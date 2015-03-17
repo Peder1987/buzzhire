@@ -1,4 +1,4 @@
-{% load thumbnail %}
+{% load thumbnail icons %}
 <nav class="navbar navbar-default" id='nav-primary'>
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -15,21 +15,21 @@
     <div class='collapse navbar-collapse' id='navbar-main'>
         <ul class="nav navbar-nav navbar-right">
             {% if request.user.is_anonymous %}
-                <li><a href="{% url 'account_login' %}"><i class='fa fa-sign-in'></i> Log in</a></li>
+                <li><a href="{% url 'account_login' %}">{{ 'login'|icon }} Log in</a></li>
             {% else %}
                 <li class="dropdown" id='user-menu'>
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                     <i class='fa fa-user'></i> {{ request.user }} <span class="caret"></span>
+                     {{ 'user'|icon }} {{ request.user }} <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu" role="menu">
-                    {#<li><a href="{% url 'account_details_change' %}"><i class='fa fa-edit'></i> Edit account details</a></li>#}
-                    <li><a href="{% url 'account_change_password' %}"><i class='fa fa-lock'></i> Change password</a></li>
+                    {#<li><a href="{% url 'account_details_change' %}">{{ 'edit'|icon }} Edit account details</a></li>#}
+                    <li><a href="{% url 'account_change_password' %}">{{ 'password'|icon }} Change password</a></li>
                     {% if request.user.is_admin %}
                         <li class="divider"></li>
-                        <li><a href="{% url 'admin:index' %}"><i class='fa fa-cogs'></i> Admin</a></li>
+                        <li><a href="{% url 'admin:index' %}">{{ 'admin'|icon }} Admin</a></li>
                     {% endif %}
                     <li class="divider"></li>
-                    <li><a href="{% url 'logout' %}"><i class='fa fa-sign-out'></i> Sign out</a></li>
+                    <li><a href="{% url 'account_logout' %}">{{ 'logout'|icon }} Log out</a></li>
                   </ul>
                 </li>
              {% endif %}

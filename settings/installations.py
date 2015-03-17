@@ -11,6 +11,8 @@ class Local(ProjectConfiguration):
         ('David Seddon', 'david@seddonym.me'),
     )
 
+    ACCOUNT_PASSWORD_MIN_LENGTH = 1
+
     @classproperty
     def MEDIA_ROOT(cls):
         return os.path.join(cls.get_setting('PROJECT_ROOT'), 'uploads')

@@ -1,6 +1,7 @@
 {% extends 'form_page.html' %}
+{% load icons %}
 
 {% block content %}
-    <p>Already have an account? <a class='btn btn-sm btn-default' href="{% url 'account_login' %}"><i class='fa fa-sign-in'></i> Log in</a></p>
+    <p>Already have an account? <a class='btn btn-sm btn-default' href="{% url 'account_login' %}">{{ 'login'|icon }} Log in</a></p>
     {{ block.super }}
 {% endblock %}

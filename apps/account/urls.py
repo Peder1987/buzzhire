@@ -6,9 +6,10 @@ urlpatterns = [
     url(r"^login/$", views.LoginView.as_view(), name="account_login"),
     url(r"^logout/$", views.LogoutView.as_view(), name="account_logout"),
 
-#     url(r"^password/change/$", views.password_change,
-#         name="account_change_password"),
-#     url(r"^password/set/$", views.password_set, name="account_set_password"),
+    url(r"^password/change/$", views.PasswordChangeView.as_view(),
+        name="account_change_password"),
+    url(r"^password/set/$", views.views.PasswordSetView.as_view(),
+        name="account_set_password"),
 #
 #     url(r"^inactive/$", views.account_inactive, name="account_inactive"),
 #

@@ -180,26 +180,24 @@ class ConfirmationMixin(FormMixin):
 
     template_name = 'form_page.html'
     form_class = ConfirmForm
-
-    # Message to display on confirmation
-    success_message = None
-    # Title of the page
-    page_title = None
     question = None
     cancel_url = ''
+    action_icon = 'confirm'
+    cancel_icon = 'undo'
 
     def get_form_kwargs(self):
         form_kwargs = super(ConfirmationMixin, self).get_form_kwargs()
         form_kwargs.update({
             'cancel_url': self.get_cancel_url(),
             'question': self.get_question(),
+            'action_icon': self.action_icon,
+            'cancel_icon': self.cancel_icon,
         })
         return form_kwargs
 
     def get_context_data(self, *args, **kwargs):
         context = super(ConfirmationMixin, self).get_context_data(*args,
                                                                  **kwargs)
-        context['title'] = self.page_title
         form_class = self.get_form_class()
         context['form'] = self.get_form(form_class)
         return context

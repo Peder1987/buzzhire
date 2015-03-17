@@ -29,26 +29,23 @@ class ConfirmForm(forms.Form):
         self.question = kwargs.pop('question', 'Are you sure?')
         self.action_text = kwargs.pop('action_text', 'Confirm')
         self.cancel_text = kwargs.pop('cancel_text', 'Cancel')
+        self.cancel_icon = kwargs.pop('cancel_icon', None)
+        self.action_icon = kwargs.pop('action_icon', None)
 
         super(ConfirmForm, self).__init__(*args, **kwargs)
 
         self.helper = FormHelper(self)
 
-        self.helper.layout.append(
-            self.get_buttons(),
-        )
+        self.helper.layout.append(layout.HTML(self.get_inner_html()))
 
-    def get_buttons(self):
-        return layout.Layout(
-            layout.HTML('<p>%s</p>' % self.question),
-            layout.HTML("<a class='btn btn-default' \
-                        href='%s'>%s</a>&nbsp;" % (self.cancel_url,
-                                                   self.cancel_text)),
-            self.get_confirm_button(),
-        )
-
-    def get_confirm_button(self):
-        return layout.Submit('confirm', self.action_text)
+    def get_inner_html(self):
+        return render_to_string('includes/forms/confirm_form_inner.html',
+                            {'question': self.question,
+                             'action_text': self.action_text,
+                             'cancel_text': self.cancel_text,
+                             'cancel_url': self.cancel_url,
+                             'action_icon': self.action_icon,
+                             'cancel_icon': self.cancel_icon})
 
 
 class UsabilityFormMixin(object):

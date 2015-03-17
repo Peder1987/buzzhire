@@ -42,3 +42,8 @@ class ProjectConfiguration(StandardConfiguration):
     )
 
     CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+    ACCOUNT_EMAIL_REQUIRED = True
+    ACCOUNT_USERNAME_REQUIRED = False
+    ACCOUNT_EMAIL_VERIFICATION = 'none'
+    # ACCOUNT_AUTHENTICATION_METHOD = 'email'
