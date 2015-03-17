@@ -4,9 +4,15 @@
 #
 #     pip install -r requirements.pip
 
-django==1.7.6
-psycopg2
-# sorl-thumbnail
-# Pillow
-# django-debug-toolbar
-# django-bleach
+Django==1.7.6
+django-allauth==0.19.1
+django-configurations==0.8
+django-configurations-seddonym==0.1
+django-crispy-forms==1.4.0
+oauthlib==0.7.2
+Pillow==2.7.0
+psycopg2==2.6
+python-openid==2.2.5
+requests==2.6.0
+requests-oauthlib==0.4.2
+sorl-thumbnail==12.2
