@@ -1,4 +1,5 @@
 from configurations_seddonym import StandardConfiguration
+from configurations_seddonym.utils import classproperty
 import os
 
 
@@ -7,6 +8,7 @@ class ProjectConfiguration(StandardConfiguration):
 #     STATICFILES_DIRS = (
 #         os.path.join(BASE_DIR, "static"),
 #     )
+    PROTOCOL = 'http'
 
     PROJECT_NAME = 'buzzhire'
     INSTALLED_APPS = StandardConfiguration.INSTALLED_APPS + (
@@ -17,6 +19,7 @@ class ProjectConfiguration(StandardConfiguration):
         'allauth',
         'allauth.account',
         'sorl.thumbnail',
+        'django_inlinecss',
         # 'allauth.socialaccount',
         # 'allauth.socialaccount.providers.facebook',
         # 'allauth.socialaccount.providers.google',
