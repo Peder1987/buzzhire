@@ -33,7 +33,7 @@ class ProjectConfiguration(StandardConfiguration):
     TEMPLATE_CONTEXT_PROCESSORS = StandardConfiguration.TEMPLATE_CONTEXT_PROCESSORS + (
          "allauth.account.context_processors.account",
          "allauth.socialaccount.context_processors.socialaccount",
-         # 'apps.main.context_processors.main',
+         'apps.main.context_processors.main',
     )
 
     AUTHENTICATION_BACKENDS = (
