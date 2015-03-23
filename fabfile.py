@@ -53,12 +53,12 @@ def reload_wsgi():
     run('touch %s' % env.wsgi_reload_file)
 
 
-
+@task
 def reload_nginx():
     """
     Reload nginx config.
     """
-    sudo('supervisorctl restart %s' % env.nginx_process)
+    run('supervisorctl restart %s' % env.nginx_process)
 
 
 @task
