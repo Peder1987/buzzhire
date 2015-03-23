@@ -17,6 +17,7 @@ def live():
     env.virtualenv_dir = '/home/buzzhire/.virtualenvs/live'
     env.code_dir = '/home/buzzhire/webapps/live/project'
     env.activate = 'source %s/bin/activate' % env.virtualenv_dir
+    env.wsgi_reload_file = '/home/buzzhire/tmp/live.reload'
     env.backup_on_deploy = False
 
 
@@ -30,6 +31,7 @@ def dev():
     env.virtualenv_dir = '/home/buzzhire/.virtualenvs/dev'
     env.code_dir = '/home/buzzhire/webapps/dev/project'
     env.activate = 'source %s/bin/activate' % env.virtualenv_dir
+    env.wsgi_reload_file = '/home/buzzhire/tmp/dev.reload'
     env.backup_on_deploy = False
 
 # Set the default environment.
@@ -40,6 +42,14 @@ def virtualenv():
     with cd(env.code_dir):
         with prefix(env.activate):
             yield
+
+
+def reload_wsgi():
+    """
+    Graceful restart of wsgi server.
+    """
+    run('touch %s' % env.wsgi_reload_file)
+
 
 @task
 def deploy(skip_backup=False):
@@ -54,7 +64,7 @@ def deploy(skip_backup=False):
         if env.backup_on_deploy and not skip_backup:
             backup()
 
-        run("touch wsgi.py")
+        reload_wsgi()
         run("./manage.py migrate")
         run('./manage.py collectstatic --noinput')
 
