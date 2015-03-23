@@ -34,10 +34,10 @@ class Local(ProjectConfiguration):
 
 class Dev(ProjectConfiguration):
     DEBUG = True
-    DOMAIN = 'buzzhire.localhost'
+    DOMAIN = 'dev.buzzhire.co'
     WEBFACTION_USER = 'buzzhire'
     WEBFACTION_APPNAME = 'dev'
-    
+
     @classproperty
     def PROJECT_ROOT(cls):
         return '/home/%s/webapps/%s/project' % (cls.WEBFACTION_USER, WEBFACTION_APPNAME)
