@@ -18,6 +18,7 @@ def live():
     env.code_dir = '/home/buzzhire/webapps/live/project'
     env.activate = 'source %s/bin/activate' % env.virtualenv_dir
     env.wsgi_reload_file = '/home/buzzhire/tmp/live.reload'
+    env.nginx_process = 'live_nginx'
     env.backup_on_deploy = False
 
 
@@ -32,6 +33,7 @@ def dev():
     env.code_dir = '/home/buzzhire/webapps/dev/project'
     env.activate = 'source %s/bin/activate' % env.virtualenv_dir
     env.wsgi_reload_file = '/home/buzzhire/tmp/dev.reload'
+    env.nginx_process = 'dev_nginx'
     env.backup_on_deploy = False
 
 # Set the default environment.
@@ -49,6 +51,14 @@ def reload_wsgi():
     Graceful restart of wsgi server.
     """
     run('touch %s' % env.wsgi_reload_file)
+
+
+
+def reload_nginx():
+    """
+    Reload nginx config.
+    """
+    sudo('supervisorctl restart %s' % env.nginx_process)
 
 
 @task
