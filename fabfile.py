@@ -20,6 +20,7 @@ def live():
     env.wsgi_reload_file = '/home/buzzhire/tmp/live.reload'
     env.nginx_process = 'live_nginx'
     env.backup_on_deploy = False
+    env.django_configuration = 'Live'
 
 
 @task
@@ -35,6 +36,7 @@ def dev():
     env.wsgi_reload_file = '/home/buzzhire/tmp/dev.reload'
     env.nginx_process = 'dev_nginx'
     env.backup_on_deploy = False
+    env.django_configuration = 'Dev'
 
 # Set the default environment.
 dev()
@@ -42,8 +44,9 @@ dev()
 @_contextmanager
 def virtualenv():
     with cd(env.code_dir):
-        with prefix(env.activate):
-            yield
+        with prefix('export DJANGO_CONFIGURATION=%s' % env.django_configuration):
+            with prefix(env.activate):
+                yield
 
 
 def reload_wsgi():

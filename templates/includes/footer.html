@@ -1,14 +1,14 @@
-{% load static %}
-<div id="footer">
+<!-- Footer -->
+<footer>
     <div class="container">
         <div class="row">
-            
-        </div>
-        <div class='row'>
-            <div class='col-md-12'>
-                <h6>&copy; 2015 Buzzhire. Website development by <a href='http://seddonym.me/'>David Seddon</a></h6>
+            <div class="col-sm-7 copyright">
+                <p>&copy; 2015 Buzzhire. <a href='{% url 'credits' %}'>Site credits</a></p>
+            </div>
+            <div class="col-sm-5 social-icon">
+                <a href="#" class="social-icon"><i class="fa fa-facebook"></i></a>
+                <a href="#" class="social-icon"><i class="fa fa-twitter"></i></a>
             </div>
         </div>
     </div>
-</div>
-
+</footer>
