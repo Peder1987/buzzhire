@@ -62,11 +62,11 @@ class Dev(ProjectConfiguration):
 
     @classproperty
     def STATIC_ROOT(cls):
-        return '/home/%s/webapps/%s_static/' % (cls.WEBFACTION_USER, cls.WEBFACTION_APPNAME)
+        return '/home/%s/webapps/%s/static' % (cls.WEBFACTION_USER, cls.WEBFACTION_APPNAME)
 
     @classproperty
     def MEDIA_ROOT(cls):
-        return '/home/%s/webapps/%s_uploads/' % (cls.WEBFACTION_USER, cls.WEBFACTION_APPNAME)
+        return '/home/%s/webapps/%s/uploads' % (cls.WEBFACTION_USER, cls.WEBFACTION_APPNAME)
 
     @classproperty
     def LOG_PATH(cls):
