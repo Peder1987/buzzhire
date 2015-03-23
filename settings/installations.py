@@ -5,7 +5,8 @@ import os
 
 class Local(ProjectConfiguration):
     DEBUG = True
-    DOMAIN = 'buzzhire.localhost'
+    DOMAIN = 'localhost'
+    PORT = '8000'
     PROJECT_ROOT = '/home/david/www/buzzhire'
     MANAGERS = ADMINS = (
         ('David Seddon', 'david@seddonym.me'),
@@ -13,7 +14,12 @@ class Local(ProjectConfiguration):
 
     @classproperty
     def BASE_URL(cls):
-        return '%s://%s' % (cls.PROTOCOL, cls.DOMAIN)
+        if getattr(cls, 'PORT', ''):
+            # Necessary for the development server
+            url = "%s:%s" % (cls.DOMAIN, cls.PORT)
+        else:
+            url = cls.DOMAIN
+        return '%s://%s' % (cls.PROTOCOL, url)
 
     ACCOUNT_PASSWORD_MIN_LENGTH = 1
 

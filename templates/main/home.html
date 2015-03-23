@@ -1,66 +1,65 @@
 {% extends 'base.html' %}
-
+{% load staticthumbnail static %}
 {% block content_wrapper %}
-           <!-- Top content -->
      
-  <div id="home" class="top-content">
-            <div class="inner-bg">
+        <div id="home" class="top-content" data-background-image='{% static 'img/bikespeed.jpg' %}'>
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1">
-                            <h2>Landing Page Template</h2>
+                            <h2>Book a driver at a moment's notice</h2>
                             <div class="description">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pharetra odio ac felis iaculis cursus aliquet quis orci. Nunc id lorem ut mi euismod accumsan. Nullam at sapien lacus. Pellentesque nec mollis metus. Fusce sed risus suscipit, vulputate augue non, scelerisque lacus.
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pharetra odio ac felis iaculis.
                             </div>
-                            <div class="top-button">
-                                <a class="btn btn-lg" href="#features-section"><i class="fa fa-angle-double-down"></i> Learn More</a>
-                                <a class="btn btn-lg" href="#products-section"> <i class="fa fa-mobile"></i> Download Now</a>
-                            </div>
-                            <img src="assets/img/1.png" alt="">
-
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <a class="btn btn-lg" href="#features-section"><i class="fa fa-angle-double-down"></i> Learn more</a>
+                    </div>
+                    <div class='row'>
+                        <div class='col-md-4 col-md-offset-4'>
+                            <p style='background-color: rgba(0,0,0,0.8); font-size: 1.25em; padding: 1.5em 1em;'>Are you a freelance driver? <a href=''>Get in touch</a></p>
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
- 
+    
         <!-- Features -->
         <div id="features-section" class="features-container">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12 features">
-                        <h3>Features</h3>
+                        <h3>Our drivers</h3>
                         <p>
-                            Sed non sem libero. Aenean in orci porta, sodales lorem vel, ultricies lacus. Vestibulum eu urna sed leo tempor auctor et vitae augue. Praesent libero leo, tempor eget mattis nec, cursus non felis. Donec vitae orci ut turpis convallis mattis.
+                            Sed non sem libero. Aenean in orci porta, sodales lorem vel, ultricies lacus. Vestibulum eu urna sed leo tempor auctor et vitae augue.
                         </p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-4 features-box">
                         <div class="icon">
-                            <i class="fa fa-apple"></i>
+                            <i class="fa fa-diamond"></i>
                         </div>
-                        <h4>Iphone Version</h4>
+                        <h4>Professional</h4>
                         <p>
-                            Ut lobortis auctor est, quis ornare orci tristique vel. Pellentesque sit amet ultricies nisl. Ut aliquet dolor mi, vitae varius felis elementum.
+                            BuzzHire professionals are experienced, friendly, background-checked, and insured.
                         </p>
                     </div>
                     <div class="col-sm-4 features-box">
                         <div class="icon">
-                            <i class="fa fa-android"></i>
+                            <i class="fa fa-clock-o"></i>
                         </div>
-                        <h4>Android Version</h4>
+                        <h4>Available</h4>
                         <p>
-                            Ut lobortis auctor est, quis ornare orci tristique vel. Pellentesque sit amet ultricies nisl. Ut aliquet dolor mi, vitae varius felis elementum.
+                            Book online in 60 seconds and schedule your driver for as early as a few hours later.
                         </p>
                     </div>
                     <div class="col-sm-4 features-box">
                         <div class="icon">
-                            <i class="fa fa-windows"></i>
+                            <i class="fa fa-certificate"></i>
                         </div>
-                        <h4>Windows Version</h4>
+                        <h4>Guaranteed</h4>
                         <p>
-                            Ut lobortis auctor est, quis ornare orci tristique vel. Pellentesque sit amet ultricies nisl. Ut aliquet dolor mi, vitae varius felis elementum.
+                            If you’re not satisfied with our work, we’ll refund your money. It’s as simple as that.
                         </p>
                     </div>
                 </div>
@@ -72,17 +71,21 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-7 product-text">
-                        <h3>Iphone mobile apps</h3>
-                        <p>
-                            Integer ac bibendum lectus. Quisque interdum aliquam felis vel volutpat. Vivamus commodo felis quis dui pharetra, ac venenatis magna lacinia. Vestibulum quis dignissim nibh. Duis vitae felis orci. Aliquam porta interdum feugiat.
-                        </p>
+                        <h3>How to book</h3>
+                        <ol>
+                            <li>Select date and time you'd like your driver to show up</li>
+                            <li>We'll confirm your driver and take care of payment electronically and securely</li> 
+                            <li>An-experienced fully-equipped driver will arrive at your premises, ready to work</li>
+                        </ol>
                         <div class="product-button">
-                            <a class="btn btn-primary" href="#"><i class="fa fa-apple"></i> Buy Now</a>
+                            <a class="btn btn-primary" href="#"><i class="fa fa-user"></i> Register</a>
                         </div>
 
                     </div>
                     <div class="col-md-5 product-img">
-                        <img src="assets/img/2.png" alt="">
+                        {% staticthumbnail 'img/laptop.jpg' '500x500' as im %}
+                            <img src='{{ im.url }}' height='{{ im.height }}' width='{{ im.width }}'/>
+                        {% endthumbnail %}
                     </div>
                 </div>
             </div>
@@ -93,16 +96,20 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-5 product-img">
-                        <img src="assets/img/3.png" alt="">
-
+                        {% staticthumbnail 'img/scooter.jpg' '500x500' as im %}
+                            <img src='{{ im.url }}' height='{{ im.height }}' width='{{ im.width }}'/>
+                        {% endthumbnail %}
                     </div>
                     <div class="col-md-7 product-text">
-                        <h3>Android mobile apps</h3>
-                        <p>
-                            Integer ac bibendum lectus. Quisque interdum aliquam felis vel volutpat. Vivamus commodo felis quis dui pharetra, ac venenatis magna lacinia. Vestibulum quis dignissim nibh. Duis vitae felis orci. Aliquam porta interdum feugiat.
-                        </p>
+                        <h3>Freelance driver?</h3>
+                        <ul>
+                            <li>Find a delivery job in seconds</li>
+                            <li>Signing up is easy</li>
+                            <li>Select your availability and we'll do the rest</li>
+                            <li>Be your own boss and manage your schedule</li>
+                        </ul>
                         <div class="product-button">
-                            <a class="btn btn-primary" href="#"><i class="fa fa-android"></i> Buy Now</a>
+                            <a class="btn btn-primary" href="#"><i class="fa fa-motorcycle"></i> Driver sign up</a>
                         </div>
 
                     </div>
@@ -110,80 +117,6 @@
             </div>
         </div>
         
-        <!-- Product -->
-        <div class="product-container product-bg1">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-7 product-text">
-                        <h3>Windows mobile apps</h3>
-                        <p>
-                            Integer ac bibendum lectus. Quisque interdum aliquam felis vel volutpat. Vivamus commodo felis quis dui pharetra, ac venenatis magna lacinia. Vestibulum quis dignissim nibh. Duis vitae felis orci. Aliquam porta interdum feugiat.
-                        </p>
-                        <div class="product-button">
-                            <a class="btn btn-primary" href="#"><i class="fa fa-windows"></i> Buy Now</a>
-                        </div>
-
-                    </div>
-                    <div class="col-md-5 product-img">
-                        <img src="assets/img/4.png" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-                <!-- Testimonials -->
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 testimonials">
-                    <h3>Testimonials</h3>
-                <div class="col-sm-4 reviews">
-                    <div class="review reviews-panel box-arrow-down">
-                        <p>
-                            Pellentesque sit amet augue a mi luctus laoreet ut nec velit. Morbi in fermentum elit.
-                        </p>
-                    </div>
-                    <div class="review-author">
-                        <div class="img">
-<img src="assets/img/testimonials/1.jpg" alt=""></div>
-                        <p>
-                            <a href="#"><strong>David Hoffman</strong></a><br />
-                            <span>Dolor magna...</span>
-                        </p>
-                    </div>
-                </div>
-                <div class="col-sm-4 reviews">
-                    <div class="review reviews-panel box-arrow-down">
-                        <p>
-                            Pellentesque sit amet augue a mi luctus laoreet ut nec velit. Morbi in fermentum elit.
-                        </p>
-                    </div>
-                    <div class="review-author">
-                        <div class="img">
-<img src="assets/img/testimonials/2.jpg" alt=""></div>
-                        <p>
-                            <a href="#"><strong>Dana Bell</strong></a><br />
-                            <span>Dolor magna...</span>
-                        </p>
-                    </div>
-                </div>
-                <div class="col-sm-4 reviews">
-                    <div class="review reviews-panel box-arrow-down">
-                        <p>
-                            Pellentesque sit amet augue a mi luctus laoreet ut nec velit. Morbi in fermentum elit.
-                        </p>
-                    </div>
-                    <div class="review-author">
-                        <div class="img">
-<img src="assets/img/testimonials/3.jpg" alt=""></div>
-                        <p>
-                            <a href="#"><strong>Mark Jeff</strong><br /></a>
-                            <span>Dolor magna...</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        </div>
 
         <!-- Subscription -->
         <div class="subscribe-container">
@@ -191,7 +124,6 @@
                 <div class="row">
                     <div class="col-sm-12 subscribe">
                         <h3>Subscribe to our newsletter</h3>
-                        <p>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec ut urna eget felis mattis tincidunt id sed risus.</p>
                         <form class="form-inline" action="assets/subscribe.php" method="post">
                             <input type="text" name="email" placeholder="Enter your email">
                             <button type="submit" class="btn btn-subscribe">Subscribe</button>
@@ -201,164 +133,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        
-   
-        <!-- Team -->
-        <div id="team-section" class="team-container">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12 team">
-                        <h3>Our Team</h3>
-                        <p>
-                            Ut ac varius nibh. Nullam est nisl, sagittis sed risus vel, facilisis commodo tortor. Suspendisse suscipit tellus vitae tellus porta rutrum. Proin ac orci auctor, consequat dolor nec, scelerisque nisl. Aliquam imperdiet nulla id scelerisque auctor. Proin egestas mauris vel arcu bibendum ornare.
-                        </p>
-                    </div>
-                </div>
-            <div class="row">
-                <div class="col-md-3 col-sm-6">
-                    <div class="team-member">
-                            <img src="assets/img/team/1.png" alt="">
-                        <h4>Lara Thompson</h4>
-                        <p>Developer</p>
-                        <div class="contact-details">
-                            <ul class="list-inline">
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li><li>
-                                <a href="#"><i class="fa fa-twitter"></i></a></li><li>
-                                <a href="#"><i class="fa fa-google-plus"></i></a></li><li>
-                                <a href="#"><i class="fa fa-tumblr"></i></a></li><li>
-                                <a href="#"><i class="fa fa-instagram"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="team-member">
-                            <img src="assets/img/team/2.png" alt="">
-                        <h4>Nicole Kass</h4>
-                        <p>Programmer</p>
-                        <div class="contact-details">
-                            <ul class="list-inline">
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li><li>
-                                <a href="#"><i class="fa fa-twitter"></i></a></li><li>
-                                <a href="#"><i class="fa fa-google-plus"></i></a></li><li>
-                                <a href="#"><i class="fa fa-tumblr"></i></a></li><li>
-                                <a href="#"><i class="fa fa-instagram"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="team-member">
-                            <img src="assets/img/team/3.png" alt="">
-                        <h4>Paul Smith</h4>
-                        <p>Software Engineer</p>
-                        <div class="contact-details">
-                            <ul class="list-inline">
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li><li>
-                                <a href="#"><i class="fa fa-twitter"></i></a></li><li>
-                                <a href="#"><i class="fa fa-google-plus"></i></a></li><li>
-                                <a href="#"><i class="fa fa-tumblr"></i></a></li><li>
-                                <a href="#"><i class="fa fa-instagram"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="team-member">
-                            <img src="assets/img/team/4.png" alt="">
-                        <h4>Gena Chane</h4>
-                        <p>Sales Manager</p>
-                        <div class="contact-details">
-                            <ul class="list-inline">
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li><li>
-                                <a href="#"><i class="fa fa-twitter"></i></a></li><li>
-                                <a href="#"><i class="fa fa-google-plus"></i></a></li><li>
-                                <a href="#"><i class="fa fa-tumblr"></i></a></li><li>
-                                <a href="#"><i class="fa fa-instagram"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                        </div>
-                    </div>
-                </div>
-        <!-- FAQ -->
-        <div id="faq-section" class="faq-container">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12 faq-text">
-                        <h3>Frequently Asked Questions</h3>
-                        <p>
-                            Duis vitae felis orci. Aliquam porta interdum feugiat. Ut placerat, sem porta adipiscing sagittis, justo neque condimentum lacus, id vulputate velit ante eu arcu. Sed convallis eu ante ut sagittis. Mauris eget arcu consectetur, porttitor leo non, consequat lectus.
-                        </p>
-                <div class="col-md-6 col-sm-6 col-xs-12 faq">
-                    <div class="faq-box">
-                        <h4 class="question"><i class="fa fa-question-circle"></i>Nam ultricies sem sit amet risus?</h4>
-                        <p class="answer">Donec accumsan, nunc accumsan scelerisque fringilla, ante risus tincidunt justo, consequat molestie diam nisl sollicitudin lacus. Donec condimentum egestas tellus, ut tempus sem luctus sed. Nulla vel accumsan justo, in faucibus nisl. Duis egestas ante at justo lacinia bibendum.</p>
-                    </div>
-                    <div class="faq-box">
-                        <h4 class="question"><i class="fa fa-question-circle"></i>Nam ultricies sem sit amet risus tempor?</h4>
-                        <p class="answer">Donec accumsan, nunc accumsan scelerisque fringilla, ante risus tincidunt justo, consequat molestie diam nisl sollicitudin lacus. Donec condimentum egestas tellus, ut tempus sem luctus sed. Nulla vel accumsan justo, in faucibus nisl. Duis egestas ante at justo lacinia bibendum.</p>
-                    </div> 
-                    <div class="faq-box">
-                        <h4 class="question"><i class="fa fa-question-circle"></i>Duis congue ullamcorper?</h4>
-                        <p class="answer">Donec accumsan, nunc accumsan scelerisque fringilla, ante risus tincidunt justo, consequat molestie diam nisl sollicitudin lacus. Donec condimentum egestas tellus, ut tempus sem luctus sed. Nulla vel accumsan justo, in faucibus nisl. Duis egestas ante at justo lacinia bibendum.</p>
-                    </div> 
-                </div> 
-
-                <div class="col-md-6 col-sm-6 col-xs-12 faq">
-                    <div class="faq-box">
-                        <h4 class="question"><i class="fa fa-question-circle"></i>Pellentesque lacinia tristique libero?</h4>
-                        <p class="answer">Donec accumsan, nunc accumsan scelerisque fringilla, ante risus tincidunt justo, consequat molestie diam nisl sollicitudin lacus. Donec condimentum egestas tellus, ut tempus sem luctus sed. Nulla vel accumsan justo, in faucibus nisl. Duis egestas ante at justo lacinia bibendum.</p>
-                    </div> 
-                    <div class="faq-box">
-                        <h4 class="question"><i class="fa fa-question-circle"></i>Suspendisse sed nisl sit amet ante venenatis?</h4>
-                        <p class="answer">Donec accumsan, nunc accumsan scelerisque fringilla, ante risus tincidunt justo, consequat molestie diam nisl sollicitudin lacus. Donec condimentum egestas tellus, ut tempus sem luctus sed. Nulla vel accumsan justo, in faucibus nisl. Duis egestas ante at justo lacinia bibendum.</p>
-                    </div> 
-                    <div class="faq-box">
-                        <h4 class="question"><i class="fa fa-question-circle"></i>Nam ac molestie augue?</h4>
-                        <p class="answer">Donec accumsan, nunc accumsan scelerisque fringilla, ante risus tincidunt justo, consequat molestie diam nisl sollicitudin lacus. Donec condimentum egestas tellus, ut tempus sem luctus sed. Nulla vel accumsan justo, in faucibus nisl. Duis egestas ante at justo lacinia bibendum.</p>
-                    </div> 
-                   </div> 
-                  </div>
-                 </div>
-                </div>
-               </div>
-
-        <!-- Contact us -->
-        <div id="contact-section" class="contact-container">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 contact">
-                    <h3>Contact Us</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pharetra odio ac felis iaculis cursus aliquet quis orci. Nunc id lorem ut mi euismod accumsan.
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-7 form-group contact-form">
-                    <h4>Send message</h4>
-                    <form method="post" action="assets/contact.php">
-                        <input type="text" name="email" placeholder="Email" class="form-control contact-email">
-                        <input type="text" name="subject" placeholder="Subject" class="form-control contact-subject">
-                        <textarea name="message" class="form-control" placeholder="Message"></textarea>
-                        <button type="submit" class="btn btn-contact">Submit</button>
-                    </form>
-                </div>
-                <div class="col-sm-5 contact-address contact-about">
-                    <h4>About Us</h4>
-                    <p>Fusce at leo eros. Morbi mauris arcu, eleifend sit amet turpis ac, porta luctus neque. Etiam ultricies ac augue a venenatis. Quisque aliquam odio eu magna sodales, vel interdum erat suscipit. Mauris ut porttitor tellus.
-</p>
-                    <h4>Address</h4>
-                    <p><i class="fa fa-map-marker"></i>13 Brant Street, Burlington, Ontario, Canada</p>
-                    <p><i class="fa fa-phone"></i>Phone: 0011 222 335 7773</p>
-
-                </div>
-            </div>
-          </div>
         </div>
 {% endblock %}
 

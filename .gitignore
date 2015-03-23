@@ -3,3 +3,4 @@
 *.pydevproject
 .settings
 settings/secret.py
+uploads
