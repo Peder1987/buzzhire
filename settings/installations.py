@@ -72,3 +72,11 @@ class Dev(ProjectConfiguration):
     def LOG_PATH(cls):
         return '/home/%s/logs/user/%s/' % (cls.WEBFACTION_USER, cls.WEBFACTION_APPNAME)
 
+    @classmethod
+    def get_default_database_name(cls):
+        return '%s_%s' % (cls.get_setting('PROJECT_NAME'),
+                          cls.get_setting('WEBFACTION_APPNAME'))
+
+    @classmethod
+    def get_default_database_user(cls):
+        return cls.get_default_database_name()
