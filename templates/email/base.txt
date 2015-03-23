@@ -1,0 +1,14 @@
+{% load html2text %}
+{% if title %}{{ title }}
+-----------------{% endif %}{% if subtitle %}
+{{ subtitle }}
+{% endif %} 
+{% block content %}{{ content|html2text }}{% endblock %}
+
+{% block action_panel %}{{ action_panel|html2text }}{% endblock %}
+
+{% block signature %}
+Buzzhire
+{{ contact_email }}
+{{ base_url }}
+{% endblock %}
