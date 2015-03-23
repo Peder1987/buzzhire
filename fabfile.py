@@ -71,6 +71,7 @@ def deploy(skip_backup=False):
 @task
 def backup():
     "Backs up the site uploaded files and database to Amazon S3."
-    with virtualenv():
-        run('./manage.py dbbackup')
-        run('./manage.py mediabackup')
+    utils.fastprint('Backups are not yet configured.')
+#     with virtualenv():
+#         run('./manage.py dbbackup')
+#         run('./manage.py mediabackup')

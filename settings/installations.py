@@ -52,10 +52,6 @@ class Dev(ProjectConfiguration):
 
     ACCOUNT_PASSWORD_MIN_LENGTH = 1
 
-    @classmethod
-    def get_static_root(cls):
-        return ''
-
     @classproperty
     def STATICFILES_DIRS(cls):
         return (os.path.join(cls.get_setting('PROJECT_ROOT'), 'static'),)
@@ -80,3 +76,11 @@ class Dev(ProjectConfiguration):
     @classmethod
     def get_default_database_user(cls):
         return cls.get_default_database_name()
+
+
+class Live(Dev):
+    DEBUG = False
+    DOMAIN = 'buzzhire.co'
+    WEBFACTION_APPNAME = 'live'
+
+    ACCOUNT_PASSWORD_MIN_LENGTH = 6
