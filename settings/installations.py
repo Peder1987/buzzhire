@@ -40,7 +40,7 @@ class Dev(ProjectConfiguration):
 
     @classproperty
     def PROJECT_ROOT(cls):
-        return '/home/%s/webapps/%s/project' % (cls.WEBFACTION_USER, WEBFACTION_APPNAME)
+        return '/home/%s/webapps/%s/project' % (cls.WEBFACTION_USER, cls.WEBFACTION_APPNAME)
 
     MANAGERS = ADMINS = (
         ('David Seddon', 'david@seddonym.me'),
