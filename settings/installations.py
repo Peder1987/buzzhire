@@ -61,11 +61,11 @@ class Dev(ProjectConfiguration):
         return (os.path.join(cls.get_setting('PROJECT_ROOT'), 'static'),)
 
     @classproperty
-    def STATIC_ROOT(cls):
+    def get_static_root(cls):
         return '/home/%s/webapps/%s/static' % (cls.WEBFACTION_USER, cls.WEBFACTION_APPNAME)
 
     @classproperty
-    def MEDIA_ROOT(cls):
+    def get_media_root(cls):
         return '/home/%s/webapps/%s/uploads' % (cls.WEBFACTION_USER, cls.WEBFACTION_APPNAME)
 
     @classproperty
