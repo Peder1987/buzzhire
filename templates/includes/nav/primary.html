@@ -15,7 +15,7 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 {% if request.user.is_anonymous %}
-                <li><a href="{% url 'account_signup' %}">{{ 'register'|icon }} Register</a></li>
+                <li><a href="{% url 'book' %}">{{ 'book'|icon }} Book a driver</a></li>
                 <li><a href="{% url 'account_login' %}">{{ 'login'|icon }} Log in</a></li>
             {% else %}
                 <li class="dropdown" id='user-menu'>

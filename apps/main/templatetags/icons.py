@@ -15,6 +15,7 @@ ICON_MAP = {
     'admin': 'cogs',
     'edit': 'edit',
     'password': 'lock',
+    'book': 'calendar',
 }
 
 @register.filter
