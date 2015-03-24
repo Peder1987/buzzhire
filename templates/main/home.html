@@ -2,7 +2,13 @@
 {% load staticthumbnail static %}
 {% block content_wrapper %}
      
-        <div id="home" class="top-content" data-background-image='{% static 'img/bikespeed.jpg' %}'>
+        <div id="home" class="top-content" data-background-images='["{% static 'img/hero/bikespeed.jpg' %}",
+                                                                    "{% static 'img/hero/app.jpg' %}",
+                                                                    "{% static 'img/hero/bicycle.jpg' %}",
+                                                                    "{% static 'img/hero/laptop.jpg' %}",
+                                                                    "{% static 'img/hero/scooter.jpg' %}",
+                                                                    "{% static 'img/hero/scooter-purple.jpg' %}",
+                                                                    "{% static 'img/hero/scooter-red.jpg' %}"]'>
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1">

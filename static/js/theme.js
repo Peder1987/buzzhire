@@ -29,10 +29,8 @@ jQuery(document).ready(function() {
 	
 /***** Background slideshow *****/
 
-    var background_image = $('.top-content').data('background-image');
-	$('.top-content').backstretch([
-        background_image,
-    ], {duration: 3000, fade: 800});
+    var background_images = $('.top-content').data('background-images');
+	$('.top-content').backstretch(background_images, {duration: 3000, fade: 800});
     
 
 /***** Contact form *****/
