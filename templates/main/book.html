@@ -1,11 +1,44 @@
 {% extends 'base.html' %}
 {% load staticthumbnail static %}
 {% block content_wrapper %}
-     
+        <div class="features-container">
+           <div class="row" style='margin-top: 5em;'>
+                <div class="col-sm-12 features">
+                    <h3>Book a driver</h3>
+                </div>
+            </div>
+       </div>
+        
+        <!-- Product -->
+        <div id="products-section" class="product-container product-bg1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-7 product-text">
+                        <h3>How to book</h3>
+                        <ol>
+                            <li>Select date and time you'd like your driver to show up.</li>
+                            <li>We'll confirm your driver and take care of payment electronically and securely.</li> 
+                            <li>An-experienced fully-equipped driver will arrive at your premises, ready to work.</li>
+                        </ol>
+                    </div>
+                    <div class="col-md-5">
+                        <p>TODO - booking form</p>
+                    </div>
+                    {% comment %}
+                    <div class="col-md-5 product-img">
+                        {% staticthumbnail 'img/laptop.jpg' '500x500' as im %}
+                            <img src='{{ im.url }}' height='{{ im.height }}' width='{{ im.width }}'/>
+                        {% endthumbnail %}
+                    </div>
+                    {% endcomment %}
+                </div>
+            </div>
+        </div>
+
         <!-- Features -->
         <div id="features-section" class="features-container">
             <div class="container">
-                <div class="row" style='margin-top: 5em;'>
+                <div class="row" >
                     <div class="col-sm-12 features">
                         <h3>Our drivers</h3>
                     </div>
@@ -42,30 +75,6 @@
             </div>
         </div>
         
-        <!-- Product -->
-        <div id="products-section" class="product-container product-bg1">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-7 product-text">
-                        <h3>How to book</h3>
-                        <ol>
-                            <li>Select date and time you'd like your driver to show up</li>
-                            <li>We'll confirm your driver and take care of payment electronically and securely</li> 
-                            <li>An-experienced fully-equipped driver will arrive at your premises, ready to work</li>
-                        </ol>
-                        <div class="product-button">
-                            <a class="btn btn-primary btn-lg" href="{% url 'account_signup' %}"><i class="fa fa-user"></i> Register</a>
-                        </div>
-
-                    </div>
-                    <div class="col-md-5 product-img">
-                        {% staticthumbnail 'img/laptop.jpg' '500x500' as im %}
-                            <img src='{{ im.url }}' height='{{ im.height }}' width='{{ im.width }}'/>
-                        {% endthumbnail %}
-                    </div>
-                </div>
-            </div>
-        </div>
         
 {% endblock %}
 
