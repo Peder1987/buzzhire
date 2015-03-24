@@ -56,9 +56,12 @@ img { max-width: 100%; }
 
 .btn {
   border-radius: 0px;
+  font-weight: 300;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.btn-block {
   margin-bottom: 20px;
-    font-weight: 300;
-    font-family: 'Open Sans', sans-serif;
 }
 
 .btn-lg {
@@ -119,31 +122,33 @@ img { max-width: 100%; }
   box-shadow: none;
 }
 
-input[type="text"],
-textarea {
-    margin: 0;
-    padding: 0 10px;
-    vertical-align: middle;
-	background: #f5f5f5;
-    border: none;
-    border-bottom: 1px solid #ccc;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 22px;
-    font-weight: 300;
-    line-height: 50px;
-    color: #888;
-    -moz-border-radius: 0;
-    -webkit-border-radius: 0;
-    border-radius: 0;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    -o-transition: all .3s;
-    -moz-transition: all .3s;
-    -webkit-transition: all .3s;
-    -ms-transition: all .3s;
-    transition: all .3s;
-}
+/* input[type="text"], */
+/* input[type="password"], */
+/* input[type="email"], */
+/* textarea { */
+/*     margin: 0; */
+/*     padding: 0 10px; */
+/*     vertical-align: middle; */
+/* 	background: #f5f5f5; */
+/*     border: none; */
+/*     border-bottom: 1px solid #ccc; */
+/*     font-family: 'Open Sans', sans-serif; */
+/*     font-size: 22px; */
+/*     font-weight: 300; */
+/*     line-height: 50px; */
+/*     color: #888; */
+/*     -moz-border-radius: 0; */
+/*     -webkit-border-radius: 0; */
+/*     border-radius: 0; */
+/*     -moz-box-shadow: none; */
+/*     -webkit-box-shadow: none; */
+/*     box-shadow: none; */
+/*     -o-transition: all .3s; */
+/*     -moz-transition: all .3s; */
+/*     -webkit-transition: all .3s; */
+/*     -ms-transition: all .3s; */
+/*     transition: all .3s; */
+/* } */
 
 input[type="text"]:focus, 
 textarea:focus {
