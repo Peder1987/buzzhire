@@ -37,9 +37,8 @@ class Driver(Freelancer):
     )
     vehicle_types = MultiSelectField(choices=VEHICLE_TYPE_CHOICES)
 
-    motorcycle_licence = models.BooleanField(default=False,
-        help_text='If you are a motorcycle/scooter driver, do you have your'
-        'CBT/full motorcycle license? ')
+    motorcycle_licence = models.BooleanField('I have a CBT/full motorcycle license.',
+                                             default=False)
 
     DRIVING_EXPERIENCE_LESS_ONE = '0-1'
     DRIVING_EXPERIENCE_ONE_THREE = '1-3'

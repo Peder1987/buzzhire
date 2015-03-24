@@ -76,17 +76,23 @@ class CrispyFormMixin(object):
     top_html_dict = {}
     bottom_html = None
     bottom_html_dict = {}
+    form_tag = True
 
     def __init__(self, *args, **kwargs):
         super(CrispyFormMixin, self).__init__(*args, **kwargs)
 
         self.helper = FormHelper(self)
-        if self.prefix:
-            submit_name = '%s_%s' % (self.prefix, self.submit_name)
-        else:
-            submit_name = self.submit_name
-        self.helper.layout.append(layout.Submit(submit_name,
-                                            self.submit_text))
+
+        # Allow forms to easily override the form_tag
+        self.helper.form_tag = self.form_tag
+
+        if self.submit_name:
+            if self.prefix:
+                submit_name = '%s_%s' % (self.prefix, self.submit_name)
+            else:
+                submit_name = self.submit_name
+            self.helper.layout.append(layout.Submit(submit_name,
+                                                self.submit_text))
 
         if self.top_html:
             self.helper.layout.insert(0, layout.HTML(

@@ -1106,3 +1106,7 @@ footer {
 }
 
 form { margin-bottom: 1em; }
+
+.checkbox input[type="checkbox"] { margin-top: 2px; }
+label.checkbox input[type="checkbox"] { margin-left: 0; margin-right: 0.3em; position: static; vertical-align: sub; }
+label.checkbox { font-weight: normal; }
