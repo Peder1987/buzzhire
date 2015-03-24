@@ -1,4 +1,4 @@
-{% load thumbnail icons %}
+{% load thumbnail icons static staticthumbnail %}
 <div class="navbar navbar-default navbar-fixed-top menu-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
@@ -8,7 +8,9 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Buzzhire</a>
+            {% staticthumbnail 'img/logo/logo.jpg' 'x50' as im %}
+                <a href="/"><img src='{{ im.url }}' width='{{ im.width }}' height='{{ im.height }}' alt='Buzzhire'/></a>
+            {% endthumbnail %}
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">

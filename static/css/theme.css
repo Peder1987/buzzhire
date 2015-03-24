@@ -86,15 +86,8 @@ img { max-width: 100%; }
 }
 
 .btn-primary {
-	display: inline-block;
-	height: 52px;
-	margin: 0;
-    margin-bottom:40px;
-    padding: 0 20px;
     background: #2e3b4e;
-  border: none;
-    font-size: 22px;
-    line-height: 48px;
+    border: none;
     color: #fff;
 }
 
