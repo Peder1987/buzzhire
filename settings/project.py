@@ -9,7 +9,7 @@ class ProjectConfiguration(StandardConfiguration):
 #         os.path.join(BASE_DIR, "static"),
 #     )
     PROTOCOL = 'http'
-
+    SITE_TITLE = 'Buzzhire'
     PROJECT_NAME = 'buzzhire'
     INSTALLED_APPS = StandardConfiguration.INSTALLED_APPS + (
         # Apps lower down the list should import from apps higher up the list,
