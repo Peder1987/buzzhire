@@ -11,7 +11,8 @@ class Lead(models.Model):
     email = models.EmailField()
     more_information = models.TextField(
         help_text="If you like, tell us a little more about what "
-            "you're looking for.")
+            "you're looking for.",
+        blank=True)
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:

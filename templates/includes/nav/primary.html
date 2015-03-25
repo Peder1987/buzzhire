@@ -14,10 +14,9 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                {% if request.user.is_anonymous %}
                 {% url 'book' as book_url %}
                 <li{% if request.path == book_url %} class='active'{% endif %}><a href="{% url 'book' %}">{{ 'book'|icon }} Book a driver</a></li>
-                
+            {% if request.user.is_anonymous %}
                 {#<li><a href="{% url 'account_login' %}">{{ 'login'|icon }} Log in</a></li>#}
             {% else %}
                 <li class="dropdown" id='user-menu'>
