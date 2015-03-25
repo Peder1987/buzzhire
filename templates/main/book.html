@@ -1,15 +1,19 @@
 {% extends 'base.html' %}
 {% load staticthumbnail static %}
+
 {% block content_wrapper %}
-        <div style='color: #888;'>
-           <div class="row" style='margin-top: 5em; margin-bottom: 2em; '>
-                <div class="col-sm-12 features text-center" style='margin-bottom: 2em; '>
-                    <h3><i class='fa fa-calendar'></i> How to book</h3>
+        
+        <div class='container'>
+           <div class="row page-title">
+                <div class="col-md-12">
+                    <h3><i class='fa fa-calendar'></i> {{ title }}</h3>
                 </div>
-                <div class='col-md-3 col-md-offset-3'>
+           </div>
+           <div class="row" style='margin-bottom: 3em;'>
+                <div class='col-md-6'>
                     <img class='img-responsive' src='{% static 'img/laptop.jpg' %}'/>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <ol class='prominent-list'>
                         <li>
                             <h4><i class='fa fa-clock-o'></i> Post a job online</h4>
@@ -47,7 +51,7 @@
         </div>
         
         <!-- Features -->
-        <div id="our-drivers" class="features-container">
+        <div id="our-drivers" class="features-container" style='margin-top: 3em;'>
             <div class="container">
                 <div class="row" >
                     <div class="col-sm-12 features">

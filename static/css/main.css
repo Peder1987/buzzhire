@@ -5,7 +5,8 @@ body {
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
-    -webkit-text-size-adjust: 100%;	
+    -webkit-text-size-adjust: 100%;
+    color: #888;	
 }
 
 :focus {
@@ -42,11 +43,19 @@ h2, h3 {
     line-height: 54px;
 }
 
+h4 {
+    padding: 0 0 10px 0;
+    font-size: 30px;
+    font-weight: 300;
+    color: #888;
+    line-height: 34px;
+}
+
 p {
     font-size: 17px;
     line-height: 32px;
+    margin-bottom: 30px;
 }
-
 
 
 img { max-width: 100%; }
@@ -111,6 +120,7 @@ img { max-width: 100%; }
 
 /***** Form elements *****/
 
+form { color: #555; }
 .form-control {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
@@ -123,39 +133,11 @@ img { max-width: 100%; }
   box-shadow: none;
 }
 
-/* input[type="text"], */
-/* input[type="password"], */
-/* input[type="email"], */
-/* textarea { */
-/*     margin: 0; */
-/*     padding: 0 10px; */
-/*     vertical-align: middle; */
-/* 	background: #f5f5f5; */
-/*     border: none; */
-/*     border-bottom: 1px solid #ccc; */
-/*     font-family: 'Open Sans', sans-serif; */
-/*     font-size: 22px; */
-/*     font-weight: 300; */
-/*     line-height: 50px; */
-/*     color: #888; */
-/*     -moz-border-radius: 0; */
-/*     -webkit-border-radius: 0; */
-/*     border-radius: 0; */
-/*     -moz-box-shadow: none; */
-/*     -webkit-box-shadow: none; */
-/*     box-shadow: none; */
-/*     -o-transition: all .3s; */
-/*     -moz-transition: all .3s; */
-/*     -webkit-transition: all .3s; */
-/*     -ms-transition: all .3s; */
-/*     transition: all .3s; */
-/* } */
-
-input[type="text"]:focus, 
+input:focus, 
 textarea:focus {
 	outline: 0;
-    border: none;
-    border-bottom: 1px solid #ccc;
+    border-color: #eee;
+    _border-bottom: 1px solid #ccc;
     -moz-box-shadow: none;
     -webkit-box-shadow: none;
     box-shadow: none;
@@ -371,12 +353,9 @@ color: #888;
     text-align: center;
 }
 
-.features {
-    margin-top: 60px;
-    padding-bottom: 10px;
-}
+.page-title { margin-top: 9em; text-align: center; margin-bottom: 2em; }
 
-.features h3 {
+h3 {
     color: #555;
 }
 
@@ -462,6 +441,9 @@ color: #888;
     margin: 0 auto;
     text-align: left;
 }
+
+.product-container h4 { color: #fff; padding-bottom: 0; }
+.product-container h4 i { padding-right: 6px; }
 
 .product-text {
     margin-top: 60px;
@@ -875,14 +857,6 @@ margin-left: -22px;
 	padding-bottom: 80px;
 }
 
-.form-group h4,
-.contact-address h4 {
-	padding: 0 0 10px 0;
-	font-size: 30px;
-    font-weight: 300;
-    color: #888;
-    line-height: 34px;
-}
 
 .contact-form p {
 	margin: 15px 0 0 0;
@@ -935,20 +909,6 @@ margin-left: -22px;
 
 .contact-form form .contact-error {
 	border-color: #F00;
-}
-
-.contact-address p {
-	margin-bottom: 30px;
-	font-size: 18px;
-	color: #888;
-    line-height: 32px;
-}
-
-.contact-address p i {
-	padding-right: 15px;
-	font-size: 24px;
-	color: #FF6065;
-	vertical-align: middle;
 }
 
 
@@ -1107,6 +1067,146 @@ footer {
 
 }
 
+a, a:hover, a:focus {
+    color: #33A1C9;
+    text-decoration: none;
+    -o-transition: all .3s;
+    -moz-transition: all .3s;
+    -webkit-transition: all .3s;
+    -ms-transition: all .3s;
+    transition: all .3s;
+}
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
+    color: #33A1C9 !important;
+    background-color: transparent;
+}
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a:focus {
+    color: #33A1C9 !important;
+    background-color: transparent;
+}
+.navbar-brand{
+    font-weight: 700;
+    color: #33A1C9 !important;
+    font-size: 22px;
+    line-height: 20px;
+}
+.navbar-default .navbar-nav>li>a:hover {
+    color: #33A1C9 !important;
+
+}
+ .navbar-default .navbar-toggle .icon-bar {
+  background-color: #33A1C9;
+}
+
+
+.btn-lg {
+    display: inline-block;
+    height: 52px;
+    margin:20px;
+    padding: 0 20px;
+    font-size: 22px;
+    line-height: 48px;
+}
+
+.btn-lg:hover, .btn-lg:focus, .btn-lg:active, .btn-lg.active {
+    -o-transition: all .3s;
+    -moz-transition: all .3s;
+    -webkit-transition: all .3s;
+    -ms-transition: all .3s;
+    transition: all .3s;
+}
+
+.btn-subscribe, 
+.btn-contact {
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
+    background: #33A1C9;
+    border: 0;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 52px;
+    color: #fff;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    text-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -o-transition: all .3s;
+    -moz-transition: all .3s;
+    -webkit-transition: all .3s;
+    -ms-transition: all .3s;
+    transition: all .3s;
+}
+
+.btn-subscribe:hover, 
+.btn-contact:hover {
+    background: #38B0DE;
+    color: #fff;
+    -o-transition: all .3s;
+    -moz-transition: all .3s;
+    -webkit-transition: all .3s;
+    -ms-transition: all .3s;
+    transition: all .3s;
+}
+
+.btn-subscribe:active, 
+.btn-contact:active {
+    outline: 0;
+    background: #38B0DE;
+    color: #fff;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.top-content .logo a {
+    display: inline-block;
+    font-size: 58px;
+    line-height: 68px;
+    font-weight: 600; 
+    color: #38B0DE;
+}
+
+.top-content .logo a:hover { 
+    color: #33A1C9;
+}
+.product-bg1 {
+    background: #38B0DE;
+    color: #fff;
+}
+.reviews .review-author strong {
+    color: #38B0DE;
+    font-size: 14px;
+}
+.faq .faq-box .question {
+  margin-top: 0;
+  margin-bottom: 15px;
+    padding-bottom: 20px;
+  border-bottom: 2px solid #38B0DE;
+}
+.faq .faq-box .question i {
+  margin-right: 10px;
+  color: #38B0DE;
+  font-size: 24px;
+}
+.contact-address p i {
+    padding-right: 15px;
+    font-size: 24px;
+    color: #33A1C9;
+    vertical-align: middle;
+}
+
+footer {
+    padding: 20px 0 16px 0;
+    background: #2A3849;
+  border-bottom: 2px solid #38B0DE;
+}
+
+
+
 form { margin-bottom: 1em; }
 
 .checkbox input[type="checkbox"] { margin-top: 2px; }
@@ -1118,4 +1218,9 @@ label.checkbox { font-weight: normal; }
 .prominent-list h4 { font-size: 1.5em; }
 .prominent-list p { margin-left: 2em; }
 
-.help-block { margin-top: -11px; font-size: 14px; }
+.help-block { font-size: 14px; }
+
+.btn-default { color: #555; }
+
+li.active { background-color: #2e3b4e; }
+.navbar-default.menu-top li.active a { color: #fff !important; } 

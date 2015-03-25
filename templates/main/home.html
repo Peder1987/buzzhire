@@ -113,3 +113,13 @@
 
 {% endblock %}
 
+{% block extrascripts %}
+    <script type='text/javascript'>
+        $(function() {
+        	// Carousel
+        	var background_images = $('.top-content').data('background-images');
+        	$('.top-content').backstretch(background_images, {duration: 3000, fade: 800});
+        });
+    </script>
+    
+{% endblock %}

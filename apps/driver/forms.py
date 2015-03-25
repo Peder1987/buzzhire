@@ -1,4 +1,5 @@
 from django import forms
+from apps.core.forms import CrispyFormMixin
 from apps.account.forms import SignupForm as BaseSignupForm
 from crispy_forms.helper import FormHelper
 from crispy_forms import layout
@@ -16,14 +17,15 @@ class SignupForm(BaseSignupForm):
     submit_name = None
 
 
-class SignupFormDriverDetails(forms.ModelForm):
+class SignupFormDriverDetails(CrispyFormMixin, forms.ModelForm):
     """A form for filling out driver details, included with SignupForm in
     a single html <form>.
     """
+    form_tag = False
+    submit_text = 'Sign up'
+    submit_context = {'icon_name': 'login'}
     def __init__(self, *args, **kwargs):
         super(SignupFormDriverDetails, self).__init__(*args, **kwargs)
-        self.helper = FormHelper(self)
-        self.helper.form_tag = False
 
         self.helper.layout = layout.Layout(
             layout.Fieldset(
@@ -52,7 +54,7 @@ class SignupFormDriverDetails(forms.ModelForm):
             ),
         )
 
-        self.helper.layout.append(layout.Submit('submit', 'Sign up'))
+        self.helper.layout.append(self.get_submit_button())
 
     def save(self, user):
         "Saves the driver model, given the user."

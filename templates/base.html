@@ -5,7 +5,7 @@
      {% include 'includes/html_head.html' %}
      {% block extrastyles %}{% endblock %}
      {# Put our custom stylesheet here to prevent third-party extrastyles overriding it #}
-     {#<link href="{% static 'css/main.css' %}" rel="stylesheet">#}
+     <link href="{% static 'css/main.css' %}" rel="stylesheet">
   </head>
   <body{% if is_home %} id='home'{% endif %} data-spy="scroll" data-offset="80">
         
@@ -15,13 +15,11 @@
             <div class="container">
               {% block page_title %}
                   {% if title %}
-                       <div id="features-section" class="features-container">
-                           <div class="row" style='margin-top: 5em;'>
-                                <div class="col-sm-12 features">
-                                    <h3>{% block page_title_inner %}{{ title }}{% endblock %}</h3>
-                                </div>
+                       <div class="row page-title">
+                            <div class="col-md-12">
+                                <h3>{% block page_title_inner %}{{ title }}{% endblock %}</h3>
                             </div>
-                       </div>
+                        </div>
                   {% endif %}
               {% endblock %}
 

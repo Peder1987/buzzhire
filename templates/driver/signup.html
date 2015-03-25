@@ -1,7 +1,6 @@
 {% extends 'account/signup.html' %}
 {% load crispy_forms_tags %}
 {% block form_content %}
-    {{ driver_form.errors }}
     <form method="post">
         {% csrf_token %}
         {% crispy form %}

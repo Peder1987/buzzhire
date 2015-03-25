@@ -9,5 +9,5 @@ class LeadCreateView(ContextMixin, CreateView):
 
     extra_context = {'title': 'Express interest'}
     form_class = forms.LeadForm
-    template_name = 'form_page.html'
+    template_name = 'client/express_interest.html'
     success_url = reverse_lazy('express_interest_thankyou')
