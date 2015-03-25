@@ -29,7 +29,9 @@ class ProjectConfiguration(StandardConfiguration):
         'apps.core',
         'apps.main',
         'apps.freelancer',
+        'apps.client',
         'apps.driver',
+
     )
 
     TEMPLATE_CONTEXT_PROCESSORS = StandardConfiguration.TEMPLATE_CONTEXT_PROCESSORS + (

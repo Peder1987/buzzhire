@@ -2,6 +2,7 @@ from apps.account.views import SignupView as BaseSignupView
 from allauth.account.utils import complete_signup
 from allauth.account import app_settings
 from . import forms
+from django.shortcuts import redirect
 
 
 class SignupView(BaseSignupView):
@@ -46,10 +47,15 @@ class SignupView(BaseSignupView):
             return self.form_invalid(form)
 
     def form_valid(self, form):
-        'Adapted from BaseSignupView to save the driver too.'
+        """Adapted from BaseSignupView to save the driver too.
+        We do not currently run the complete_signup process, as we
+        don't want the driver to be logged in after sign up. 
+        """
+
         user = form.save(self.request)
         # Save driver form too
         self.driver_form.save(user)
-        return complete_signup(self.request, user,
-                               app_settings.EMAIL_VERIFICATION,
-                               self.get_success_url())
+        return redirect('driver_thankyou')
+#         return complete_signup(self.request, user,
+#                                app_settings.EMAIL_VERIFICATION,
+#                                self.get_success_url())
