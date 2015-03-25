@@ -4,9 +4,6 @@
      
         <div id="home" class="top-content" style='height: 600px;' data-background-images='["{% static 'img/hero/bikespeed.jpg' %}",
                                                                     "{% static 'img/hero/app.jpg' %}",
-                                                                    "{% static 'img/hero/bicycle.jpg' %}",
-                                                                    "{% static 'img/hero/sunset.jpg' %}",
-                                                                    "{% static 'img/hero/laptop.jpg' %}",
                                                                     "{% static 'img/hero/scooter.jpg' %}",
                                                                     "{% static 'img/hero/scooter-purple.jpg' %}",
                                                                     "{% static 'img/hero/bicycle-water.jpg' %}",
@@ -26,7 +23,7 @@
                     </div>
                     <div class='row' style='margin-top: 4em;'>
                         <a class="btn btn-lg btn-default" href="#features-section"><i class="fa fa-angle-double-down"></i> Learn more</a>
-                        <a class="btn btn-lg btn-primary" href="{% url 'driver_signup' %}"><i class="fa fa-motorcycle"></i> Sign up to drive</a>
+                        <a class="btn btn-lg btn-primary" href="{% url 'driver_signup' %}"><i class="fa fa-road"></i> Sign up to drive</a>
                     </div>
                 </div>
         </div>
@@ -47,7 +44,7 @@
                         </div>
                         <h4>Great pay</h4>
                         <p>
-                            Our drivers make more than &pound;8OO a week.
+                            Earn up to &pound;13/hr.  Our drivers make more than &pound;8OO a week.
                         </p>
                     </div>
                     <div class="col-sm-4 features-box">
@@ -72,46 +69,47 @@
                 </div>
             </div>
         </div>
+
+        <div class="product-container product-bg2" style='padding-top: 6em; padding-bottom: 4em;'>
+            <div class="container">
+                <div class='row text-center' style='margin-bottom: 3em;'>
+                    <h3><i class='fa fa-info-circle'></i> How it works</h3>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <ol class='prominent-list'>
+                            <li>
+                                <h4><i class='fa fa-inbox'></i> Get started</h4>
+                                <p>Tell us more about yourself and provide us with the necessary documents to drive.</p>
+                            </li>
+                            <li>
+                                <h4><i class='fa fa-check-square-o'></i> Get approved</h4>
+                                <p>We'll let you know when you've been approved.</p>    
+                            </li>
+                            <li>
+                                <h4><i class='fa fa-rocket'></i> Start working</h4>
+                                <p>You're ready to go! Set your own schedule and start earning money.</p>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <div class='row' style='margin-top: 3em;'>
+                    <div class='col-md-4 col-md-offset-4 text-center'>
+                        <a class="btn btn-lg btn-block btn-default" href="{% url 'driver_signup' %}"><i class="fa fa-road"></i> Sign up to drive</a>
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+
     
         <div class="container" >
-            <div class='row' style='margin-bottom: 6em;'>
-                <div class='col-md-4 col-md-offset-4 text-center'>
-                    <a class="btn btn-lg btn-block btn-primary" href="{% url 'driver_signup' %}"><i class="fa fa-motorcycle"></i> Sign up to drive</a>
-                </div>
-            </div>
-            <div class='row' style='margin-bottom: 6em;'>
+            <div class='row' style='margin-top: 4em; margin-bottom: 6em;'>
                 <div class='col-md-12 text-center'>
-                    <h4>Want to <a href='{% url 'book' %}'>book a driver</a>?</h4>
+                    <h4>Want to <a href='{% url 'book' %}'><i class="fa fa-calendar"></i> book a driver</a>?</h4>
                 </div>
             </div>
         </div>
 
-        {% comment %}
-        <!-- Product -->
-        <div class="product-container product-bg2" id="driver-registration">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-5 product-img">
-                        {% staticthumbnail 'img/scooter.jpg' '500x500' as im %}
-                            <img src='{{ im.url }}' height='{{ im.height }}' width='{{ im.width }}'/>
-                        {% endthumbnail %}
-                    </div>
-                    <div class="col-md-7 product-text">
-                        <h3>Freelance driver?</h3>
-                        <ul>
-                            <li>Find a delivery job in seconds</li>
-                            <li>Signing up is easy</li>
-                            <li>Select your availability and we'll do the rest</li>
-                            <li>Be your own boss and manage your schedule</li>
-                        </ul>
-                        <div class="product-button">
-                            <a class="btn btn-primary btn-lg" href="{% url 'account_signup' %}"><i class="fa fa-motorcycle"></i> Apply to be a driver</a>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endcomment %}
 {% endblock %}
 

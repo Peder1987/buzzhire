@@ -1110,3 +1110,8 @@ form { margin-bottom: 1em; }
 .checkbox input[type="checkbox"] { margin-top: 2px; }
 label.checkbox input[type="checkbox"] { margin-left: 0; margin-right: 0.3em; position: static; vertical-align: sub; }
 label.checkbox { font-weight: normal; }
+
+.prominent-list { list-style: none; font-size: 1.1em; }
+.prominent-list li { margin-bottom: 2em; }
+.prominent-list h4 { font-size: 1.5em; }
+.prominent-list p { margin-left: 2em; }

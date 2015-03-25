@@ -1,42 +1,51 @@
 {% extends 'base.html' %}
 {% load staticthumbnail static %}
 {% block content_wrapper %}
-        <div class="features-container">
-           <div class="row" style='margin-top: 5em;'>
-                <div class="col-sm-12 features">
-                    <h3>Book a driver</h3>
+        <div style='color: #888;'>
+           <div class="row" style='margin-top: 5em; margin-bottom: 2em; '>
+                <div class="col-sm-12 features text-center" style='margin-bottom: 2em; '>
+                    <h3><i class='fa fa-calendar'></i> How to book</h3>
                 </div>
+                <div class='col-md-3 col-md-offset-3'>
+                    <img class='img-responsive' src='{% static 'img/laptop.jpg' %}'/>
+                </div>
+                <div class="col-md-4">
+                    <ol class='prominent-list'>
+                        <li>
+                            <h4><i class='fa fa-clock-o'></i> Post a job online</h4>
+                            <p>Select date and time you'd like your driver to show up.</p>
+                        </li>
+                        <li>
+                            <h4><i class='fa fa-check-square-o'></i> Get confirmation</h4>
+                            <p>We'll confirm your driver and take care of payment electronically and securely.</p>
+                        </li>
+                        <li>
+                            <h4><i class='fa fa-car'></i> Your driver is on their way</h4>
+                            <p>An <a href='#our-drivers'>experienced fully-equipped driver</a> will arrive at your premises, ready to work.</p>
+                        </li>
+                    </ol>
+                </div>
+                
             </div>
        </div>
+       
         
-        <!-- Product -->
-        <div id="products-section" class="product-container product-bg1">
+        <div class="product-container product-bg1" style='padding-top: 6em; padding-bottom: 4em;'>
             <div class="container">
-                <div class="row">
-                    <div class="col-md-7 product-text">
-                        <h3>How to book</h3>
-                        <ol>
-                            <li>Select date and time you'd like your driver to show up.</li>
-                            <li>We'll confirm your driver and take care of payment electronically and securely.</li> 
-                            <li>An-experienced fully-equipped driver will arrive at your premises, ready to work.</li>
-                        </ol>
-                    </div>
-                    <div class="col-md-5">
-                        <p>TODO - booking form</p>
-                    </div>
-                    {% comment %}
-                    <div class="col-md-5 product-img">
-                        {% staticthumbnail 'img/laptop.jpg' '500x500' as im %}
-                            <img src='{{ im.url }}' height='{{ im.height }}' width='{{ im.width }}'/>
-                        {% endthumbnail %}
-                    </div>
-                    {% endcomment %}
+                <div class='row text-center' style='margin-bottom: 3em;'>
+                    <h3><i class='fa fa-bolt'></i> Buzzhire is launching this spring!</h3>
                 </div>
+                <div class='row' style='margin-top: 3em;'>
+                    <div class='col-md-4 col-md-offset-4'>
+                        <p>TODO - express interest form.</p>
+                    </div>
+                </div>
+            
             </div>
         </div>
-
+        
         <!-- Features -->
-        <div id="features-section" class="features-container">
+        <div id="our-drivers" class="features-container">
             <div class="container">
                 <div class="row" >
                     <div class="col-sm-12 features">
