@@ -19,6 +19,7 @@ def live():
     env.activate = 'source %s/bin/activate' % env.virtualenv_dir
     env.wsgi_reload_file = '/home/buzzhire/tmp/live.reload'
     env.nginx_process = 'live_nginx'
+    env.uwsgi_process = 'live_uwsgi'
     env.backup_on_deploy = False
     env.django_configuration = 'Live'
 
@@ -35,6 +36,7 @@ def dev():
     env.activate = 'source %s/bin/activate' % env.virtualenv_dir
     env.wsgi_reload_file = '/home/buzzhire/tmp/dev.reload'
     env.nginx_process = 'dev_nginx'
+    env.uwsgi_process = 'dev_uwsgi'
     env.backup_on_deploy = False
     env.django_configuration = 'Dev'
 
@@ -53,7 +55,7 @@ def reload_wsgi():
     """
     Graceful restart of wsgi server.
     """
-    run('touch %s' % env.wsgi_reload_file)
+    run('supervisorctl restart %s' % env.uwsgi_process)
 
 
 @task
