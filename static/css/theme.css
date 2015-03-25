@@ -42,6 +42,13 @@ h2, h3 {
     line-height: 54px;
 }
 
+p {
+    font-size: 17px;
+    line-height: 32px;
+}
+
+
+
 img { max-width: 100%; }
 
 ::-moz-selection { background: #ccc; color: #fff; text-shadow: none; }
@@ -404,11 +411,6 @@ color: #888;
     font-weight: 300;
     color: #555;
     line-height: 34px;
-}
-
-.features-box p {
-	font-size: 17px;
-    line-height: 32px;
 }
 
 .features-box .icon{
@@ -1115,3 +1117,5 @@ label.checkbox { font-weight: normal; }
 .prominent-list li { margin-bottom: 2em; }
 .prominent-list h4 { font-size: 1.5em; }
 .prominent-list p { margin-left: 2em; }
+
+.help-block { margin-top: -11px; font-size: 14px; }

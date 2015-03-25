@@ -75,8 +75,9 @@ class Freelancer(models.Model):
 
     DAYS_OF_WEEK_CHOICES = [(calendar.day_abbr[i].lower(),
                                calendar.day_name[i]) for i in range(7)]
-    days_available = MultiSelectField(choices=DAYS_OF_WEEK_CHOICES,
-                help_text='Which days of the week are you available to work?',
+    days_available = MultiSelectField(
+                'Which days of the week are you available to work?',
+                choices=DAYS_OF_WEEK_CHOICES,
                 blank=True)
 
     HOURS_AVAILABLE_MORNINGS = 'MO'
@@ -91,8 +92,8 @@ class Freelancer(models.Model):
     )
     # Mornings, Afternoons, Evenings, Night, Flexible
     hours_available = MultiSelectField(
+                            'What are your preferred working hours?',
                             choices=HOURS_AVAILABLE_CHOICES,
-                            help_text='What are your preferred working hours?',
                             blank=True)
 
     @property
