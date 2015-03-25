@@ -292,6 +292,9 @@ color: #888;
     text-align: center;
     color: #fff;
 }
+.top-content { height: 600px; }
+.top-content .container { position: relative; padding-top: 7em;}
+
 
 .inner-bg {
     padding: 0;
@@ -937,13 +940,17 @@ footer {
 
 /***** Media queries *****/
 
+@media (min-width: 768px) {
+  .top-content .buttons-row { margin-top: 4em; }
+}
+
 @media (min-width: 992px) and (max-width: 1199px) {
 
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
 
-	.top-content .text {
+    .top-content .text {
     	padding-top: 25px;
     }
 
@@ -983,6 +990,10 @@ footer {
     .top-content .description, .features p, .product-text p, .faq-text p, .subscribe p, .testimonials p, .team p, .contact p {
         padding: 0 20px;
     }
+    
+        .top-content .buttons-row { margin: 1em;}
+    .top-content .buttons-row .btn { font-size: 1.2em; margin: 0.5em; }
+    .top-content .container { padding-top: 3em;}
     
     .features-box p, .team-member p, .contact-address p {
         padding: 0 20px;
@@ -1025,7 +1036,7 @@ footer {
 }
 
 @media (max-width: 540px) {
-
+  
     .subscribe form input {
         width: 90%;
     }
@@ -1223,4 +1234,7 @@ label.checkbox { font-weight: normal; }
 .btn-default { color: #555; }
 
 li.active { background-color: #2e3b4e; }
-.navbar-default.menu-top li.active a { color: #fff !important; } 
+.navbar-default.menu-top li.active a { color: #fff !important; }
+
+.dimmer-overlay { position: absolute; background-color: rgba(0,0,0,0.5); height: 100%; width: 100%; top: 0; }
+
