@@ -991,9 +991,9 @@ footer {
         padding: 0 20px;
     }
     
-        .top-content .buttons-row { margin: 1em;}
+    .top-content .buttons-row { margin: 0.5em;}
     .top-content .buttons-row .btn { font-size: 1.2em; margin: 0.5em; }
-    .top-content .container { padding-top: 3em;}
+    .top-content .container { padding-top: 2em;}
     
     .features-box p, .team-member p, .contact-address p {
         padding: 0 20px;
