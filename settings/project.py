@@ -19,6 +19,7 @@ class ProjectConfiguration(StandardConfiguration):
         'allauth',
         'allauth.account',
         'sorl.thumbnail',
+        'django_extensions',
         'django_inlinecss',
         # 'allauth.socialaccount',
         # 'allauth.socialaccount.providers.facebook',
@@ -54,3 +55,6 @@ class ProjectConfiguration(StandardConfiguration):
     ACCOUNT_USERNAME_REQUIRED = False
     ACCOUNT_EMAIL_VERIFICATION = 'none'
     # ACCOUNT_AUTHENTICATION_METHOD = 'email'
+
+    FACEBOOK_URL = 'www.facebook.com/buzzhire.uk'
+    TWITTER_URL = 'twitter.com/buzzhire'

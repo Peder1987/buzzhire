@@ -37,6 +37,9 @@ class Local(ProjectConfiguration):
     def LOG_PATH(cls):
         return os.path.join('/var/log/django', cls.PROJECT_NAME)
 
+    AWS_ACCESS_KEY_ID = ''
+    AWS_BUCKET_NAME = 'bucket'
+
 
 class Dev(ProjectConfiguration):
     DEBUG = True

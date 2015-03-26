@@ -1,16 +1,14 @@
 {% extends 'base.html' %}
-{% load staticthumbnail static %}
+{% load staticthumbnail static icons %}
 {% block content_wrapper %}
      
-        <div id="home" class="top-content" data-background-images='["{% static 'img/hero/bikespeed.jpg' %}",
-                                                                    "{% static 'img/hero/app.jpg' %}",
-                                                                    "{% static 'img/hero/scooter.jpg' %}",
-                                                                    "{% static 'img/hero/scooter-purple.jpg' %}",
-                                                                    "{% static 'img/hero/bicycle-water.jpg' %}",
+        <div id="home" class="top-content" data-background-images='["{% static 'img/hero/road.jpg' %}",
+                                                                    "{% static 'img/hero/scooter-red.jpg' %}",
                                                                     "{% static 'img/hero/watch.jpg' %}",
-                                                                    "{% static 'img/hero/road.jpg' %}",
+                                                                    "{% static 'img/hero/bicycle-water.jpg' %}",
                                                                     "{% static 'img/hero/night-scene.jpg' %}",
-                                                                    "{% static 'img/hero/scooter-red.jpg' %}"]'>
+                                                                    "{% static 'img/hero/app.jpg' %}"
+                                                                    ]'>
                 <div class='dimmer-overlay'></div>
                 <div class="container">
                     <div class="row">
@@ -23,7 +21,7 @@
                     </div>
                     <div class='row buttons-row'>
                         <a class="btn btn-lg btn-default" href="#features-section"><i class="fa fa-angle-double-down"></i> Learn more</a>
-                        <a class="btn btn-lg btn-primary" href="{% url 'driver_signup' %}"><i class="fa fa-road"></i> Sign up to drive</a>
+                        <a class="btn btn-lg btn-primary" href="{% url 'driver_signup' %}">{{ 'driver_register'|icon }} Sign up to drive</a>
                     </div>
                 </div>
         </div>
@@ -62,7 +60,7 @@
                         </div>
                         <h4>Easy payments</h4>
                         <p>
-                            No more waiting weeks to be paid. BuzzHire will direct deposit your earnings
+                            No more waiting weeks to be paid. Buzzhire will direct deposit your earnings
                             into your bank account within 48 hours of completing your job.
                         </p>
                     </div>
@@ -95,7 +93,7 @@
                 </div>
                 <div class='row' style='margin-top: 3em;'>
                     <div class='col-md-4 col-md-offset-4 text-center'>
-                        <a class="btn btn-lg btn-block btn-default" href="{% url 'driver_signup' %}"><i class="fa fa-road"></i> Sign up to drive</a>
+                        <a class="btn btn-lg btn-block btn-default" href="{% url 'driver_signup' %}">{{ 'driver_register'|icon }} Sign up to drive</a>
                     </div>
                 </div>
             
