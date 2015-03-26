@@ -438,6 +438,40 @@ h3 {
 	-o-transition: all 0.7s;
 }
 
+
+.prominent-box {
+    text-align: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.prominent-box h4 {
+    padding: 10px 0;
+    font-size: 30px;
+    font-weight: 300;
+    color: #555;
+    line-height: 34px;
+}
+
+.prominent-box .icon {
+    position: relative;
+    font-size: 28px;
+    padding: 28px 0;
+    font-weight: bold;
+    text-align: center;
+    width:92px;
+    height: 92px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    background: #eee;
+    display: inline-block;
+    margin-bottom: 18px;
+    color:#979796;
+}
+
+
+
 /***** Product *****/
 
 .product-container {
