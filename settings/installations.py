@@ -41,8 +41,8 @@ class Local(ProjectConfiguration):
     def LOG_PATH(cls):
         return os.path.join('/var/log/django', cls.PROJECT_NAME)
 
-    AWS_ACCESS_KEY_ID = ''
-    AWS_BUCKET_NAME = 'bucket'
+    AWS_ACCESS_KEY_ID = 'AKIAI7ZMKSCZQGQRGUJQ'
+    AWS_BUCKET_NAME = 'buzzhire-backups-local-media'
 
 
 class Dev(ProjectConfiguration):
@@ -90,6 +90,9 @@ class Dev(ProjectConfiguration):
     def get_default_database_user(cls):
         return cls.get_default_database_name()
 
+    AWS_ACCESS_KEY_ID = 'AKIAI7ZMKSCZQGQRGUJQ'
+    AWS_BUCKET_NAME = 'buzzhire_backups_dev_media'
+
 
 class Live(Dev):
     DEBUG = False
@@ -97,3 +100,6 @@ class Live(Dev):
     WEBFACTION_APPNAME = 'live'
 
     ACCOUNT_PASSWORD_MIN_LENGTH = 6
+
+    AWS_ACCESS_KEY_ID = 'AKIAI7ZMKSCZQGQRGUJQ'
+    AWS_BUCKET_NAME = 'buzzhire_backups_dev_media'
