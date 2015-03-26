@@ -41,8 +41,7 @@ class Local(ProjectConfiguration):
     def LOG_PATH(cls):
         return os.path.join('/var/log/django', cls.PROJECT_NAME)
 
-    AWS_ACCESS_KEY_ID = 'AKIAI7ZMKSCZQGQRGUJQ'
-    AWS_BUCKET_NAME = 'buzzhire-backups-local-media'
+
 
 
 class Dev(ProjectConfiguration):
@@ -102,4 +101,16 @@ class Live(Dev):
     ACCOUNT_PASSWORD_MIN_LENGTH = 6
 
     AWS_ACCESS_KEY_ID = 'AKIAI7ZMKSCZQGQRGUJQ'
-    AWS_BUCKET_NAME = 'buzzhire_backups_dev_media'
+    AWS_BUCKET_NAME = 'buzzhire.backups.media'
+
+    DBBACKUP_STORAGE = 'dbbackup.storage.s3_storage'
+    DBBACKUP_S3_BUCKET = 'buzzhire.backups.db'
+
+    @classproperty
+    def DBBACKUP_S3_ACCESS_KEY(cls):
+        return cls.AWS_ACCESS_KEY_ID
+
+    @classproperty
+    def DBBACKUP_S3_SECRET_KEY(cls):
+        return cls.AWS_SECRET_ACCESS_KEY
+

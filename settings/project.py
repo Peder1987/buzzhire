@@ -22,6 +22,7 @@ class ProjectConfiguration(StandardConfiguration):
         'django_extensions',
         'django_inlinecss',
         'compressor',
+        'dbbackup',
         # 'allauth.socialaccount',
         # 'allauth.socialaccount.providers.facebook',
         # 'allauth.socialaccount.providers.google',
