@@ -89,9 +89,6 @@ class Dev(ProjectConfiguration):
     def get_default_database_user(cls):
         return cls.get_default_database_name()
 
-    AWS_ACCESS_KEY_ID = 'AKIAI7ZMKSCZQGQRGUJQ'
-    AWS_BUCKET_NAME = 'buzzhire_backups_dev_media'
-
 
 class Live(Dev):
     DEBUG = False
@@ -101,10 +98,10 @@ class Live(Dev):
     ACCOUNT_PASSWORD_MIN_LENGTH = 6
 
     AWS_ACCESS_KEY_ID = 'AKIAI7ZMKSCZQGQRGUJQ'
-    AWS_BUCKET_NAME = 'buzzhire.backups.media'
+    AWS_BUCKET_NAME = 'buzzhire-backups-media'
 
     DBBACKUP_STORAGE = 'dbbackup.storage.s3_storage'
-    DBBACKUP_S3_BUCKET = 'buzzhire.backups.db'
+    DBBACKUP_S3_BUCKET = 'buzzhire-backups-db'
 
     @classproperty
     def DBBACKUP_S3_ACCESS_KEY(cls):
