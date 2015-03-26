@@ -21,6 +21,7 @@ class ProjectConfiguration(StandardConfiguration):
         'sorl.thumbnail',
         'django_extensions',
         'django_inlinecss',
+        'compressor',
         # 'allauth.socialaccount',
         # 'allauth.socialaccount.providers.facebook',
         # 'allauth.socialaccount.providers.google',
@@ -58,3 +59,11 @@ class ProjectConfiguration(StandardConfiguration):
 
     FACEBOOK_URL = 'www.facebook.com/buzzhire.uk'
     TWITTER_URL = 'twitter.com/buzzhire'
+
+    STATICFILES_FINDERS = StandardConfiguration.STATICFILES_FINDERS + (
+        'compressor.finders.CompressorFinder',
+    )
+
+    COMPRESS_PRECOMPILERS = (
+        ('text/less', 'lessc {infile} {outfile}'),
+    )

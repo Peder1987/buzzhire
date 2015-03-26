@@ -34,6 +34,10 @@ class Local(ProjectConfiguration):
     STATIC_ROOT = ''
 
     @classproperty
+    def COMPRESS_ROOT(cls):
+        return os.path.join(cls.get_setting('PROJECT_ROOT'), 'compressed')
+
+    @classproperty
     def LOG_PATH(cls):
         return os.path.join('/var/log/django', cls.PROJECT_NAME)
 
@@ -42,7 +46,7 @@ class Local(ProjectConfiguration):
 
 
 class Dev(ProjectConfiguration):
-    DEBUG = True
+    DEBUG = False
     DOMAIN = 'dev.buzzhire.co'
     WEBFACTION_USER = 'buzzhire'
     WEBFACTION_APPNAME = 'dev'
