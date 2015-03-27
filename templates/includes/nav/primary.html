@@ -8,7 +8,9 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="/"><img src='{% static 'img/logo/logo.svg' %}' height='50px' alt='Buzzhire'/></a>
+            <div style='height: 50px;'>
+                <a href="/"><img src='{% static 'img/logo/logo.svg' %}' style='height: 100%;' alt='Buzzhire'/></a>
+            </div>
             {% comment %}
             {% staticthumbnail 'img/logo/logo.png' 'x50' format="PNG" as im %}
                 <a href="/"><img src='{{ im.url }}' width='{{ im.width }}' height='{{ im.height }}' alt='Buzzhire'/></a>
