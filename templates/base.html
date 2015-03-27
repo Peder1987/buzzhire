@@ -1,47 +1,48 @@
-{% load static %}
+{% load static compress %}
 <!DOCTYPE html>
 <html>
   <head>
      {% include 'includes/html_head.html' %}
      {% block extrastyles %}{% endblock %}
      {# Put our custom stylesheet here to prevent third-party extrastyles overriding it #}
-     {#<link href="{% static 'css/main.css' %}" rel="stylesheet">#}
+     {% compress css %}
+        {#<link href="{% static 'css/main.css' %}" rel="stylesheet">#}
+        <link href="{% static 'css/main.less' %}" rel="stylesheet" type='text/less'>
+     {% endcompress %}
   </head>
-  <body{% if is_home %} id='home'{% endif %}>
-    
-    {% include 'includes/nav/primary.html' %}
-    
-    <div id='main'{% if not title and not is_home %} class='main-no-title'{% endif %}>
-	    {% block content_wrapper %}
-		    <div class="container">
+  <body{% if is_home %} id='home'{% endif %} data-spy="scroll" data-offset="80">
+        
+        {% include 'includes/nav/primary.html' %}
 
+        {% block content_wrapper %}
+            <div class="container">
               {% block page_title %}
                   {% if title %}
-                       <div class="header text-center">
-                            <div id='banner' class='page-header'>
-                                <h1>{% block page_title_inner %}{{ title }}{% endblock %}</h1>
+                       <div class="row page-title">
+                            <div class="col-md-12">
+                                <h3>{% block page_title_inner %}{{ title }}{% endblock %}</h3>
                             </div>
                         </div>
                   {% endif %}
               {% endblock %}
 
-		      {% block messages %}
+              {% block messages %}
                  {% include 'includes/messages.html' %}
-		      {% endblock messages %}
-		      
-	          {% block content_row_wrapper %}
-                <div class='row bottom-space' id='content-row'>
+              {% endblock messages %}
+              
+              {% block content_row_wrapper %}
+                <div class='row' id='content-row'>
                     <div class='col-md-6 col-md-offset-3'>
                         {% block content %}{% endblock %}
                     </div>
-	            </div>
+                </div>
               {% endblock %}
               
-		    </div> <!-- /container -->
-		{% endblock %}
-	</div>
-    {% include 'includes/footer.html' %} 
-    {% include 'includes/page_bottom.html' %}
-    {% block extrascripts %}{% endblock %}
-  </body>
-</html>
+            </div> <!-- /container -->
+        {% endblock %}
+
+        {% include 'includes/footer.html' %} 
+        {% include 'includes/page_bottom.html' %}
+        {% block extrascripts %}{% endblock %}
+    </body>
+    </html>

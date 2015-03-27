@@ -12,6 +12,17 @@ urlpatterns = [
                             extra_context={'title': 'Contact us'}),
                             name='contact'),
 
+    url(r'^book/$', ContextTemplateView.as_view(
+                            template_name='main/book.html',
+                            extra_context={'title': 'Book a driver'}),
+                            name='book'),
+
+
+    url(r'^credits/$', ContextTemplateView.as_view(
+                            template_name='main/credits.html',
+                            extra_context={'title': 'Site credits'}),
+                            name='credits'),
+
     url(r'^testerror$', views.TestError.as_view()),
     url(r'^testdenied$', views.TestDenied.as_view()),
 ]

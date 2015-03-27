@@ -13,7 +13,7 @@ class LogoutForm(CrispyFormMixin, ConfirmForm):
 
 
 class SignupForm(CrispyFormMixin, forms.SignupForm):
-    pass
+    submit_text = 'Sign up'
 
 
 class ResetPasswordForm(CrispyFormMixin, forms.ResetPasswordForm):

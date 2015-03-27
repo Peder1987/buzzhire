@@ -8,6 +8,7 @@ ICON_MAP = {
     'login': 'sign-in',
     'logout': 'sign-out',
     'register': 'user',
+    'driver_register': 'motorcycle',
     'undo': 'reply',
     'confirm': 'check-circle',
     'user': 'user',
@@ -15,6 +16,7 @@ ICON_MAP = {
     'admin': 'cogs',
     'edit': 'edit',
     'password': 'lock',
+    'book': 'calendar',
 }
 
 @register.filter

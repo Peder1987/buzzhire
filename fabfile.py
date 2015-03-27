@@ -18,7 +18,10 @@ def live():
     env.code_dir = '/home/buzzhire/webapps/live/project'
     env.activate = 'source %s/bin/activate' % env.virtualenv_dir
     env.wsgi_reload_file = '/home/buzzhire/tmp/live.reload'
+    env.nginx_process = 'live_nginx'
+    env.uwsgi_process = 'live_uwsgi'
     env.backup_on_deploy = False
+    env.django_configuration = 'Live'
 
 
 @task
@@ -32,7 +35,10 @@ def dev():
     env.code_dir = '/home/buzzhire/webapps/dev/project'
     env.activate = 'source %s/bin/activate' % env.virtualenv_dir
     env.wsgi_reload_file = '/home/buzzhire/tmp/dev.reload'
+    env.nginx_process = 'dev_nginx'
+    env.uwsgi_process = 'dev_uwsgi'
     env.backup_on_deploy = False
+    env.django_configuration = 'Dev'
 
 # Set the default environment.
 dev()
@@ -40,15 +46,24 @@ dev()
 @_contextmanager
 def virtualenv():
     with cd(env.code_dir):
-        with prefix(env.activate):
-            yield
+        with prefix('export DJANGO_CONFIGURATION=%s' % env.django_configuration):
+            with prefix(env.activate):
+                yield
 
 
 def reload_wsgi():
     """
     Graceful restart of wsgi server.
     """
-    run('touch %s' % env.wsgi_reload_file)
+    run('supervisorctl restart %s' % env.uwsgi_process)
+
+
+@task
+def reload_nginx():
+    """
+    Reload nginx config.
+    """
+    run('supervisorctl restart %s' % env.nginx_process)
 
 
 @task

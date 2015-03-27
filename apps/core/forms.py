@@ -72,21 +72,24 @@ class CrispyFormMixin(object):
     """
     submit_name = 'submit'
     submit_text = 'Submit'
+    submit_context = {}
+    submit_template_name = 'includes/forms/buttons.html'
     top_html = None
     top_html_dict = {}
     bottom_html = None
     bottom_html_dict = {}
+    form_tag = True
 
     def __init__(self, *args, **kwargs):
         super(CrispyFormMixin, self).__init__(*args, **kwargs)
 
         self.helper = FormHelper(self)
-        if self.prefix:
-            submit_name = '%s_%s' % (self.prefix, self.submit_name)
-        else:
-            submit_name = self.submit_name
-        self.helper.layout.append(layout.Submit(submit_name,
-                                            self.submit_text))
+
+        # Allow forms to easily override the form_tag
+        self.helper.form_tag = self.form_tag
+
+        if self.submit_name:
+            self.helper.layout.append(self.get_submit_button())
 
         if self.top_html:
             self.helper.layout.insert(0, layout.HTML(
@@ -95,3 +98,20 @@ class CrispyFormMixin(object):
         if self.bottom_html:
             self.helper.layout.append(layout.HTML(
                                     self.bottom_html % self.bottom_html_dict))
+
+    def get_full_submit_name(self):
+        if self.prefix:
+            return '%s_%s' % (self.prefix, self.submit_name)
+        else:
+            return self.submit_name
+
+    def get_submit_button(self):
+        # Use the template instead - good for adding extra stuff
+        # such as icons and colours
+        context = {
+            'submit_name': self.get_full_submit_name(),
+            'submit_text': self.submit_text,
+        }
+        context.update(self.submit_context)
+        return layout.HTML(render_to_string(
+                                self.submit_template_name, context))

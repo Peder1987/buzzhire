@@ -9,7 +9,7 @@ class ProjectConfiguration(StandardConfiguration):
 #         os.path.join(BASE_DIR, "static"),
 #     )
     PROTOCOL = 'http'
-
+    SITE_TITLE = 'Buzzhire'
     PROJECT_NAME = 'buzzhire'
     INSTALLED_APPS = StandardConfiguration.INSTALLED_APPS + (
         # Apps lower down the list should import from apps higher up the list,
@@ -19,7 +19,10 @@ class ProjectConfiguration(StandardConfiguration):
         'allauth',
         'allauth.account',
         'sorl.thumbnail',
+        'django_extensions',
         'django_inlinecss',
+        'compressor',
+        'dbbackup',
         # 'allauth.socialaccount',
         # 'allauth.socialaccount.providers.facebook',
         # 'allauth.socialaccount.providers.google',
@@ -28,12 +31,16 @@ class ProjectConfiguration(StandardConfiguration):
         # 'dbbackup',
         'apps.core',
         'apps.main',
+        'apps.freelancer',
+        'apps.client',
+        'apps.driver',
+
     )
 
     TEMPLATE_CONTEXT_PROCESSORS = StandardConfiguration.TEMPLATE_CONTEXT_PROCESSORS + (
          "allauth.account.context_processors.account",
          "allauth.socialaccount.context_processors.socialaccount",
-         # 'apps.main.context_processors.main',
+         'apps.main.context_processors.main',
     )
 
     AUTHENTICATION_BACKENDS = (
@@ -50,3 +57,14 @@ class ProjectConfiguration(StandardConfiguration):
     ACCOUNT_USERNAME_REQUIRED = False
     ACCOUNT_EMAIL_VERIFICATION = 'none'
     # ACCOUNT_AUTHENTICATION_METHOD = 'email'
+
+    FACEBOOK_URL = 'www.facebook.com/buzzhire.uk'
+    TWITTER_URL = 'twitter.com/buzzhire'
+
+    STATICFILES_FINDERS = StandardConfiguration.STATICFILES_FINDERS + (
+        'compressor.finders.CompressorFinder',
+    )
+
+    COMPRESS_PRECOMPILERS = (
+        ('text/less', 'lessc {infile} {outfile}'),
+    )

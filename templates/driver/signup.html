@@ -1,0 +1,10 @@
+{% extends 'account/signup.html' %}
+{% load crispy_forms_tags %}
+{% block form_content %}
+    <form method="post">
+        {% csrf_token %}
+        {% crispy form %}
+        {% crispy driver_form %}
+    </form>
+    
+{% endblock %}

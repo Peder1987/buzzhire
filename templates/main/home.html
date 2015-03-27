@@ -1,6 +1,167 @@
 {% extends 'base.html' %}
+{% load staticthumbnail static icons %}
+{% block content_wrapper %}
+     
+        <div id="home" class="top-content" data-background-images='["{% static 'img/hero/road.jpg' %}",
+                                                                    "{% static 'img/hero/scooter-red.jpg' %}",
+                                                                    "{% static 'img/hero/watch.jpg' %}",
+                                                                    "{% static 'img/hero/bicycle-water.jpg' %}",
+                                                                    "{% static 'img/hero/night-scene.jpg' %}",
+                                                                    "{% static 'img/hero/app.jpg' %}"
+                                                                    ]'>
+                <div class='dimmer-overlay'></div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1">
+                            <h2>Find a delivery job in seconds</h2>
+                            <div class="description">
+                                Signing up is easy, and you'll start earning money in no time.
+                            </div>
+                        </div>
+                    </div>
+                    <div class='row buttons-row'>
+                        <a class="btn btn-lg btn-default" href="#features-section"><i class="fa fa-angle-double-down"></i> Learn more</a>
+                        <a class="btn btn-lg btn-primary" href="{% url 'driver_signup' %}">{{ 'driver_register'|icon }} Sign up to drive</a>
+                    </div>
+                </div>
+        </div>
+        
+    
+        <!-- Features -->
+        <div id="features-section" class="features-container">
+            <div class="container">
+                <div class="row" style='margin-top: 5em;'>
+                    <div class="col-sm-12 features">
+                        <h3>Why Buzzhire?</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 features-box">
+                        <div class="icon">
+                            <i class="fa fa-gbp"></i>
+                        </div>
+                        <h4>Great pay</h4>
+                        <p>
+                            Earn up to &pound;13/hr.  Our top drivers make more than &pound;8OO a week.
+                            Pay varies depending on your vehicle.
+                        </p>
+                    </div>
+                    <div class="col-sm-4 features-box">
+                        <div class="icon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <h4>Flexible schedule</h4>
+                        <p>
+                            You choose when you want to work and how much. Build a full schedule or simply claim a few jobs on the side.
+                        </p>
+                    </div>
+                    <div class="col-sm-4 features-box">
+                        <div class="icon">
+                            <i class="fa fa-thumbs-up"></i>
+                        </div>
+                        <h4>Easy payments</h4>
+                        <p>
+                            No more waiting weeks to be paid. Buzzhire will direct deposit your earnings
+                            into your bank account within 48 hours of completing your job.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-{% block _content %}
-   <p>TODO - home.</p>
+        <div class="product-container product-bg2" style='padding-top: 6em; padding-bottom: 4em;'>
+            <div class="container">
+                <div class='row text-center' style='margin-bottom: 3em;'>
+                    <h3>How it works</h3>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 prominent-box">
+                        <div class="icon">
+                            1
+                        </div>
+                        <h4>Get started</h4>
+                        <p>
+                            Tell us more about yourself and provide us with the necessary documents to drive.
+                        </p>
+                    </div>
+                    <div class="col-sm-4 prominent-box">
+                        <div class="icon">
+                            2
+                        </div>
+                        <h4>Get approved</h4>
+                        <p>
+                            We'll let you know when you've been approved.
+                        </p>
+                    </div>
+                    <div class="col-sm-4 prominent-box">
+                        <div class="icon">
+                            3
+                        </div>
+                        <h4>Start working</h4>
+                        <p>
+                            You're ready to go! Set your own schedule and start earning money.
+                        </p>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class='col-md-4 col-md-offset-4 text-center'>
+                        <a class="btn btn-lg btn-block btn-default" href="{% url 'driver_signup' %}">{{ 'driver_register'|icon }} Sign up to drive</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% comment %}
+            <div class="product-container product-bg2" style='padding-top: 6em; padding-bottom: 4em;'>
+                <div class="container">
+                    <div class='row text-center' style='margin-bottom: 3em;'>
+                        <h3><i class='fa fa-info-circle'></i> How it works</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3">
+                            <ol class='prominent-list'>
+                                <li>
+                                    <h4><i class='fa fa-inbox'></i> Get started</h4>
+                                    <p>Tell us more about yourself and provide us with the necessary documents to drive.</p>
+                                </li>
+                                <li>
+                                    <h4><i class='fa fa-check-square-o'></i> Get approved</h4>
+                                    <p>We'll let you know when you've been approved.</p>    
+                                </li>
+                                <li>
+                                    <h4><i class='fa fa-rocket'></i> Start working</h4>
+                                    <p>You're ready to go! Set your own schedule and start earning money.</p>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class='row' style='margin-top: 3em;'>
+                        <div class='col-md-4 col-md-offset-4 text-center'>
+                            <a class="btn btn-lg btn-block btn-default" href="{% url 'driver_signup' %}">{{ 'driver_register'|icon }} Sign up to drive</a>
+                        </div>
+                    </div>
+                
+                </div>
+            </div>
+        {% endcomment %}
+    
+        <div class="container" >
+            <div class='row' style='margin-top: 5em; margin-bottom: 5em;'>
+                <div class='col-md-12 text-center'>
+                    <h4>Want to <a href='{% url 'book' %}'><i class="fa fa-calendar"></i> book a driver</a>?</h4>
+                </div>
+            </div>
+        </div>
+
 {% endblock %}
 
+{% block extrascripts %}
+    <script type='text/javascript'>
+        $(function() {
+        	// Carousel
+        	var background_images = $('.top-content').data('background-images');
+        	$('.top-content').backstretch(background_images, {duration: 3000, fade: 800});
+        });
+    </script>
+    
+{% endblock %}

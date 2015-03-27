@@ -5,7 +5,8 @@ import os
 
 class Local(ProjectConfiguration):
     DEBUG = True
-    DOMAIN = 'buzzhire.localhost'
+    DOMAIN = 'localhost'
+    PORT = '8000'
     PROJECT_ROOT = '/home/david/www/buzzhire'
     MANAGERS = ADMINS = (
         ('David Seddon', 'david@seddonym.me'),
@@ -13,7 +14,12 @@ class Local(ProjectConfiguration):
 
     @classproperty
     def BASE_URL(cls):
-        return '%s://%s' % (cls.PROTOCOL, cls.DOMAIN)
+        if getattr(cls, 'PORT', ''):
+            # Necessary for the development server
+            url = "%s:%s" % (cls.DOMAIN, cls.PORT)
+        else:
+            url = cls.DOMAIN
+        return '%s://%s' % (cls.PROTOCOL, url)
 
     ACCOUNT_PASSWORD_MIN_LENGTH = 1
 
@@ -28,12 +34,18 @@ class Local(ProjectConfiguration):
     STATIC_ROOT = ''
 
     @classproperty
+    def COMPRESS_ROOT(cls):
+        return os.path.join(cls.get_setting('PROJECT_ROOT'), 'compressed')
+
+    @classproperty
     def LOG_PATH(cls):
         return os.path.join('/var/log/django', cls.PROJECT_NAME)
 
 
+
+
 class Dev(ProjectConfiguration):
-    DEBUG = True
+    DEBUG = False
     DOMAIN = 'dev.buzzhire.co'
     WEBFACTION_USER = 'buzzhire'
     WEBFACTION_APPNAME = 'dev'
@@ -84,3 +96,18 @@ class Live(Dev):
     WEBFACTION_APPNAME = 'live'
 
     ACCOUNT_PASSWORD_MIN_LENGTH = 6
+
+    AWS_ACCESS_KEY_ID = 'AKIAI7ZMKSCZQGQRGUJQ'
+    AWS_BUCKET_NAME = 'buzzhire-backups-media'
+
+    DBBACKUP_STORAGE = 'dbbackup.storage.s3_storage'
+    DBBACKUP_S3_BUCKET = 'buzzhire-backups-db'
+
+    @classproperty
+    def DBBACKUP_S3_ACCESS_KEY(cls):
+        return cls.AWS_ACCESS_KEY_ID
+
+    @classproperty
+    def DBBACKUP_S3_SECRET_KEY(cls):
+        return cls.AWS_SECRET_ACCESS_KEY
+
