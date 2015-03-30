@@ -53,23 +53,27 @@ class Dev(ProjectConfiguration):
     EMAIL_HOST_USER = 'buzzhire_dev'
     EMAIL_HOST = 'smtp.webfaction.com'
 
-    @classproperty
-    def PROJECT_ROOT(cls):
-        return '/home/%s/webapps/%s/project' % (cls.WEBFACTION_USER, cls.WEBFACTION_APPNAME)
-
     MANAGERS = ADMINS = (
         ('David Seddon', 'david@seddonym.me'),
     )
+
+    ACCOUNT_PASSWORD_MIN_LENGTH = 1
+
+    @classproperty
+    def PROJECT_ROOT(cls):
+        return '/home/%s/webapps/%s/project' % (cls.WEBFACTION_USER, cls.WEBFACTION_APPNAME)
 
     @classproperty
     def BASE_URL(cls):
         return '%s://%s' % (cls.PROTOCOL, cls.DOMAIN)
 
-    ACCOUNT_PASSWORD_MIN_LENGTH = 1
-
     @classproperty
     def STATICFILES_DIRS(cls):
         return (os.path.join(cls.get_setting('PROJECT_ROOT'), 'static'),)
+
+    @classproperty
+    def LOG_PATH(cls):
+        return '/home/%s/logs/user/%s/' % (cls.WEBFACTION_USER, cls.WEBFACTION_APPNAME)
 
     @classmethod
     def get_static_root(cls):
@@ -78,10 +82,6 @@ class Dev(ProjectConfiguration):
     @classmethod
     def get_media_root(cls):
         return '/home/%s/webapps/%s/uploads' % (cls.WEBFACTION_USER, cls.WEBFACTION_APPNAME)
-
-    @classproperty
-    def LOG_PATH(cls):
-        return '/home/%s/logs/user/%s/' % (cls.WEBFACTION_USER, cls.WEBFACTION_APPNAME)
 
     @classmethod
     def get_default_database_name(cls):
@@ -117,4 +117,20 @@ class Live(Dev):
     @classproperty
     def DBBACKUP_S3_SECRET_KEY(cls):
         return cls.AWS_SECRET_ACCESS_KEY
+
+    @classproperty
+    def PROJECT_ROOT(cls):
+        return '/home/%s/webapps/%s/project' % (cls.WEBFACTION_USER, cls.WEBFACTION_APPNAME)
+
+    @classproperty
+    def BASE_URL(cls):
+        return '%s://%s' % (cls.PROTOCOL, cls.DOMAIN)
+
+    @classproperty
+    def STATICFILES_DIRS(cls):
+        return (os.path.join(cls.get_setting('PROJECT_ROOT'), 'static'),)
+
+    @classproperty
+    def LOG_PATH(cls):
+        return '/home/%s/logs/user/%s/' % (cls.WEBFACTION_USER, cls.WEBFACTION_APPNAME)
 
