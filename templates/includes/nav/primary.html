@@ -19,17 +19,20 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                {% url 'book' as book_url %}
-                <li{% if request.path == book_url %} class='active'{% endif %}><a href="{% url 'book' %}">{{ 'book'|icon }} Book a driver</a></li>
+                {% url 'book' as link_url %}
+                {% include 'includes/menu_link.html' with icon_name='book' link_text='Book a driver' %}
+                {% url 'driver_become' as link_url %}
+                {% include 'includes/menu_link.html' with icon_name='driver_register' link_text='Become a driver' %}
             {% if request.user.is_anonymous %}
-                {#<li><a href="{% url 'account_login' %}">{{ 'login'|icon }} Log in</a></li>#}
+                {% url 'account_login' as link_url %}
+                {% include 'includes/menu_link.html' with icon_name='login' link_text='Log in' %}
             {% else %}
                 <li class="dropdown" id='user-menu'>
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                      {{ 'user'|icon }} {{ request.user }} <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu" role="menu">
-                    {#<li><a href="{% url 'account_details_change' %}">{{ 'edit'|icon }} Edit account details</a></li>#}
+                    <li><a href="{% url 'account_details_change' %}">{{ 'edit'|icon }} Edit account details</a></li>
                     <li><a href="{% url 'account_change_password' %}">{{ 'password'|icon }} Change password</a></li>
                     {% if request.user.is_admin %}
                         <li class="divider"></li>
