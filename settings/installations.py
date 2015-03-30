@@ -50,6 +50,9 @@ class Dev(ProjectConfiguration):
     WEBFACTION_USER = 'buzzhire'
     WEBFACTION_APPNAME = 'dev'
 
+    EMAIL_HOST_USER = 'buzzhire_dev'
+    EMAIL_HOST = 'smtp.webfaction.com'
+
     @classproperty
     def PROJECT_ROOT(cls):
         return '/home/%s/webapps/%s/project' % (cls.WEBFACTION_USER, cls.WEBFACTION_APPNAME)
@@ -94,6 +97,10 @@ class Live(Dev):
     DEBUG = False
     DOMAIN = 'buzzhire.co'
     WEBFACTION_APPNAME = 'live'
+
+    EMAIL_HOST_USER = 'buzzhire_live'
+    EMAIL_HOST = 'smtp.webfaction.com'
+
 
     ACCOUNT_PASSWORD_MIN_LENGTH = 6
 
