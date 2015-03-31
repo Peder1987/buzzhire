@@ -2,8 +2,8 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from apps.core.email import send_mail
 from django.conf import settings
-from .models import JobRequest
-from .signals import jobrequest_cancelled, jobrequest_opened
+# from .models import JobRequest
+# from .signals import jobrequest_cancelled, jobrequest_opened
 
 
 # @receiver(post_save, sender=JobRequest)
@@ -29,17 +29,6 @@ from .signals import jobrequest_cancelled, jobrequest_opened
 #                    'bookings_email': settings.BOOKINGS_EMAIL},
 #                   from_email=settings.BOOKINGS_EMAIL)
 #
-#
-# @receiver(jobrequest_opened)
-# def notify_client_on_job_request_opened(sender, jobrequest, **kwargs):
-#     """Sends a email to the client when a job request
-#     is opened."""
-#     send_mail(jobrequest.email,
-#               'Your job request has been approved',
-#               'job/email/jobrequest_opened',
-#               {'object': jobrequest,
-#                'bookings_email': settings.BOOKINGS_EMAIL},
-#               from_email=settings.BOOKINGS_EMAIL)
 #
 #
 # @receiver(jobrequest_cancelled)

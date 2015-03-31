@@ -2,9 +2,8 @@ from django.contrib import admin
 from . import models
 
 
-class JobRequestAdmin(admin.ModelAdmin):
-    list_display = ('reference_number', 'client', 'job_date',
-                    'date_submitted', 'status')
-    list_filter = ('job_date', 'status')
+class DriverJobRequestAdmin(admin.ModelAdmin):
+    list_display = ('reference_number', 'client', 'status')
+    list_filter = ('status',)
 
-admin.site.register(models.JobRequest, JobRequestAdmin)
+admin.site.register(models.DriverJobRequest, DriverJobRequestAdmin)

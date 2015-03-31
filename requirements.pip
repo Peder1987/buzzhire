@@ -11,6 +11,7 @@ Django==1.7.6
 django-allauth==0.19.1
 django-appconf==1.0.1
 django-bootstrap-breadcrumbs==0.7.1
+django-braces==1.4.0
 django-compressor==1.4
 django-configurations==0.8
 django-configurations-seddonym==0.1

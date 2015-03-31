@@ -54,3 +54,4 @@ class Driver(Freelancer):
                                             choices=DRIVING_EXPERIENCE_CHOICES)
     own_vehicle = models.BooleanField('I have my own vehicle',
                                       default=False)
+

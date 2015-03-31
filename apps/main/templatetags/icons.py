@@ -25,6 +25,7 @@ ICON_MAP = {
     'driver_profile_change': 'edit',
     'client_profile_change': 'edit',
     'client': 'briefcase',
+    'driverjobrequest_create': 'motorcycle',
 }
 
 @register.filter

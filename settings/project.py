@@ -29,6 +29,7 @@ class ProjectConfiguration(StandardConfiguration):
         'apps.freelancer',
         'apps.client',
         'apps.driver',
+        'apps.job',
         'apps.booking',
         'apps.main',
     )

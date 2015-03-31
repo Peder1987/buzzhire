@@ -7,6 +7,8 @@
               {% url 'client_change' client.pk as link_url %}
               {% include 'includes/panel_link.html' with icon_name='client_profile_change' link_text='Edit your profile' %}
           {% endwith %}
+          {% url 'driverjobrequest_create' as link_url %}
+          {% include 'includes/panel_link.html' with icon_name='driverjobrequest_create' link_text='Book a driver' %}
       </div>
     </div>
 {% endif %}

@@ -18,5 +18,6 @@ urlpatterns = [
 #         name="driver_detail"),
     url(r"^(?P<pk>[\d]+)/edit/$", views.DriverUpdateView.as_view(),
         name="driver_change"),
+
 ]
 

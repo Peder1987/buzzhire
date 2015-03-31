@@ -1,0 +1,11 @@
+{% extends 'account/dashboard_base.html' %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block inner_breadcrumb %}
+    {% breadcrumb 'Book a driver' 'driverjobrequest_create' %}
+{% endblock %}
+
+{% block content %}
+    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.</p>
+    <p>ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+{% endblock %}

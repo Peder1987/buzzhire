@@ -7,15 +7,15 @@ urlpatterns = [
 #     url(r'^$', views.JobRequestList.as_view(),
 #         name='jobrequest_list'),
 
-    url(r'^create/$', views.JobRequestCreate.as_view(),
-        name='jobrequest_create'),
+     url(r'^create/$', views.DriverJobRequestCreate.as_view(),
+         name='driverjobrequest_create'),
 
-    url(r'^create/sign-in/$', views.JobRequestCreateAnonymous.as_view(),
-        name='jobrequest_create_anon'),
+     url(r'^create/sign-in/$', views.DriverJobRequestCreateAnonymous.as_view(),
+         name='driverjobrequest_create_anon'),
 
-#     url(r'^create/done/$', views.JobRequestComplete.as_view(),
-#         name='jobrequest_complete'),
-#
+     url(r'^create/done/$', views.DriverJobRequestComplete.as_view(),
+         name='driverjobrequest_complete'),
+
 #     url(r'^requests/moderation/$', views.JobRequestsModeration.as_view(),
 #         name='jobrequest_moderation'),
 #     url(r'^requests/(?P<pk>[\d]+)/$', views.JobRequestDetail.as_view(),
