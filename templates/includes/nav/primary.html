@@ -1,4 +1,4 @@
-{% load thumbnail icons static staticthumbnail %}
+{% load thumbnail icons static staticthumbnail main_tags %}
 <div class="navbar navbar-default navbar-fixed-top menu-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
@@ -19,29 +19,37 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                {% url 'book' as link_url %}
-                {% include 'includes/menu_link.html' with icon_name='book' link_text='Book a driver' %}
+                {% if request.user.is_anonymous or request.user.is_client %}
+                    {% url 'book' as link_url %}
+                    {% include 'includes/menu_link.html' with icon_name='book' link_text='Book a driver' %}
+                {% endif %}
+            {% if request.user.is_anonymous %}
                 {% url 'driver_become' as link_url %}
                 {% include 'includes/menu_link.html' with icon_name='driver_register' link_text='Become a driver' %}
-            {% if request.user.is_anonymous %}
                 {% url 'account_login' as link_url %}
                 {% include 'includes/menu_link.html' with icon_name='login' link_text='Log in' %}
             {% else %}
-                <li class="dropdown" id='user-menu'>
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                     {{ 'user'|icon }} {{ request.user }} <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu" role="menu">
-                    {#<li><a href="{% url 'account_details_change' %}">{{ 'edit'|icon }} Edit account details</a></li>#}
-                    <li><a href="{% url 'account_change_password' %}">{{ 'password'|icon }} Change password</a></li>
-                    {% if request.user.is_admin %}
+                {% url 'account_dashboard' as link_url %}
+                {% include 'includes/menu_link.html' with icon_name='dashboard' link_text='Dashboard' %}
+                <p class="navbar-text">Logged in as {{ request.user }}</p>
+                <p class="navbar-text"><a href="{% url 'account_logout' %}">{{ 'logout'|icon }} Log out</a></p>
+                {% comment %}
+                    <li class="dropdown" id='user-menu'>
+                      <a href="#" class="dropdown-toggle{% if request.path|is_in_dashboard %} active{% endif %}" data-toggle="dropdown" role="button" aria-expanded="false">
+                         {{ 'user'|icon }} {{ request.user }} <span class="caret"></span>
+                      </a>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a href="{% url 'account_dashboard' %}">{{ 'dashboard'|icon }} Dashboard</a></li>
+                        <li><a href="{% url 'account_change_password' %}">{{ 'password'|icon }} Change password</a></li>
+                        {% if request.user.is_admin %}
+                            <li class="divider"></li>
+                            <li><a href="{% url 'admin:index' %}">{{ 'admin'|icon }} Admin</a></li>
+                        {% endif %}
                         <li class="divider"></li>
-                        <li><a href="{% url 'admin:index' %}">{{ 'admin'|icon }} Admin</a></li>
-                    {% endif %}
-                    <li class="divider"></li>
-                    <li><a href="{% url 'account_logout' %}">{{ 'logout'|icon }} Log out</a></li>
-                  </ul>
-                </li>
+                        <li><a href="{% url 'account_logout' %}">{{ 'logout'|icon }} Log out</a></li>
+                      </ul>
+                    </li>
+                {% endcomment %}
              {% endif %}
             </ul>
         </div> 

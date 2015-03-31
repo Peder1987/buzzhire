@@ -2,6 +2,13 @@
 {% load staticthumbnail static %}
 
 {% block content_wrapper %}
+
+      {% block breadcrumbs_wrapper %}
+        <div class='container'>
+            {{ block.super }}
+        </div>
+      {% endblock %}
+
       {% block page_title %}
           {% if title %}
                <div class='container'>
@@ -21,7 +28,7 @@
             </div>
          {% endif %}
       {% endblock %}
-              
+      
       {% block content_row_wrapper %}
         {% block content %}{% endblock %}
       {% endblock %}

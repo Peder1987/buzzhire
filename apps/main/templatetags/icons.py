@@ -19,6 +19,7 @@ ICON_MAP = {
     'password': 'lock',
     'book': 'calendar',
     'reset_password': 'undo',
+    'dashboard': 'dashboard',
 }
 
 @register.filter

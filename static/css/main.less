@@ -1,10 +1,11 @@
 /***** General *****/
-@lightblue: #0778ae;
+@lightblue: #e4f6ff;
 @lightmidblue: #0778ae;
 @midblue: #07699a;
 @darkmidblue: #025d8b;
 @darkblue: darken(#025d8b, 20%);
 @grey: #979796;
+@darkgrey: #474f52;
 @bodytextcolor: #888;
 
 body {
@@ -1225,7 +1226,7 @@ footer a:hover {
     color: @midblue;
 }
 .product-bg1 {
-    background: @lightblue;
+    background: @lightmidblue;
     color: #fff;
 }
 .reviews .review-author strong {
@@ -1280,3 +1281,13 @@ label.checkbox { font-weight: normal; }
 
 .breadcrumb { margin-top: 20px;  margin-bottom: -20px; }
 .after-breadcrumb { margin-top: 40px; }
+
+.navbar-text { line-height: 1em; font-size: 15px; margin-top: 17px; }
+
+.sidebar-main h4 { margin-top: 0; margin-bottom: 1em; }
+
+.panel .list-group-item.active,
+.panel .list-group-item.active:focus,
+.panel .list-group-item.active:hover { background-color: @darkgrey; color: white; } 
+
+.top-space { margin-top: 1.5em; }

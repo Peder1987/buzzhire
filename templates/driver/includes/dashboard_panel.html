@@ -1,8 +1,10 @@
 {% load icons %}
 {% if request.user.is_driver %}
-    <div class="panel panel-primary">
+    <div class="panel panel-default">
       <div class="panel-heading">{{ 'driver'|icon }} Driver</div>
       <div class="list-group">
+      {% include 'includes/panel_link.html' with link_url='' icon_name='user' link_text='Link one' %}
+      {% include 'includes/panel_link.html' with link_url='' icon_name='user' link_text='Link two' %}
           {% comment %}
               {% url 'account_change_password' as link_url %}
               {% include 'includes/panel_link.html' with icon_name='password' link_text='Change password' %}

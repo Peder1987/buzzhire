@@ -1,9 +1,11 @@
-{% extends 'page_sidebar.html' %}
+{% extends 'account/dashboard_base.html' %}
+{% block page_title_sidebar %}{% endblock %}
 
-{% block sidebar %}
-    {% include 'account/includes/dashboard_panel.html' %}
-    {% include 'driver/includes/dashboard_panel.html' %}
+{% block content %}
+    <h4>Welcome to your account dashboard!</h4>
+    
+    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+    invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
+    et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+    ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
 {% endblock %}
-
-
-{% block content %}Hello{% endblock %}
