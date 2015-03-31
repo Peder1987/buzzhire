@@ -18,7 +18,7 @@ def _driver(self):
     Returns the Freelancer for the user.  If it doesn't, raises
     Freelancer.DoesNotExist.
     """
-    return self.driver_set.get()
+    return Driver.objects.get(user=self)
 User.driver = property(_driver)
 
 

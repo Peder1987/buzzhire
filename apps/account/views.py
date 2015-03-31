@@ -18,6 +18,7 @@ class SignupView(ContextMixin, views.SignupView):
 class LoginView(ContextMixin, views.LoginView):
     extra_context = {'title': 'Log in'}
     form_class = forms.LoginForm
+    success_url = reverse_lazy('account_dashboard')
 
 
 class LogoutView(ContextMixin, ConfirmationMixin, views.LogoutView):

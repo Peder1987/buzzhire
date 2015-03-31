@@ -104,6 +104,12 @@ class Freelancer(models.Model):
     def __unicode__(self):
         return "%s %s" % (self.first_name, self.last_name)
 
+    def get_full_name(self):
+        "Returns the full name of the freelancer."
+        return '%s %s' % (self.first_name,
+                          self.last_name)
+
+
     def get_absolute_url(self):
         return reverse('freelancer_detail', args=(self.pk,))
 

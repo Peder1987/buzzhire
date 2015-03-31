@@ -3,14 +3,14 @@
     <div class="panel panel-default">
       <div class="panel-heading">{{ 'driver'|icon }} Driver</div>
       <div class="list-group">
-      {% include 'includes/panel_link.html' with link_url='' icon_name='user' link_text='Link one' %}
-      {% include 'includes/panel_link.html' with link_url='' icon_name='user' link_text='Link two' %}
-          {% comment %}
-              {% url 'account_change_password' as link_url %}
-              {% include 'includes/panel_link.html' with icon_name='password' link_text='Change password' %}
-              {% url 'account_logout' as link_url %}
-              {% include 'includes/panel_link.html' with icon_name='logout' link_text='Log out' %}
-          {% endcomment %}
+          {% with request.user.driver as driver %}
+              {% comment %}
+                  {% url 'driver_detail' driver.pk as link_url %}
+                  {% include 'includes/panel_link.html' with icon_name='driver_profile_view' link_text='View your profile' %}
+              {% endcomment %}
+              {% url 'driver_change' driver.pk as link_url %}
+              {% include 'includes/panel_link.html' with icon_name='driver_profile_change' link_text='Edit your profile' %}
+          {% endwith %}
       </div>
     </div>
 {% endif %}

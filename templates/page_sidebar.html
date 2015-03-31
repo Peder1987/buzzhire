@@ -2,6 +2,9 @@
 {% load django_bootstrap_breadcrumbs %}
 {% block page_title %}{% endblock %}
 
+{# Move messages to within sidebar #}
+{% block messages %}{% endblock %}
+
 {% block content_row_wrapper %}
     <div class='container sidebar-page'>
         <div class='row after-breadcrumb sidebar'>
@@ -9,6 +12,11 @@
                 {% block sidebar %}{% endblock %}
             </div>
             <div class='col-md-9 sidebar-main'>
+                {% block messages_sidebar %}
+                    {% if messages %}
+                      {% include 'includes/messages.html' with top_space=False %}
+                    {% endif %}
+                {% endblock %}
                 {% block page_title_sidebar %}<h4>{{ title }}</h4>{% endblock %}
                 {% block content %}{% endblock %}
             </div>

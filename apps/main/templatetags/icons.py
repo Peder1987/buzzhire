@@ -20,6 +20,9 @@ ICON_MAP = {
     'book': 'calendar',
     'reset_password': 'undo',
     'dashboard': 'dashboard',
+    'driver_profile_view': 'eye',
+    'driver_profile_change': 'edit',
+
 }
 
 @register.filter
