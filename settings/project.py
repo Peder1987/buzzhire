@@ -30,12 +30,12 @@ class ProjectConfiguration(StandardConfiguration):
         # 'sorl.thumbnail',
         # 'dbbackup',
         'apps.core',
-        'apps.main',
+        'apps.account',
         'apps.freelancer',
         'apps.client',
         'apps.driver',
         'apps.booking',
-
+        'apps.main',
     )
 
     TEMPLATE_CONTEXT_PROCESSORS = StandardConfiguration.TEMPLATE_CONTEXT_PROCESSORS + (
@@ -57,7 +57,7 @@ class ProjectConfiguration(StandardConfiguration):
     ACCOUNT_EMAIL_REQUIRED = True
     ACCOUNT_USERNAME_REQUIRED = False
     ACCOUNT_EMAIL_VERIFICATION = 'none'
-    # ACCOUNT_AUTHENTICATION_METHOD = 'email'
+    ACCOUNT_AUTHENTICATION_METHOD = 'email'
 
     FACEBOOK_URL = 'www.facebook.com/buzzhire.uk'
     TWITTER_URL = 'twitter.com/buzzhire'

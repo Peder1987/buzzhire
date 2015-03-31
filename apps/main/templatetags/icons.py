@@ -17,6 +17,7 @@ ICON_MAP = {
     'edit': 'edit',
     'password': 'lock',
     'book': 'calendar',
+    'reset_password': 'undo',
 }
 
 @register.filter
