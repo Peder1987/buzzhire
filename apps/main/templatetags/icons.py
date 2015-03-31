@@ -13,6 +13,7 @@ ICON_MAP = {
     'undo': 'reply',
     'confirm': 'check-circle',
     'user': 'user',
+    'account': 'user',
     'forgot': 'question-circle',
     'admin': 'cogs',
     'edit': 'edit',
@@ -22,7 +23,8 @@ ICON_MAP = {
     'dashboard': 'dashboard',
     'driver_profile_view': 'eye',
     'driver_profile_change': 'edit',
-
+    'client_profile_change': 'edit',
+    'client': 'briefcase',
 }
 
 @register.filter

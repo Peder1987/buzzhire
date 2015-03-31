@@ -1,6 +1,6 @@
 {% load icons %}
 <div class="panel panel-default">
-  <div class="panel-heading">{{ 'user'|icon }} Account</div>
+  <div class="panel-heading">{{ 'account'|icon }} Account</div>
   <div class="list-group">
       {% url 'account_change_password' as link_url %}
       {% include 'includes/panel_link.html' with icon_name='password' link_text='Change password' %}

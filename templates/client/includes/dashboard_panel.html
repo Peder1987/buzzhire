@@ -1,0 +1,12 @@
+{% load icons %}
+{% if request.user.is_client %}
+    <div class="panel panel-default">
+      <div class="panel-heading">{{ 'client'|icon }} Client</div>
+      <div class="list-group">
+          {% with request.user.client as client %}
+              {% url 'client_change' client.pk as link_url %}
+              {% include 'includes/panel_link.html' with icon_name='client_profile_change' link_text='Edit your profile' %}
+          {% endwith %}
+      </div>
+    </div>
+{% endif %}

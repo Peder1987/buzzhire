@@ -64,3 +64,5 @@ class ProjectConfiguration(StandardConfiguration):
     COMPRESS_PRECOMPILERS = (
         ('text/less', 'lessc {infile} {outfile}'),
     )
+
+    LOGIN_URL = 'account_login'

@@ -1,26 +1,28 @@
 {% extends "base.html" %}
+{% load icons %}
 
 {% block page_title %}
-  {% with title='Permission denied' %}
+  {% with title='Permission denied!' %}
      {{ block.super }}
   {% endwith %}
 {% endblock %}
 
 {% block content %}
     <div class='text-center'>
-        <h3>Sorry, you're not allowed to do that.</h3>
+        <h4>Sorry, you're not allowed to do that.</h4>
         {% if request.user.is_anonymous %}
             <p class='top-space'>
-                <a href='{% url 'login' %}' class='btn btn-lg btn-primary'>
-                    <i class='fa fa-sign-in'></i> Sign in
+                <a href='{% url 'account_login' %}' class='btn btn-lg btn-primary'>
+                    {{ 'login'|icon }} Log in
                 </a>
                 <a class='btn btn-lg btn-default' href='/'><i class='fa fa-home'></i> Return to home</a>
             </p>
         {% else %}
-            <p>You are signed in as <strong>{{ request.user }}</strong>
-                <a href='{% url 'logout' %}' class='btn btn-sm btn-default'><i class='fa fa-sign-out'></i> Sign out</a>
+            <p>You are logged in as <strong>{{ request.user }}</strong>.</p>
+            <p class='top-space'>
+                <a href='{% url 'account_logout' %}' class='btn btn-lg btn-default'>{{ 'logout'|icon }} Log out</a>
+                <a class='btn btn-lg btn-primary' href='/'><i class='fa fa-home'></i> Return to home</a>
             </p>
-            <p class='top-space'><a class='btn btn-lg btn-primary' href='/'><i class='fa fa-home'></i> Return to home</a></p>
         {% endif %}
     </div>
 {% endblock %}

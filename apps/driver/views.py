@@ -4,7 +4,7 @@ from allauth.account import app_settings
 from . import forms
 from .models import Driver
 from django.contrib import messages
-from apps.core.views import ContextMixin
+from apps.core.views import ContextMixin, OwnerOnlyMixin
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import DetailView, UpdateView
@@ -77,7 +77,7 @@ class DriverDetailView(DetailView):
 
 
 
-class DriverUpdateView(ContextMixin, UpdateView):
+class DriverUpdateView(OwnerOnlyMixin, ContextMixin, UpdateView):
     model = Driver
     form_class = forms.DriverForm
     template_name = 'account/dashboard_base.html'

@@ -3,6 +3,8 @@ from django.views.generic import TemplateView
 from django.core.urlresolvers import reverse
 import logging
 from .forms import ConfirmForm
+from django.contrib.auth.views import redirect_to_login
+from django.core.exceptions import PermissionDenied
 
 
 logger = logging.getLogger('project')
@@ -209,3 +211,19 @@ class ConfirmationMixin(FormMixin):
     def get_question(self):
         "Returns question to ask."
         return self.question
+
+
+class OwnerOnlyMixin(object):
+    """Mixin for a DetailView - restricts the view to the user who owns
+    the model in question, or a site admin.
+    'Ownership' is determined by a 'user' field on the model.
+    """
+    def dispatch(self, request, *args, **kwargs):
+        # If the user is not logged in, give them the chance to
+        if self.request.user.is_anonymous():
+            return redirect_to_login(self.request.path)
+        elif not self.request.user.is_admin:
+            if self.get_object().user != self.request.user:
+                # The user doesn't 'own' the object
+                raise PermissionDenied
+        return super(OwnerOnlyMixin, self).dispatch(request, *args, **kwargs)

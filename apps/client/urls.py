@@ -9,4 +9,7 @@ urlpatterns = [
                 template_name='client/thankyou.html',
                 extra_context={'title': 'Thanks for your interest'}),
                 name="express_interest_thankyou"),
+
+    url(r"^(?P<pk>[\d]+)/edit/$", views.ClientUpdateView.as_view(),
+        name="client_change"),
 ]

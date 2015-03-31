@@ -101,14 +101,13 @@ class Freelancer(models.Model):
         "Returns a reference number for this freelancer."
         return 'FR%s' % str(self.pk).zfill(7)
 
-    def __unicode__(self):
-        return "%s %s" % (self.first_name, self.last_name)
-
     def get_full_name(self):
         "Returns the full name of the freelancer."
         return '%s %s' % (self.first_name,
                           self.last_name)
 
+    def __unicode__(self):
+        return self.get_full_name()
 
     def get_absolute_url(self):
         return reverse('freelancer_detail', args=(self.pk,))
