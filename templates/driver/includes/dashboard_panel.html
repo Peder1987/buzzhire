@@ -1,0 +1,14 @@
+{% load icons %}
+{% if request.user.is_driver %}
+    <div class="panel panel-primary">
+      <div class="panel-heading">{{ 'driver'|icon }} Driver</div>
+      <div class="list-group">
+          {% comment %}
+              {% url 'account_change_password' as link_url %}
+              {% include 'includes/panel_link.html' with icon_name='password' link_text='Change password' %}
+              {% url 'account_logout' as link_url %}
+              {% include 'includes/panel_link.html' with icon_name='logout' link_text='Log out' %}
+          {% endcomment %}
+      </div>
+    </div>
+{% endif %}

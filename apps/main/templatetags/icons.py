@@ -9,6 +9,7 @@ ICON_MAP = {
     'logout': 'sign-out',
     'register': 'user',
     'driver_register': 'motorcycle',
+    'driver': 'motorcycle',
     'undo': 'reply',
     'confirm': 'check-circle',
     'user': 'user',

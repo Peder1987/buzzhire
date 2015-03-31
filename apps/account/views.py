@@ -1,7 +1,13 @@
 from allauth.account import views
-from apps.core.views import ContextMixin, ConfirmationMixin
+from apps.core.views import ContextMixin, ConfirmationMixin, \
+                            ContextTemplateView
 from . import forms
 from django.core.urlresolvers import reverse_lazy
+
+
+class DashboardView(ContextTemplateView):
+    extra_context = {'title': 'Dashboard'}
+    template_name = 'account/dashboard.html'
 
 
 class SignupView(ContextMixin, views.SignupView):

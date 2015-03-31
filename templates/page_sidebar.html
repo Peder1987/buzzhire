@@ -1,0 +1,15 @@
+{% extends 'page_fullwidth.html' %}
+{% load django_bootstrap_breadcrumbs %}
+{% block page_title %}{% endblock %}
+
+{% block content_row_wrapper %}
+    <div class='container'>
+        {% block breadcrumbs_wrapper %}{{ block.super }}{% endblock %}
+        <div class='row after-breadcrumb'>
+            <div class='col-md-3'>
+                {% block sidebar %}{% endblock %}
+            </div>
+            <div class='col-md-9'>{% block content %}{% endblock %}</div>
+        </div>
+    </div>
+{% endblock %}

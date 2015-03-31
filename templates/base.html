@@ -1,4 +1,4 @@
-{% load static compress %}
+{% load static compress django_bootstrap_breadcrumbs %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -13,9 +13,29 @@
   <body{% if is_home %} id='home'{% endif %} data-spy="scroll" data-offset="80">
         
         {% include 'includes/nav/primary.html' %}
-
+        <div style='margin-top: 90px;'>
         {% block content_wrapper %}
             <div class="container">
+              
+              {% block breadcrumbs_wrapper %}
+                  {% block breadcrumbs %}
+                      {% if title %}
+                         {% breadcrumb 'Home' '/' %}
+                         {% block inner_breadcrumb %}
+                             {# Extend this block to put the page path inside #}
+                         {% endblock %}
+                         {% breadcrumb title request.path %}
+                      {% endif %}
+                  {% endblock %}
+                  {% block breadcrumb_display %}
+                    <div class='row'>
+                        <div class="col-md-12">
+                          {% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap3.html" %}
+                        </div>
+                    </div>
+                  {% endblock %}
+              {% endblock %}
+        
               {% block page_title %}
                   {% if title %}
                        <div class="row page-title">
@@ -45,7 +65,7 @@
               
             </div> <!-- /container -->
         {% endblock %}
-
+        </div>
         {% include 'includes/footer.html' %} 
         {% include 'includes/page_bottom.html' %}
         {% block extrascripts %}{% endblock %}
