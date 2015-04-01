@@ -34,8 +34,9 @@ class DriverJobRequestForm(CrispyFormMixin, forms.ModelForm):
 
     class Meta:
         model = DriverJobRequest
-        fields = ('vehicle_types', 'driving_experience',
-                  'number_of_freelancers', 'pay_per_hour')
+        fields = ('date', 'start_time', 'duration', 'pay_per_hour',
+                  'vehicle_types', 'driving_experience',
+                  'number_of_freelancers')
 
 
 class DriverJobRequestInnerForm(DriverJobRequestForm):

@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.core.urlresolvers import reverse
+from datetime import date, datetime
 from multiselectfield import MultiSelectField
 from djmoney.models.fields import MoneyField
 from apps.driver.models import Driver
@@ -44,10 +45,12 @@ class JobRequest(models.Model):
     # The date this form was submitted
     date_submitted = models.DateTimeField(auto_now_add=True)
 
-    pay_per_hour = MoneyField(max_digits=3, decimal_places=2,
+    pay_per_hour = MoneyField(max_digits=5, decimal_places=2,
                               default_currency='GBP')
-    # TODO day and time
-
+    date = models.DateField(default=date.today)
+    start_time = models.TimeField(default=datetime.now)
+    duration = models.PositiveSmallIntegerField(default=1,
+                    help_text='Length of the job, in hours.')
     number_of_freelancers = models.PositiveSmallIntegerField(
                                 'Number of people required',
                                 choices=[(i, i) for i in range(1, 10)],
