@@ -53,7 +53,5 @@ class DriverJobRequestSignupInnerForm(SignupInnerForm):
         super(DriverJobRequestSignupInnerForm, self).__init__(*args, **kwargs)
 
         self.helper.layout[0].insert(0, layout.HTML(
-            """<p>Already have an account on Buzzhire?
-            Please <a href='{% url 'account_login' %}'>log in</a>, or 
-            if you forgot your password you can
-            <a href='{% url 'account_reset_password' %}'>reset it</a>.</p>"""))
+            """<p>Please give us an email address and password that you
+            can use to sign in to the site."""))
