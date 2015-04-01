@@ -68,3 +68,4 @@ class ProjectConfiguration(StandardConfiguration):
     )
 
     LOGIN_URL = 'account_login'
+    CURRENCIES = ('GBP',)

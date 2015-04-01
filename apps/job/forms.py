@@ -6,7 +6,8 @@ from apps.account.forms import SignupInnerForm
 from crispy_forms import layout
 from django.core.exceptions import ValidationError
 from django.forms.widgets import HiddenInput
-
+from apps.core.widgets import Bootstrap3SterlingMoneyWidget
+from django.forms import widgets
 
 class DriverJobRequestForm(CrispyFormMixin, forms.ModelForm):
     """Form for submitting a job request.
@@ -14,13 +15,14 @@ class DriverJobRequestForm(CrispyFormMixin, forms.ModelForm):
     """
     submit_text = 'Book'
     submit_context = {'icon_name': 'driverjobrequest_create'}
-#     def __init__(self, *args, **kwargs):
-#         self.client = kwargs.pop('client')
-#
-#         super(DriverJobRequestForm, self).__init__(*args, **kwargs)
-#
-#         self.fields['client'].widget = HiddenInput()
-#         self.fields['client'].initial = self.client
+
+    def __init__(self, *args, **kwargs):
+        super(DriverJobRequestForm, self).__init__(*args, **kwargs)
+
+        amount, currency = self.fields['pay_per_hour'].fields
+        self.fields['pay_per_hour'].widget = Bootstrap3SterlingMoneyWidget(
+           amount_widget=amount.widget, currency_widget=widgets.HiddenInput)
+
 
     def save(self, client, commit=True):
         """We require the client to be passed at save time.  This is
@@ -32,7 +34,8 @@ class DriverJobRequestForm(CrispyFormMixin, forms.ModelForm):
 
     class Meta:
         model = DriverJobRequest
-        exclude = ('client', 'status')
+        fields = ('vehicle_types', 'driving_experience',
+                  'number_of_freelancers', 'pay_per_hour')
 
 
 class DriverJobRequestInnerForm(DriverJobRequestForm):

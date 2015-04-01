@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from multiselectfield import MultiSelectField
+from djmoney.models.fields import MoneyField
 from apps.driver.models import Driver
 from apps.client.models import Client
 
@@ -43,7 +44,8 @@ class JobRequest(models.Model):
     # The date this form was submitted
     date_submitted = models.DateTimeField(auto_now_add=True)
 
-    # TODO pay_per_hour
+    pay_per_hour = MoneyField(max_digits=3, decimal_places=2,
+                              default_currency='GBP')
     # TODO day and time
 
     number_of_freelancers = models.PositiveSmallIntegerField(
