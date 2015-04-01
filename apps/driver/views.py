@@ -1,18 +1,19 @@
-from apps.account.views import SignupView as BaseSignupView
-from allauth.account.utils import complete_signup
-from allauth.account import app_settings
-from . import forms
-from .models import Driver
-from django.contrib import messages
-from apps.core.views import ContextMixin, OwnerOnlyMixin
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import DetailView, UpdateView
+from django.contrib import messages
+from allauth.account.utils import complete_signup
+from allauth.account import app_settings
+from apps.core.views import ContextMixin, OwnerOnlyMixin
+from apps.account.views import SignupView as BaseSignupView
+from apps.account.forms import SignupInnerForm
+from . import forms
+from .models import Driver
 
 
 class SignupView(BaseSignupView):
     extra_context = {'title': 'Driver sign up'}
-    form_class = forms.SignupForm
+    form_class = SignupInnerForm
     template_name = 'driver/signup.html'
     # The form prefix for the account form
     prefix = 'account'

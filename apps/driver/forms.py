@@ -1,20 +1,8 @@
 from django import forms
 from apps.core.forms import CrispyFormMixin
-from apps.account.forms import SignupForm as BaseSignupForm
 from crispy_forms.helper import FormHelper
 from crispy_forms import layout
 from .models import Driver
-
-
-class SignupForm(BaseSignupForm):
-    """This sign up form is included with SignupFormDriverDetails in
-    the same html <form>.
-    
-    It's the same as the standard SignupForm but with the <form>
-    and submit buttons removed. 
-    """
-    form_tag = False
-    submit_name = None
 
 
 class DriverForm(CrispyFormMixin, forms.ModelForm):

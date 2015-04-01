@@ -54,6 +54,7 @@ class ProjectConfiguration(StandardConfiguration):
     ACCOUNT_USERNAME_REQUIRED = False
     ACCOUNT_EMAIL_VERIFICATION = 'none'
     ACCOUNT_AUTHENTICATION_METHOD = 'email'
+    ACCOUNT_USER_DISPLAY = 'apps.account.utils.user_display'
 
     FACEBOOK_URL = 'www.facebook.com/buzzhire.uk'
     TWITTER_URL = 'twitter.com/buzzhire'

@@ -10,7 +10,7 @@ urlpatterns = [
      url(r'^create/$', views.DriverJobRequestCreate.as_view(),
          name='driverjobrequest_create'),
 
-     url(r'^create/sign-in/$', views.DriverJobRequestCreateAnonymous.as_view(),
+     url(r'^create/new-client/$', views.DriverJobRequestCreateAnonymous.as_view(),
          name='driverjobrequest_create_anon'),
 
      url(r'^create/done/$', views.DriverJobRequestComplete.as_view(),

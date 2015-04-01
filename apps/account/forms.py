@@ -17,6 +17,16 @@ class SignupForm(CrispyFormMixin, forms.SignupForm):
     submit_text = 'Sign up'
 
 
+class SignupInnerForm(SignupForm):
+    """This sign up form is the same as the standard SignupForm but with
+    the <form> and submit buttons removed, used for including with other
+    forms in a single html <form> tag. 
+    """
+    form_tag = False
+    submit_name = None
+    wrap_fieldset_title = 'Account details'
+
+
 class ResetPasswordForm(CrispyFormMixin, forms.ResetPasswordForm):
     submit_text = 'Reset'
     submit_context = {'icon_name': 'reset_password'}

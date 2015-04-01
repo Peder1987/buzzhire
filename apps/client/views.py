@@ -9,12 +9,15 @@ from .models import Client
 
 
 class ClientOnlyMixin(object):
-    """Views mixin - only allow clients or admins to access."""
+    """Views mixin - only allow clients to access.
+    Adds client as an attribute on the view."""
     def dispatch(self, request, *args, **kwargs):
         # If the user is not logged in, give them the chance to
         if self.request.user.is_anonymous():
             return redirect_to_login(self.request.path)
-        elif not (self.request.user.is_client or self.request.user.is_admin):
+        try:
+            self.client = self.request.user.client
+        except Client.DoesNotExist:
             raise PermissionDenied
         return super(ClientOnlyMixin, self).dispatch(request, *args, **kwargs)
 

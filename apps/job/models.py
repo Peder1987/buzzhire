@@ -3,6 +3,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from multiselectfield import MultiSelectField
 from apps.driver.models import Driver
+from apps.client.models import Client
 
 
 class OpenJobRequestManager(models.Manager):
@@ -22,9 +23,8 @@ class JobRequest(models.Model):
     from the beginning.
     """
 
-    # The user who is making the job request
-    client = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             related_name='job_requests')
+    # The client who is making the job request
+    client = models.ForeignKey(Client, related_name='job_requests')
 
     # Status - for admin purposes
     STATUS_OPEN = 'OP'
@@ -76,4 +76,5 @@ class DriverJobRequest(JobRequest):
     vehicle_types = MultiSelectField(choices=Driver.VEHICLE_TYPE_CHOICES)
     driving_experience = models.CharField('Minimum driving experience',
                                 max_length=3,
-                                choices=Driver.DRIVING_EXPERIENCE_CHOICES)
+                                choices=Driver.DRIVING_EXPERIENCE_CHOICES,
+                                default=Driver.DRIVING_EXPERIENCE_LESS_ONE)

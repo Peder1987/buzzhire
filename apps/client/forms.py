@@ -22,3 +22,17 @@ class ClientForm(CrispyFormMixin, forms.ModelForm):
     class Meta:
         model = Client
         exclude = ('user',)
+
+
+class ClientInnerForm(ClientForm):
+    """A form for filling out client details, included with SignupForm in
+    a single html <form>.
+    """
+    form_tag = False
+    submit_name = None
+    wrap_fieldset_title = 'About you'
+
+    def save(self, user):
+        "Saves the client model, given the user."
+        self.instance.user = user
+        return super(ClientForm, self).save()

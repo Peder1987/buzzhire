@@ -1,0 +1,11 @@
+{% extends 'account/signup.html' %}
+{% load django_bootstrap_breadcrumbs crispy_forms_tags %}
+
+{% block form_content %}
+    <form method="post">
+        {% csrf_token %}
+        {% crispy extra_forms.0 %}
+        {% crispy extra_forms.1 %}
+        {% crispy form %}
+    </form>
+{% endblock %}

@@ -20,7 +20,7 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 {% if request.user.is_anonymous or request.user.is_client %}
-                    {% url 'book' as link_url %}
+                    {% url 'driverjobrequest_create' as link_url %}
                     {% include 'includes/menu_link.html' with icon_name='book' link_text='Book a driver' %}
                 {% endif %}
             {% if request.user.is_anonymous %}
