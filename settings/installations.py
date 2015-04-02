@@ -1,6 +1,7 @@
 from .project import ProjectConfiguration
 from configurations_seddonym.utils import classproperty
 import os
+from django.conf.global_settings import DEFAULT_FROM_EMAIL
 
 
 class Local(ProjectConfiguration):
@@ -11,6 +12,14 @@ class Local(ProjectConfiguration):
     MANAGERS = ADMINS = (
         ('David Seddon', 'david@seddonym.me'),
     )
+
+    BOOKINGS_EMAIL = 'bookingslocal@dev.buzzhire.co'
+    EMAIL_HOST_USER = 'buzzhire_dev'
+    EMAIL_HOST = 'smtp.webfaction.com'
+
+    @classmethod
+    def get_default_from_email(cls):
+        return 'local@dev.buzzhire.co'
 
     @classproperty
     def BASE_URL(cls):
@@ -42,8 +51,6 @@ class Local(ProjectConfiguration):
         return os.path.join('/var/log/django', cls.PROJECT_NAME)
 
 
-
-
 class Dev(ProjectConfiguration):
     DEBUG = False
     DOMAIN = 'dev.buzzhire.co'
@@ -53,6 +60,7 @@ class Dev(ProjectConfiguration):
     EMAIL_HOST_USER = 'buzzhire_dev'
     EMAIL_HOST = 'smtp.webfaction.com'
     # TODO - get default from mail in form 'Buzzhire <contact@dev.buzzhire.co>'
+    BOOKINGS_EMAIL = 'contact@buzzhire.co'
 
     MANAGERS = ADMINS = (
         ('David Seddon', 'david@seddonym.me'),
@@ -101,7 +109,6 @@ class Live(Dev):
 
     EMAIL_HOST_USER = 'buzzhire_live'
     EMAIL_HOST = 'smtp.webfaction.com'
-
 
     ACCOUNT_PASSWORD_MIN_LENGTH = 6
 
