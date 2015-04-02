@@ -52,7 +52,7 @@ class Local(ProjectConfiguration):
 
 
 class Dev(ProjectConfiguration):
-    DEBUG = False
+    DEBUG = True
     DOMAIN = 'dev.buzzhire.co'
     WEBFACTION_USER = 'buzzhire'
     WEBFACTION_APPNAME = 'dev'
