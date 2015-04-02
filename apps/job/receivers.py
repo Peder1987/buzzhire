@@ -26,16 +26,16 @@ def notify_client_on_job_request(sender, instance, created, **kwargs):
     a new job request."""
     if created:
         content = render_to_string(
-                'job/email/includes/driverjobrequest_confirmation.html',
-                {'object': instance,
-                 'admin': False})
+            'job/email/includes/driverjobrequest_confirmation.html',
+            {'object': instance,
+             'admin': False})
         send_mail(instance.client.user.email,
-                  'Thank you for your booking',
-                  'email/base',
-                  {'title': 'Thank you for your booking',
-                   'content': content,
-                   'bookings_email': settings.BOOKINGS_EMAIL},
-                  from_email=settings.BOOKINGS_EMAIL)
+              'Thank you for your booking',
+              'email/base',
+              {'title': 'Thank you for your booking',
+               'content': content,
+               'bookings_email': settings.BOOKINGS_EMAIL},
+              from_email=settings.BOOKINGS_EMAIL)
 
 #
 #

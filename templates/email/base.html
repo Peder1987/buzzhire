@@ -33,7 +33,7 @@
                             <td class="center">
                               <center>
                                   <br>
-                                  {% staticthumbnail 'img/logo/logo.png' '200' as im %}
+                                  {% staticthumbnail 'img/logo/logo.png' '200' format='PNG' as im %}
                                     <img class='center' src="{{ base_url }}{{ im.url }}" width='{{ im.width }}' height='{{ im.height }}'/>
                                   {% endthumbnail %}
                               </center>
