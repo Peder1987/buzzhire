@@ -49,3 +49,15 @@ def instances_and_widgets(bound_field):
          instance_widgets.append((instance, widget))
          index += 1
     return instance_widgets
+
+
+@register.filter
+def startswith(test_string, start_string):
+    """Returns whether comparison string starts with the original string.
+    Usage:
+    
+      {% if test_string|startswith:start_string %}
+          <p>'{{ test_string }}' starts with '{{ start_string }}'!
+      {% endif %}
+    """
+    return test_string.startswith(start_string)

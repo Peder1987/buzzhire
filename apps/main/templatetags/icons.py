@@ -19,6 +19,8 @@ ICON_MAP = {
     'edit': 'edit',
     'password': 'lock',
     'book': 'calendar',
+    'date': 'calendar',
+    'time': 'clock-o',
     'reset_password': 'undo',
     'dashboard': 'dashboard',
     'driver_profile_view': 'eye',
@@ -26,6 +28,7 @@ ICON_MAP = {
     'client_profile_change': 'edit',
     'client': 'briefcase',
     'driverjobrequest_create': 'motorcycle',
+    'requested_jobs': 'list',
 }
 
 @register.filter

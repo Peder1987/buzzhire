@@ -1,5 +1,5 @@
-{% load icons %}
-<li{% if request.path == link_url %} class='active'{% endif %}> 
+{% load icons core_tags %}
+<li{% if request.path|startswith:link_url %} class='active'{% endif %}> 
     <a href="{{ link_url }}">
         {% if icon_name %}{{ icon_name|icon }} {% endif %}{{ link_text }}
     </a>

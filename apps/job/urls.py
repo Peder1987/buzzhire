@@ -4,8 +4,15 @@ from apps.job.models import JobRequest
 
 
 urlpatterns = [
-#     url(r'^$', views.JobRequestList.as_view(),
-#         name='jobrequest_list'),
+     url(r'^requested/$', views.RequestedJobList.as_view(),
+         name='requested_jobs'),
+
+     url(r'^requested/past/$', views.RequestedJobList.as_view(past=True),
+         name='requested_jobs_past'),
+
+#
+#      url(r'^accepted/$', views.DriverJobRequestForFreelancerList.as_view(),
+#          name='freelancer_driverjobrequest_list'),
 
      url(r'^create/$', views.DriverJobRequestCreate.as_view(),
          name='driverjobrequest_create'),

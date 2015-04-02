@@ -8,11 +8,24 @@ from apps.driver.models import Driver
 from apps.client.models import Client
 
 
-class OpenJobRequestManager(models.Manager):
-    "Job request manager for open job requests."
-    def get_queryset(self):
-        queryset = super(OpenJobRequestManager, self).get_queryset()
-        return queryset.filter(status=JobRequest.STATUS_OPEN)
+class JobRequestQuerySet(models.QuerySet):
+    "Custom queryset for JobRequests."
+
+    def future(self):
+        """Filter by job requests that are in the future (i.e. started
+        today or later.
+        TODO - we may need to improve this so it takes into account duration.
+        """
+        return self.filter(date__gte=date.today())
+
+    def past(self):
+        """Filter by job requests that are in the past (i.e. started
+        yesterday or before."""
+        return self.exclude(date__gte=date.today())
+
+    def for_client(self, client):
+        "Filters by job requests that a client has requested."
+        return self.filter(client=client)
 
 
 class JobRequest(models.Model):
@@ -56,8 +69,7 @@ class JobRequest(models.Model):
                                 choices=[(i, i) for i in range(1, 10)],
                                 default=1)
 
-    objects = models.Manager()
-    open_objects = OpenJobRequestManager()
+    objects = JobRequestQuerySet.as_manager()
 
     def __unicode__(self):
         return self.reference_number

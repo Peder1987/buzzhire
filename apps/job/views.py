@@ -1,4 +1,4 @@
-from django.views.generic import CreateView, UpdateView, TemplateView
+from django.views.generic import CreateView, UpdateView, TemplateView, ListView
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 from allauth.account import app_settings
@@ -114,3 +114,32 @@ class DriverJobRequestCreateAnonymous(BaseSignupView):
         return complete_signup(self.request, user,
                                app_settings.EMAIL_VERIFICATION,
                                self.get_success_url())
+
+
+class RequestedJobList(ClientOnlyMixin, ContextMixin, TabsMixin, ListView):
+    """List of driver job requests ordered by a client.
+    This view has two modes - if self.past is True, it will return the
+    job requests in the past, otherwise it will show upcoming job requests.   
+    """
+    paginate_by = 2
+    extra_context = {'title': 'Requested jobs'}
+    tabs = [
+        ('Upcoming', reverse_lazy('requested_jobs')),
+        ('Past', reverse_lazy('requested_jobs_past')),
+    ]
+    past = False
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = DriverJobRequest.objects.for_client(self.client)
+        if self.past:
+            return queryset.past()
+        else:
+            return queryset.future()
+
+
+# class DriverJobRequestForFreelancerList(FreelancerOnlyMixin, ListView):
+#     """List of driver job requests accepted by a freelancer."""
+#     paginate_by = 2
+#
+#     def get_queryset(self, *args, **kwargs):
+#         return DriverJobRequest.objects.for_freelancer(self.freelancer)

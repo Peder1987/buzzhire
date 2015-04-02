@@ -1,0 +1,30 @@
+{% extends 'account/dashboard_base.html' %}
+{% load icons humanize %}
+{% block content %}
+    {% include 'includes/tabs.html' %}  
+    {% if object_list %}
+        <table class='table'>
+            <thead>
+                <th>Reference</th>
+                <th>Start date and time</th>
+                <th>Duration</th>
+                <th>Number of people</th>
+                <th>Status</th>
+            </thead>
+            <tbody>
+                {% for object in object_list %}
+                    <tr>
+                        <td>{{ object.reference_number }}</td>
+                        <td>{{ 'date'|icon }} {{ object.date }}<br>{{ 'time'|icon }} {{ object.start_time }}</td>
+                        <td>{{ object.duration }} hour{{ object.duration|pluralize }}</td>
+                        <td>{{ object.number_of_freelancers }}</td>
+                        <td>{{ object.get_status_display }}</td>
+                    </tr>
+                {% endfor %}        
+            </tbody>
+        </table>
+        {% include 'includes/paginator.html' %}
+    {% else %}
+        <p>No jobs.</p>
+    {% endif %}   
+{% endblock %}
