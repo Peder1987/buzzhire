@@ -17,7 +17,7 @@ def send_mail(to, subject, template_name, context, from_email=None):
     if not from_email:
         from_email = settings.CONTACT_EMAIL
 
-    context['base_url'] = settings.BASE_URL
+    context['domain'] = settings.DOMAIN
     context['contact_email'] = settings.CONTACT_EMAIL
 
     content = {}

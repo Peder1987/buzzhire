@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^booking/', include('apps.booking.urls')),
     url(r'^job/', include('apps.job.urls')),
     url(r'^', include('apps.main.urls')),
+
 ]
 
 

@@ -22,6 +22,7 @@ class ProjectConfiguration(StandardConfiguration):
         'django_extensions',
         'django_inlinecss',
         'compressor',
+
         'dbbackup',
         'django_bootstrap_breadcrumbs',
         'apps.core',

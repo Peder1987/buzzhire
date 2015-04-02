@@ -84,7 +84,14 @@ class JobRequest(models.Model):
 
     class Meta:
         ordering = '-date_submitted',
-        abstract = True
+
+
+class DriverJobRequestManager(models.Manager):
+    """Manager for DriverJobRequests."""
+
+    def get_from_jobrequest(self, jobrequest):
+        "Gets a DriverJobRequest object from the JobRequest."""
+        return self.get(pk=jobrequest.pk)
 
 
 class DriverJobRequest(JobRequest):
@@ -95,3 +102,5 @@ class DriverJobRequest(JobRequest):
                                 max_length=3,
                                 choices=Driver.DRIVING_EXPERIENCE_CHOICES,
                                 default=Driver.DRIVING_EXPERIENCE_LESS_ONE)
+
+    objects = DriverJobRequestManager.from_queryset(JobRequestQuerySet)()
