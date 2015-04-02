@@ -101,6 +101,19 @@ class Dev(ProjectConfiguration):
     def get_default_database_user(cls):
         return cls.get_default_database_name()
 
+    @classmethod
+    def get_contact_email(cls):
+        return 'contact@%s' % cls.get_setting('DOMAIN')
+
+    @classmethod
+    def get_default_from_email(cls):
+        return 'Buzzhire <%s>' % cls.get_contact_email()
+
+    @classmethod
+    def get_server_email(cls):
+        return cls.get_contact_email()
+
+
 
 class Live(Dev):
     DEBUG = False
