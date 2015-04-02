@@ -2,8 +2,9 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from apps.core.email import send_mail
 from django.conf import settings
-from .models import DriverJobRequest
 from django.template.loader import render_to_string
+from .models import DriverJobRequest
+
 
 
 @receiver(post_save, sender=DriverJobRequest)

@@ -60,7 +60,7 @@ class Dev(ProjectConfiguration):
     EMAIL_HOST_USER = 'buzzhire_dev'
     EMAIL_HOST = 'smtp.webfaction.com'
     # TODO - get default from mail in form 'Buzzhire <contact@dev.buzzhire.co>'
-    BOOKINGS_EMAIL = 'contact@buzzhire.co'
+    BOOKINGS_EMAIL = 'contact@dev.buzzhire.co'
 
     MANAGERS = ADMINS = (
         ('David Seddon', 'david@seddonym.me'),

@@ -1,4 +1,5 @@
 from django import template
+from django.conf import settings
 from copy import copy
 
 
@@ -61,3 +62,14 @@ def startswith(test_string, start_string):
       {% endif %}
     """
     return test_string.startswith(start_string)
+
+
+@register.simple_tag
+def base_url():
+    """Returns the base url.
+    
+    Usage:
+    
+        {% base_url %}
+    """
+    return settings.BASE_URL
