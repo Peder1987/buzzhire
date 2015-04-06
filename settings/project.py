@@ -1,5 +1,4 @@
 from configurations_seddonym import StandardConfiguration
-from configurations_seddonym.utils import classproperty
 import os
 
 
@@ -8,7 +7,6 @@ class ProjectConfiguration(StandardConfiguration):
 #     STATICFILES_DIRS = (
 #         os.path.join(BASE_DIR, "static"),
 #     )
-    PROTOCOL = 'http'
     SITE_TITLE = 'Buzzhire'
     PROJECT_NAME = 'buzzhire'
     INSTALLED_APPS = StandardConfiguration.INSTALLED_APPS + (
