@@ -22,7 +22,7 @@ class DriverJobRequestCreate(ClientOnlyMixin, ContextMixin, CreateView):
     model = DriverJobRequest
     success_url = reverse_lazy('driverjobrequest_complete')
     form_class = DriverJobRequestForm
-    template_name = 'account/dashboard_base.html'
+    template_name = 'job/driverjobrequest_create.html'
 
     def dispatch(self, request, *args, **kwargs):
         # if not logged in, redirect to a job request pre-sign up page

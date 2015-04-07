@@ -20,7 +20,7 @@ class ProjectConfiguration(StandardConfiguration):
         'django_extensions',
         'django_inlinecss',
         'compressor',
-
+        'djangobower',
         'dbbackup',
         'django_bootstrap_breadcrumbs',
         'apps.core',
@@ -60,6 +60,7 @@ class ProjectConfiguration(StandardConfiguration):
 
     STATICFILES_FINDERS = StandardConfiguration.STATICFILES_FINDERS + (
         'compressor.finders.CompressorFinder',
+        'djangobower.finders.BowerFinder',
     )
 
     COMPRESS_PRECOMPILERS = (
@@ -68,3 +69,11 @@ class ProjectConfiguration(StandardConfiguration):
 
     LOGIN_URL = 'account_login'
     CURRENCIES = ('GBP',)
+
+    def BOWER_COMPONENTS_ROOT(self):
+        return os.path.join(self.PROJECT_ROOT, 'components')
+
+    BOWER_INSTALLED_APPS = (
+        'eternicode/bootstrap-datepicker',
+        'weareoutman/clockpicker',
+    )

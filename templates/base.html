@@ -4,11 +4,6 @@
   <head>
      {% include 'includes/html_head.html' %}
      {% block extrastyles %}{% endblock %}
-     {# Put our custom stylesheet here to prevent third-party extrastyles overriding it #}
-     {% compress css %}
-        {#<link href="{% static 'css/main.css' %}" rel="stylesheet">#}
-        <link href="{% static 'css/main.less' %}" rel="stylesheet" type='text/less'>
-     {% endcompress %}
   </head>
   <body{% if is_home %} id='home'{% endif %} data-spy="scroll" data-offset="80">
         

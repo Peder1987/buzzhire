@@ -1,5 +1,5 @@
 {% extends 'account/signup.html' %}
-{% load django_bootstrap_breadcrumbs crispy_forms_tags %}
+{% load django_bootstrap_breadcrumbs crispy_forms_tags static %}
 
 {% block form_content %}
     <p>Already have an account on Buzzhire?
@@ -13,4 +13,9 @@
         {% crispy extra_forms.1 %}
         {% crispy form %}
     </form>
+{% endblock %}
+
+{% block extrascripts %}
+    {{ block.super }}
+    {% include 'includes/forms/datetime_form_js.html' %}
 {% endblock %}

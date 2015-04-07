@@ -22,7 +22,7 @@ class DriverJobRequestForm(CrispyFormMixin, forms.ModelForm):
         amount, currency = self.fields['pay_per_hour'].fields
         self.fields['pay_per_hour'].widget = Bootstrap3SterlingMoneyWidget(
            amount_widget=amount.widget, currency_widget=widgets.HiddenInput)
-
+        self.fields['start_time'].widget = forms.TimeInput(format='%H:%M')
 
     def save(self, client, commit=True):
         """We require the client to be passed at save time.  This is
