@@ -1,8 +1,9 @@
-from django.views.generic import ListView
+from django.views.generic import ListView, UpdateView
 from django.core.urlresolvers import reverse_lazy
 from apps.core.views import ContextMixin, TabsMixin
 from apps.freelancer.views import FreelancerOnlyMixin
-from .models import Booking
+from .models import Booking, Availability
+from .forms import AvailabilityForm
 
 
 class FreelancerBookingsList(FreelancerOnlyMixin,
@@ -25,3 +26,21 @@ class FreelancerBookingsList(FreelancerOnlyMixin,
             return queryset.past()
         else:
             return queryset.future()
+
+
+class AvailabilityUpdate(FreelancerOnlyMixin,
+                         ContextMixin, UpdateView):
+    """View for freelancer to edit their availability.
+    """
+    model = Availability
+    extra_context = {'title': 'Availability'}
+    form_class = AvailabilityForm
+
+    def get_object(self):
+        # Return the Availability for the Freelancer, creating one
+        # if it doesn't exist.
+        try:
+            return self.freelancer.availability
+        except Availability.DoesNotExist:
+            return Availability.objects.create(freelancer=self.freelancer)
+

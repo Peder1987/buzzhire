@@ -30,6 +30,7 @@ ICON_MAP = {
     'driverjobrequest_create': 'motorcycle',
     'requested_jobs': 'list',
     'freelancer_bookings': 'list',
+    'availability': 'calendar',
 }
 
 @register.filter

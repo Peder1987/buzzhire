@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import date
+import calendar
 from apps.freelancer.models import Freelancer
 from apps.job.models import JobRequest
 
@@ -47,3 +48,28 @@ class Booking(models.Model):
 
 
     objects = BookingQuerySet.as_manager()
+
+
+
+class Availability(models.Model):
+    """A model for storing the general availability
+    of a particular freelancer."""
+    freelancer = models.OneToOneField(Freelancer)
+
+    # Specify the two dimensions for the fields, to help with processing
+    SHIFTS = ('early_morning', 'morning', 'afternoon', 'evening', 'night')
+    # DAYS = [day.lower() for day in calendar.day_name]
+    DAYS = ['monday', 'tuesday']
+
+    monday_early_morning = models.BooleanField(default=True, help_text='2am - 7am')
+    monday_morning = models.BooleanField(default=True, help_text='7am - 12pm')
+    monday_afternoon = models.BooleanField(default=True, help_text='12pm - 5pm')
+    monday_evening = models.BooleanField(default=True, help_text='5pm - 10pm')
+    monday_night = models.BooleanField(default=True, help_text='10pm - 2am')
+
+    tuesday_early_morning = models.BooleanField(default=True, help_text='2am - 7am')
+    tuesday_morning = models.BooleanField(default=True, help_text='7am - 12pm')
+    tuesday_afternoon = models.BooleanField(default=True, help_text='12pm - 5pm')
+    tuesday_evening = models.BooleanField(default=True, help_text='5pm - 10pm')
+    tuesday_night = models.BooleanField(default=True, help_text='10pm - 2am')
+

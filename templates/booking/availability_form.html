@@ -1,0 +1,30 @@
+{% extends 'account/dashboard_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {% with form.get_field_table as field_table %}
+            <table class='table'>
+                <thead>
+                    <tr>
+                        <th></th>
+                        {% for heading in field_table.headings %}
+                            <th>{{ heading }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in field_table.rows %}
+                        <tr>
+                            <th>{{ row.heading }}</th>
+                            {% for field in row.fields %}
+                                <td>{{ field|as_crispy_field }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endwith %}
+    </form>
+{% endblock %}
