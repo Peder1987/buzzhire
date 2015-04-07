@@ -3,7 +3,8 @@ from . import models
 
 # This is necessary just to allow search_fields to work elsewhere
 class JobRequestAdmin(admin.ModelAdmin):
-    list_display = ('reference_number', 'client', 'date', 'start_time')
+    list_display = ('reference_number', 'client', 'date', 'start_time',
+                    'postcode_area')
     list_filter = ('status', 'date',)
     search_fields = ('reference_number',)
     date_hierarchy = 'date'

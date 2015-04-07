@@ -69,6 +69,25 @@ class JobRequest(models.Model):
                                 choices=[(i, i) for i in range(1, 10)],
                                 default=1)
 
+    POSTCODE_CENTRAL = 'C'
+    POSTCODE_WEST = 'W'
+    POSTCODE_SOUTH_WEST = 'SW'
+    POSTCODE_SOUTH_EAST = 'SE'
+    POSTCODE_EAST = 'E'
+    POSTCODE_NORTH = 'N'
+    POSTCODE_NORTH_WEST = 'NW'
+    POSTCODE_CHOICES = (
+        (POSTCODE_CENTRAL, 'Central London (Postcodes: EC, WC)'),
+        (POSTCODE_WEST, 'West London (Postcodes: W)'),
+        (POSTCODE_SOUTH_WEST, 'South West London (Postcodes: SW)'),
+        (POSTCODE_SOUTH_EAST, 'South East London (Postcodes: SE)'),
+        (POSTCODE_EAST, 'East London (Postcodes: E)'),
+        (POSTCODE_NORTH, 'North London (Postcodes: N)'),
+        (POSTCODE_NORTH_WEST, 'North West London (Postcodes: NW)'),
+    )
+    postcode_area = models.CharField('Location',
+                                     max_length=2, choices=POSTCODE_CHOICES)
+
     objects = JobRequestQuerySet.as_manager()
 
     def __unicode__(self):

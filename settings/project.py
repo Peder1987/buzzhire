@@ -73,6 +73,10 @@ class ProjectConfiguration(StandardConfiguration):
     def BOWER_COMPONENTS_ROOT(self):
         return os.path.join(self.PROJECT_ROOT, 'components')
 
+    # The way django-bower is used in this project is that we run
+    # ./manage.py bower install locally, to add the packages to
+    # components/bower_components.  However, this is under version control
+    # so bower install doesn't need to be run by the other installations.
     BOWER_INSTALLED_APPS = (
         'eternicode/bootstrap-datepicker',
         'weareoutman/clockpicker',
