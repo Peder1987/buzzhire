@@ -121,7 +121,7 @@ class RequestedJobList(ClientOnlyMixin, ContextMixin, TabsMixin, ListView):
     This view has two modes - if self.past is True, it will return the
     job requests in the past, otherwise it will show upcoming job requests.   
     """
-    paginate_by = 2
+    paginate_by = 15
     extra_context = {'title': 'Requested jobs'}
     tabs = [
         ('Upcoming', reverse_lazy('requested_jobs')),

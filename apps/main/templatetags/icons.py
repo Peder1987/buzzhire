@@ -29,6 +29,7 @@ ICON_MAP = {
     'client': 'briefcase',
     'driverjobrequest_create': 'motorcycle',
     'requested_jobs': 'list',
+    'freelancer_bookings': 'list',
 }
 
 @register.filter

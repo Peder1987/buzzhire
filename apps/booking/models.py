@@ -1,6 +1,28 @@
 from django.db import models
+from datetime import date
 from apps.freelancer.models import Freelancer
 from apps.job.models import JobRequest
+
+
+class BookingQuerySet(models.QuerySet):
+    "Custom queryset for Bookings."
+
+    def future(self):
+        """Filter by job requests that are in the future (i.e. started
+        today or later.
+        TODO - we may need to improve this so it takes into account duration.
+        """
+        return self.filter(jobrequest__date__gte=date.today())
+
+    def past(self):
+        """Filter by job requests that are in the past (i.e. started
+        yesterday or before."""
+        return self  # TODO
+        return self.exclude(jobrequest__date__gte=date.today())
+
+    def for_freelancer(self, freelancer):
+        "Filters by job requests that a freelancer has been allocated to."
+        return self.filter(freelancer=freelancer)
 
 
 class Booking(models.Model):
@@ -23,3 +45,5 @@ class Booking(models.Model):
         # A single freelancer can't be booked in twice for the same job
         unique_together = (("freelancer", "jobrequest"),)
 
+
+    objects = BookingQuerySet.as_manager()

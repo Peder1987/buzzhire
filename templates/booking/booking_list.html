@@ -9,24 +9,22 @@
                 <th>Start date and time</th>
                 <th>Duration</th>
                 <th>Location</th>
-                <th>Number of people</th>
-                <th>Status</th>
+                <th>Pay per hour</th>
             </thead>
             <tbody>
                 {% for object in object_list %}
                     <tr>
                         <td>{{ object.reference_number }}</td>
-                        <td>{{ 'date'|icon }} {{ object.date }}<br>{{ 'time'|icon }} {{ object.start_time }}</td>
-                        <td>{{ object.duration }} hour{{ object.duration|pluralize }}</td>
-                        <td>{{ object.get_postcode_area_display }}</td>
-                        <td>{{ object.number_of_freelancers }}</td>
-                        <td>{{ object.get_status_display }}</td>
+                        <td>{{ 'date'|icon }} {{ object.jobrequest.date }}<br>{{ 'time'|icon }} {{ object.jobrequest.start_time }}</td>
+                        <td>{{ object.jobrequest.duration }} hour{{ object.jobrequest.duration|pluralize }}</td>
+                        <td>{{ object.jobrequest.get_postcode_area_display }}</td>
+                        <td>&pound;{{ object.jobrequest.pay_per_hour.amount }}</td>
                     </tr>
                 {% endfor %}        
             </tbody>
         </table>
         {% include 'includes/paginator.html' %}
     {% else %}
-        <p class='well top-space'>No jobs.</p>
+        <p class='well top-space'>No bookings.</p>
     {% endif %}   
 {% endblock %}
