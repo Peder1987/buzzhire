@@ -53,6 +53,17 @@ def instances_and_widgets(bound_field):
 
 
 @register.filter
+def get_non_page_options(request):
+    """Returns a urlencoded version of the GET options passed to the request,
+    with the paginator page option removed.
+    
+    Used by templates/includes/paginator.html."""
+    querydict = request.GET.copy()
+    querydict.pop('page', None)
+    return querydict.urlencode
+
+
+@register.filter
 def startswith(test_string, start_string):
     """Returns whether comparison string starts with the original string.
     Usage:

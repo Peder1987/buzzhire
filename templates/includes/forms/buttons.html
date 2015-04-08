@@ -1,6 +1,6 @@
 {% load icons %}
 <div class='text-center'>
-<button name='{{ submit_name }}' class='btn {% if button_classes %}{{ button_classes }}{% else %}btn-lg btn-primary{% endif %}'>
+<button name='{{ submit_name }}' value='{{ submit_value|default:'submit' }}' class='btn {% if button_classes %}{{ button_classes }}{% else %}btn-lg btn-primary{% endif %}'>
     {% if icon_name %}{{ icon_name|icon }}{% endif %} {{ submit_text }}
 </button>
 </div>

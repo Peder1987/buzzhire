@@ -25,6 +25,20 @@ def _freelancer(self):
 User.freelancer = property(_freelancer)
 
 
+class PublishedFreelancerManager(models.Manager):
+    """Manager for published freelancers.
+    Note that models inheriting Freelancer should redeclare it:
+    
+        class SpecialFreelancer(Freelancer):
+            objects = models.Manager()
+            published_objects = PublishedFreelancerManager()
+    """
+    def get_queryset(self):
+        return self.model.objects.filter(published=True)
+        queryset = super(PublishedFreelancerManager, self).get_queryset()
+        return queryset.filter(published=True)
+
+
 class Freelancer(models.Model):
     "A freelancer is a person offering a professional service."
 
@@ -95,6 +109,9 @@ class Freelancer(models.Model):
                             'What are your preferred working hours?',
                             choices=HOURS_AVAILABLE_CHOICES,
                             blank=True)
+
+    objects = models.Manager()
+    published_objects = PublishedFreelancerManager()
 
     @property
     def reference_number(self):

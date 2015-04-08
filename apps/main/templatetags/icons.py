@@ -32,6 +32,7 @@ ICON_MAP = {
     'freelancer_bookings': 'list',
     'availability': 'calendar',
     'save': 'check-circle',
+    'driver_search': 'search',
 }
 
 @register.filter

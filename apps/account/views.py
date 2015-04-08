@@ -3,6 +3,8 @@ from apps.core.views import ContextMixin, ConfirmationMixin, \
                             ContextTemplateView
 from . import forms
 from django.core.urlresolvers import reverse_lazy
+from django.contrib.auth.views import redirect_to_login
+from django.core.exceptions import PermissionDenied
 
 
 class DashboardView(ContextTemplateView):
@@ -53,3 +55,14 @@ class PasswordChangeView(ContextMixin, views.PasswordChangeView):
 
 class PasswordSetView(ContextMixin, views.PasswordSetView):
     extra_context = {'title': 'Password changed'}
+
+
+class AdminOnlyMixin(object):
+    """Views mixin - only allow admins to access."""
+    def dispatch(self, request, *args, **kwargs):
+        # If the user is not logged in, give them the chance to
+        if self.request.user.is_anonymous():
+            return redirect_to_login(self.request.path)
+        elif not self.request.user.is_admin:
+            raise PermissionDenied
+        return super(AdminOnlyMixin, self).dispatch(request, *args, **kwargs)

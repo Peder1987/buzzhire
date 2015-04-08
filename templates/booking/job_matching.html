@@ -1,0 +1,48 @@
+{% extends 'account/dashboard_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class='well'>
+    {{ form.errors }}
+        {% crispy form %}
+    </div>
+    {% if searched %}
+        {% if object_list %}
+            {% include 'includes/paginator_results_count.html' with results_description='providers' %}
+            <table class='table table-striped'>
+                <thead>
+                    <th>Ref</th>
+                    <th>Name</th>
+                    <th>Vehicle types</th>
+                    <th>Driving experience</th>
+                    <th>Own vehicle?</th>
+                </thead>
+                <tbody>
+                    {% for object in object_list %}
+                        <tr>
+                            <td><a href='{% url 'admin:driver_driver_change' object.pk %}'>{{ object.reference_number }}</a></td>
+                            <td>{{ object.get_full_name }}</td>
+                            <td>{{ object.get_vehicle_types_display }}</td>
+                            <td>{{ object.get_driving_experience_display }}</td>
+                            <td><i class='fa fa-{{ object.own_vehicle|yesno:'check,times' }}'></i></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+           </table>
+           {% include 'includes/paginator.html' %}
+        {% else %}
+            <p>No results.</p>
+        {% endif %}
+    {% else %}
+        <div class='alert alert-info'>
+            Use the filters to search for a driver.
+        </div>
+    {% endif %}
+    
+{% endblock %}
+
+
+{% block extrascripts %}
+    {{ block.super }}
+    {% include 'includes/forms/datetime_form_js.html' %}
+{% endblock %}

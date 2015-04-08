@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from multiselectfield import MultiSelectField
-from apps.freelancer.models import Freelancer
+from apps.freelancer.models import Freelancer, PublishedFreelancerManager
 
 
 def _is_driver(self):
@@ -55,3 +55,5 @@ class Driver(Freelancer):
     own_vehicle = models.BooleanField('I have my own vehicle',
                                       default=False)
 
+    objects = models.Manager()
+    published_objects = PublishedFreelancerManager()

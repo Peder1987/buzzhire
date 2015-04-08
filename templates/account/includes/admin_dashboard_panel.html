@@ -1,0 +1,10 @@
+{% load icons %}
+{% if request.user.is_admin %}
+    <div class="panel panel-default">
+      <div class="panel-heading">{{ 'admin'|icon }} Admin</div>
+      <div class="list-group">
+          {% url 'driver_search' as link_url %}
+          {% include 'includes/panel_link.html' with icon_name='driver_search' link_text='Driver search' %}
+      </div>
+    </div>
+{% endif %}
