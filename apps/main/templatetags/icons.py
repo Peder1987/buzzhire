@@ -33,6 +33,7 @@ ICON_MAP = {
     'availability': 'calendar',
     'save': 'check-circle',
     'job_matching': 'search',
+    'create': 'plus-circle',
 }
 
 @register.filter

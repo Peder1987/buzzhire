@@ -1,8 +1,9 @@
 {% load humanize core_tags %}
 <p><strong>Reference:</strong> {{ object.reference_number }}</p>
 <p><strong>Date:</strong> {{ object.date }}</p>
-<p><strong>Time:</strong> {{ object.start_time }}</p>
+<p><strong>Start time:</strong> {{ object.start_time }}</p>
 <p><strong>Duration:</strong> {{ object.duration }} hour{{ object.duration|pluralize }}</p>
+<p><strong>Location:</strong> {{ object.get_location_display }} </p>
 <p><strong>Number of people:</strong> {{ object.number_of_freelancers }} </p>
 <p><strong>Pay per hour:</strong> &pound;{{ object.pay_per_hour.amount }} </p>
 <p><strong>Vehicle types:</strong> {{ object.get_vehicle_types_display }} </p>

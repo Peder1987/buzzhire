@@ -1,5 +1,5 @@
 {% extends 'account/dashboard_base.html' %}
-{% load crispy_forms_tags %}
+{% load crispy_forms_tags icons %}
 
 {% block content %}
     <div class='well'>
@@ -31,6 +31,7 @@
                     <th>Vehicle types</th>
                     <th>Driving experience</th>
                     <th>Own vehicle?</th>
+                    <th></th>
                 </thead>
                 <tbody>
                     {% for object in object_list %}
@@ -40,6 +41,7 @@
                             <td>{{ object.get_vehicle_types_display }}</td>
                             <td>{{ object.get_driving_experience_display }}</td>
                             <td><i class='fa fa-{{ object.own_vehicle|yesno:'check,times' }}'></i></td>
+                            <td><a class='btn btn-sm btn-default' href='{% url 'admin:booking_booking_add' %}'>{{ 'create'|icon }} Add booking</a> 
                         </tr>
                     {% endfor %}
                 </tbody>
