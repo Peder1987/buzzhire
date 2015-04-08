@@ -1,3 +1,4 @@
+import calendar
 from django import forms
 from django.db.models import BooleanField
 from apps.core.forms import CrispyFormMixin
@@ -71,7 +72,8 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
 
     vehicle_types = forms.ModelMultipleChoiceField(
                                         queryset=VehicleType.objects.all(),
-                                         required=False)
+                                        required=False,
+                                        widget=forms.CheckboxSelectMultiple)
     DRIVING_EXPERIENCE_CHOICES = (
         (0, 'No preference'),
         (1, '1 year'),
@@ -90,6 +92,16 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
         'minimum_driving_experience': 'driving_experience__gte',
     }
 
+    def clean(self):
+        super(JobMatchingForm, self).clean()
+        # Ensure both, or neither, of the date / shift fields are set
+        for full_field, empty_field in (('date', 'shift'), ('shift', 'date')):
+            if self.cleaned_data.get(full_field) \
+                                and not self.cleaned_data.get(empty_field):
+                self.add_error(empty_field,
+                       'If you are searching by %s, you '
+                       'must also provide a %s.' % (full_field, empty_field))
+
     def get_results(self):
         """Returns the results of a successful search.
         Should be called after the form has been successfully validated."""
@@ -99,7 +111,7 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
         results = self.filter_from_map(results)
 
         results = self.filter_by_own_vehicle(results)
-        # results = self.filter_by_availability(results)
+        results = self.filter_by_availability(results)
 
         # Return unique results
         return results.distinct()
@@ -123,26 +135,15 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
     def filter_by_availability(self, results):
         "Filters by availability, if it's been searched for."
 
-        if self.cleaned_data['available_date']:
+        if self.cleaned_data['date']:
 
-            # Build filter kwargs for the date
-            filter_kwargs = {'user__available_slots__date':
-                                        self.cleaned_data['available_date']}
+            # Get day of week for that date
+            day_name = calendar.day_name[
+                                self.cleaned_data['date'].weekday()].lower()
 
-            # Build filter kwargs for the time period
-            if self.cleaned_data['available_time_period'] == \
-                                            AvailableSlot.TIME_PERIOD_ALLDAY:
-                # If they're just searching for all day availability,
-                # we it's a straightforward search for slots with that choice
-                filter_kwargs['user__available_slots__time_period'] = \
-                                            AvailableSlot.TIME_PERIOD_ALLDAY
-            else:
-                # If it's AM/PM, we search for slots with that choice,
-                # OR all day
-                filter_kwargs['user__available_slots__time_period__in'] = (
-                     self.cleaned_data['available_time_period'],
-                     AvailableSlot.TIME_PERIOD_ALLDAY
-                )
+            # Build filter kwargs
+            field_name = '%s_%s' % (day_name, self.cleaned_data['shift'])
+            filter_kwargs = {'availability__%s' % field_name: True}
 
             # Filter
             results = results.filter(**filter_kwargs)
