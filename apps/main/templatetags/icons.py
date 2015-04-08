@@ -31,6 +31,7 @@ ICON_MAP = {
     'requested_jobs': 'list',
     'freelancer_bookings': 'list',
     'availability': 'calendar',
+    'save': 'check-circle',
 }
 
 @register.filter

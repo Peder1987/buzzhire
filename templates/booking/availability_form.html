@@ -1,30 +1,33 @@
 {% extends 'account/dashboard_base.html' %}
-{% load crispy_forms_tags %}
+{% load icons %}
 
 {% block content %}
     <form method="post">
         {% csrf_token %}
         {% with form.get_field_table as field_table %}
-            <table class='table'>
-                <thead>
-                    <tr>
-                        <th></th>
-                        {% for heading in field_table.headings %}
-                            <th>{{ heading }}</th>
-                        {% endfor %}
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for row in field_table.rows %}
+            <div class="table-responsive">
+                <table class='table table-striped'>
+                    <thead>
                         <tr>
-                            <th>{{ row.heading }}</th>
-                            {% for field in row.fields %}
-                                <td>{{ field|as_crispy_field }}</td>
+                            <th></th>
+                            {% for heading in field_table.headings %}
+                                <th>{{ heading }}</th>
                             {% endfor %}
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for row in field_table.rows %}
+                            <tr>
+                                <th>{{ row.heading }}</th>
+                                {% for field in row.fields %}
+                                    <td>{{ field }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         {% endwith %}
+        {% include 'includes/forms/buttons.html' with submit_name='save' icon_name='save' submit_text='Save' %} 
     </form>
 {% endblock %}

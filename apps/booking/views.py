@@ -1,5 +1,6 @@
 from django.views.generic import ListView, UpdateView
 from django.core.urlresolvers import reverse_lazy
+from django.contrib import messages
 from apps.core.views import ContextMixin, TabsMixin
 from apps.freelancer.views import FreelancerOnlyMixin
 from .models import Booking, Availability
@@ -35,6 +36,7 @@ class AvailabilityUpdate(FreelancerOnlyMixin,
     model = Availability
     extra_context = {'title': 'Availability'}
     form_class = AvailabilityForm
+    success_url = reverse_lazy('availability_update')
 
     def get_object(self):
         # Return the Availability for the Freelancer, creating one
@@ -44,3 +46,6 @@ class AvailabilityUpdate(FreelancerOnlyMixin,
         except Availability.DoesNotExist:
             return Availability.objects.create(freelancer=self.freelancer)
 
+    def form_valid(self, *args, **kwargs):
+        messages.add_message(self.request, messages.INFO, 'Saved.')
+        return super(AvailabilityUpdate, self).form_valid(*args, **kwargs)

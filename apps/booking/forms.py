@@ -1,11 +1,21 @@
 from django import forms
+from django.db.models import BooleanField
 from apps.core.forms import CrispyFormMixin
 from .models import Availability
 
 
-class AvailabilityForm(CrispyFormMixin, forms.ModelForm):
+class AvailabilityForm(forms.ModelForm):
     "Form for a freelancer to edit their availability."
     submit_text = 'Update availability'
+
+    def __init__(self, *args, **kwargs):
+        super(AvailabilityForm, self).__init__(*args, **kwargs)
+        for field_name in self.fields:
+            if isinstance(Availability._meta.get_field(field_name),
+                          BooleanField):
+                self.fields[field_name].widget = forms.Select(
+                                    choices=Availability.AVAILABILITY_CHOICES)
+
 
     def get_field_table(self):
         """Returns the form fields in the format suitable for arranging
@@ -46,3 +56,4 @@ class AvailabilityForm(CrispyFormMixin, forms.ModelForm):
     class Meta:
         model = Availability
         exclude = ('freelancer',)
+
