@@ -53,7 +53,8 @@ class Driver(Freelancer):
         (DRIVING_EXPERIENCE_FIVE, 'More than 5 years'),
     )
     # Legacy field - to be deleted once has migrated
-    driving_experience_old = models.CharField(max_length=3,
+    driving_experience_old = models.CharField(blank=True,
+                                            max_length=3,
                                             choices=DRIVING_EXPERIENCE_CHOICES)
     driving_experience = models.PositiveSmallIntegerField(default=1,
                                         choices=DRIVING_EXPERIENCE_CHOICES)
