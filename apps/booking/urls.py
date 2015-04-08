@@ -14,5 +14,5 @@ urlpatterns = [
          name='availability_update'),
 
     url(r'^job-matching/$', views.JobMatchingView.as_view(),
-         name='driver_search'),
+         name='job_matching'),
 ]

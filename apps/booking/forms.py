@@ -92,7 +92,7 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
 #     languages = forms.ModelChoiceField(queryset=None, required=False)
     submit_text = 'Search drivers'
     submit_name = 'search'
-    submit_context = {'icon_name': 'driver_search'}
+    submit_context = {'icon_name': 'job_matching'}
     bottom_html = "<a class='btn btn-default' href='{{ request.path }}'>Reset</a>&nbsp;"
 
     # Maps field name to filter kwargs when searching

@@ -3,8 +3,8 @@
     <div class="panel panel-default">
       <div class="panel-heading">{{ 'admin'|icon }} Admin</div>
       <div class="list-group">
-          {% url 'driver_search' as link_url %}
-          {% include 'includes/panel_link.html' with icon_name='driver_search' link_text='Driver search' %}
+          {% url 'job_matching' as link_url %}
+          {% include 'includes/panel_link.html' with icon_name='job_matching' link_text='Job matching' %}
       </div>
     </div>
 {% endif %}
