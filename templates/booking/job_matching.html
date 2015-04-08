@@ -38,7 +38,7 @@
                         <tr>
                             <td><a href='{% url 'admin:driver_driver_change' object.pk %}'>{{ object.reference_number }}</a></td>
                             <td>{{ object.get_full_name }}</td>
-                            <td>{{ object.get_vehicle_types_display }}</td>
+                            <td>{% for vehicle_type in object.vehicle_types.all %}{{ vehicle_type }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
                             <td>{{ object.get_driving_experience_display }}</td>
                             <td><i class='fa fa-{{ object.own_vehicle|yesno:'check,times' }}'></i></td>
                             <td><a class='btn btn-sm btn-default' href='{% url 'admin:booking_booking_add' %}'>{{ 'create'|icon }} Add booking</a> 

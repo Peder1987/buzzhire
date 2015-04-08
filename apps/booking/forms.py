@@ -3,7 +3,7 @@ from django.db.models import BooleanField
 from apps.core.forms import CrispyFormMixin
 from multiselectfield.forms.fields import MultiSelectFormField
 from .models import Availability
-from apps.driver.models import Driver
+from apps.driver.models import Driver, VehicleType
 
 
 class AvailabilityForm(forms.ModelForm):
@@ -60,7 +60,6 @@ class AvailabilityForm(forms.ModelForm):
         exclude = ('freelancer',)
 
 
-
 class JobMatchingForm(CrispyFormMixin, forms.Form):
     """Form for searching drivers to help match them to jobs."""
 
@@ -70,9 +69,8 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
                            for value in Availability.SHIFTS])
     shift = forms.ChoiceField(choices=SHIFT_CHOICES, required=False)
 
-    # NB the MultiSelectFormField doesn't work properly with searching;
-    # we'll probably need to switch it to a manytomanyfield
-    vehicle_types = MultiSelectFormField(choices=Driver.VEHICLE_TYPE_CHOICES,
+    vehicle_types = forms.ModelMultipleChoiceField(
+                                        queryset=VehicleType.objects.all(),
                                          required=False)
     DRIVING_EXPERIENCE_CHOICES = (
         (0, 'No preference'),
@@ -86,24 +84,11 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
     own_vehicle = forms.BooleanField(label='The driver needs their own vehicle.',
                                      required=False)
 
-#     available_time_period = forms.ChoiceField(label='',
-#                                choices=AvailableSlot.TIME_PERIOD_CHOICES,
-#                                initial=AvailableSlot.TIME_PERIOD_ALLDAY)
-#
-#     specialism = forms.ModelChoiceField(queryset=None, required=False)
-#     qualification_level = forms.ModelChoiceField(queryset=None, required=False)
-#     skills = forms.ModelChoiceField(queryset=None, required=False)
-#     languages = forms.ModelChoiceField(queryset=None, required=False)
-
     # Maps field name to filter kwargs when searching
     FILTER_MAP = {
         'vehicle_types': 'vehicle_types',
         'minimum_driving_experience': 'driving_experience__gte',
     }
-
-    def __init__(self, *args, **kwargs):
-        super(JobMatchingForm, self).__init__(*args, **kwargs)
-        # self.helper.form_method = 'GET'
 
     def get_results(self):
         """Returns the results of a successful search.
@@ -113,13 +98,11 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
 
         results = self.filter_from_map(results)
 
-        # results = self.filter_by_driving_experience(results)
         results = self.filter_by_own_vehicle(results)
         # results = self.filter_by_availability(results)
 
         # Return unique results
         return results.distinct()
-
 
     def filter_from_map(self, results):
         """Filters the results based on the FILTER_MAP that is used
@@ -129,16 +112,6 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
             if self.cleaned_data[field_name]:
                 filter_kwargs[filter_kwarg] = self.cleaned_data[field_name]
         return results.filter(**filter_kwargs)
-
-    def filter_by_driving_experience(self, results):
-        "Filters by driving experience, if it's been searched for."
-
-        if self.cleaned_data['minimum_driving_experience']:
-            # TODO - should probably change way driving experience is stored
-            # in the database, so we can do 'greater than' queries
-            pass
-        return results
-
 
     def filter_by_own_vehicle(self, results):
         "Filters by own vehicle, if it's been required."

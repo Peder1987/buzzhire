@@ -22,6 +22,18 @@ def _driver(self):
 User.driver = property(_driver)
 
 
+class VehicleType(models.Model):
+    """A type of vehicle that the driver may drive.
+    """
+    title = models.CharField(max_length=30)
+
+    def __unicode__(self):
+        return self.title
+
+    class Meta:
+        ordering = ('title',)
+
+
 class Driver(Freelancer):
     "A driver is a freelancer whose service is driving."
 
@@ -35,7 +47,9 @@ class Driver(Freelancer):
         (VEHICLE_TYPE_CAR, 'Car'),
         (VEHICLE_TYPE_VAN, 'Van'),
     )
-    vehicle_types = MultiSelectField(choices=VEHICLE_TYPE_CHOICES)
+    vehicle_types_old = MultiSelectField(choices=VEHICLE_TYPE_CHOICES,
+                                         blank=True)
+    vehicle_types = models.ManyToManyField(VehicleType, related_name='drivers')
 
     motorcycle_licence = models.BooleanField('I have a CBT/full motorcycle license.',
                                              default=False)

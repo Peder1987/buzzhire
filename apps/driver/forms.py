@@ -46,8 +46,8 @@ class DriverForm(CrispyFormMixin, forms.ModelForm):
         model = Driver
         exclude = ('user',)
         widgets = {
-            'driving_experience': forms.Select(
-                                    choices=Driver.DRIVING_EXPERIENCE_CHOICES),
+            'driving_experience': forms.widgets.Select,
+            'vehicle_types': forms.widgets.CheckboxSelectMultiple,
         }
 
 
