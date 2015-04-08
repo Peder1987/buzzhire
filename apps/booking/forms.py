@@ -98,6 +98,7 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
     # Maps field name to filter kwargs when searching
     FILTER_MAP = {
         'vehicle_types': 'vehicle_types',
+        'minimum_driving_experience': 'driving_experience__gte',
     }
 
     def __init__(self, *args, **kwargs):

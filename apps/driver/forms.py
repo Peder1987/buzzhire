@@ -45,6 +45,10 @@ class DriverForm(CrispyFormMixin, forms.ModelForm):
     class Meta:
         model = Driver
         exclude = ('user',)
+        widgets = {
+            'driving_experience': forms.Select(
+                                    choices=Driver.DRIVING_EXPERIENCE_CHOICES),
+        }
 
 
 class SignupFormDriverDetails(DriverForm):

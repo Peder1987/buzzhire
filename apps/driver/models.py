@@ -40,18 +40,24 @@ class Driver(Freelancer):
     motorcycle_licence = models.BooleanField('I have a CBT/full motorcycle license.',
                                              default=False)
 
-    DRIVING_EXPERIENCE_LESS_ONE = '0-1'
-    DRIVING_EXPERIENCE_ONE_THREE = '1-3'
-    DRIVING_EXPERIENCE_THREE_FIVE = '3-5'
-    DRIVING_EXPERIENCE_FIVE_PLUS = '5+'
+    # The integer stored in driving experience denotes that they have
+    # AT LEAST that number of years driving experience.
+    DRIVING_EXPERIENCE_LESS_ONE = 0
+    DRIVING_EXPERIENCE_ONE = 1
+    DRIVING_EXPERIENCE_THREE = 3
+    DRIVING_EXPERIENCE_FIVE = 5
     DRIVING_EXPERIENCE_CHOICES = (
         (DRIVING_EXPERIENCE_LESS_ONE, 'Less than 1 year'),
-        (DRIVING_EXPERIENCE_ONE_THREE, '1 - 3 years'),
-        (DRIVING_EXPERIENCE_THREE_FIVE, '3 - 5 year'),
-        (DRIVING_EXPERIENCE_FIVE_PLUS, 'More than 5 years'),
+        (DRIVING_EXPERIENCE_ONE, '1 - 3 years'),
+        (DRIVING_EXPERIENCE_THREE, '3 - 5 years'),
+        (DRIVING_EXPERIENCE_FIVE, 'More than 5 years'),
     )
-    driving_experience = models.CharField(max_length=3,
+    # Legacy field - to be deleted once has migrated
+    driving_experience_old = models.CharField(max_length=3,
                                             choices=DRIVING_EXPERIENCE_CHOICES)
+    driving_experience = models.PositiveSmallIntegerField(default=1,
+                                        choices=DRIVING_EXPERIENCE_CHOICES)
+
     own_vehicle = models.BooleanField('I have my own vehicle',
                                       default=False)
 
