@@ -3,8 +3,23 @@
 
 {% block content %}
     <div class='well'>
-    {{ form.errors }}
-        {% crispy form %}
+        <form method='get'>
+            {% csrf_token %}
+            <div class='row'>
+                <div class='col-md-4'>
+                    {{ form.date|as_crispy_field }}
+                    {{ form.shift|as_crispy_field }}
+                </div>
+                <div class='col-md-4'>
+                    {{ form.minimum_driving_experience|as_crispy_field }}
+                    {{ form.own_vehicle|as_crispy_field }}
+                </div>
+                <div class='col-md-4'>
+                    {{ form.vehicle_types|as_crispy_field }}
+                </div>
+            </div>
+            {% include 'includes/forms/buttons.html' with submit_name='search' icon_name='job_matching' submit_text='Search drivers' cancel_url=request.path cancel_text='Reset' %} 
+        </form>
     </div>
     {% if searched %}
         {% if object_list %}

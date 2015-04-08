@@ -64,7 +64,11 @@ class AvailabilityForm(forms.ModelForm):
 class JobMatchingForm(CrispyFormMixin, forms.Form):
     """Form for searching drivers to help match them to jobs."""
 
-    # available_date = forms.DateField(required=False)
+    date = forms.DateField(required=False)
+    SHIFT_CHOICES = tuple([(None, '-- Enter shift --')] +
+                          [(value, value.capitalize().replace('_', ' '))
+                           for value in Availability.SHIFTS])
+    shift = forms.ChoiceField(choices=SHIFT_CHOICES, required=False)
 
     # NB the MultiSelectFormField doesn't work properly with searching;
     # we'll probably need to switch it to a manytomanyfield
@@ -90,10 +94,6 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
 #     qualification_level = forms.ModelChoiceField(queryset=None, required=False)
 #     skills = forms.ModelChoiceField(queryset=None, required=False)
 #     languages = forms.ModelChoiceField(queryset=None, required=False)
-    submit_text = 'Search drivers'
-    submit_name = 'search'
-    submit_context = {'icon_name': 'job_matching'}
-    bottom_html = "<a class='btn btn-default' href='{{ request.path }}'>Reset</a>&nbsp;"
 
     # Maps field name to filter kwargs when searching
     FILTER_MAP = {
@@ -102,7 +102,7 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(JobMatchingForm, self).__init__(*args, **kwargs)
-        self.helper.form_method = 'GET'
+        # self.helper.form_method = 'GET'
 
     def get_results(self):
         """Returns the results of a successful search.
