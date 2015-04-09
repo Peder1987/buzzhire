@@ -122,4 +122,8 @@ class DriverJobRequest(JobRequest):
                                 choices=Driver.DRIVING_EXPERIENCE_CHOICES,
                                 default=Driver.DRIVING_EXPERIENCE_LESS_ONE)
 
+    own_vehicle = models.BooleanField(
+                            'The driver must supply their own vehicle.',
+                            default=True)
+
     objects = DriverJobRequestManager.from_queryset(JobRequestQuerySet)()

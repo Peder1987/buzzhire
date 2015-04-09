@@ -26,6 +26,11 @@ class DriverJobRequestForm(CrispyFormMixin, forms.ModelForm):
         self.fields['start_time'].widget = forms.TimeInput(format='%H:%M')
         self.fields['duration'].widget = Bootstrap3TextInput(addon_after='hours')
 
+#         self.helper.layout = layout.Layout(
+#             layout.Fieldset('Date and location'),
+#
+#         )
+
     def save(self, client, commit=True):
         """We require the client to be passed at save time.  This is
         to make it easier to include the form before the client is created,
@@ -38,7 +43,8 @@ class DriverJobRequestForm(CrispyFormMixin, forms.ModelForm):
         model = DriverJobRequest
         fields = ('date', 'start_time', 'duration', 'postcode_area',
                   'pay_per_hour',
-                  'vehicle_types', 'driving_experience',
+                  'vehicle_types', 'own_vehicle',
+                  'driving_experience',
                   'number_of_freelancers')
 
 

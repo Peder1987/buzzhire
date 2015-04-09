@@ -2,6 +2,9 @@
 {% load icons %}
 
 {% block content %}
+    <p>Please select your availability so that we can match you with jobs that
+    fit your schedule. If you are marked as "Not available" for a particular
+    time slot you will not be booked in for a job during that time.</p>
     <form method="post">
         {% csrf_token %}
         {% with form.get_field_table as field_table %}
