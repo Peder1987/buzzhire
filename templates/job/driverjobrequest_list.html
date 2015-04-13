@@ -18,7 +18,7 @@
                         <td>{{ object.reference_number }}</td>
                         <td>{{ 'date'|icon }} {{ object.date }}<br>{{ 'time'|icon }} {{ object.start_time }}</td>
                         <td>{{ object.duration }} hour{{ object.duration|pluralize }}</td>
-                        <td>{{ object.get_postcode_area_display }}</td>
+                        <td>{% include 'job/includes/location.html' %}</td>
                         <td>{{ object.number_of_freelancers }}</td>
                         <td>{{ object.get_status_display }}</td>
                     </tr>

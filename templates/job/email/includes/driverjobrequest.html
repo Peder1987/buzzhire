@@ -8,11 +8,7 @@
 <p><strong>Duration:</strong> {{ object.duration }} hour{{ object.duration|pluralize }}</p>
 
 <h5>Location</h5>
-<p>{{ object.address1 }}<br>
-{% if object.address2 %}{{ object.address2 }}<br>{% endif %}
-{{ object.get_city_display }}<br>
-{{ object.postcode }}
-</p>
+<p>{% include 'job/includes/location.html' %}</p>
 
 <h5>Vehicle</h5>
 <p><strong>Vehicle types:</strong> {{ object.get_vehicle_types_display }} </p>

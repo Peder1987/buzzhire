@@ -62,6 +62,8 @@ class DriverJobRequestForm(CrispyFormMixin, forms.ModelForm):
         such as in the anonymous creation of bookings."""
         # Make sure the client is saved in the job request
         self.instance.client = client
+        # Make sure the city of London is saved
+        self.instance.city = DriverJobRequest.CITY_LONDON
         return super(DriverJobRequestForm, self).save(commit)
 
     class Meta:
