@@ -59,13 +59,14 @@ class JobRequest(models.Model):
     date_submitted = models.DateTimeField(auto_now_add=True)
 
     pay_per_hour = MoneyField(max_digits=5, decimal_places=2,
-                              default_currency='GBP')
+                  default_currency='GBP',
+                  help_text='How much you will pay per hour, for each driver.')
     date = models.DateField(default=date.today)
     start_time = models.TimeField(default=datetime.now)
     duration = models.PositiveSmallIntegerField(default=1,
                     help_text='Length of the job, in hours.')
     number_of_freelancers = models.PositiveSmallIntegerField(
-                                'Number of people required',
+                                'Number of drivers required',
                                 choices=[(i, i) for i in range(1, 10)],
                                 default=1)
 
@@ -78,14 +79,35 @@ class JobRequest(models.Model):
     CITY_CHOICES = (
         (CITY_LONDON, 'London'),
     )
-    city = models.CharField(max_length=1,
-                            choices=CITY_CHOICES, default=CITY_LONDON,
+    city = models.CharField(max_length=1, blank=True,
+                    choices=CITY_CHOICES, default=CITY_LONDON,
                     help_text='We currently only accept bookings in London.')
     postcode = models.CharField(max_length=10)
 
+
+    PHONE_REQUIREMENT_NOT_REQUIRED = 'NR'
+    PHONE_REQUIREMENT_ANY = 'AY'
+    PHONE_REQUIREMENT_ANDROID = 'AN'
+    PHONE_REQUIREMENT_IPHONE = 'IP'
+    PHONE_REQUIREMENT_WINDOWS = 'WI'
+    PHONE_REQUIREMENT_OTHER = 'OT'
+
+    PHONE_REQUIREMENT_CHOICES = (
+        (PHONE_REQUIREMENT_NOT_REQUIRED, 'No smart phone needed'),
+        (PHONE_REQUIREMENT_ANY, 'Any smart phone'),
+        (PHONE_REQUIREMENT_ANDROID, 'Android'),
+        (PHONE_REQUIREMENT_IPHONE, 'iPhone'),
+        (PHONE_REQUIREMENT_WINDOWS, 'Windows'),
+    )
+    phone_requirement = models.CharField(max_length=2,
+            choices=PHONE_REQUIREMENT_CHOICES,
+            default=PHONE_REQUIREMENT_NOT_REQUIRED,
+            help_text='Whether the driver needs a smart phone to do '
+                'this job (for example, if you need them to run an app).')
+
     comments = models.TextField(
                     blank=True,
-                    help_text='Any further information to tell the driver.')
+                    help_text='Anything else to tell the driver.')
 
     objects = JobRequestQuerySet.as_manager()
 
@@ -116,8 +138,8 @@ class DriverJobRequest(JobRequest):
     """A JobRequest that is specifically for drivers to complete.
     """
     vehicle_types = MultiSelectField(choices=Driver.VEHICLE_TYPE_CHOICES)
-    driving_experience = models.CharField('Minimum driving experience',
-                                max_length=3,
+    driving_experience = models.PositiveSmallIntegerField(
+                                'Minimum driving experience',
                                 choices=Driver.DRIVING_EXPERIENCE_CHOICES,
                                 default=Driver.DRIVING_EXPERIENCE_LESS_ONE)
 

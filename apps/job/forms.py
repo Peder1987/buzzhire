@@ -26,6 +26,7 @@ class DriverJobRequestForm(CrispyFormMixin, forms.ModelForm):
         self.fields['start_time'].widget = forms.TimeInput(format='%H:%M')
         self.fields['duration'].widget = Bootstrap3TextInput(addon_after='hours')
         self.fields['city'].widget.attrs = {'disabled': 'disabled'}
+        self.fields['comments'].widget.attrs = {'rows': 3}
         self.helper.layout = layout.Layout(
             layout.Fieldset('Date and time',
                 'date', 'start_time', 'duration',
@@ -38,9 +39,18 @@ class DriverJobRequestForm(CrispyFormMixin, forms.ModelForm):
             layout.Fieldset('Vehicle',
                 'vehicle_types', 'own_vehicle',
             ),
-            layout.Fieldset('Cost',
+            layout.Fieldset('Driver details',
+                'number_of_freelancers',
+                'driving_experience',
+                'phone_requirement',
+            ),
+            layout.Fieldset('Budget',
                 'pay_per_hour',
-            )
+            ),
+            layout.Fieldset('Further info',
+                'comments'
+            ),
+            self.get_submit_button()
         )
 
     def save(self, client, commit=True):
@@ -60,6 +70,7 @@ class DriverJobRequestForm(CrispyFormMixin, forms.ModelForm):
                   'vehicle_types', 'own_vehicle',
                   'driving_experience',
                   'number_of_freelancers',
+                  'phone_requirement',
                   'comments')
 
 

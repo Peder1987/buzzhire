@@ -71,7 +71,6 @@ class Freelancer(models.Model):
     eligible_to_work = models.BooleanField('I am eligible to work in the UK.',
                                            default=False)
 
-
     PHONE_TYPE_ANDROID = 'AN'
     PHONE_TYPE_IPHONE = 'IP'
     PHONE_TYPE_WINDOWS = 'WI'

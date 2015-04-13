@@ -1,13 +1,36 @@
 {% load humanize core_tags %}
+
 <p><strong>Reference:</strong> {{ object.reference_number }}</p>
+
+<h5>Date and time</h5>
 <p><strong>Date:</strong> {{ object.date }}</p>
 <p><strong>Start time:</strong> {{ object.start_time }}</p>
 <p><strong>Duration:</strong> {{ object.duration }} hour{{ object.duration|pluralize }}</p>
-<p><strong>Location:</strong> {{ object.get_postcode_area_display }} </p>
-<p><strong>Number of people:</strong> {{ object.number_of_freelancers }} </p>
-<p><strong>Pay per hour:</strong> &pound;{{ object.pay_per_hour.amount }} </p>
+
+<h5>Location</h5>
+<p>{{ object.address1 }}<br>
+{% if object.address2 %}{{ object.address2 }}<br>{% endif %}
+{{ object.get_city_display }}<br>
+{{ object.postcode }}
+</p>
+
+<h5>Vehicle</h5>
 <p><strong>Vehicle types:</strong> {{ object.get_vehicle_types_display }} </p>
+<p><strong>Does the driver need to supply their own vehicle?</strong> {{ object.own_vehicle|yesno|capfirst }} </p>
+
+<h5>Driver details</h5>
+<p><strong>Number of drivers:</strong> {{ object.number_of_freelancers }} </p>
 <p><strong>Minimum driving experience:</strong> {{ object.get_driving_experience_display }} </p>
+<p><strong>Phone requirement:</strong> {{ object.get_phone_requirement_display }} </p>
+
+<h5>Budget</h5>
+{# TODO - this must display differently depending on who is reading it #}
+<p><strong>Pay per hour:</strong> &pound;{{ object.pay_per_hour.amount }} </p>
+
+{% if object.comments %}
+<h5>Comments</h5>
+<p>{{ object.comments|linebreaks }} </p>
+{% endif %}
 
 {% if admin %}
     <p><a href='{% base_url %}{% url 'admin:job_driverjobrequest_change' object.pk %}'>View job request</a></p>
