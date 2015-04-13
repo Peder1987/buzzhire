@@ -69,24 +69,23 @@ class JobRequest(models.Model):
                                 choices=[(i, i) for i in range(1, 10)],
                                 default=1)
 
-    POSTCODE_CENTRAL = 'C'
-    POSTCODE_WEST = 'W'
-    POSTCODE_SOUTH_WEST = 'SW'
-    POSTCODE_SOUTH_EAST = 'SE'
-    POSTCODE_EAST = 'E'
-    POSTCODE_NORTH = 'N'
-    POSTCODE_NORTH_WEST = 'NW'
-    POSTCODE_CHOICES = (
-        (POSTCODE_CENTRAL, 'Central London (Postcodes: EC, WC)'),
-        (POSTCODE_WEST, 'West London (Postcodes: W)'),
-        (POSTCODE_SOUTH_WEST, 'South West London (Postcodes: SW)'),
-        (POSTCODE_SOUTH_EAST, 'South East London (Postcodes: SE)'),
-        (POSTCODE_EAST, 'East London (Postcodes: E)'),
-        (POSTCODE_NORTH, 'North London (Postcodes: N)'),
-        (POSTCODE_NORTH_WEST, 'North West London (Postcodes: NW)'),
+    address1 = models.CharField('Address line 1', max_length=75)
+    address2 = models.CharField('Address line 2', max_length=75, blank=True)
+
+    # Specify only London - we do it as a field just for ease of handling
+    # it on forms etc.
+    CITY_LONDON = 'L'
+    CITY_CHOICES = (
+        (CITY_LONDON, 'London'),
     )
-    postcode_area = models.CharField('Location',
-                                     max_length=2, choices=POSTCODE_CHOICES)
+    city = models.CharField(max_length=1,
+                            choices=CITY_CHOICES, default=CITY_LONDON,
+                    help_text='We currently only accept bookings in London.')
+    postcode = models.CharField(max_length=10)
+
+    comments = models.TextField(
+                    blank=True,
+                    help_text='Any further information to tell the driver.')
 
     objects = JobRequestQuerySet.as_manager()
 

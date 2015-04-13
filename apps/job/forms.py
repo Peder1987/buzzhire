@@ -25,11 +25,23 @@ class DriverJobRequestForm(CrispyFormMixin, forms.ModelForm):
            attrs={'step': '0.25'})
         self.fields['start_time'].widget = forms.TimeInput(format='%H:%M')
         self.fields['duration'].widget = Bootstrap3TextInput(addon_after='hours')
-
-#         self.helper.layout = layout.Layout(
-#             layout.Fieldset('Date and location'),
-#
-#         )
+        self.fields['city'].widget.attrs = {'disabled': 'disabled'}
+        self.helper.layout = layout.Layout(
+            layout.Fieldset('Date and time',
+                'date', 'start_time', 'duration',
+            ),
+            layout.Fieldset('Location',
+                'address1', 'address2',
+                'city',
+                'postcode',
+            ),
+            layout.Fieldset('Vehicle',
+                'vehicle_types', 'own_vehicle',
+            ),
+            layout.Fieldset('Cost',
+                'pay_per_hour',
+            )
+        )
 
     def save(self, client, commit=True):
         """We require the client to be passed at save time.  This is
@@ -41,11 +53,14 @@ class DriverJobRequestForm(CrispyFormMixin, forms.ModelForm):
 
     class Meta:
         model = DriverJobRequest
-        fields = ('date', 'start_time', 'duration', 'postcode_area',
+        fields = ('date', 'start_time', 'duration',
+                  'address1', 'address2', 'city',
+                  'postcode',
                   'pay_per_hour',
                   'vehicle_types', 'own_vehicle',
                   'driving_experience',
-                  'number_of_freelancers')
+                  'number_of_freelancers',
+                  'comments')
 
 
 class DriverJobRequestInnerForm(DriverJobRequestForm):
