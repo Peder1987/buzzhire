@@ -50,8 +50,11 @@ class DriverJobRequestForm(CrispyFormMixin, forms.ModelForm):
             layout.Fieldset('Further info',
                 'comments'
             ),
-            self.get_submit_button()
         )
+
+        # Add the submit button, but allow subclassing forms to suppress it
+        if self.submit_name:
+            self.helper.layout.append(self.get_submit_button())
 
     def save(self, client, commit=True):
         """We require the client to be passed at save time.  This is
