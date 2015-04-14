@@ -28,7 +28,8 @@
                 <thead>
                     <th>Ref</th>
                     <th>Name</th>
-                    <th>Vehicle types</th>
+                    <th>Can drive</th>
+                    <th>Can provide</th>
                     <th>Driving experience</th>
                     <th>Own vehicle?</th>
                     <th></th>
@@ -38,7 +39,8 @@
                         <tr>
                             <td><a href='{% url 'admin:driver_driver_change' object.pk %}'>{{ object.reference_number }}</a></td>
                             <td>{{ object.get_full_name }}</td>
-                            <td>{% for vehicle_type in object.vehicle_types.all %}{{ vehicle_type }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+                            <td>{% for vehicle_type in object.vehicle_types_able.all %}<span class='label label-default'>{{ vehicle_type }}</span> {% endfor %}</td>
+                            <td>{% for vehicle_type in object.vehicle_types_own.all %}<span class='label label-primary'>{{ vehicle_type }}</span> {% endfor %}</td>
                             <td>{{ object.get_driving_experience_display }}</td>
                             <td><i class='fa fa-{{ object.own_vehicle|yesno:'check,times' }}'></i></td>
                             <td><a class='btn btn-sm btn-default' href='{% url 'admin:booking_booking_add' %}'>{{ 'create'|icon }} Add booking</a> 

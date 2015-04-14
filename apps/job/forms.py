@@ -77,6 +77,9 @@ class DriverJobRequestForm(CrispyFormMixin, forms.ModelForm):
                   'number_of_freelancers',
                   'phone_requirement',
                   'comments')
+        widgets = {
+            'vehicle_types': widgets.CheckboxSelectMultiple,
+        }
 
 
 class DriverJobRequestInnerForm(DriverJobRequestForm):

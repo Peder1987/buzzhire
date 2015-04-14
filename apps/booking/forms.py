@@ -83,12 +83,12 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
 
     minimum_driving_experience = forms.ChoiceField(required=False,
                                     choices=DRIVING_EXPERIENCE_CHOICES)
-    own_vehicle = forms.BooleanField(label='The driver needs their own vehicle.',
-                                     required=False)
+    own_vehicle = forms.BooleanField(
+                                label='The driver needs their own vehicle.',
+                                required=False)
 
     # Maps field name to filter kwargs when searching
     FILTER_MAP = {
-        'vehicle_types': 'vehicle_types',
         'minimum_driving_experience': 'driving_experience__gte',
     }
 
@@ -110,7 +110,7 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
 
         results = self.filter_from_map(results)
 
-        results = self.filter_by_own_vehicle(results)
+        results = self.filter_by_vehicle_requirements(results)
         results = self.filter_by_availability(results)
 
         # Return unique results
@@ -125,11 +125,15 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
                 filter_kwargs[filter_kwarg] = self.cleaned_data[field_name]
         return results.filter(**filter_kwargs)
 
-    def filter_by_own_vehicle(self, results):
-        "Filters by own vehicle, if it's been required."
+    def filter_by_vehicle_requirements(self, results):
+        "Filters by vehicle requirements."
 
-        if self.cleaned_data['own_vehicle']:
-            results = results.filter(own_vehicle=True)
+        if self.cleaned_data['vehicle_types']:
+            filter_field = 'vehicle_types_own' \
+                           if self.cleaned_data['own_vehicle'] \
+                           else 'vehicle_types_able'
+            results = results.filter(
+                        **{filter_field: self.cleaned_data['vehicle_types']})
         return results
 
     def filter_by_availability(self, results):

@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from datetime import date, datetime
 from multiselectfield import MultiSelectField
 from djmoney.models.fields import MoneyField
-from apps.driver.models import Driver
+from apps.driver.models import Driver, VehicleType
 from apps.client.models import Client
 
 
@@ -137,7 +137,12 @@ class DriverJobRequestManager(models.Manager):
 class DriverJobRequest(JobRequest):
     """A JobRequest that is specifically for drivers to complete.
     """
-    vehicle_types = MultiSelectField(choices=Driver.VEHICLE_TYPE_CHOICES)
+    vehicle_types = models.ManyToManyField(VehicleType,
+           related_name='jobrequests',
+           help_text="Which types of vehicle would be appropriate for the job. "
+            "(N.B. if you require a specific mixture of vehicles, "
+            "such as one car and one van, then you should create these as "
+            "separate bookings.)")
     driving_experience = models.PositiveSmallIntegerField(
                                 'Minimum driving experience',
                                 choices=Driver.DRIVING_EXPERIENCE_CHOICES,
