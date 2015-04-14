@@ -49,7 +49,18 @@ class Driver(Freelancer):
     )
     vehicle_types_old = MultiSelectField(choices=VEHICLE_TYPE_CHOICES,
                                          blank=True)
-    vehicle_types = models.ManyToManyField(VehicleType, related_name='drivers')
+
+    vehicle_types_able = models.ManyToManyField(VehicleType,
+             verbose_name='Vehicles you can drive',
+             related_name='drivers_able',
+             help_text='Which vehicles you are able and licensed to drive. '
+                    'You do not need to provide the vehicle for the booking.')
+    vehicle_types_own = models.ManyToManyField(
+            VehicleType,
+            verbose_name='Vehicles you can provide',
+            blank=True,
+            related_name='drivers_own',
+            help_text='Which vehicles you can provide for a booking.')
 
     motorcycle_licence = models.BooleanField('I have a CBT/full motorcycle license.',
                                              default=False)

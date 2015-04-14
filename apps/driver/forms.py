@@ -24,14 +24,14 @@ class DriverForm(CrispyFormMixin, forms.ModelForm):
                 'About you',
                 'english_fluency',
                 'eligible_to_work',
-                'vehicle_types',
+                'vehicle_types_able',
                 'driving_experience',
                 'motorcycle_licence',
             ),
             layout.Fieldset(
                 'Your equipment',
                 'phone_type',
-                'own_vehicle',
+                'vehicle_types_own',
             ),
             layout.Fieldset(
                 'Your availability',
@@ -47,7 +47,8 @@ class DriverForm(CrispyFormMixin, forms.ModelForm):
         exclude = ('user',)
         widgets = {
             'driving_experience': forms.widgets.Select,
-            'vehicle_types': forms.widgets.CheckboxSelectMultiple,
+            'vehicle_types_own': forms.widgets.CheckboxSelectMultiple,
+            'vehicle_types_able': forms.widgets.CheckboxSelectMultiple,
         }
 
 
