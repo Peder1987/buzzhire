@@ -9,7 +9,7 @@ from apps.core.views import ContextMixin, TabsMixin, ConfirmationMixin
 from apps.client.views import ClientOnlyMixin
 from apps.client.forms import ClientInnerForm
 from apps.account.views import SignupView as BaseSignupView
-
+from . import signals
 from .models import DriverJobRequest
 from .forms import DriverJobRequestForm, DriverJobRequestInnerForm, \
                     DriverJobRequestSignupInnerForm
@@ -34,6 +34,11 @@ class DriverJobRequestCreate(ClientOnlyMixin, ContextMixin, CreateView):
         """Adapted version of form_valid that supplies the client
         """
         self.object = form.save(client=self.client)
+        # Rather than use the standard post_save signal, we send a custom
+        # signal.  This is because we need to send it after the m2m fields
+        # have been saved.
+        signals.driverjobrequest_created.send(sender=self.__class__,
+                                              driverjobrequest=self.object)
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -111,6 +116,9 @@ class DriverJobRequestCreateAnonymous(BaseSignupView):
         # Save extra forms too
         client = self.bound_forms['client'].save(user=user)
         self.bound_forms['driverjobrequest'].save(client=client)
+        # Send signal (see DriverJobRequestCreate for explanation)
+        signals.driverjobrequest_created.send(sender=self.__class__,
+                                      driverjobrequest=self.object)
         return complete_signup(self.request, user,
                                app_settings.EMAIL_VERIFICATION,
                                self.get_success_url())
