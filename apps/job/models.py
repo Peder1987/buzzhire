@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from datetime import date, datetime
 from multiselectfield import MultiSelectField
 from djmoney.models.fields import MoneyField
-from apps.driver.models import Driver, VehicleType
+from apps.driver.models import Driver, VehicleType, DriverVehicleType
 from apps.client.models import Client
 
 
@@ -143,6 +143,12 @@ class DriverJobRequest(JobRequest):
             "(N.B. if you require a specific mixture of vehicles, "
             "such as one car and one van, then you should create these as "
             "separate bookings.)")
+    minimum_delivery_box = models.PositiveSmallIntegerField(
+            choices=DriverVehicleType.DELIVERY_BOX_CHOICES,
+            default=DriverVehicleType.DELIVERY_BOX_NONE,
+            help_text='For scooters, motorcycles and bicycles, '
+                        'the minimum delivery box size.')
+
     driving_experience = models.PositiveSmallIntegerField(
                                 'Minimum driving experience',
                                 choices=Driver.DRIVING_EXPERIENCE_CHOICES,

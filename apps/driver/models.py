@@ -84,6 +84,15 @@ class Driver(Freelancer):
     published_objects = PublishedFreelancerManager()
 
 
+class DriverVehicleTypeQuerySet(models.QuerySet):
+    "Custom queryset for DriverVehicleTypes."
+
+    def owned(self):
+        """Filter by driver vehicles that the driver can provide for a booking.
+        """
+        return self.filter(own_vehicle=True)
+
+
 class DriverVehicleType(models.Model):
     """'Through' model for storing information for a driver about
     a particular vehicle.
@@ -110,6 +119,8 @@ class DriverVehicleType(models.Model):
                 default=DELIVERY_BOX_NONE,
                 help_text='What size delivery box does your vehicle have? '
                     '(Scooters, motorcycles and bicycles only.)')
+
+    objects = DriverVehicleTypeQuerySet.as_manager()
 
     def __unicode__(self):
         return unicode(self.vehicle_type)

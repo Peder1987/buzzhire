@@ -4,7 +4,7 @@ from django.db.models import BooleanField
 from apps.core.forms import CrispyFormMixin
 from multiselectfield.forms.fields import MultiSelectFormField
 from .models import Availability
-from apps.driver.models import Driver, VehicleType
+from apps.driver.models import Driver, VehicleType, DriverVehicleType
 
 
 class AvailabilityForm(forms.ModelForm):
@@ -86,6 +86,8 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
     own_vehicle = forms.BooleanField(
                                 label='The driver needs their own vehicle.',
                                 required=False)
+    minimum_delivery_box = forms.ChoiceField(required=False,
+                        choices=DriverVehicleType.DELIVERY_BOX_CHOICES)
 
     # Maps field name to filter kwargs when searching
     FILTER_MAP = {
@@ -111,6 +113,7 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
         results = self.filter_from_map(results)
 
         results = self.filter_by_vehicle_requirements(results)
+        results = self.filter_by_delivery_box(results)
         results = self.filter_by_availability(results)
 
         # Return unique results
@@ -125,15 +128,24 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
                 filter_kwargs[filter_kwarg] = self.cleaned_data[field_name]
         return results.filter(**filter_kwargs)
 
+    def filter_by_delivery_box(self, results):
+        "Filters by minimum delivery box."
+        return results
+
     def filter_by_vehicle_requirements(self, results):
         "Filters by vehicle requirements."
 
         if self.cleaned_data['vehicle_types']:
-            filter_field = 'vehicle_types_own' \
-                           if self.cleaned_data['own_vehicle'] \
-                           else 'vehicle_types_able'
-            results = results.filter(
-                        **{filter_field: self.cleaned_data['vehicle_types']})
+            if self.cleaned_data['own_vehicle']:
+                # Filter by vehicle types that are owned
+                results = results.filter(
+                            drivervehicletype__vehicle_type=\
+                                        self.cleaned_data['vehicle_types'],
+                            drivervehicletype__own_vehicle=True)
+            else:
+                # Just filter by vehicle types
+                results = results.filter(
+                            vehicle_types=self.cleaned_data['vehicle_types'])
         return results
 
     def filter_by_availability(self, results):
