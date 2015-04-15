@@ -91,10 +91,15 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
                         help_text='N.B. This will filter out any vehicle '
                             'that does not have a delivery box of at least '
                             'this size, including cars.')
+    PHONE_TYPE_CHOICES = ((None, 'No preference'),) \
+                         + Driver.PHONE_TYPE_CHOICES
+    phone_type = forms.ChoiceField(required=False,
+                                   choices=PHONE_TYPE_CHOICES)
 
     # Maps field name to filter kwargs when searching
     FILTER_MAP = {
         'minimum_driving_experience': 'driving_experience__gte',
+        'phone_type': 'phone_type',
     }
 
     def clean(self):
@@ -151,7 +156,9 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
                 filter_kwargs = {
                     'vehicle_types': self.cleaned_data['vehicle_types']
                 }
-        return results.filter(**filter_kwargs)
+            return results.filter(**filter_kwargs)
+
+        return results
 
     def filter_by_availability(self, results):
         "Filters by availability, if it's been searched for."
