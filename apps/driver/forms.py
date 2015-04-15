@@ -2,7 +2,7 @@ from django import forms
 from apps.core.forms import CrispyFormMixin
 from crispy_forms.helper import FormHelper
 from crispy_forms import layout
-from .models import Driver
+from .models import Driver, DriverVehicleType, VehicleType
 
 
 class DriverForm(CrispyFormMixin, forms.ModelForm):
@@ -24,14 +24,13 @@ class DriverForm(CrispyFormMixin, forms.ModelForm):
                 'About you',
                 'english_fluency',
                 'eligible_to_work',
-                'vehicle_types_able',
                 'driving_experience',
                 'motorcycle_licence',
             ),
             layout.Fieldset(
                 'Your equipment',
                 'phone_type',
-                'vehicle_types_own',
+                'delivery_box',
             ),
             layout.Fieldset(
                 'Your availability',
@@ -44,11 +43,9 @@ class DriverForm(CrispyFormMixin, forms.ModelForm):
 
     class Meta:
         model = Driver
-        exclude = ('user',)
+        exclude = ('user', 'vehicle_types')
         widgets = {
             'driving_experience': forms.widgets.Select,
-            'vehicle_types_own': forms.widgets.CheckboxSelectMultiple,
-            'vehicle_types_able': forms.widgets.CheckboxSelectMultiple,
         }
 
 
@@ -64,3 +61,38 @@ class SignupFormDriverDetails(DriverForm):
         "Saves the driver model, given the user."
         self.instance.user = user
         return super(SignupFormDriverDetails, self).save()
+
+
+class DriverVehicleTypeForm(CrispyFormMixin, forms.ModelForm):
+    "Form for creating/editing a driver vehicle."
+
+    @property
+    def submit_text(self):
+        return 'Save' if self.instance.pk else 'Create'
+
+    @property
+    def submit_context(self):
+        icon_name = 'save' if self.instance.pk else 'create'
+        return {'icon_name': icon_name}
+
+
+    def __init__(self, *args, **kwargs):
+        self.driver = kwargs.pop('driver')
+        super(DriverVehicleTypeForm, self).__init__(*args, **kwargs)
+
+        # Limit choices to vehicle types they haven't already created
+        existing_vehicle_types = self.driver.vehicle_types.values('pk')
+        if self.instance.pk:
+            # If we're editing it, we should include the object's own vehicle
+            existing_vehicle_types = existing_vehicle_types.exclude(
+                                            pk=self.instance.vehicle_type.pk)
+        self.fields['vehicle_type'].queryset = VehicleType.objects.exclude(
+                                            pk__in=existing_vehicle_types)
+
+    def save(self):
+        self.instance.driver = self.driver
+        return super(DriverVehicleTypeForm, self).save()
+
+    class Meta:
+        model = DriverVehicleType
+        fields = ('vehicle_type', 'own_vehicle', 'delivery_box')

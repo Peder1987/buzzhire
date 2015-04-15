@@ -10,3 +10,5 @@ class DriverAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.Driver, DriverAdmin)
+admin.site.register(models.VehicleType)
+admin.site.register(models.DriverVehicleType)

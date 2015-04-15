@@ -1,12 +1,12 @@
 {% load icons %}
 {% if request.user.is_freelancer %}
     <div class="panel panel-default">
-      <div class="panel-heading">{{ 'driver'|icon }} Bookings</div>
+      <div class="panel-heading">{{ 'driver'|icon }} Booking</div>
       <div class="list-group">
           {% url 'availability_update' as link_url %}
           {% include 'includes/panel_link.html' with icon_name='availability' link_text='Availability' %}
           {% url 'freelancer_bookings_list' as link_url %}
-          {% include 'includes/panel_link.html' with icon_name='freelancer_bookings' link_text='My bookings' %}
+          {% include 'includes/panel_link.html' with icon_name='freelancer_bookings' link_text='Bookings' %}
       </div>
     </div>
 {% endif %}

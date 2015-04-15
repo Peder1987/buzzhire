@@ -50,17 +50,13 @@ class Driver(Freelancer):
     vehicle_types_old = MultiSelectField(choices=VEHICLE_TYPE_CHOICES,
                                          blank=True)
 
-    vehicle_types_able = models.ManyToManyField(VehicleType,
-             verbose_name='Vehicles you can drive',
-             related_name='drivers_able',
+    vehicle_types = models.ManyToManyField(VehicleType,
+             verbose_name='Vehicles',
+             through='DriverVehicleType',
+             blank=True,
+             related_name='drivers',
              help_text='Which vehicles you are able and licensed to drive. '
                     'You do not need to provide the vehicle for the booking.')
-    vehicle_types_own = models.ManyToManyField(
-            VehicleType,
-            verbose_name='Vehicles you can provide',
-            blank=True,
-            related_name='drivers_own',
-            help_text='Which vehicles you can provide for a booking.')
 
     motorcycle_licence = models.BooleanField('I have a CBT/full motorcycle license.',
                                              default=False)
@@ -84,8 +80,40 @@ class Driver(Freelancer):
     driving_experience = models.PositiveSmallIntegerField(default=1,
                                         choices=DRIVING_EXPERIENCE_CHOICES)
 
-    own_vehicle = models.BooleanField('I have my own vehicle',
-                                      default=False)
-
     objects = models.Manager()
     published_objects = PublishedFreelancerManager()
+
+
+class DriverVehicleType(models.Model):
+    """'Through' model for storing information for a driver about
+    a particular vehicle.
+    """
+    driver = models.ForeignKey(Driver)
+    vehicle_type = models.ForeignKey(VehicleType,
+        help_text='Note: you may only create one vehicle of each type.')
+
+    own_vehicle = models.BooleanField(
+                            'I can provide this vehicle on a job.',
+                            default=False)
+    # We store deliver box sizes as integers so we can do simple
+    # greater than / less than searches
+    DELIVERY_BOX_NONE = 0
+    DELIVERY_BOX_STANDARD = 2
+    DELIVERY_BOX_PIZZA = 4
+    DELIVERY_BOX_CHOICES = (
+        (DELIVERY_BOX_NONE, 'None'),
+        (DELIVERY_BOX_STANDARD, 'Standard'),
+        (DELIVERY_BOX_PIZZA, 'Pizza'),
+    )
+    delivery_box = models.PositiveSmallIntegerField(
+                'Minimum delivery box size', choices=DELIVERY_BOX_CHOICES,
+                default=DELIVERY_BOX_NONE,
+                help_text='What size delivery box does your vehicle have? '
+                    '(Scooters, motorcycles and bicycles only.)')
+
+    def __unicode__(self):
+        return unicode(self.vehicle_type)
+
+    class Meta:
+        unique_together = ('driver', 'vehicle_type')
+        ordering = ('vehicle_type__title',)

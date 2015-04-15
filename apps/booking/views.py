@@ -15,7 +15,7 @@ class FreelancerBookingsList(FreelancerOnlyMixin,
     job requests in the past, otherwise it will show upcoming job requests.   
     """
     paginate_by = 2
-    extra_context = {'title': 'My bookings'}
+    extra_context = {'title': 'Bookings'}
     tabs = [
         ('Upcoming', reverse_lazy('freelancer_bookings_list')),
         ('Past', reverse_lazy('freelancer_bookings_list_past')),

@@ -5,11 +5,13 @@
       {% with client=request.user.client driver=request.user.driver %}
           {% if client %}
             {% url 'client_change' client.pk as link_url %}
-            {% include 'includes/panel_link.html' with icon_name='client_profile_change' link_text='Edit your profile' %}
+            {% include 'includes/panel_link.html' with icon_name='client_profile_change' link_text='Edit profile' %}
           {% endif %}
           {% if driver %}
             {% url 'driver_change' driver.pk as link_url %}
-            {% include 'includes/panel_link.html' with icon_name='driver_profile_change' link_text='Edit your profile' %}
+            {% include 'includes/panel_link.html' with icon_name='driver_profile_change' link_text='Edit profile' %}
+            {% url 'drivervehicletype_list' as link_url %}
+            {% include 'includes/panel_link.html' with icon_name='vehicletypes' link_text='Vehicles' %}
           {% endif %}
       {% endwith %}
       {% url 'account_change_password' as link_url %}

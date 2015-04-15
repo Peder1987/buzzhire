@@ -1,6 +1,13 @@
 {% extends 'account/dashboard_base.html' %}
+{% load icons %}
 {% block page_title_sidebar %}{% endblock %}
 
 {% block content %}
     <h4>Welcome to your account dashboard!</h4>
+    {% if request.user.is_driver and not request.user.driver.vehicle_types.exists %}
+        <div class='alert alert-warning'>
+            <p>Before anyone can book you, we need to know which vehicles you drive.</p>
+            <p><a href='{% url 'drivervehicletype_add' %}' class='btn btn-default'>{{ 'create'|icon }} Create a vehicle</a></p>
+        </div>
+    {% endif %}
 {% endblock %}

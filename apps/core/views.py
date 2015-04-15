@@ -216,14 +216,21 @@ class ConfirmationMixin(FormMixin):
 class OwnerOnlyMixin(object):
     """Mixin for a DetailView - restricts the view to the user who owns
     the model in question, or a site admin.
-    'Ownership' is determined by a 'user' field on the model.
+    
+    By default, 'ownership' is determined by a 'user' field on the model.
+    This can be changed by overriding the is_owner() method.
     """
+    def is_owner(self):
+        "Whether or not the current user should be treated as the 'owner'."
+        return self.get_object().user == self.request.user
+
     def dispatch(self, request, *args, **kwargs):
         # If the user is not logged in, give them the chance to
         if self.request.user.is_anonymous():
             return redirect_to_login(self.request.path)
         elif not self.request.user.is_admin:
-            if self.get_object().user != self.request.user:
+            if not self.is_owner():
                 # The user doesn't 'own' the object
                 raise PermissionDenied
         return super(OwnerOnlyMixin, self).dispatch(request, *args, **kwargs)
+

@@ -17,6 +17,7 @@ ICON_MAP = {
     'forgot': 'question-circle',
     'admin': 'cogs',
     'edit': 'edit',
+    'delete': 'trash',
     'password': 'lock',
     'book': 'calendar',
     'date': 'calendar',
@@ -34,6 +35,9 @@ ICON_MAP = {
     'save': 'check-circle',
     'job_matching': 'search',
     'create': 'plus-circle',
+    'vehicletypes': 'car',
+    'yes': 'check',
+    'no': 'times',
 }
 
 @register.filter

@@ -19,5 +19,14 @@ urlpatterns = [
     url(r"^(?P<pk>[\d]+)/edit/$", views.DriverUpdateView.as_view(),
         name="driver_change"),
 
+    url(r"^vehicles/$", views.DriverVehicleTypeListView.as_view(),
+        name="drivervehicletype_list"),
+    url(r"^vehicles/add/$", views.DriverVehicleTypeCreateView.as_view(),
+        name="drivervehicletype_add"),
+    url(r"^vehicles/(?P<pk>[\d]+)/$", views.DriverVehicleTypeUpdateView.as_view(),
+        name="drivervehicletype_change"),
+    url(r"^vehicles/(?P<pk>[\d]+)/delete/$", views.DriverVehicleTypeDeleteView.as_view(),
+        name="drivervehicletype_delete"),
+
 ]
 
