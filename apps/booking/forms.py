@@ -87,7 +87,10 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
                                 label='The driver needs their own vehicle.',
                                 required=False)
     minimum_delivery_box = forms.ChoiceField(required=False,
-                        choices=DriverVehicleType.DELIVERY_BOX_CHOICES)
+                        choices=DriverVehicleType.DELIVERY_BOX_CHOICES,
+                        help_text='N.B. This will filter out any vehicle '
+                            'that does not have a delivery box of at least '
+                            'this size, including cars.')
 
     # Maps field name to filter kwargs when searching
     FILTER_MAP = {
@@ -113,7 +116,6 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
         results = self.filter_from_map(results)
 
         results = self.filter_by_vehicle_requirements(results)
-        results = self.filter_by_delivery_box(results)
         results = self.filter_by_availability(results)
 
         # Return unique results
@@ -128,25 +130,28 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
                 filter_kwargs[filter_kwarg] = self.cleaned_data[field_name]
         return results.filter(**filter_kwargs)
 
-    def filter_by_delivery_box(self, results):
-        "Filters by minimum delivery box."
-        return results
-
     def filter_by_vehicle_requirements(self, results):
         "Filters by vehicle requirements."
 
         if self.cleaned_data['vehicle_types']:
             if self.cleaned_data['own_vehicle']:
                 # Filter by vehicle types that are owned
-                results = results.filter(
-                            drivervehicletype__vehicle_type=\
-                                        self.cleaned_data['vehicle_types'],
-                            drivervehicletype__own_vehicle=True)
+                filter_kwargs = {
+                    'drivervehicletype__vehicle_type': \
+                                    self.cleaned_data['vehicle_types'],
+                    'drivervehicletype__own_vehicle': True
+                }
+                # Include delivery box filter, if specified
+                if self.cleaned_data['minimum_delivery_box']:
+                    filter_kwargs['drivervehicletype__delivery_box__gte'] = \
+                                    self.cleaned_data['minimum_delivery_box']
+                results = results.filter(**filter_kwargs)
             else:
                 # Just filter by vehicle types
-                results = results.filter(
-                            vehicle_types=self.cleaned_data['vehicle_types'])
-        return results
+                filter_kwargs = {
+                    'vehicle_types': self.cleaned_data['vehicle_types']
+                }
+        return results.filter(**filter_kwargs)
 
     def filter_by_availability(self, results):
         "Filters by availability, if it's been searched for."
