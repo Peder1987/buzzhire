@@ -115,10 +115,11 @@ class DriverJobRequestCreateAnonymous(BaseSignupView):
         user = form.save(self.request)
         # Save extra forms too
         client = self.bound_forms['client'].save(user=user)
-        self.bound_forms['driverjobrequest'].save(client=client)
+        driverjobrequest = self.bound_forms['driverjobrequest'].save(
+                                                                client=client)
         # Send signal (see DriverJobRequestCreate for explanation)
         signals.driverjobrequest_created.send(sender=self.__class__,
-                                      driverjobrequest=self.object)
+                                      driverjobrequest=driverjobrequest)
         return complete_signup(self.request, user,
                                app_settings.EMAIL_VERIFICATION,
                                self.get_success_url())
