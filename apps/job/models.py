@@ -22,8 +22,10 @@ def client_to_driver_rate(client_rate):
     driver_rate = client_rate * (1 - (Decimal(COMMISSION_PERCENT) / 100))
 
     # Round driver rate to nearest 25p
+    # TB the "%.2f" conversion ensures it's to two decimal places
     ROUNDING = float(COMMISSION_ROUND_PENCE) / 100
-    driver_rate.amount = Decimal(round(float(driver_rate.amount) / ROUNDING) * ROUNDING)
+    driver_rate.amount = Decimal(
+            "%.2f" % (round(float(driver_rate.amount) / ROUNDING) * ROUNDING))
     return driver_rate
 
 

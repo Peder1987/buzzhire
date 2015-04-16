@@ -8,6 +8,7 @@ from multiselectfield.forms.fields import MultiSelectFormField
 from djmoney.forms.fields import MoneyField
 from apps.core.widgets import Bootstrap3SterlingMoneyWidget
 from .models import Availability
+from apps.job.models import client_to_driver_rate
 from apps.driver.models import Driver, VehicleType, DriverVehicleType
 
 
@@ -99,6 +100,7 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
                         help_text='N.B. This will filter out any vehicle '
                             'that does not have a delivery box of at least '
                             'this size, including cars.')
+
     PHONE_TYPE_CHOICES = ((None, 'No preference'),) \
                          + Driver.PHONE_TYPE_CHOICES
     phone_type = forms.ChoiceField(required=False,
@@ -139,6 +141,7 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
 
         results = self.filter_by_vehicle_requirements(results)
         results = self.filter_by_availability(results)
+        results = self.filter_by_pay_per_hour(results)
 
         # Return unique results
         return results.distinct()
@@ -193,4 +196,15 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
             # Filter
             results = results.filter(**filter_kwargs)
 
+        return results
+
+    def filter_by_pay_per_hour(self, results):
+        """Filters the results based on the minimum pay per hour.
+        """
+
+        if self.cleaned_data['client_pay_per_hour']:
+            self.driver_pay_per_hour = client_to_driver_rate(
+                                    self.cleaned_data['client_pay_per_hour'])
+            return results.filter(
+                            minimum_pay_per_hour__lte=self.driver_pay_per_hour)
         return results

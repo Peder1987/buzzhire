@@ -14,6 +14,7 @@
                     {{ form.minimum_driving_experience|as_crispy_field }}
                     {{ form.phone_type|as_crispy_field }}
                     {{ form.client_pay_per_hour|as_crispy_field }}
+                    {% if form.driver_pay_per_hour %}<p class='help-block'>Calculated driver rate: <strong>&pound;{{ form.driver_pay_per_hour.amount }}</strong>.</p>{% endif %}
                 </div>
                 <div class='col-md-4'>
                     {{ form.vehicle_types|as_crispy_field }}
