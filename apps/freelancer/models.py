@@ -7,6 +7,7 @@ from datetime import date
 from django.core import validators
 from multiselectfield import MultiSelectField
 from djmoney.models.fields import MoneyField
+from apps.location.models import Postcode
 import calendar
 
 def _is_freelancer(self):
@@ -114,6 +115,8 @@ class Freelancer(models.Model):
     minimum_pay_per_hour = MoneyField(max_digits=5, decimal_places=2,
                   default_currency='GBP', default=Decimal(8.50),
                   help_text='The minimum pay per hour you will accept.')
+
+    postcode = models.ForeignKey(Postcode, blank=True, null=True)
 
     objects = models.Manager()
     published_objects = PublishedFreelancerManager()

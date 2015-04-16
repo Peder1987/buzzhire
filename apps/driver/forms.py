@@ -1,16 +1,23 @@
 from django import forms
 from django.forms import widgets
+from django.core.exceptions import ValidationError
 from apps.core.forms import CrispyFormMixin
 from crispy_forms.helper import FormHelper
 from crispy_forms import layout
 from apps.core.widgets import Bootstrap3SterlingMoneyWidget
 from .models import Driver, DriverVehicleType, VehicleType
+from apps.location.models import Postcode
+from apps.location.utils import GeoLocationMatchException
 
 
 class DriverForm(CrispyFormMixin, forms.ModelForm):
     """Edit form for a driver's profile."""
     submit_text = 'Save profile'
     submit_context = {'icon_name': 'edit'}
+    raw_postcode = forms.CharField(label='Postcode', max_length=10,
+                                   required=False,
+        help_text='The postcode of where you are based.  This helps us match '
+        'you with jobs that are nearby.')
 
     def __init__(self, *args, **kwargs):
         super(DriverForm, self).__init__(*args, **kwargs)
@@ -43,6 +50,10 @@ class DriverForm(CrispyFormMixin, forms.ModelForm):
                 'Your rates',
                 'minimum_pay_per_hour',
             ),
+            layout.Fieldset(
+                'Your location',
+                'raw_postcode',
+            ),
 #             layout.Fieldset(
 #                 'Your availability',
 #                 'days_available',
@@ -51,6 +62,16 @@ class DriverForm(CrispyFormMixin, forms.ModelForm):
         )
 
         self.helper.layout.append(self.get_submit_button())
+
+    def clean_raw_postcode(self):
+        standardised_postcode = self.cleaned_data['raw_postcode'].replace(
+                                                                    ' ', '')
+        try:
+            self.cleaned_data['postcode'], created = Postcode.objects.get_or_create(
+                                            postcode=standardised_postcode)
+        except GeoLocationMatchException:
+            raise ValidationError('That was not a valid postcode.')
+
 
     class Meta:
         model = Driver

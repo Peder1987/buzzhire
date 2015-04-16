@@ -13,6 +13,7 @@ class ProjectConfiguration(StandardConfiguration):
         # Apps lower down the list should import from apps higher up the list,
         # and not the other way around
         'django.contrib.humanize',
+        'django.contrib.gis',
         'crispy_forms',
         'allauth',
         'allauth.account',
@@ -24,6 +25,7 @@ class ProjectConfiguration(StandardConfiguration):
         'dbbackup',
         'django_bootstrap_breadcrumbs',
         'apps.core',
+        'apps.location',
         'apps.account',
         'apps.freelancer',
         'apps.client',
@@ -84,3 +86,7 @@ class ProjectConfiguration(StandardConfiguration):
         'acpmasquerade/bootstrap3-timepicker2',
     )
 
+    @property
+    def DEFAULT_DATABASE_ENGINE(self):
+        # Location-based database
+        return 'django.contrib.gis.db.backends.postgis'
