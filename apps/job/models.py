@@ -83,7 +83,7 @@ class JobRequest(models.Model):
                   default_currency='GBP', default=Decimal(8.50),
                   help_text='How much you will pay per hour, for each driver.')
     date = models.DateField(default=date.today)
-    start_time = models.TimeField(default=datetime.now)
+    start_time = models.TimeField(default='9:00 AM')
     duration = models.PositiveSmallIntegerField(default=1,
                     help_text='Length of the job, in hours.')
     number_of_freelancers = models.PositiveSmallIntegerField(

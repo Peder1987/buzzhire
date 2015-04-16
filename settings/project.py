@@ -70,6 +70,8 @@ class ProjectConfiguration(StandardConfiguration):
     LOGIN_URL = 'account_login'
     CURRENCIES = ('GBP',)
 
+    TIME_INPUT_FORMATS = ['%I:%M %p']
+
     def BOWER_COMPONENTS_ROOT(self):
         return os.path.join(self.PROJECT_ROOT, 'components')
 
@@ -79,6 +81,6 @@ class ProjectConfiguration(StandardConfiguration):
     # so bower install doesn't need to be run by the other installations.
     BOWER_INSTALLED_APPS = (
         'eternicode/bootstrap-datepicker',
-        'weareoutman/clockpicker',
+        'acpmasquerade/bootstrap3-timepicker2',
     )
 

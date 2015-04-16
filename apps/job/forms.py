@@ -24,7 +24,7 @@ class DriverJobRequestForm(CrispyFormMixin, forms.ModelForm):
         self.fields['client_pay_per_hour'].widget = Bootstrap3SterlingMoneyWidget(
           amount_widget=amount.widget, currency_widget=widgets.HiddenInput,
           attrs={'step': '0.25'})
-        self.fields['start_time'].widget = forms.TimeInput(format='%H:%M')
+        self.fields['start_time'].widget = forms.TimeInput()
         self.fields['duration'].widget = Bootstrap3TextInput(addon_after='hours')
         self.fields['city'].widget.attrs = {'disabled': 'disabled'}
         self.fields['comments'].widget.attrs = {'rows': 3}
