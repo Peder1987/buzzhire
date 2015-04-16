@@ -32,11 +32,11 @@ class DriverForm(CrispyFormMixin, forms.ModelForm):
                 'phone_type',
                 'delivery_box',
             ),
-            layout.Fieldset(
-                'Your availability',
-                'days_available',
-                'hours_available',
-            ),
+#             layout.Fieldset(
+#                 'Your availability',
+#                 'days_available',
+#                 'hours_available',
+#             ),
         )
 
         self.helper.layout.append(self.get_submit_button())

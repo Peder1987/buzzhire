@@ -6,6 +6,7 @@ from apps.core.views import ContextMixin, TabsMixin
 from apps.freelancer.views import FreelancerOnlyMixin
 from .models import Booking, Availability
 from .forms import AvailabilityForm, JobMatchingForm
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 class FreelancerBookingsList(FreelancerOnlyMixin,
@@ -30,7 +31,7 @@ class FreelancerBookingsList(FreelancerOnlyMixin,
             return queryset.future()
 
 
-class AvailabilityUpdate(FreelancerOnlyMixin,
+class AvailabilityUpdate(FreelancerOnlyMixin, SuccessMessageMixin,
                          ContextMixin, UpdateView):
     """View for freelancer to edit their availability.
     """
@@ -38,18 +39,15 @@ class AvailabilityUpdate(FreelancerOnlyMixin,
     extra_context = {'title': 'Availability'}
     form_class = AvailabilityForm
     success_url = reverse_lazy('availability_update')
+    success_message = 'Saved.'
 
     def get_object(self):
-        # Return the Availability for the Freelancer, creating one
-        # if it doesn't exist.
+        # Return the Availability for the Freelancer, creating
+        # (but not saving) one if it doesn't exist.
         try:
             return self.freelancer.availability
         except Availability.DoesNotExist:
-            return Availability.objects.create(freelancer=self.freelancer)
-
-    def form_valid(self, *args, **kwargs):
-        messages.add_message(self.request, messages.INFO, 'Saved.')
-        return super(AvailabilityUpdate, self).form_valid(*args, **kwargs)
+            return Availability(freelancer=self.freelancer)
 
 
 class JobMatchingView(AdminOnlyMixin, ContextMixin, ListView):
