@@ -21,8 +21,9 @@
 <p><strong>Phone requirement:</strong> {{ object.get_phone_requirement_display }} </p>
 
 <h5>Budget</h5>
-{# TODO - this must display differently depending on who is reading it #}
-<p><strong>Pay per hour:</strong> &pound;{{ object.pay_per_hour.amount }} </p>
+{% block budget_details %}
+    <p><strong>Pay per hour:</strong> &pound;{{ object.driver_pay_per_hour.amount }} </p>
+{% endblock %}
 
 {% if object.comments %}
 <h5>Comments</h5>

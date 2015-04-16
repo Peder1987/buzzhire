@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django import forms
 from django.forms import widgets
 from .models import DriverJobRequest
@@ -19,10 +20,10 @@ class DriverJobRequestForm(CrispyFormMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(DriverJobRequestForm, self).__init__(*args, **kwargs)
 
-        amount, currency = self.fields['pay_per_hour'].fields
-        self.fields['pay_per_hour'].widget = Bootstrap3SterlingMoneyWidget(
-           amount_widget=amount.widget, currency_widget=widgets.HiddenInput,
-           attrs={'step': '0.25'})
+        amount, currency = self.fields['client_pay_per_hour'].fields
+        self.fields['client_pay_per_hour'].widget = Bootstrap3SterlingMoneyWidget(
+          amount_widget=amount.widget, currency_widget=widgets.HiddenInput,
+          attrs={'step': '0.25'})
         self.fields['start_time'].widget = forms.TimeInput(format='%H:%M')
         self.fields['duration'].widget = Bootstrap3TextInput(addon_after='hours')
         self.fields['city'].widget.attrs = {'disabled': 'disabled'}
@@ -46,7 +47,7 @@ class DriverJobRequestForm(CrispyFormMixin, forms.ModelForm):
                 'phone_requirement',
             ),
             layout.Fieldset('Budget',
-                'pay_per_hour',
+                'client_pay_per_hour',
             ),
             layout.Fieldset('Further info',
                 'comments'
@@ -72,7 +73,7 @@ class DriverJobRequestForm(CrispyFormMixin, forms.ModelForm):
         fields = ('date', 'start_time', 'duration',
                   'address1', 'address2', 'city',
                   'postcode',
-                  'pay_per_hour',
+                  'client_pay_per_hour',
                   'vehicle_types', 'own_vehicle',
                   'minimum_delivery_box',
                   'driving_experience',

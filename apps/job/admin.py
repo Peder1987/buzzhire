@@ -14,7 +14,7 @@ admin.site.register(models.JobRequest, JobRequestAdmin)
 
 class DriverJobRequestAdmin(JobRequestAdmin):
     list_display = ('reference_number', 'client', 'date', 'start_time',
-                    'duration', 'pay_per_hour', 'number_of_freelancers',
+                    'duration', 'client_pay_per_hour', 'number_of_freelancers',
                     'status')
 
 admin.site.register(models.DriverJobRequest, DriverJobRequestAdmin)

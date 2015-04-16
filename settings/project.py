@@ -81,3 +81,4 @@ class ProjectConfiguration(StandardConfiguration):
         'eternicode/bootstrap-datepicker',
         'weareoutman/clockpicker',
     )
+

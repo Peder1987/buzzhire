@@ -1,8 +1,12 @@
 import calendar
+from decimal import Decimal
 from django import forms
+from django.forms import widgets
 from django.db.models import BooleanField
 from apps.core.forms import CrispyFormMixin
 from multiselectfield.forms.fields import MultiSelectFormField
+from djmoney.forms.fields import MoneyField
+from apps.core.widgets import Bootstrap3SterlingMoneyWidget
 from .models import Availability
 from apps.driver.models import Driver, VehicleType, DriverVehicleType
 
@@ -83,6 +87,10 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
 
     minimum_driving_experience = forms.ChoiceField(required=False,
                                     choices=DRIVING_EXPERIENCE_CHOICES)
+
+    client_pay_per_hour = MoneyField(max_digits=5, decimal_places=2,
+                                     required=False)
+
     own_vehicle = forms.BooleanField(
                                 label='The driver needs their own vehicle.',
                                 required=False)
@@ -101,6 +109,15 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
         'minimum_driving_experience': 'driving_experience__gte',
         'phone_type': 'phone_type',
     }
+
+    def __init__(self, *args, **kwargs):
+        super(JobMatchingForm, self).__init__(*args, **kwargs)
+        amount, currency = self.fields['client_pay_per_hour'].fields
+        self.fields['client_pay_per_hour'].widget = \
+            Bootstrap3SterlingMoneyWidget(
+               amount_widget=amount.widget,
+               currency_widget=widgets.HiddenInput(attrs={'value': 'GBP'}),
+               attrs={'step': '0.25'})
 
     def clean(self):
         super(JobMatchingForm, self).clean()

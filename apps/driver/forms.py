@@ -1,7 +1,9 @@
 from django import forms
+from django.forms import widgets
 from apps.core.forms import CrispyFormMixin
 from crispy_forms.helper import FormHelper
 from crispy_forms import layout
+from apps.core.widgets import Bootstrap3SterlingMoneyWidget
 from .models import Driver, DriverVehicleType, VehicleType
 
 
@@ -12,6 +14,11 @@ class DriverForm(CrispyFormMixin, forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(DriverForm, self).__init__(*args, **kwargs)
+
+        amount, currency = self.fields['minimum_pay_per_hour'].fields
+        self.fields['minimum_pay_per_hour'].widget = Bootstrap3SterlingMoneyWidget(
+          amount_widget=amount.widget, currency_widget=widgets.HiddenInput,
+          attrs={'step': '0.25'})
 
         self.helper.layout = layout.Layout(
             layout.Fieldset(
@@ -31,6 +38,10 @@ class DriverForm(CrispyFormMixin, forms.ModelForm):
                 'Your equipment',
                 'phone_type',
                 'delivery_box',
+            ),
+            layout.Fieldset(
+                'Your rates',
+                'minimum_pay_per_hour',
             ),
 #             layout.Fieldset(
 #                 'Your availability',

@@ -16,7 +16,7 @@ def notify_admin_on_job_request(sender, driverjobrequest, **kwargs):
               'email/base',
               {'title': 'New job request',
                'content': render_to_string(
-                        'job/email/includes/driverjobrequest.html',
+                        'job/email/includes/admin_driverjobrequest.html',
                         {'object': driverjobrequest, 'admin': True})})
 
 
