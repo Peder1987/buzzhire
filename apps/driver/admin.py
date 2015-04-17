@@ -4,7 +4,7 @@ from . import models
 
 class DriverAdmin(admin.ModelAdmin):
     list_display = ('reference_number', 'user', 'first_name', 'last_name',
-                    'published')
+                    'published', 'postcode')
     list_filter = ('published',)
     exclude = ('driving_experience_old', 'vehicle_types_old')
 

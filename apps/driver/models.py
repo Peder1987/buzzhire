@@ -1,4 +1,4 @@
-from django.db import models
+from django.contrib.gis.db import models
 from django.contrib.auth.models import User
 from multiselectfield import MultiSelectField
 from apps.freelancer.models import Freelancer, PublishedFreelancerManager
@@ -81,7 +81,7 @@ class Driver(Freelancer):
     driving_experience = models.PositiveSmallIntegerField(default=1,
                                         choices=DRIVING_EXPERIENCE_CHOICES)
 
-    objects = models.Manager()
+    objects = models.GeoManager()
     published_objects = PublishedFreelancerManager()
 
 

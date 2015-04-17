@@ -10,6 +10,7 @@ from apps.core.widgets import Bootstrap3SterlingMoneyWidget
 from .models import Availability
 from apps.job.models import client_to_driver_rate
 from apps.driver.models import Driver, VehicleType, DriverVehicleType
+from apps.location.forms import PostcodeFormMixin
 
 
 class AvailabilityForm(forms.ModelForm):
@@ -66,7 +67,7 @@ class AvailabilityForm(forms.ModelForm):
         exclude = ('freelancer',)
 
 
-class JobMatchingForm(CrispyFormMixin, forms.Form):
+class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
     """Form for searching drivers to help match them to jobs."""
 
     date = forms.DateField(required=False)
@@ -142,6 +143,7 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
         results = self.filter_by_vehicle_requirements(results)
         results = self.filter_by_availability(results)
         results = self.filter_by_pay_per_hour(results)
+        results = self.filter_by_location(results)
 
         # Return unique results
         return results.distinct()
@@ -207,4 +209,15 @@ class JobMatchingForm(CrispyFormMixin, forms.Form):
                                     self.cleaned_data['client_pay_per_hour'])
             return results.filter(
                             minimum_pay_per_hour__lte=self.driver_pay_per_hour)
+        return results
+
+    def filter_by_location(self, results):
+        """Filters the results by the supplied postcode, checking that it's
+        within an acceptable distance for the driver."""
+        if self.cleaned_data.get('postcode'):
+            # Specific include distances so the template knows
+            self.include_distances = True
+            results = results.distance(self.cleaned_data['postcode'].point,
+                                       field_name='postcode__point')\
+                        .order_by('distance')
         return results

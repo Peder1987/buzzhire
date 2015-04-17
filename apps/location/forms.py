@@ -19,10 +19,12 @@ class PostcodeFormMixin(forms.Form):
         # to link with the postcode ForeignKey field.
         compressed_postcode = self.cleaned_data['raw_postcode'].replace(
                                                                     ' ', '')
+        # If they supply a postcode
         if compressed_postcode:
-            # If they supply a postcode
-            if self.instance.postcode_id and compressed_postcode \
-                            == self.instance.postcode.compressed_postcode:
+            is_model_form = hasattr(self, 'instance')
+            if is_model_form and self.instance.postcode_id and \
+                                    compressed_postcode == \
+                                    self.instance.postcode.compressed_postcode:
                 # Postcode is the same, don't attempt to recreate it
                 self.cleaned_data['postcode'] = self.instance.postcode
             else:

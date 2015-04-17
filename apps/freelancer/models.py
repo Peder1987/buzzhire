@@ -1,5 +1,5 @@
 from decimal import Decimal
-from django.db import models
+from django.contrib.gis.db import models
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.conf import settings
@@ -30,7 +30,7 @@ def _freelancer(self):
 User.freelancer = property(_freelancer)
 
 
-class PublishedFreelancerManager(models.Manager):
+class PublishedFreelancerManager(models.GeoManager):
     """Manager for published freelancers.
     Note that models inheriting Freelancer should redeclare it:
     
@@ -127,7 +127,7 @@ class Freelancer(models.Model):
         choices=DISTANCE_CHOICES, default=5,
         help_text='The maximum distance you are prepared to travel to a job.')
 
-    objects = models.Manager()
+    objects = models.GeoManager()
     published_objects = PublishedFreelancerManager()
 
     @property

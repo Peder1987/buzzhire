@@ -63,7 +63,7 @@ class DriverForm(CrispyFormMixin, PostcodeFormMixin, forms.ModelForm):
 
     class Meta:
         model = Driver
-        exclude = ('user', 'vehicle_types', 'motorcycle_licence')
+        exclude = ('user', 'vehicle_types', 'motorcycle_licence', 'published')
         widgets = {
             'driving_experience': forms.widgets.Select,
         }
