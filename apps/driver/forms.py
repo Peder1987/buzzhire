@@ -43,7 +43,6 @@ class DriverForm(CrispyFormMixin, forms.ModelForm):
                 'english_fluency',
                 'eligible_to_work',
                 'driving_experience',
-                'motorcycle_licence',
             ),
             layout.Fieldset(
                 'Your equipment',
@@ -87,7 +86,7 @@ class DriverForm(CrispyFormMixin, forms.ModelForm):
 
     class Meta:
         model = Driver
-        exclude = ('user', 'vehicle_types')
+        exclude = ('user', 'vehicle_types', 'motorcycle_licence')
         widgets = {
             'driving_experience': forms.widgets.Select,
         }

@@ -58,6 +58,7 @@ class Driver(Freelancer):
              help_text='Which vehicles you are able and licensed to drive. '
                     'You do not need to provide the vehicle for the booking.')
 
+    # TODO - remove
     motorcycle_licence = models.BooleanField('I have a CBT/full motorcycle license.',
                                              default=False)
 
