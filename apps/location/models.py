@@ -1,4 +1,5 @@
 from django.contrib.gis.db import models
+from django.core.exceptions import ValidationError
 from .utils import GeoLocation, GeoLocationMatchException
 
 
@@ -6,23 +7,19 @@ class Postcode(models.Model):
     """A postcode is a model that represents a particular postcode,
     with a geographical point."""
 
-    postcode = models.CharField(max_length=8, db_index=True)
+    # The postcode, without spaces - easier to use as a key
+    compressed_postcode = models.CharField(max_length=8, db_index=True)
+    # Human-friendly version of the postcode
+    postcode = models.CharField(max_length=8, blank=True)
     point = models.PointField()
 
     objects = models.GeoManager()
 
-    def __init__(self, *args, **kwargs):
-        super(Postcode, self).__init__(*args, **kwargs)
-        # Store the original postcode, so we can tell if it's change
-        # in the save() method
-        self._original_postcode = self.postcode
-
     def save(self, *args, **kwargs):
-        # If the postcode has changed,
-        # set the point based on the postcode
-        if not self.point or (self.postcode != self._original_postcode):
+        # Set the point based on the postcode
+        if not self.point:
             try:
-                geolocation = GeoLocation(self.postcode)
+                geolocation = GeoLocation(self.compressed_postcode)
             except GeoLocationMatchException as e:
                 # This is most likely to happen if the quota is exceeded
                 raise ValidationError(
@@ -31,6 +28,7 @@ class Postcode(models.Model):
                     "the postcode.")
             else:
                 self.point = geolocation.point
+                self.postcode = geolocation.postcode
 
         # Ensure we validate the model before saving
         self.full_clean()
@@ -40,4 +38,4 @@ class Postcode(models.Model):
         return self.postcode
 
     class Meta:
-        ordering = ['postcode']
+         ordering = ['postcode']

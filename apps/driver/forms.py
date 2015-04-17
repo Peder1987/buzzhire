@@ -27,6 +27,10 @@ class DriverForm(CrispyFormMixin, forms.ModelForm):
           amount_widget=amount.widget, currency_widget=widgets.HiddenInput,
           attrs={'step': '0.25'})
 
+        # Prepopulate raw_postcode field if there is already a postcode
+        if self.instance.postcode:
+            self.fields['raw_postcode'].initial = str(self.instance.postcode)
+
         self.helper.layout = layout.Layout(
             layout.Fieldset(
                 'Contact details',
@@ -44,7 +48,6 @@ class DriverForm(CrispyFormMixin, forms.ModelForm):
             layout.Fieldset(
                 'Your equipment',
                 'phone_type',
-                'delivery_box',
             ),
             layout.Fieldset(
                 'Your rates',
@@ -53,25 +56,34 @@ class DriverForm(CrispyFormMixin, forms.ModelForm):
             layout.Fieldset(
                 'Your location',
                 'raw_postcode',
+
             ),
-#             layout.Fieldset(
-#                 'Your availability',
-#                 'days_available',
-#                 'hours_available',
-#             ),
         )
 
         self.helper.layout.append(self.get_submit_button())
 
     def clean_raw_postcode(self):
-        standardised_postcode = self.cleaned_data['raw_postcode'].replace(
+        # We use the raw postcode form field to generate a postcode instance
+        # to link with the postcode ForeignKey field.
+        compressed_postcode = self.cleaned_data['raw_postcode'].replace(
                                                                     ' ', '')
-        try:
-            self.cleaned_data['postcode'], created = Postcode.objects.get_or_create(
-                                            postcode=standardised_postcode)
-        except GeoLocationMatchException:
-            raise ValidationError('That was not a valid postcode.')
+        if compressed_postcode:
+            # If they supply a postcode
+            if self.instance.postcode and compressed_postcode \
+                            == self.instance.postcode.compressed_postcode:
+                # Postcode is the same, don't attempt to recreate it
+                self.cleaned_data['postcode'] = self.instance.postcode
+            else:
+                # If the postcode is new or different, create/link it
+                # with a new postcode instance
+                try:
+                    self.cleaned_data['postcode'], created = \
+                                Postcode.objects.get_or_create(
+                                    compressed_postcode=compressed_postcode)
+                except GeoLocationMatchException:
+                    raise ValidationError('That was not a valid postcode.')
 
+        return compressed_postcode
 
     class Meta:
         model = Driver
