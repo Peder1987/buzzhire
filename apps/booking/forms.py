@@ -11,6 +11,7 @@ from .models import Availability
 from apps.job.models import client_to_driver_rate
 from apps.driver.models import Driver, VehicleType, DriverVehicleType
 from apps.location.forms import PostcodeFormMixin
+from django.contrib.gis.measure import D
 
 
 class AvailabilityForm(forms.ModelForm):
@@ -106,6 +107,8 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
                          + Driver.PHONE_TYPE_CHOICES
     phone_type = forms.ChoiceField(required=False,
                                    choices=PHONE_TYPE_CHOICES)
+
+    # respect_travel_distance = forms.BooleanField(required=False)
 
     # Maps field name to filter kwargs when searching
     FILTER_MAP = {
@@ -217,7 +220,17 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
         if self.cleaned_data.get('postcode'):
             # Specific include distances so the template knows
             self.include_distances = True
-            results = results.distance(self.cleaned_data['postcode'].point,
+            searched_point = self.cleaned_data['postcode'].point
+            results = results.distance(searched_point,
                                        field_name='postcode__point')\
                         .order_by('distance')
+
+            # if self.cleaned_data['respect_travel_distance']:
+                # Filter by only those drivers whose travel distance works
+                # with the postcode supplied
+                # TODO - get this working with their personal distance settings
+                # http://stackoverflow.com/questions/9547069/geodjango-distance-filter-with-distance-value-stored-within-model-query
+                # results = results.filter(
+                #      postcode__point__distance_lte=(searched_point, D(mi=4)))
+
         return results

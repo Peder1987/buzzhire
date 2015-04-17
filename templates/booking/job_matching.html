@@ -10,6 +10,7 @@
                     {{ form.date|as_crispy_field }}
                     {{ form.shift|as_crispy_field }}
                     {{ form.raw_postcode|as_crispy_field }}
+                    {{ form.respect_travel_distance|as_crispy_field }}
                 </div>
                 <div class='col-md-4'>
                     {{ form.phone_type|as_crispy_field }}
@@ -32,10 +33,11 @@
                 <thead>
                     <th>Ref</th>
                     <th>Name</th>
+                    <th>Location</th>
+                    <th>Maximum travel distance</th>
                     <th>Can drive</th>
                     <th>Can provide</th>
                     <th>Minimum pay per hour</th>
-                    <th>Location</th>
                     <th></th>
                 </thead>
                 <tbody>
@@ -43,9 +45,6 @@
                         <tr>
                             <td><a href='{% url 'admin:driver_driver_change' object.pk %}'>{{ object.reference_number }}</a></td>
                             <td>{{ object.get_full_name }}</td>
-                            <td>{% for vehicle_type in object.vehicle_types.all %}<span class='label label-default'>{{ vehicle_type }}</span> {% endfor %}</td>
-                            <td>{% for driver_vehicle_type in object.drivervehicletype_set.owned %}<span class='label label-primary'>{{ driver_vehicle_type }}</span> {% endfor %}</td>
-                            <td>&pound;{{ object.minimum_pay_per_hour.amount }}</td>
                             <td>{% if object.postcode %}
                                     {{ object.postcode }}
                                     {% if form.include_distances %}
@@ -55,6 +54,10 @@
                                     {% endif %}
                                 {% else %}unknown{% endif %}
                             </td>
+                            <td>{% if object.postcode %}{{ object.travel_distance }} mile{{ object.travel_distance|pluralize }}{% endif %}</td>
+                            <td>{% for vehicle_type in object.vehicle_types.all %}<span class='label label-default'>{{ vehicle_type }}</span><br>{% endfor %}</td>
+                            <td>{% for driver_vehicle_type in object.drivervehicletype_set.owned %}<span class='label label-primary'>{{ driver_vehicle_type }}</span><br>{% endfor %}</td>
+                            <td>&pound;{{ object.minimum_pay_per_hour.amount }}</td>
                             <td><a class='btn btn-sm btn-default' href='{% url 'admin:booking_booking_add' %}'>{{ 'create'|icon }} Add booking</a> 
                         </tr>
                     {% endfor %}

@@ -38,6 +38,7 @@ ICON_MAP = {
     'vehicletypes': 'car',
     'yes': 'check',
     'no': 'times',
+    'location': 'map-marker',
 }
 
 @register.filter
