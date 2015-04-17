@@ -6,6 +6,7 @@ from multiselectfield import MultiSelectField
 from djmoney.models.fields import MoneyField
 from apps.driver.models import Driver, VehicleType, DriverVehicleType
 from apps.client.models import Client
+from apps.location.models import Postcode
 from decimal import Decimal
 
 
@@ -103,7 +104,7 @@ class JobRequest(models.Model):
     city = models.CharField(max_length=1, blank=True,
                     choices=CITY_CHOICES, default=CITY_LONDON,
                     help_text='We currently only accept bookings in London.')
-    postcode = models.CharField(max_length=10)
+    postcode = models.ForeignKey(Postcode)
 
 
     PHONE_REQUIREMENT_NOT_REQUIRED = 'NR'

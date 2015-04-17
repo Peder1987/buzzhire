@@ -7,6 +7,8 @@ from datetime import date
 from django.core import validators
 from multiselectfield import MultiSelectField
 from djmoney.models.fields import MoneyField
+from django.contrib.humanize.templatetags.humanize import apnumber
+from django.template.defaultfilters import pluralize
 from apps.location.models import Postcode
 import calendar
 
@@ -117,6 +119,13 @@ class Freelancer(models.Model):
                   help_text='The minimum pay per hour you will accept.')
 
     postcode = models.ForeignKey(Postcode, blank=True, null=True)
+
+    DISTANCE_CHOICES = [(i, "%s mile%s" % (str(apnumber(i)).capitalize(),
+                                           pluralize(i))) \
+                                        for i in (1, 2, 5, 10, 20, 50)]
+    travel_distance = models.PositiveSmallIntegerField(
+        choices=DISTANCE_CHOICES, default=5,
+        help_text='The maximum distance you are prepared to travel to a job.')
 
     objects = models.Manager()
     published_objects = PublishedFreelancerManager()

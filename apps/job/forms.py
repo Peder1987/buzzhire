@@ -9,8 +9,11 @@ from django.core.exceptions import ValidationError
 from django.forms.widgets import HiddenInput
 from apps.core.widgets import Bootstrap3SterlingMoneyWidget, Bootstrap3TextInput
 from django.forms import widgets
+from apps.location.forms import PostcodeFormMixin
 
-class DriverJobRequestForm(CrispyFormMixin, forms.ModelForm):
+
+class DriverJobRequestForm(CrispyFormMixin, PostcodeFormMixin,
+                           forms.ModelForm):
     """Form for submitting a job request.
     Should be instantiated with a Client object.
     """
@@ -35,7 +38,7 @@ class DriverJobRequestForm(CrispyFormMixin, forms.ModelForm):
             layout.Fieldset('Location',
                 'address1', 'address2',
                 'city',
-                'postcode',
+                'raw_postcode',
             ),
             layout.Fieldset('Vehicle',
                 'vehicle_types', 'own_vehicle',
@@ -66,13 +69,13 @@ class DriverJobRequestForm(CrispyFormMixin, forms.ModelForm):
         self.instance.client = client
         # Make sure the city of London is saved
         self.instance.city = DriverJobRequest.CITY_LONDON
+        self.instance.postcode = self.cleaned_data['postcode']
         return super(DriverJobRequestForm, self).save(commit)
 
     class Meta:
         model = DriverJobRequest
         fields = ('date', 'start_time', 'duration',
                   'address1', 'address2', 'city',
-                  'postcode',
                   'client_pay_per_hour',
                   'vehicle_types', 'own_vehicle',
                   'minimum_delivery_box',
