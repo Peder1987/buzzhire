@@ -1,0 +1,21 @@
+{% extends 'account/signup.html' %}
+{% load django_bootstrap_breadcrumbs crispy_forms_tags static %}
+
+{% block form_content %}
+    <p>Already have an account on Buzzhire?
+       Please <a href='{% url 'account_login' %}?next={% url 'driverjobrequest_create' %}'>log in to book</a>, or 
+       if you forgot your password you can
+       <a href='{% url 'account_reset_password' %}'>reset it</a>.
+    </p>
+    <form method="post">
+        {% csrf_token %}
+        {% crispy extra_forms.0 %}
+        {% crispy extra_forms.1 %}
+        {% crispy form %}
+    </form>
+{% endblock %}
+
+{% block extrascripts %}
+    {{ block.super }}
+    {% include 'includes/forms/datetime_form_js.html' %}
+{% endblock %}

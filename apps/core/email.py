@@ -3,15 +3,21 @@ from django.conf import settings
 from django.template.loader import render_to_string
 
 
-def send_mail(to, subject, template_name, context):
+def send_mail(to, subject, template_name, context, from_email=None):
     """
     Sends an email to the supplied email address, using
     the template name and context.
     The template name should not include the file type; instead,
     it will search for .html and .txt versions of the template.
     NB both html and text versions are required.
+    
+    Can optionally specify a from_email, otherwise it will use
+    CONTACT_EMAIL in the settings.
     """
-    context['base_url'] = settings.BASE_URL
+    if not from_email:
+        from_email = settings.CONTACT_EMAIL
+
+    context['domain'] = settings.DOMAIN
     context['contact_email'] = settings.CONTACT_EMAIL
 
     content = {}

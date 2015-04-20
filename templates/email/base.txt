@@ -1,4 +1,4 @@
-{% load html2text %}
+{% load html2text core_tags %}
 {% if title %}{{ title }}
 -----------------{% endif %}{% if subtitle %}
 {{ subtitle }}
@@ -10,5 +10,5 @@
 {% block signature %}
 Buzzhire
 {{ contact_email }}
-{{ base_url }}
+{% base_url %}
 {% endblock %}

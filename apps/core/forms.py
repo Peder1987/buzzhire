@@ -79,6 +79,7 @@ class CrispyFormMixin(object):
     bottom_html = None
     bottom_html_dict = {}
     form_tag = True
+    wrap_fieldset_title = ''  # The title of the fieldset to wrap the form in
 
     def __init__(self, *args, **kwargs):
         super(CrispyFormMixin, self).__init__(*args, **kwargs)
@@ -87,6 +88,14 @@ class CrispyFormMixin(object):
 
         # Allow forms to easily override the form_tag
         self.helper.form_tag = self.form_tag
+
+        # Wrap the whole form in a fieldset, if wrap_fieldset is specified
+        if self.wrap_fieldset_title:
+            fieldset_kwargs = [self.wrap_fieldset_title]
+            fieldset_kwargs.extend(self.fields.keys())
+            self.helper.layout = layout.Layout(
+                layout.Fieldset(*fieldset_kwargs)
+            )
 
         if self.submit_name:
             self.helper.layout.append(self.get_submit_button())

@@ -352,7 +352,7 @@ small {
 }
 
 a {
-  color: #2ba6cb; 
+  color: #07699a; 
   text-decoration: none;
 }
 
@@ -730,10 +730,6 @@ body.outlook p {
     .callout .panel {
       background: #ECF8FF;
       border-color: #b9e5ff;
-    }
-
-    .header {
-      background: #999999;
     }
 
     .footer .wrapper {

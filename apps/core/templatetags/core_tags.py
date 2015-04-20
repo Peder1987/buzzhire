@@ -1,4 +1,5 @@
 from django import template
+from django.conf import settings
 from copy import copy
 
 
@@ -49,3 +50,37 @@ def instances_and_widgets(bound_field):
          instance_widgets.append((instance, widget))
          index += 1
     return instance_widgets
+
+
+@register.filter
+def get_non_page_options(request):
+    """Returns a urlencoded version of the GET options passed to the request,
+    with the paginator page option removed.
+    
+    Used by templates/includes/paginator.html."""
+    querydict = request.GET.copy()
+    querydict.pop('page', None)
+    return querydict.urlencode
+
+
+@register.filter
+def startswith(test_string, start_string):
+    """Returns whether comparison string starts with the original string.
+    Usage:
+    
+      {% if test_string|startswith:start_string %}
+          <p>'{{ test_string }}' starts with '{{ start_string }}'!
+      {% endif %}
+    """
+    return test_string.startswith(start_string)
+
+
+@register.simple_tag
+def base_url():
+    """Returns the base url.
+    
+    Usage:
+    
+        {% base_url %}
+    """
+    return settings.BASE_URL

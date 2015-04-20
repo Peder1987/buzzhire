@@ -5,7 +5,8 @@ from apps.core.forms import CrispyFormMixin, ConfirmForm
 
 
 class LoginForm(CrispyFormMixin, forms.LoginForm):
-    pass
+    submit_context = {'icon_name': 'login'}
+    submit_text = 'Log in'
 
 
 class LogoutForm(CrispyFormMixin, ConfirmForm):
@@ -16,13 +17,26 @@ class SignupForm(CrispyFormMixin, forms.SignupForm):
     submit_text = 'Sign up'
 
 
+class SignupInnerForm(SignupForm):
+    """This sign up form is the same as the standard SignupForm but with
+    the <form> and submit buttons removed, used for including with other
+    forms in a single html <form> tag. 
+    """
+    form_tag = False
+    submit_name = None
+    wrap_fieldset_title = 'Account details'
+
+
 class ResetPasswordForm(CrispyFormMixin, forms.ResetPasswordForm):
-    pass
+    submit_text = 'Reset'
+    submit_context = {'icon_name': 'reset_password'}
 
 
 class ResetPasswordKeyForm(CrispyFormMixin, forms.ResetPasswordKeyForm):
-    pass
+    submit_text = 'Save new password'
+    submit_context = {'icon_name': 'password'}
 
 
 class ChangePasswordForm(CrispyFormMixin, forms.ChangePasswordForm):
-    pass
+    submit_context = {'icon_name': 'password'}
+    submit_text = 'Change password'

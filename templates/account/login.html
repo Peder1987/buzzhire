@@ -8,6 +8,8 @@
     </div>
     {% endcomment %}
     {{ block.super }}
-    <p><a class="btn btn-sm btn-default" href="{% url 'account_reset_password' %}">{{ 'forgot'|icon }} Forgot Password?</a></p>
+    <div class='text-center'>
+        <p><a class="btn btn-sm btn-default" href="{% url 'account_reset_password' %}">{{ 'forgot'|icon }} Forgot Password?</a></p>
+    </div>
     
 {% endblock %}

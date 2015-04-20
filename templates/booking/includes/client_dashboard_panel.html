@@ -1,0 +1,12 @@
+{% load icons %}
+{% if request.user.is_client %}
+    <div class="panel panel-default">
+      <div class="panel-heading">{{ 'book'|icon }} Booking</div>
+      <div class="list-group">
+          {% url 'driverjobrequest_create' as link_url %}
+          {% include 'includes/panel_link.html' with icon_name='driverjobrequest_create' link_text='Book a driver' %}
+          {% url 'requested_jobs' as link_url %}
+          {% include 'includes/panel_link.html' with icon_name='requested_jobs' link_text='Requested jobs' %}
+      </div>
+    </div>
+{% endif %}

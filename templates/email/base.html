@@ -1,4 +1,4 @@
-{% load inlinecss staticthumbnail %}
+{% load inlinecss staticthumbnail core_tags %}
 {% comment %}
   Context that can be sent to this email:
   - title - text
@@ -31,10 +31,11 @@
                         <table class="twelve columns">
                           <tr>
                             <td class="center">
-                              {# TODO - put logo here #}
                               <center>
                                   <br>
-                                  <img class='center' src="http://placehold.it/200x50">
+                                  {% staticthumbnail 'img/logo/logo.png' '200' format='PNG' as im %}
+                                    <img class='center' src="{% base_url %}{{ im.url }}" width='{{ im.width }}' height='{{ im.height }}'/>
+                                  {% endthumbnail %}
                               </center>
                             </td>
                             <td class="expander"></td>
@@ -118,7 +119,7 @@
                             <br>
                             <p class='lead'>Buzzhire</p>
                             <p>{{ contact_email }}</p>
-                            <p><a href="{{ base_url }}">buzzhire.co</a></p>
+                            <p><a href="{% base_url %}">{{ domain }}</a></p>
                           </td>
                           <td class="expander"></td>
                         </tr>

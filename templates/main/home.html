@@ -1,10 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'page_fullwidth.html' %}
 {% load staticthumbnail static icons %}
-{% block content_wrapper %}
+{% block content %}
      
-        <div id="home" class="top-content" data-background-images='["{% static 'img/hero/road.jpg' %}",
-                                                                    "{% static 'img/hero/scooter-red.jpg' %}",
-                                                                    "{% static 'img/hero/watch.jpg' %}",
+        <div id="home" class="top-content" data-background-images='["{% static 'img/hero/watch.jpg' %}",
                                                                     "{% static 'img/hero/bicycle-water.jpg' %}",
                                                                     "{% static 'img/hero/night-scene.jpg' %}",
                                                                     "{% static 'img/hero/app.jpg' %}"
@@ -13,155 +11,175 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1">
-                            <h2>Find a delivery job in seconds</h2>
+                            <h2>Find a driver in seconds</h2></h2>
                             <div class="description">
-                                Signing up is easy, and you'll start earning money in no time.
+                            Book an experienced driver at a moment's notice. Just pick the time and we'll do the rest.
                             </div>
                         </div>
                     </div>
                     <div class='row buttons-row'>
-                        <a class="btn btn-lg btn-default" href="#features-section"><i class="fa fa-angle-double-down"></i> Learn more</a>
-                        <a class="btn btn-lg btn-primary" href="{% url 'driver_signup' %}">{{ 'driver_register'|icon }} Sign up to drive</a>
+                        <a class="btn btn-lg btn-default" href="#how-it-works"><i class="fa fa-angle-double-down"></i> How it works</a>
+                        <a class="btn btn-lg btn-primary" href="{% url 'driverjobrequest_create' %}">{{ 'book'|icon }} Book a driver</a>
                     </div>
                 </div>
         </div>
-        
-    
-        <!-- Features -->
-        <div id="features-section" class="features-container">
+
+
+        <div id='how-it-works' class="features-container">
             <div class="container">
-                <div class="row" style='margin-top: 5em;'>
-                    <div class="col-sm-12 features">
-                        <h3>Why Buzzhire?</h3>
+                <div class="row page-title">
+                    <div class="col-md-12">
+                        <h3>How it works</h3>
                     </div>
-                </div>
+               </div>
                 <div class="row">
                     <div class="col-sm-4 features-box">
                         <div class="icon">
-                            <i class="fa fa-gbp"></i>
+                            <i class="fa fa-clock-o"></i>
                         </div>
-                        <h4>Great pay</h4>
-                        <p>
-                            Earn up to &pound;13/hr.  Our top drivers make more than &pound;8OO a week.
-                            Pay varies depending on your vehicle.
-                        </p>
+                        <h4>Post a job online</h4>
+                        <p>Select the date and time you'd like your driver to show up.</p>
                     </div>
                     <div class="col-sm-4 features-box">
                         <div class="icon">
-                            <i class="fa fa-calendar"></i>
+                            <i class="fa fa-check-square-o"></i>
                         </div>
-                        <h4>Flexible schedule</h4>
-                        <p>
-                            You choose when you want to work and how much. Build a full schedule or simply claim a few jobs on the side.
-                        </p>
+                        <h4>Get confirmation</h4>
+                        <p>We'll confirm your driver and take care of payment electronically and securely.</p>
                     </div>
                     <div class="col-sm-4 features-box">
                         <div class="icon">
-                            <i class="fa fa-thumbs-up"></i>
+                            <i class="fa fa-car"></i>
                         </div>
-                        <h4>Easy payments</h4>
-                        <p>
-                            No more waiting weeks to be paid. Buzzhire will direct deposit your earnings
-                            into your bank account within 48 hours of completing your job.
-                        </p>
+                        <h4>Your driver is on their way</h4>
+                        <p>An experienced fully-equipped driver will arrive at your premises, ready to work.</p>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="product-container product-bg2" style='padding-top: 6em; padding-bottom: 4em;'>
+        </div> 
+       
+       <div style="padding-top: 6em; padding-bottom: 4em;" class="product-container product-bg2">
             <div class="container">
-                <div class='row text-center' style='margin-bottom: 3em;'>
-                    <h3>How it works</h3>
+                <div style="margin-bottom: 3em;" class="row text-center">
+                    <h3>Why Buzzhire?</h3>
                 </div>
                 <div class="row">
                     <div class="col-sm-4 prominent-box">
                         <div class="icon">
-                            1
+                            <i class="fa fa-diamond"></i>
                         </div>
-                        <h4>Get started</h4>
+                        <h4>Professional</h4>
                         <p>
-                            Tell us more about yourself and provide us with the necessary documents to drive.
+                            Buzzhire professionals are experienced, friendly, background-checked, and insured.
                         </p>
                     </div>
                     <div class="col-sm-4 prominent-box">
-                        <div class="icon">
-                            2
+                       <div class="icon">
+                            <i class="fa fa-clock-o"></i>
                         </div>
-                        <h4>Get approved</h4>
+                        <h4>Available</h4>
                         <p>
-                            We'll let you know when you've been approved.
+                            Book online in 60 seconds and schedule your driver for as early as a few hours later.
                         </p>
                     </div>
                     <div class="col-sm-4 prominent-box">
-                        <div class="icon">
-                            3
+                       <div class="icon">
+                            <i class="fa fa-certificate"></i>
                         </div>
-                        <h4>Start working</h4>
+                        <h4>Guaranteed</h4>
                         <p>
-                            You're ready to go! Set your own schedule and start earning money.
+                            If you're not satisfied with our work, we’ll refund your money. It's as simple as that.
                         </p>
                     </div>
                 </div>
-                <div class='row'>
-                    <div class='col-md-4 col-md-offset-4 text-center'>
-                        <a class="btn btn-lg btn-block btn-default" href="{% url 'driver_signup' %}">{{ 'driver_register'|icon }} Sign up to drive</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {% comment %}
-            <div class="product-container product-bg2" style='padding-top: 6em; padding-bottom: 4em;'>
-                <div class="container">
-                    <div class='row text-center' style='margin-bottom: 3em;'>
-                        <h3><i class='fa fa-info-circle'></i> How it works</h3>
-                    </div>
+                {% if not request.user.is_authenticated %}
                     <div class="row">
-                        <div class="col-md-6 col-md-offset-3">
-                            <ol class='prominent-list'>
-                                <li>
-                                    <h4><i class='fa fa-inbox'></i> Get started</h4>
-                                    <p>Tell us more about yourself and provide us with the necessary documents to drive.</p>
-                                </li>
-                                <li>
-                                    <h4><i class='fa fa-check-square-o'></i> Get approved</h4>
-                                    <p>We'll let you know when you've been approved.</p>    
-                                </li>
-                                <li>
-                                    <h4><i class='fa fa-rocket'></i> Start working</h4>
-                                    <p>You're ready to go! Set your own schedule and start earning money.</p>
-                                </li>
-                            </ol>
+                        <div class="col-md-4 col-md-offset-4 text-center">
+                            <a class="btn btn-lg btn-block btn-default" href="{% url 'driverjobrequest_create' %}">{{ 'book'|icon }} Book a driver</a>
                         </div>
                     </div>
-                    <div class='row' style='margin-top: 3em;'>
-                        <div class='col-md-4 col-md-offset-4 text-center'>
-                            <a class="btn btn-lg btn-block btn-default" href="{% url 'driver_signup' %}">{{ 'driver_register'|icon }} Sign up to drive</a>
-                        </div>
-                    </div>
-                
-                </div>
+                {% endif %}
             </div>
-        {% endcomment %}
-    
-        <div class="container" >
-            <div class='row' style='margin-top: 5em; margin-bottom: 5em;'>
-                <div class='col-md-12 text-center'>
-                    <h4>Want to <a href='{% url 'book' %}'><i class="fa fa-calendar"></i> book a driver</a>?</h4>
+        </div>
+
+        <div class="container" style='margin-top: 8em; margin-bottom: 2em;'>
+            <div class="row text-center">
+                <div class="col-sm-3 bottom-space">
+                    <p><img src='{% static 'img/press/guardian.png' %}' alt='The Guardian'/></p>
+                </div>
+                <div class="col-sm-3">
+                    <p><img src='{% static 'img/press/eveningstandard.png' %}' alt='London Evening Standard'/></p>
+                </div>
+                <div class="col-sm-3">
+                    <p><img src='{% static 'img/press/telegraph.png' %}' alt='The Telegraph'/></p>
+                </div>
+                <div class="col-sm-3">
+                    <p><img src='{% static 'img/press/metro.png' %}' alt='London Metro'/></p>
+                </div>
+
+            </div>
+        </div>
+
+       
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 testimonials">
+                    <h3>What our clients say</h3>
+                    <div class="col-sm-4 reviews">
+                        <div class="review reviews-panel box-arrow-down">
+                            <p>
+                                So easy to use, and really professional drivers.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 reviews">
+                        <div class="review reviews-panel box-arrow-down">
+                            <p>
+                                The only way to fill urgent gaps in our fleet.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 reviews">
+                        <div class="review reviews-panel box-arrow-down">
+                            <p>
+                                Buzzhire takes the hassle out of hiring.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
+
+        <div style="padding-top: 6em; padding-bottom: 4em;" class="product-container product-bg1">
+            <div class="container">
+                <div style="margin-bottom: 3em;" class="row text-center">
+                    <h3><i class='fa fa-mobile'></i> Buzzhire on the go</h3>
+                    <h4>App coming soon!</h4>
+                </div>
+            </div>
+        </div>
+
+        <div style="padding-top: 5em; padding-bottom: 4em;">
+            <div class="container">
+                <div class="row" style='margin-top: 3em; margin-bottom: 5em;'>
+                    <div class="col-md-4 col-md-offset-4 text-center">
+                        <h4>Ready to book now?</h4>
+                        <a class="btn btn-lg btn-primary btn-block" href="{% url 'driverjobrequest_create' %}">{{ 'book'|icon }} Book a driver</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    
+        
 {% endblock %}
 
 {% block extrascripts %}
     <script type='text/javascript'>
         $(function() {
-        	// Carousel
-        	var background_images = $('.top-content').data('background-images');
-        	$('.top-content').backstretch(background_images, {duration: 3000, fade: 800});
+            // Carousel
+            var background_images = $('.top-content').data('background-images');
+            $('.top-content').backstretch(background_images, {duration: 3000, fade: 800});
         });
     </script>
-    
 {% endblock %}

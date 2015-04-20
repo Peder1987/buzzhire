@@ -1,0 +1,38 @@
+{% extends 'account/dashboard_base.html' %}
+{% load icons %}
+
+{% block content %}
+    <p><a href='{% url 'drivervehicletype_add' %}' class='btn btn-default'>{{ 'create'|icon }} Add vehicle</a></p>
+    {% if object_list %}
+        <div class='table-responsive'>
+            <table class='table'>
+                <thead>
+                    <th>Type</th>
+                    <th>Can you provide the vehicle?</th>
+                    <th>Delivery box size</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    {% for object in object_list %}
+                       <tr>
+                           <td>{{ object }}</td>
+                           <td>{{ object.own_vehicle|yesno|icon }}</td>
+                           <td>{{ object.get_delivery_box_display }}</td>
+                           <td class='text-right'>
+                             <a href='{% url 'drivervehicletype_change' object.pk %}' class='btn btn-sm btn-default'>{{ 'edit'|icon }}</a>
+                             <a href='{% url 'drivervehicletype_delete' object.pk %}' class='btn btn-sm btn-default'>{{ 'delete'|icon }}</a>
+                           </td>
+                       </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        
+        
+    {% else %}
+        <div class='well'>
+            <p>No vehicles.</p>
+        </div>
+    {% endif %}
+{% endblock %}  

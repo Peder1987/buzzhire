@@ -2,6 +2,11 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
+    url(r'^$', views.DashboardView.as_view(
+            template_name='account/dashboard.html',
+            extra_context={'title': 'Dashboard'}),
+            name='account_dashboard'),
+
     url(r"^signup/$", views.SignupView.as_view(), name="account_signup"),
     url(r"^login/$", views.LoginView.as_view(), name="account_login"),
     url(r"^logout/$", views.LogoutView.as_view(), name="account_logout"),
@@ -31,5 +36,6 @@ urlpatterns = [
     url(r"^password/reset/key/done/$",
         views.PasswordResetFromKeyDoneView.as_view(),
         name="account_reset_password_from_key_done"),
+
 ]
 

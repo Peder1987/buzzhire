@@ -1,0 +1,5 @@
+{% extends 'job/email/includes/driver_driverjobrequest.html' %}
+
+{% block budget_details %}
+    <p><strong>Cost per hour:</strong> &pound;{{ object.client_pay_per_hour.amount }} </p>
+{% endblock %}

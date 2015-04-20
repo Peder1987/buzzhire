@@ -6,4 +6,9 @@ class LeadAdmin(admin.ModelAdmin):
     list_display = ('first_name', 'last_name', 'email', 'created')
 
 
+class ClientAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'last_name', 'user', 'mobile')
+
+
 admin.site.register(models.Lead, LeadAdmin)
+admin.site.register(models.Client, ClientAdmin)
