@@ -62,7 +62,8 @@ class JobRequest(models.Model):
     # The date this form was submitted
     date_submitted = models.DateTimeField(auto_now_add=True)
 
-    client_pay_per_hour = MoneyField(max_digits=5, decimal_places=2,
+    client_pay_per_hour = MoneyField('Pay per hour',
+                  max_digits=5, decimal_places=2,
                   default_currency='GBP',
                   default=Decimal(settings.CLIENT_MIN_WAGE),
                   help_text='How much you will pay per hour, for each driver.',
