@@ -1,6 +1,7 @@
 from decimal import Decimal
 from django import forms
 from django.forms import widgets
+from django.conf import settings
 from .models import DriverJobRequest
 from apps.core.forms import CrispyFormMixin, ConfirmForm
 from apps.account.forms import SignupInnerForm
@@ -25,7 +26,9 @@ class DriverJobRequestForm(CrispyFormMixin, PostcodeFormMixin,
 
         amount, currency = self.fields['client_pay_per_hour'].fields
         self.fields['client_pay_per_hour'].widget = Bootstrap3SterlingMoneyWidget(
-          amount_widget=amount.widget, currency_widget=widgets.HiddenInput,
+          amount_widget=widgets.NumberInput(
+                                    attrs={'min': settings.CLIENT_MIN_WAGE}),
+          currency_widget=widgets.HiddenInput,
           attrs={'step': '0.25'})
         self.fields['start_time'].widget = forms.TimeInput()
         self.fields['duration'].widget = Bootstrap3TextInput(addon_after='hours')

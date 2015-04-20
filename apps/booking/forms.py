@@ -8,7 +8,7 @@ from multiselectfield.forms.fields import MultiSelectFormField
 from djmoney.forms.fields import MoneyField
 from apps.core.widgets import Bootstrap3SterlingMoneyWidget
 from .models import Availability
-from apps.job.models import client_to_driver_rate
+from apps.freelancer.models import client_to_freelancer_rate
 from apps.driver.models import Driver, VehicleType, DriverVehicleType
 from apps.location.forms import PostcodeFormMixin
 from django.contrib.gis.measure import D
@@ -208,7 +208,7 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
         """
 
         if self.cleaned_data['client_pay_per_hour']:
-            self.driver_pay_per_hour = client_to_driver_rate(
+            self.driver_pay_per_hour = client_to_freelancer_rate(
                                     self.cleaned_data['client_pay_per_hour'])
             return results.filter(
                             minimum_pay_per_hour__lte=self.driver_pay_per_hour)

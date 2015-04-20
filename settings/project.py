@@ -93,3 +93,10 @@ class ProjectConfiguration(StandardConfiguration):
 
     # Whether to show the holding site instead of the main site
     COMING_SOON = False
+
+    # Min pay per hour, before commission
+    CLIENT_MIN_WAGE = 8.50
+    # The percent commission we charge on client rates
+    COMMISSION_PERCENT = 15
+    # Number of pence to round to
+    COMMISSION_ROUND_PENCE = 25

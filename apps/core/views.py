@@ -6,6 +6,9 @@ from .forms import ConfirmForm
 from django.contrib.auth.views import redirect_to_login
 from django.core.exceptions import PermissionDenied
 
+# A GBP sign
+POUND_SIGN = u'\u00A3'
+
 
 logger = logging.getLogger('project')
 

@@ -7,10 +7,13 @@ from datetime import date
 from django.core import validators
 from multiselectfield import MultiSelectField
 from djmoney.models.fields import MoneyField
+from moneyed import Money
 from django.contrib.humanize.templatetags.humanize import apnumber
 from django.template.defaultfilters import pluralize
+from apps.core.views import POUND_SIGN
 from apps.location.models import Postcode
 import calendar
+
 
 def _is_freelancer(self):
     """Custom method on User model.
@@ -28,6 +31,26 @@ def _freelancer(self):
     """
     return self.freelancer_set.get()
 User.freelancer = property(_freelancer)
+
+from decimal import Decimal
+
+
+def client_to_freelancer_rate(client_rate):
+    """Given a client rate as a moneyed.Money object,
+    return the freelancer rate, also as a Money object.
+    """
+    freelancer_rate = client_rate * (1 - (Decimal(settings.COMMISSION_PERCENT)
+                                       / 100))
+
+    # Round freelancer rate to nearest 25p
+    # TB the "%.2f" conversion ensures it's to two decimal places
+    ROUNDING = float(settings.COMMISSION_ROUND_PENCE) / 100
+    freelancer_rate.amount = Decimal(
+        "%.2f" % (round(float(freelancer_rate.amount) / ROUNDING) * ROUNDING))
+    return freelancer_rate
+
+FREELANCER_MIN_WAGE = client_to_freelancer_rate(Money(settings.CLIENT_MIN_WAGE,
+                                                  'GBP')).amount
 
 
 class PublishedFreelancerManager(models.GeoManager):
@@ -114,9 +137,11 @@ class Freelancer(models.Model):
                             choices=HOURS_AVAILABLE_CHOICES,
                             blank=True)
 
+
     minimum_pay_per_hour = MoneyField(max_digits=5, decimal_places=2,
-                  default_currency='GBP', default=Decimal(8.50),
-                  help_text='The minimum pay per hour you will accept.')
+              default_currency='GBP', default=Decimal(FREELANCER_MIN_WAGE),
+              help_text='The minimum pay per hour you will accept.',
+              validators=[validators.MinValueValidator(FREELANCER_MIN_WAGE)])
 
     postcode = models.ForeignKey(Postcode, blank=True, null=True)
 

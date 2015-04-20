@@ -2,32 +2,14 @@ from django.db import models
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from datetime import date, datetime
+from django.core import validators
 from multiselectfield import MultiSelectField
 from djmoney.models.fields import MoneyField
 from apps.driver.models import Driver, VehicleType, DriverVehicleType
 from apps.client.models import Client
 from apps.location.models import Postcode
+from apps.freelancer.models import client_to_freelancer_rate
 from decimal import Decimal
-
-
-# The percent commission we charge on client rates
-COMMISSION_PERCENT = 15
-# Number of pence to round to
-COMMISSION_ROUND_PENCE = 25
-
-
-def client_to_driver_rate(client_rate):
-    """Given a client rate as a moneyed.Money object,
-    return the driver rate, also as a Money object.
-    """
-    driver_rate = client_rate * (1 - (Decimal(COMMISSION_PERCENT) / 100))
-
-    # Round driver rate to nearest 25p
-    # TB the "%.2f" conversion ensures it's to two decimal places
-    ROUNDING = float(COMMISSION_ROUND_PENCE) / 100
-    driver_rate.amount = Decimal(
-            "%.2f" % (round(float(driver_rate.amount) / ROUNDING) * ROUNDING))
-    return driver_rate
 
 
 class JobRequestQuerySet(models.QuerySet):
@@ -81,8 +63,11 @@ class JobRequest(models.Model):
     date_submitted = models.DateTimeField(auto_now_add=True)
 
     client_pay_per_hour = MoneyField(max_digits=5, decimal_places=2,
-                  default_currency='GBP', default=Decimal(8.50),
-                  help_text='How much you will pay per hour, for each driver.')
+                  default_currency='GBP',
+                  default=Decimal(settings.CLIENT_MIN_WAGE),
+                  help_text='How much you will pay per hour, for each driver.',
+                  validators=[
+                    validators.MinValueValidator(settings.CLIENT_MIN_WAGE)])
     date = models.DateField(default=date.today)
     start_time = models.TimeField(default='9:00 AM')
     duration = models.PositiveSmallIntegerField(default=1,
@@ -139,7 +124,7 @@ class JobRequest(models.Model):
     @property
     def driver_pay_per_hour(self):
         "Returns the driver pay per hour for this job."
-        return client_to_driver_rate(self.client_pay_per_hour)
+        return client_to_freelancer_rate(self.client_pay_per_hour)
 
     @property
     def reference_number(self):

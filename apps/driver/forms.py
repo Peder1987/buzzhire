@@ -7,6 +7,7 @@ from crispy_forms import layout
 from apps.core.widgets import Bootstrap3SterlingMoneyWidget
 from .models import Driver, DriverVehicleType, VehicleType
 from apps.location.forms import PostcodeFormMixin
+from apps.freelancer.models import FREELANCER_MIN_WAGE
 
 
 class DriverForm(CrispyFormMixin, PostcodeFormMixin, forms.ModelForm):
@@ -19,9 +20,13 @@ class DriverForm(CrispyFormMixin, PostcodeFormMixin, forms.ModelForm):
         super(DriverForm, self).__init__(*args, **kwargs)
 
         amount, currency = self.fields['minimum_pay_per_hour'].fields
-        self.fields['minimum_pay_per_hour'].widget = Bootstrap3SterlingMoneyWidget(
-          amount_widget=amount.widget, currency_widget=widgets.HiddenInput,
-          attrs={'step': '0.25'})
+        self.fields['minimum_pay_per_hour'].widget = \
+            Bootstrap3SterlingMoneyWidget(
+              amount_widget=widgets.NumberInput(
+                                        attrs={'min': FREELANCER_MIN_WAGE}),
+              currency_widget=widgets.HiddenInput,
+              attrs={'step': '0.25'}
+            )
 
         self.fields['raw_postcode'].help_text = 'The postcode of where you ' \
                 'are based. This helps us match you with jobs that are nearby.'
