@@ -118,7 +118,11 @@
         <div class="container" >
             <div class='row' style='margin-top: 5em; margin-bottom: 5em;'>
                 <div class='col-md-12 text-center'>
-                    <h4>Want to <a href='{% url 'driverjobrequest_create' %}'>{{ 'book'|icon }} book a driver</a>?</h4>
+                    {% if coming_soon %}
+                        <h4>Want to <a href='{% url 'book' %}'>{{ 'book'|icon }} book a driver</a>?</h4>
+                    {% else %}
+                        <h4>Want to <a href='{% url 'driverjobrequest_create' %}'>{{ 'book'|icon }} book a driver</a>?</h4>
+                    {% endif %}
                 </div>
             </div>
         </div>
