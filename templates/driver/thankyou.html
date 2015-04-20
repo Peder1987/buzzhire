@@ -10,7 +10,9 @@
     <div class='text-center'>
         <p>Thank you for your application.</p>
         <p>We'll be in touch soon to schedule an interview.</p>
-        <p><a class='btn btn-lg btn-default' href='{% url 'account_dashboard' %}'>{{ 'dashboard'|icon }} Go to driver dashboard</a></p>
+        {% if not coming_soon %}
+            <p><a class='btn btn-lg btn-default' href='{% url 'account_dashboard' %}'>{{ 'dashboard'|icon }} Go to driver dashboard</a></p>
+        {% endif %}
     </div>
 {% endblock %}
 

@@ -19,15 +19,19 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                {% if request.user.is_anonymous or request.user.is_client %}
-                    {% url 'driverjobrequest_create' as link_url %}
-                    {% include 'includes/menu_link.html' with icon_name='book' link_text='Book a driver' %}
+                {% if not coming_soon %}
+                    {% if request.user.is_anonymous or request.user.is_client %}
+                        {% url 'driverjobrequest_create' as link_url %}
+                        {% include 'includes/menu_link.html' with icon_name='book' link_text='Book a driver' %}
+                    {% endif %}
                 {% endif %}
             {% if request.user.is_anonymous %}
                 {% url 'driver_become' as link_url %}
                 {% include 'includes/menu_link.html' with icon_name='driver_register' link_text='Become a driver' %}
-                {% url 'account_login' as link_url %}
-                {% include 'includes/menu_link.html' with icon_name='login' link_text='Log in' %}
+                {% if not coming_soon %}
+                    {% url 'account_login' as link_url %}
+                    {% include 'includes/menu_link.html' with icon_name='login' link_text='Log in' %}
+                {% endif %}
             {% else %}
                 {% url 'account_dashboard' as link_url %}
                 {% include 'includes/menu_link.html' with icon_name='dashboard' link_text='Dashboard' %}

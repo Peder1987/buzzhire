@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.views import redirect_to_login
 from django.contrib.messages.views import SuccessMessageMixin
+from django.conf import settings
 from allauth.account.utils import complete_signup
 from allauth.account import app_settings
 from apps.core.views import ContextMixin, OwnerOnlyMixin, ConfirmationMixin
@@ -84,14 +85,16 @@ class SignupView(BaseSignupView):
 
     def form_valid(self, form):
         """Adapted from BaseSignupView to save the driver too.
-        We do not currently run the complete_signup process, as we
-        don't want the driver to be logged in after sign up. 
         """
 
         user = form.save(self.request)
         # Save driver form too
         self.driver_form.save(user)
-        return complete_signup(self.request, user,
+        if settings.COMING_SOON:
+            # Do not log them in
+            return redirect('driver_thankyou')
+        else:
+            return complete_signup(self.request, user,
                                app_settings.EMAIL_VERIFICATION,
                                self.get_success_url())
 

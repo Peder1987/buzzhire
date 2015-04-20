@@ -10,9 +10,6 @@
     <p>Tell us about yourself.  Once you have signed up,
        you will also need to tell us which the vehicles you drive.
     </p>
-    {{ form.errors }}
-    {{ driver_form.errors }}
-
     <form method="post">
         {% csrf_token %}
         {% crispy form %}

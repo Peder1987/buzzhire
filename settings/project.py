@@ -90,3 +90,6 @@ class ProjectConfiguration(StandardConfiguration):
     def DEFAULT_DATABASE_ENGINE(self):
         # Location-based database
         return 'django.contrib.gis.db.backends.postgis'
+
+    # Whether to show the holding site instead of the main site
+    COMING_SOON = False

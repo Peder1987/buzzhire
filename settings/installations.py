@@ -28,6 +28,8 @@ class Live(installations.WebfactionLiveMixin, ProjectConfiguration):
     EMAIL_HOST_USER = 'buzzhire_live'
     ACCOUNT_PASSWORD_MIN_LENGTH = 6
 
+    COMING_SOON = True
+
     AWS_ACCESS_KEY_ID = 'AKIAI7ZMKSCZQGQRGUJQ'
     AWS_BUCKET_NAME = 'buzzhire-backups-media'
 
