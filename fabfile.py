@@ -50,7 +50,7 @@ def virtualenv():
             with prefix(env.activate):
                 yield
 
-
+@task
 def reload_wsgi():
     """
     Graceful restart of wsgi server.

@@ -28,6 +28,11 @@ class Live(installations.WebfactionLiveMixin, ProjectConfiguration):
     EMAIL_HOST_USER = 'buzzhire_live'
     ACCOUNT_PASSWORD_MIN_LENGTH = 6
 
+    WEBFACTION_USER = 'buzzhire'
+
+    def BOOKINGS_EMAIL(self):
+        return self.CONTACT_EMAIL
+
     COMING_SOON = True
 
     AWS_ACCESS_KEY_ID = 'AKIAI7ZMKSCZQGQRGUJQ'

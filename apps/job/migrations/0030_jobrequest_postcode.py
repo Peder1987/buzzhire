@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='jobrequest',
             name='postcode',
-            field=models.ForeignKey(default=Postcode.objects.all()[0].pk, to='location.Postcode'),
+            field=models.ForeignKey(default=lambda: Postcode.objects.all()[0].pk, to='location.Postcode'),
             preserve_default=False,
         ),
     ]
