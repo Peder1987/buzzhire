@@ -22,6 +22,15 @@ class ClientOnlyMixin(object):
         return super(ClientOnlyMixin, self).dispatch(request, *args, **kwargs)
 
 
+class OwnedByClientMixin(ClientOnlyMixin, OwnerOnlyMixin):
+    """Views mixin - only allow clients who own the object in question to
+    access the view.
+    """
+    def is_owner(self):
+        "Whether or not the current user should be treated as the 'owner'."
+        return self.get_object().client == self.client
+
+
 class LeadCreateView(ContextMixin, CreateView):
     "The 'express interest' view, for anonymous users to create a Lead."
 

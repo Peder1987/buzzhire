@@ -208,10 +208,10 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
         """
 
         if self.cleaned_data['client_pay_per_hour']:
-            self.driver_pay_per_hour = client_to_freelancer_rate(
+            self.freelancer_pay_per_hour = client_to_freelancer_rate(
                                     self.cleaned_data['client_pay_per_hour'])
             return results.filter(
-                            minimum_pay_per_hour__lte=self.driver_pay_per_hour)
+                        minimum_pay_per_hour__lte=self.freelancer_pay_per_hour)
         return results
 
     def filter_by_location(self, results):

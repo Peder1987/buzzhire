@@ -1,0 +1,128 @@
+{% extends 'account/dashboard_base.html' %}
+{% load icons humanize django_bootstrap_breadcrumbs %}
+
+{% block inner_breadcrumb %}
+  {{ block.super }}
+  {% breadcrumb 'Requested jobs' 'requested_jobs' %}
+{% endblock %}
+
+{% block content %}
+
+    <div class='row'>
+        <div class='col-md-4 col-md-push-8'>
+            <h5>Details</h5>
+            <table class='table table-striped'>
+                <tr>
+                    <th>Reference</th>
+                    <td>
+                        <span style='font-family: monospace;'>{{ object.reference_number }}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Pay per hour</th>
+                    <td>
+                        &pound;{{ object.client_pay_per_hour.amount }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Date submitted</th>
+                    <td>
+                        {{ 'date'|icon }} {{ object.date_submitted.date }}<br>
+                        {{ 'time'|icon }} {{ object.date_submitted.time }}
+                    </td>
+                </tr>
+                {% comment %}
+                <tr>
+                    <th>Client</th>
+                    <td>
+                        {{ object.client }}
+                    </td>
+                </tr>
+                {% endcomment %}
+
+                <tr>
+                    <th>Status</th>
+                    <td>
+                        <span class='label label-default'>{{ object.get_status_display }}</span>
+                    </td>
+                </tr>
+                
+             </table>
+             <h5>Location and date</h5>
+             <table class='table table-striped'>
+                <tr>
+                    <th>Date and time</th>
+                    <td>
+                        {{ 'date'|icon }} {{ object.date }}<br>
+                        {{ 'time'|icon }} {{ object.start_time }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Duration</th>
+                    <td>
+                        {{ object.duration }} hour{{ object.duration|pluralize }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Location</th>
+                    <td>
+                        <address>
+                           {% include 'job/includes/location.html' %}
+                        </address>
+                    </td>
+                </tr>
+             </table>
+        </div>
+        
+        <div class='col-md-8 col-md-pull-4'>
+             <h5>Job requirements</h5>
+             <table class='table table-striped'>
+                 <tr>
+                    <th>Number of drivers</th>
+                    <td>
+                        {{ object.number_of_freelancers }}
+                    </td>
+                </tr>
+                 <tr>
+                    <th>Vehicle types</th>
+                    <td>
+                        {% for vehicle_type in object.vehicle_types.all %}<p class='compact'><span class='label label-default'>{{ vehicle_type }}</span></p>{% endfor %}
+                    </td>
+                </tr>
+                 <tr>
+                    <th>Minimum delivery box</th>
+                    <td>
+                        {{ object.get_minimum_delivery_box_display }}
+                    </td>
+                </tr>
+                 <tr>
+                    <th>Minimum driving experience</th>
+                    <td>
+                        {{ object.get_driving_experience_display }}
+                    </td>
+                </tr>
+                 <tr>
+                    <th>Must the driver supply their own vehicle?</th>
+                    <td>
+                        {{ object.own_vehicle|yesno|icon }}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Phone requirement</th>
+                    <td>
+                        {{ object.get_phone_requirement_display }}
+                    </td>
+                </tr>
+
+            </table>
+            {% if object.comments %}
+                <h5>Comments</h5>
+                <div class='compact'>{{ object.comments|linebreaks }}</div>
+            {% endif %}
+        </div>
+    </div>
+    
+    
+    
+{% endblock %}

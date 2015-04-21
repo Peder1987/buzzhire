@@ -123,8 +123,8 @@ class JobRequest(models.Model):
         return self.reference_number
 
     @property
-    def driver_pay_per_hour(self):
-        "Returns the driver pay per hour for this job."
+    def freelancer_pay_per_hour(self):
+        "Returns the freelancer pay per hour for this job."
         return client_to_freelancer_rate(self.client_pay_per_hour)
 
     @property
@@ -172,3 +172,4 @@ class DriverJobRequest(JobRequest):
                             default=True)
 
     objects = DriverJobRequestManager.from_queryset(JobRequestQuerySet)()
+

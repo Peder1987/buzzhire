@@ -1,4 +1,5 @@
-from django.views.generic import CreateView, UpdateView, TemplateView, ListView
+from django.views.generic import (CreateView, UpdateView, TemplateView,
+                                  ListView, DetailView)
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 from allauth.account import app_settings
@@ -6,7 +7,7 @@ from allauth.account.utils import complete_signup
 from django.shortcuts import redirect
 from braces.views._access import AnonymousRequiredMixin
 from apps.core.views import ContextMixin, TabsMixin, ConfirmationMixin
-from apps.client.views import ClientOnlyMixin
+from apps.client.views import ClientOnlyMixin, OwnedByClientMixin
 from apps.client.forms import ClientInnerForm
 from apps.account.views import SignupView as BaseSignupView
 from . import signals
@@ -145,6 +146,16 @@ class RequestedJobList(ClientOnlyMixin, ContextMixin, TabsMixin, ListView):
         else:
             return queryset.future()
 
+
+class DriverJobRequestDetail(OwnedByClientMixin, DetailView):
+    "Detail page for driver job requests."
+    model = DriverJobRequest
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(DriverJobRequestDetail, self).get_context_data(*args,
+                                                                       **kwargs)
+        context['title'] = self.object
+        return context
 
 # class DriverJobRequestForFreelancerList(FreelancerOnlyMixin, ListView):
 #     """List of driver job requests accepted by a freelancer."""

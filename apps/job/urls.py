@@ -23,10 +23,11 @@ urlpatterns = [
      url(r'^create/done/$', views.DriverJobRequestComplete.as_view(),
          name='driverjobrequest_complete'),
 
+    url(r'^requests/(?P<pk>[\d]+)/$', views.DriverJobRequestDetail.as_view(),
+        name='jobrequest_detail'),
+
 #     url(r'^requests/moderation/$', views.JobRequestsModeration.as_view(),
 #         name='jobrequest_moderation'),
-#     url(r'^requests/(?P<pk>[\d]+)/$', views.JobRequestDetail.as_view(),
-#         name='jobrequest_detail'),
 #
 #     url(r'^requests/(?P<pk>[\d]+)/open/$',
 #         views.JobRequestConfirmAction.as_view(status=JobRequest.STATUS_OPEN),

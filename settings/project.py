@@ -95,7 +95,7 @@ class ProjectConfiguration(StandardConfiguration):
     COMING_SOON = False
 
     # Min pay per hour, before commission
-    CLIENT_MIN_WAGE = 8.50
+    CLIENT_MIN_WAGE = 8.0
     # The percent commission we charge on client rates
     COMMISSION_PERCENT = 15
     # Number of pence to round to
