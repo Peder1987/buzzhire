@@ -1,12 +1,13 @@
 from django.views.generic import (CreateView, UpdateView, TemplateView,
                                   ListView, DetailView)
 from django.contrib import messages
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse_lazy, reverse
 from allauth.account import app_settings
 from allauth.account.utils import complete_signup
 from django.shortcuts import redirect
 from braces.views._access import AnonymousRequiredMixin
 from apps.core.views import ContextMixin, TabsMixin, ConfirmationMixin
+from apps.account.views import AdminOnlyMixin
 from apps.client.views import ClientOnlyMixin, OwnedByClientMixin
 from apps.client.forms import ClientInnerForm
 from apps.account.views import SignupView as BaseSignupView
@@ -150,6 +151,7 @@ class RequestedJobList(ClientOnlyMixin, ContextMixin, TabsMixin, ListView):
 class DriverJobRequestDetail(OwnedByClientMixin, DetailView):
     "Detail page for driver job requests."
     model = DriverJobRequest
+    allow_admin = True
 
     def get_context_data(self, *args, **kwargs):
         context = super(DriverJobRequestDetail, self).get_context_data(*args,
@@ -163,3 +165,24 @@ class DriverJobRequestDetail(OwnedByClientMixin, DetailView):
 #
 #     def get_queryset(self, *args, **kwargs):
 #         return DriverJobRequest.objects.for_freelancer(self.freelancer)
+
+class AdminJobList(AdminOnlyMixin, ContextMixin, TabsMixin, ListView):
+    """List of driver job requests for admin users.
+    """
+    paginate_by = 15
+    extra_context = {'title': 'Job requests'}
+
+    def get_tabs(self):
+        "Returns a list of two-tuples for the tabs."
+        tabs = []
+        for status_value, status_title in DriverJobRequest.STATUS_CHOICES:
+            tabs.append((status_title,
+                         reverse('driverjobrequest_admin_list_tab',
+                                 kwargs={'status': status_value})))
+        return tabs
+
+    def get_queryset(self, *args, **kwargs):
+
+        return DriverJobRequest.objects.filter(
+                    status=self.kwargs.get('status',
+                                           DriverJobRequest.STATUS_OPEN))

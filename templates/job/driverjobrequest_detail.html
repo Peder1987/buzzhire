@@ -3,7 +3,17 @@
 
 {% block inner_breadcrumb %}
   {{ block.super }}
-  {% breadcrumb 'Requested jobs' 'requested_jobs' %}
+  {% if client %}
+    {% breadcrumb 'Requested jobs' 'requested_jobs' %}
+  {% else %}
+    {% breadcrumb 'Job requests' 'driverjobrequest_admin_list' %}
+  {% endif %}
+{% endblock %}
+
+{% block page_actions %}
+    {% if request.user.is_admin %}
+        <a class='btn btn-default' href='{% url 'job_matching' %}'>{{ 'job_matching'|icon }} Job matching</a>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -18,12 +28,34 @@
                         <span style='font-family: monospace;'>{{ object.reference_number }}</span>
                     </td>
                 </tr>
-                <tr>
-                    <th>Pay per hour</th>
-                    <td>
-                        &pound;{{ object.client_pay_per_hour.amount }}
-                    </td>
-                </tr>
+                {% if request.user.is_admin %}
+                    <tr>
+                        <th>Client</th>
+                        <td>
+                            {{ object.client }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Client pay per hour</th>
+                        <td>
+                            &pound;{{ object.client_pay_per_hour.amount }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Driver pay per hour</th>
+                        <td>
+                            &pound;{{ object.freelancer_pay_per_hour.amount }}
+                        </td>
+                    </tr>
+
+                {% else %}
+                    <tr>
+                        <th>Pay per hour</th>
+                        <td>
+                            &pound;{{ object.client_pay_per_hour.amount }}
+                        </td>
+                    </tr>
+                {% endif %}
                 <tr>
                     <th>Date submitted</th>
                     <td>
@@ -31,14 +63,7 @@
                         {{ 'time'|icon }} {{ object.date_submitted.time }}
                     </td>
                 </tr>
-                {% comment %}
-                <tr>
-                    <th>Client</th>
-                    <td>
-                        {{ object.client }}
-                    </td>
-                </tr>
-                {% endcomment %}
+                
 
                 <tr>
                     <th>Status</th>

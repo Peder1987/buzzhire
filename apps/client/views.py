@@ -10,7 +10,13 @@ from .models import Client
 
 class ClientOnlyMixin(object):
     """Views mixin - only allow clients to access.
-    Adds client as an attribute on the view."""
+    Adds client as an attribute on the view.
+    
+    Can allow admins too, if allow_admin is set to True.
+    """
+
+    allow_admin = False
+
     def dispatch(self, request, *args, **kwargs):
         # If the user is not logged in, give them the chance to
         if self.request.user.is_anonymous():
@@ -18,8 +24,17 @@ class ClientOnlyMixin(object):
         try:
             self.client = self.request.user.client
         except Client.DoesNotExist:
-            raise PermissionDenied
+            if self.allow_admin:
+                self.client = False
+            else:
+                raise PermissionDenied
         return super(ClientOnlyMixin, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, *args, **kwargs):
+        # Add the client to the template context
+        context = super(ClientOnlyMixin, self).get_context_data(*args, **kwargs)
+        context['client'] = self.client
+        return context
 
 
 class OwnedByClientMixin(ClientOnlyMixin, OwnerOnlyMixin):

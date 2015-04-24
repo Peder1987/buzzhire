@@ -6,7 +6,6 @@ from django.template.loader import render_to_string
 from .models import DriverJobRequest
 
 
-
 @receiver(driverjobrequest_created)
 def notify_admin_on_job_request(sender, driverjobrequest, **kwargs):
     "Notifies the bookings email address when a new job request is submitted."

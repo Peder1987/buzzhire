@@ -6,6 +6,9 @@
         <table class='table'>
             <thead>
                 <th>Reference</th>
+                {% if request.user.is_admin %}
+                    <th>Client</th>
+                {% endif %}
                 <th>Start date and time</th>
                 <th>Duration</th>
                 <th>Location</th>
@@ -16,6 +19,9 @@
                 {% for object in object_list %}
                     <tr>
                         <td><a href='{{ object.get_absolute_url }}'>{{ object.reference_number }}</a></td>
+                        {% if request.user.is_admin %}
+                            <td>{{ object.client }}</td>
+                        {% endif %}
                         <td>{{ 'date'|icon }} {{ object.date }}<br>{{ 'time'|icon }} {{ object.start_time }}</td>
                         <td>{{ object.duration }} hour{{ object.duration|pluralize }}</td>
                         <td>{% include 'job/includes/location.html' %}</td>

@@ -39,6 +39,7 @@ ICON_MAP = {
     'yes': 'check',
     'no': 'times',
     'location': 'map-marker',
+    'search': 'search',
 }
 
 @register.filter
