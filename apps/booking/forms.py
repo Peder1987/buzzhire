@@ -2,13 +2,14 @@ import calendar
 from decimal import Decimal
 from django import forms
 from django.forms import widgets
-from django.db.models import BooleanField
+from django.db.models import BooleanField, Q
 from apps.core.forms import CrispyFormMixin
 from multiselectfield.forms.fields import MultiSelectFormField
 from djmoney.forms.fields import MoneyField
 from apps.core.widgets import Bootstrap3SterlingMoneyWidget
 from .models import Availability
-from apps.freelancer.models import client_to_freelancer_rate
+from apps.freelancer.models import client_to_freelancer_rate, Freelancer
+from apps.job.models import JobRequest
 from apps.driver.models import Driver, VehicleType, DriverVehicleType
 from apps.location.forms import PostcodeFormMixin
 from django.contrib.gis.measure import D
@@ -84,15 +85,16 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
                                         queryset=VehicleType.objects.all(),
                                         required=False,
                                         widget=forms.CheckboxSelectMultiple)
-    DRIVING_EXPERIENCE_CHOICES = (
-        (0, 'No preference'),
-        (1, '1 year'),
-        (3, '3 years'),
-        (5, '5 years'),
-    )
+#     DRIVING_EXPERIENCE_CHOICES = (
+#         (0, 'No preference'),
+#         (1, '1 year'),
+#         (3, '3 years'),
+#         (5, '5 years'),
+#     )
 
-    minimum_driving_experience = forms.ChoiceField(required=False,
-                                    choices=DRIVING_EXPERIENCE_CHOICES)
+#     driving_experience = forms.ChoiceField(label='Minimum driving experience',
+#                                     required=False,
+#                                     choices=DRIVING_EXPERIENCE_CHOICES)
 
     client_pay_per_hour = MoneyField(max_digits=5, decimal_places=2,
                                      required=False)
@@ -106,28 +108,10 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
                             'that does not have a delivery box of at least '
                             'this size, including cars.')
 
-    PHONE_TYPE_CHOICES = ((None, 'No preference'),) \
-                         + Driver.PHONE_TYPE_CHOICES
-    phone_type = forms.ChoiceField(required=False,
-                                   choices=PHONE_TYPE_CHOICES)
-
-    # TODO -possibly change phone_type to phone_requirement
-    # phone_requirement = forms.ChoiceField(required=False,
-    #                            choices=JobRequest.PHONE_REQUIREMENT_CHOICES)
-
+    phone_requirement = forms.ChoiceField(required=False,
+                                choices=JobRequest.PHONE_REQUIREMENT_CHOICES)
 
     # respect_travel_distance = forms.BooleanField(required=False)
-
-    # Maps field name to filter kwargs when searching
-    FILTER_MAP = {
-        'minimum_driving_experience': 'driving_experience__gte',
-        'phone_type': 'phone_type',
-    }
-
-    # Fields which map directly on to job requests
-    JOB_REQUEST_FIELDS = ('date', 'minimum_delivery_box',
-                          'client_pay_per_hour',
-                          'own_vehicle')
 
     def __init__(self, *args, **kwargs):
         # Set the job request, if it's provided
@@ -145,14 +129,19 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
 
     def set_initial_based_on_job_request(self):
         "Sets the initial data based on the job request."
-        for field in self.JOB_REQUEST_FIELDS:
+        # Set initial for flat fields (i.e. ones that directly map between
+        # form and job request attributes)
+        FLAT_FIELDS = ('date', 'minimum_delivery_box', 'client_pay_per_hour',
+                       'own_vehicle', 'phone_requirement')
+        for field in FLAT_FIELDS:
             self.fields[field].initial = getattr(self.job_request, field)
 
+        # Other fields
+        self.fields['raw_postcode'].initial = str(self.job_request.postcode)
+        self.fields['vehicle_types'].initial = \
+                                        self.job_request.vehicle_types.all()
+
         # shift - todo
-        # phone_type - todo
-        # minimum_driving_experience -> driving experience
-        # postcode
-        # vehicle types
 
     def clean(self):
         super(JobMatchingForm, self).clean()
@@ -170,8 +159,7 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
 
         results = Driver.published_objects.all()
 
-        results = self.filter_from_map(results)
-
+        results = self.filter_by_phone_requirement(results)
         results = self.filter_by_vehicle_requirements(results)
         results = self.filter_by_availability(results)
         results = self.filter_by_pay_per_hour(results)
@@ -180,14 +168,25 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
         # Return unique results
         return results.distinct()
 
-    def filter_from_map(self, results):
-        """Filters the results based on the FILTER_MAP that is used
-        to define the behaviour for most of the fields."""
-        filter_kwargs = {}
-        for field_name, filter_kwarg in self.FILTER_MAP.items():
-            if self.cleaned_data[field_name]:
-                filter_kwargs[filter_kwarg] = self.cleaned_data[field_name]
-        return results.filter(**filter_kwargs)
+    def filter_by_phone_requirement(self, results):
+        "Filters by the phone requirement."
+        PHONE_REQUIREMENT_MAP = {
+            JobRequest.PHONE_REQUIREMENT_NOT_REQUIRED: lambda r: r,
+            JobRequest.PHONE_REQUIREMENT_ANY:
+                lambda r: r.exclude(
+                    phone_type__in=(Freelancer.PHONE_TYPE_NON_SMARTPHONE, '')),
+            JobRequest.PHONE_REQUIREMENT_ANDROID:
+                lambda r: r.filter(phone_type=Freelancer.PHONE_TYPE_ANDROID),
+            JobRequest.PHONE_REQUIREMENT_IPHONE:
+                lambda r: r.filter(phone_type=Freelancer.PHONE_TYPE_IPHONE),
+            JobRequest.PHONE_REQUIREMENT_WINDOWS:
+                lambda r: r.filter(phone_type=Freelancer.PHONE_TYPE_WINDOWS),
+        }
+
+        if self.cleaned_data['phone_requirement']:
+            results = PHONE_REQUIREMENT_MAP[
+                            self.cleaned_data['phone_requirement']](results)
+        return results
 
     def filter_by_vehicle_requirements(self, results):
         "Filters by vehicle requirements."
