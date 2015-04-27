@@ -1,14 +1,16 @@
-from django.views.generic import ListView, UpdateView
+from django.views.generic import ListView, UpdateView, CreateView, FormView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib import messages
 from apps.account.views import AdminOnlyMixin
-from apps.core.views import ContextMixin, TabsMixin
+from apps.core.views import ContextMixin, TabsMixin, ContextTemplateView, \
+    ConfirmationMixin
+from apps.driver.models import Driver
 from apps.freelancer.views import FreelancerOnlyMixin
 from apps.job.models import DriverJobRequest
 from .models import Booking, Availability
-from .forms import AvailabilityForm, JobMatchingForm
+from .forms import AvailabilityForm, JobMatchingForm, BookingConfirmForm
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 
 
 class FreelancerBookingsList(FreelancerOnlyMixin,
@@ -95,3 +97,40 @@ class JobMatchingView(AdminOnlyMixin, ContextMixin, ListView):
             # Set a searched flag to let the template know a search has run
             context['searched'] = True
         return context
+
+
+class BookingConfirm(AdminOnlyMixin, ConfirmationMixin, FormView):
+    """Confirmation form for the creation of a Booking
+    - i.e. assigning a freelancer to a job.
+    """
+    extra_context = {'title': 'Create booking'}
+    question = 'Are you sure you want to create this booking?'
+    cancel_url = reverse_lazy('account_dashboard')
+    template_name = 'account/dashboard_base.html'
+    form_class = BookingConfirmForm
+
+
+    def dispatch(self, *args, **kwargs):
+        self.job_request = get_object_or_404(DriverJobRequest,
+                                             pk=kwargs.pop('job_request_pk'))
+        self.driver = get_object_or_404(Driver,
+                                             pk=kwargs.pop('driver_pk'))
+        return super(BookingConfirm, self).dispatch(*args, **kwargs)
+
+
+    def get_form_kwargs(self, *args, **kwargs):
+        # Pass the job request and freelancer to the form
+        form_kwargs = super(BookingConfirm, self).get_form_kwargs(*args,
+                                                                  **kwargs)
+        form_kwargs.update({
+            'job_request': self.job_request,
+            'driver': self.driver,
+        })
+        return form_kwargs
+
+    def form_valid(self, *args, **kwargs):
+        Booking.objects.create(freelancer=self.driver,
+                               jobrequest=self.job_request)
+        messages.success(self.request, 'Created booking.')
+        return redirect(self.job_request.get_absolute_url())
+

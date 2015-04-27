@@ -7,11 +7,12 @@ from apps.core.forms import CrispyFormMixin
 from multiselectfield.forms.fields import MultiSelectFormField
 from djmoney.forms.fields import MoneyField
 from apps.core.widgets import Bootstrap3SterlingMoneyWidget
-from .models import Availability
+from .models import Availability, Booking
 from apps.freelancer.models import client_to_freelancer_rate, Freelancer
 from apps.job.models import JobRequest
 from apps.driver.models import Driver, VehicleType, DriverVehicleType
 from apps.location.forms import PostcodeFormMixin
+from apps.core.forms import ConfirmForm
 from django.contrib.gis.measure import D
 
 
@@ -264,3 +265,12 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
                 #      postcode__point__distance_lte=(searched_point, D(mi=4)))
 
         return results
+
+
+class BookingConfirmForm(ConfirmForm):
+    "Form for creating/editing a booking."
+    inner_template_name = 'booking/includes/booking_confirm_form_inner.html'
+    def __init__(self, *args, **kwargs):
+        self.job_request = kwargs.pop('job_request')
+        self.driver = kwargs.pop('driver')
+        super(BookingConfirmForm, self).__init__(*args, **kwargs)

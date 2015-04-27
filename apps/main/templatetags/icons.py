@@ -41,6 +41,7 @@ ICON_MAP = {
     'no': 'times',
     'location': 'map-marker',
     'search': 'search',
+    'right_arrow': 'arrow-circle-right',
 }
 
 @register.filter
