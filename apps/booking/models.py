@@ -32,7 +32,7 @@ class Booking(models.Model):
     JobRequests can potentially have multiple Bookings.
     """
     freelancer = models.ForeignKey(Freelancer, related_name='bookings')
-    jobrequest = models.ForeignKey(JobRequest, related_name='jobrequests')
+    jobrequest = models.ForeignKey(JobRequest, related_name='bookings')
     created = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
