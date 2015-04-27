@@ -78,7 +78,7 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
     date = forms.DateField(required=False)
     SHIFT_CHOICES = tuple([(None, '-- Enter shift --')] +
                           [(value, value.capitalize().replace('_', ' '))
-                           for value in Availability.SHIFTS])
+                                for value in Availability.SHIFTS])
     shift = forms.ChoiceField(choices=SHIFT_CHOICES, required=False)
 
     vehicle_types = forms.ModelMultipleChoiceField(
@@ -141,7 +141,9 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
         self.fields['vehicle_types'].initial = \
                                         self.job_request.vehicle_types.all()
 
-        # shift - todo
+        self.fields['shift'].initial = Availability.shift_from_time(
+                                                self.job_request.start_time)
+
 
     def clean(self):
         super(JobMatchingForm, self).clean()
