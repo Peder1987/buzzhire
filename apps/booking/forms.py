@@ -69,7 +69,10 @@ class AvailabilityForm(forms.ModelForm):
 
 
 class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
-    """Form for searching drivers to help match them to jobs."""
+    """Form for searching drivers to help match them to jobs.
+    Can be optionally instantiated with a job_request, which will prepopulate
+    the search fields based on the job request's values.
+    """
 
     date = forms.DateField(required=False)
     SHIFT_CHOICES = tuple([(None, '-- Enter shift --')] +
@@ -108,6 +111,11 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
     phone_type = forms.ChoiceField(required=False,
                                    choices=PHONE_TYPE_CHOICES)
 
+    # TODO -possibly change phone_type to phone_requirement
+    # phone_requirement = forms.ChoiceField(required=False,
+    #                            choices=JobRequest.PHONE_REQUIREMENT_CHOICES)
+
+
     # respect_travel_distance = forms.BooleanField(required=False)
 
     # Maps field name to filter kwargs when searching
@@ -116,7 +124,14 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
         'phone_type': 'phone_type',
     }
 
+    # Fields which map directly on to job requests
+    JOB_REQUEST_FIELDS = ('date', 'minimum_delivery_box',
+                          'client_pay_per_hour',
+                          'own_vehicle')
+
     def __init__(self, *args, **kwargs):
+        # Set the job request, if it's provided
+        self.job_request = kwargs.pop('job_request', None)
         super(JobMatchingForm, self).__init__(*args, **kwargs)
         amount, currency = self.fields['client_pay_per_hour'].fields
         self.fields['client_pay_per_hour'].widget = \
@@ -124,6 +139,20 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
                amount_widget=amount.widget,
                currency_widget=widgets.HiddenInput(attrs={'value': 'GBP'}),
                attrs={'step': '0.25'})
+
+        if self.job_request:
+            self.set_initial_based_on_job_request()
+
+    def set_initial_based_on_job_request(self):
+        "Sets the initial data based on the job request."
+        for field in self.JOB_REQUEST_FIELDS:
+            self.fields[field].initial = getattr(self.job_request, field)
+
+        # shift - todo
+        # phone_type - todo
+        # minimum_driving_experience -> driving experience
+        # postcode
+        # vehicle types
 
     def clean(self):
         super(JobMatchingForm, self).clean()

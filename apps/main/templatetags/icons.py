@@ -18,6 +18,7 @@ ICON_MAP = {
     'admin': 'cogs',
     'edit': 'edit',
     'delete': 'trash',
+    'clear': 'times',
     'password': 'lock',
     'book': 'calendar',
     'date': 'calendar',

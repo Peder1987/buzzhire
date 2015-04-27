@@ -2,7 +2,14 @@
 {% load crispy_forms_tags icons %}
 
 {% block content %}
+    <p class='text-center'>
+        Job matching for <a href='{{ form.job_request.get_absolute_url }}'><span style='font-family: monospace;'>{{ form.job_request }}</span></a>
+        <a class='btn btn-default btn-xs' href='{% url 'job_matching' %}'>{{ 'clear'|icon }} Clear</a>
+    </p>
+
     <div class='well'>
+        {% if form.job_request %}
+        {% endif %}
         <form method='get'>
             {% csrf_token %}
             <div class='row'>

@@ -4,9 +4,11 @@ from django.contrib import messages
 from apps.account.views import AdminOnlyMixin
 from apps.core.views import ContextMixin, TabsMixin
 from apps.freelancer.views import FreelancerOnlyMixin
+from apps.job.models import DriverJobRequest
 from .models import Booking, Availability
 from .forms import AvailabilityForm, JobMatchingForm
 from django.contrib.messages.views import SuccessMessageMixin
+from django.shortcuts import get_object_or_404
 
 
 class FreelancerBookingsList(FreelancerOnlyMixin,
@@ -59,12 +61,24 @@ class JobMatchingView(AdminOnlyMixin, ContextMixin, ListView):
 
     def get(self, request, *args, **kwargs):
         # We use a form, but with the GET method as it's a search form.
+
+        # First, handle the job request pk which may have been passed
+        # via the url.  If this is present, we should instantiate the form
+        # with that job request
+        job_request_pk = kwargs.get('job_request_pk', None)
+        if job_request_pk:
+            self.job_request = get_object_or_404(DriverJobRequest,
+                                                 pk=job_request_pk)
+            form_kwargs = {'job_request': self.job_request}
+        else:
+            form_kwargs = {}
+
         if self.request.GET.get('search', None):
             # A search has been made
-            self.form = JobMatchingForm(self.request.GET)
-        else:
-            # No search made yet
-            self.form = JobMatchingForm()
+            form_kwargs['data'] = self.request.GET
+
+        self.form = JobMatchingForm(**form_kwargs)
+
         return super(JobMatchingView, self).get(request, *args, **kwargs)
 
     def get_queryset(self):

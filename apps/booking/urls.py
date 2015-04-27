@@ -15,4 +15,7 @@ urlpatterns = [
 
     url(r'^job-matching/$', views.JobMatchingView.as_view(),
          name='job_matching'),
+
+    url(r'^job-matching/(?P<job_request_pk>[\d]+)/$', views.JobMatchingView.as_view(),
+         name='job_matching_for_job_request'),
 ]
