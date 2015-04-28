@@ -42,6 +42,7 @@ ICON_MAP = {
     'location': 'map-marker',
     'search': 'search',
     'right_arrow': 'arrow-circle-right',
+    'phone': 'phone',
 }
 
 @register.filter

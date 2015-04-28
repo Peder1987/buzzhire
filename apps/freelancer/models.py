@@ -168,8 +168,5 @@ class Freelancer(models.Model):
     def __unicode__(self):
         return self.get_full_name()
 
-    def get_absolute_url(self):
-        return reverse('freelancer_detail', args=(self.pk,))
-
     class Meta:
         ordering = 'last_name',

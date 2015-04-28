@@ -50,7 +50,7 @@
                 <tbody>
                     {% for object in object_list %}
                         <tr>
-                            <td><a href='{% url 'admin:driver_driver_change' object.pk %}'>{{ object.reference_number }}</a></td>
+                            <td><a href='{% url 'driver_detail' object.pk %}'>{{ object.reference_number }}</a></td>
                             <td>{{ object.get_full_name }}</td>
                             <td>{% if object.postcode %}
                                     {{ object.postcode }}

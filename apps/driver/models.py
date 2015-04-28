@@ -84,6 +84,9 @@ class Driver(Freelancer):
     objects = models.GeoManager()
     published_objects = PublishedFreelancerManager()
 
+    def get_absolute_url(self):
+        return reverse('driver_detail', args=(self.pk,))
+
 
 class DriverVehicleTypeQuerySet(models.QuerySet):
     "Custom queryset for DriverVehicleTypes."

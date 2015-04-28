@@ -10,7 +10,7 @@ from django.conf import settings
 from allauth.account.utils import complete_signup
 from allauth.account import app_settings
 from apps.core.views import ContextMixin, OwnerOnlyMixin, ConfirmationMixin
-from apps.account.views import SignupView as BaseSignupView
+from apps.account.views import SignupView as BaseSignupView, AdminOnlyMixin
 from apps.account.forms import SignupInnerForm
 from . import forms
 from .models import Driver, DriverVehicleType
@@ -99,7 +99,9 @@ class SignupView(BaseSignupView):
                                self.get_success_url())
 
 
-class DriverDetailView(DetailView):
+class DriverDetailView(AdminOnlyMixin, DetailView):
+    """Detail view for admin to look at a Driver.
+    """
     model = Driver
 
     def get_context_data(self, *args, **kwargs):
