@@ -19,7 +19,7 @@ class FreelancerBookingsList(FreelancerOnlyMixin,
     This view has two modes - if self.past is True, it will return the
     job requests in the past, otherwise it will show upcoming job requests.   
     """
-    paginate_by = 2
+    paginate_by = 15
     extra_context = {'title': 'Bookings'}
     tabs = [
         ('Upcoming', reverse_lazy('freelancer_bookings_list')),
@@ -115,6 +115,16 @@ class BookingConfirm(AdminOnlyMixin, ConfirmationMixin, FormView):
                                              pk=kwargs.pop('job_request_pk'))
         self.driver = get_object_or_404(Driver,
                                              pk=kwargs.pop('driver_pk'))
+        try:
+            Booking.objects.get(jobrequest=self.job_request,
+                                freelancer=self.driver)
+        except Booking.DoesNotExist:
+            # This is what we want: the booking doesn't exist already
+            pass
+        else:
+            # The booking already exists
+            messages.error(self.request, 'That booking already exists.')
+            return redirect('driverjobrequest_admin_list')
         return super(BookingConfirm, self).dispatch(*args, **kwargs)
 
 
