@@ -10,6 +10,7 @@ from apps.client.models import Client
 from apps.location.models import Postcode
 from apps.freelancer.models import client_to_freelancer_rate
 from decimal import Decimal
+from django_fsm import FSMField, transition
 
 
 class JobRequestQuerySet(models.QuerySet):
@@ -56,8 +57,30 @@ class JobRequest(models.Model):
         (STATUS_COMPLETE, 'Complete'),
         (STATUS_CANCELLED, 'Cancelled'),
     )
-    status = models.CharField(max_length=2, choices=STATUS_CHOICES,
-                              default=STATUS_OPEN)
+    status = FSMField(max_length=2, choices=STATUS_CHOICES,
+                              default=STATUS_OPEN, protected=True)
+
+    @transition(field=status, source=STATUS_OPEN, target=STATUS_CONFIRMED)
+    def confirm(self):
+        "Marks a job as confirmed - i.e. the freelancers are all booked."
+        pass
+
+    @transition(field=status, source=[STATUS_CONFIRMED, STATUS_COMPLETE,
+                                        STATUS_CANCELLED], target=STATUS_OPEN)
+    def reopen(self):
+        "Marks a job as open - i.e. it needs some freelancers to be booked in."
+        pass
+
+    @transition(field=status, source=STATUS_OPEN, target=STATUS_CANCELLED)
+    def cancel(self):
+        "Marks a job as cancelled."
+        pass
+
+    @transition(field=status, source=STATUS_CONFIRMED,
+                target=STATUS_COMPLETE)
+    def complete(self):
+        "Marks a job as complete - the job has been performed."
+        pass
 
     # The date this form was submitted
     date_submitted = models.DateTimeField(auto_now_add=True)
@@ -130,6 +153,7 @@ class JobRequest(models.Model):
     def reference_number(self):
         "Returns a reference number for this request."
         return 'JR%s' % str(self.pk).zfill(5)
+
 
     def get_absolute_url(self):
         return reverse('jobrequest_detail', args=(self.pk,))

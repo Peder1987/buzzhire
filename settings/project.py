@@ -23,6 +23,7 @@ class ProjectConfiguration(StandardConfiguration):
         'compressor',
         'djangobower',
         'dbbackup',
+        'fsm_admin',
         'django_bootstrap_breadcrumbs',
         'apps.core',
         'apps.location',

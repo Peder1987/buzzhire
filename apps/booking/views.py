@@ -11,6 +11,7 @@ from .models import Booking, Availability
 from .forms import AvailabilityForm, JobMatchingForm, BookingConfirmForm
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import get_object_or_404, redirect
+from .signals import booking_created
 
 
 class FreelancerBookingsList(FreelancerOnlyMixin,
@@ -139,8 +140,9 @@ class BookingConfirm(AdminOnlyMixin, ConfirmationMixin, FormView):
         return form_kwargs
 
     def form_valid(self, *args, **kwargs):
-        Booking.objects.create(freelancer=self.driver,
+        booking = Booking.objects.create(freelancer=self.driver,
                                jobrequest=self.job_request)
+        # Dispatch signal
+        booking_created.send(sender=self, booking=booking)
         messages.success(self.request, 'Created booking.')
         return redirect(self.job_request.get_absolute_url())
-

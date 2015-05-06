@@ -5,29 +5,48 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from .models import Booking
 from apps.job.models import DriverJobRequest
+from .signals import booking_created
 
 
-@receiver(post_save, sender=Booking)
-def notify_freelancer_on_booking(sender, instance, created, **kwargs):
+@receiver(booking_created)
+def notify_freelancer_on_booking(sender, booking, **kwargs):
     "Notifies the freelancer when a booking is created."
-    if created:
-        subject = 'Confirmation of booking %s' % instance.reference_number
-        content = render_to_string(
-            'booking/email/includes/freelancer_booking_confirmation.html',
-            {
-                'object': instance,
-                'driverjobrequest':
-                    DriverJobRequest.objects.get_from_jobrequest(
-                                                        instance.jobrequest)
-             }
-        )
-        send_mail(instance.freelancer.user.email,
-                  subject,
-                  'email/base',
-                  {'title': 'Confirmation of booking',
-                   'content': content},
-                  from_email=settings.BOOKINGS_EMAIL)
+    subject = 'Confirmation of booking %s' % booking.reference_number
+    content = render_to_string(
+        'booking/email/includes/freelancer_booking_confirmation.html',
+        {
+            'object': booking,
+            'driverjobrequest':
+                DriverJobRequest.objects.get_from_jobrequest(
+                                                    booking.jobrequest)
+         }
+    )
+    send_mail(booking.freelancer.user.email,
+              subject,
+              'email/base',
+              {'title': 'Confirmation of booking',
+               'content': content},
+              from_email=settings.BOOKINGS_EMAIL)
 
+# @receiver(booking_created)
+# def notify_client_on_booking(sender, booking, **kwargs):
+#     "Notifies the client when a booking is created."
+#     subject = 'Confirmation of booking %s' % booking.reference_number
+#     content = render_to_string(
+#         'booking/email/includes/client_booking_confirmation.html',
+#         {
+#             'object': booking,
+#             'driverjobrequest':
+#                 DriverJobRequest.objects.get_from_jobrequest(
+#                                                     booking.jobrequest)
+#          }
+#     )
+#     send_mail(booking.jobrequest.client.user.email,
+#               subject,
+#               'email/base',
+#               {'title': 'Your booking has been confirmed',
+#                'content': content},
+#               from_email=settings.BOOKINGS_EMAIL)
 
 # @receiver(post_save, sender=Booking)
 # def notify_client_on_booking(sender, instance, created, **kwargs):

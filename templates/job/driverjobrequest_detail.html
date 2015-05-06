@@ -147,25 +147,27 @@
                 <div class='compact'>{{ object.comments|linebreaks }}</div>
             {% endif %}
             
-            <h5>Bookings</h5>
-            {% if object.bookings.all %}
-                <table class='table'>
-                    <thead>
-                        <th>Reference</th>
-                        <th>Driver</th>
-                        <th></th>
-                    </thead>
-                    {% for booking in object.bookings.all %}
-                       <tr>
-                          <td class='monospace'>{{ booking }}</td>
-                          <td><a href='{% url 'driver_detail' booking.freelancer.pk %}'>{{ booking.freelancer.get_full_name }}</a></td>
-                          <td class='text-right'><a class='btn btn-sm btn-default' href='{% url 'admin:booking_booking_change' booking.pk %}'>{{ 'edit'|icon }} edit</a>
-                       </tr>
-                    {% endfor %}
-                </table>
-                
-            {% else %}
-                <p>No bookings yet.</p>
+            {% if request.user.is_admin %}
+                <h5>Bookings</h5>
+                {% if object.bookings.all %}
+                    <table class='table'>
+                        <thead>
+                            <th>Reference</th>
+                            <th>Driver</th>
+                            <th></th>
+                        </thead>
+                        {% for booking in object.bookings.all %}
+                           <tr>
+                              <td class='monospace'>{{ booking }}</td>
+                              <td><a href='{% url 'driver_detail' booking.freelancer.pk %}'>{{ booking.freelancer.get_full_name }}</a></td>
+                              <td class='text-right'><a class='btn btn-sm btn-default' href='{% url 'admin:booking_booking_change' booking.pk %}'>{{ 'edit'|icon }} edit</a>
+                           </tr>
+                        {% endfor %}
+                    </table>
+                    
+                {% else %}
+                    <p>No bookings yet.</p>
+                {% endif %}
             {% endif %}
         </div>
     </div>
