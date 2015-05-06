@@ -37,6 +37,33 @@
                         </td>
                     </tr>
                     <tr>
+                        <th>Client email</th>
+                        <td>
+                            {{ object.client.user.email }}
+                        </td>
+                    </tr>
+                {% endif %}
+                <tr>
+                    <th>Date submitted</th>
+                    <td>
+                        {{ 'date'|icon }} {{ object.date_submitted.date }}<br>
+                        {{ 'time'|icon }} {{ object.date_submitted.time }}
+                    </td>
+                </tr>
+                
+
+                <tr>
+                    <th>Status</th>
+                    <td>
+                        <span class='label label-default'>{{ object.get_status_display }}</span>
+                    </td>
+                </tr>
+                
+             </table>
+             <h5>Financial</h5>
+             <table class='table table-striped'>
+                {% if request.user.is_admin %}
+                    <tr>
                         <th>Client pay per hour</th>
                         <td>
                             &pound;{{ object.client_pay_per_hour.amount }}
@@ -57,22 +84,6 @@
                         </td>
                     </tr>
                 {% endif %}
-                <tr>
-                    <th>Date submitted</th>
-                    <td>
-                        {{ 'date'|icon }} {{ object.date_submitted.date }}<br>
-                        {{ 'time'|icon }} {{ object.date_submitted.time }}
-                    </td>
-                </tr>
-                
-
-                <tr>
-                    <th>Status</th>
-                    <td>
-                        <span class='label label-default'>{{ object.get_status_display }}</span>
-                    </td>
-                </tr>
-                
              </table>
              <h5>Location and date</h5>
              <table class='table table-striped'>
