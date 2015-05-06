@@ -10,7 +10,38 @@
 {% block content %}
      <div class='row'>
         <div class='col-md-4 col-md-push-8'>
-            <h5>Details</h5>
+            <h5>Contact</h5>
+            <table class='table table-striped'>
+                <tr>
+                    <th>Name</th>
+                    <td>{{ object.get_full_name }}</td>
+                </tr>
+                <tr>
+                    <th>Mobile</th>
+                    <td>{{ object.mobile }}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{ object.user.email }}</td>
+                </tr>
+                
+            </table>
+            <h5>Location</h5>
+            <table class='table table-striped'>
+                <tr>
+                    <th>Postcode</th>
+                    <td>
+                        {{ object.postcode }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Travel distance</th>
+                    <td>
+                        {{ object.get_travel_distance_display }}
+                    </td>
+                </tr>
+             </table>
+            <h5>Other details</h5>
             <table class='table table-striped'>
                 <tr>
                     <th>Reference</th>
@@ -28,12 +59,6 @@
                     <th>Minimum pay per hour</th>
                     <td>
                         &pound;{{ object.minimum_pay_per_hour.amount }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>Mobile</th>
-                    <td>
-                        {{ object.mobile }}
                     </td>
                 </tr>
                 <tr>
@@ -55,21 +80,6 @@
                     </td>
                 </tr>
             </table>
-            <h5>Location</h5>
-            <table class='table table-striped'>
-                <tr>
-                    <th>Postcode</th>
-                    <td>
-                        {{ object.postcode }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>Travel distance</th>
-                    <td>
-                        {{ object.get_travel_distance_display }}
-                    </td>
-                </tr>
-             </table>
         </div>
         <div class='col-md-8 col-md-pull-4'>
             <h5>Vehicles</h5>
