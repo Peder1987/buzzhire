@@ -18,7 +18,15 @@
 {% endblock %}
 
 {% block content %}
-
+    {% if object.status = 'IC' %}
+        <div class='alert alert-warning text-center'>
+            <p><strong>This job is still in checkout.</strong></p>
+            {% if request.user.client == object.client %}
+                <a class='btn btn-lg btn-warning' href='{% url 'driverjobrequest_checkout' object.pk %}'>Confirm and pay</a>
+            {% endif %}
+        </div>
+    {% endif %}
+        
     <div class='row'>
         <div class='col-md-4 col-md-push-8'>
             <h5>Details</h5>
@@ -182,7 +190,4 @@
             {% endif %}
         </div>
     </div>
-    
-    
-    
 {% endblock %}

@@ -26,11 +26,17 @@ urlpatterns = [
      url(r'^create/new-client/$', views.DriverJobRequestCreateAnonymous.as_view(),
          name='driverjobrequest_create_anon'),
 
-     url(r'^create/done/$', views.DriverJobRequestComplete.as_view(),
-         name='driverjobrequest_complete'),
+    url(r'^requests/(?P<pk>[\d]+)/checkout/$',
+        views.DriverJobRequestCheckout.as_view(),
+        name='driverjobrequest_checkout'),
+
+     url(r'^requests/(?P<pk>[\d]+)/done/$',
+         views.DriverJobRequestDone.as_view(),
+         name='driverjobrequest_done'),
 
     url(r'^requests/(?P<pk>[\d]+)/$', views.DriverJobRequestDetail.as_view(),
         name='jobrequest_detail'),
+
 
 #     url(r'^requests/moderation/$', views.JobRequestsModeration.as_view(),
 #         name='jobrequest_moderation'),

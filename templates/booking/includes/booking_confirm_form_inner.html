@@ -34,52 +34,7 @@
             <h3 class='light-icon'>{{ 'right_arrow'|icon }}</h3>
         </div>
         <div class='col-md-5'>
-            <div class='well'>
-                {% with form.job_request as object %}
-                    <p>
-                        <a class='monospace' href='{{ object.get_absolute_url }}'>{{ object.reference_number }}</a><br>
-                        {{ 'date'|icon }} {{ object.date }}, {{ object.start_time }} 
-                        
-                    </p>
-                    <table class='table text-left'>
-                        <tbody>
-                            <tr>
-                                <th>Duration</th>
-                                <td>
-                                    {{ object.duration }} hour{{ object.duration|pluralize }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Location</th>
-                                <td>
-                                    <address>
-                                       {% include 'job/includes/location.html' %}
-                                    </address>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Client</th>
-                                <td>
-                                    {{ object.client }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Client pay per hour</th>
-                                <td>
-                                    &pound;{{ object.client_pay_per_hour.amount }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Driver pay per hour</th>
-                                <td>
-                                    &pound;{{ object.freelancer_pay_per_hour.amount }}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                {% endwith %}
-                 
-            </div>
+            {% include 'job/includes/driverjobrequest_summary.html' with object=form.job_request %}
         </div>
     </div>
 {% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'job/driverjobrequest_detail.html' %}
+{% load icons django_bootstrap_breadcrumbs crispy_forms_tags %}
+
+{% block page_actions %}{% endblock %}
+
+{% block inner_breadcrumb %}
+  {{ block.super }}
+  {% breadcrumb object object.get_absolute_url %}
+{% endblock %}
+
+{% block content %}
+    <div class='row'>
+        <div class='col-md-5'>
+            {% include 'job/includes/driverjobrequest_summary.html' %}    
+        </div>
+        <div class='col-md-7'>
+            {% crispy form %}    
+        </div>
+    </div>
+{% endblock %}
+
+{% block extrascripts %}
+    {{ block.super }}
+    {# TODO #}
+{% endblock %}

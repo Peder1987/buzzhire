@@ -22,6 +22,15 @@ class DriverJobRequestForm(CrispyFormMixin, PostcodeFormMixin,
     submit_context = {'icon_name': 'driverjobrequest_create'}
 
     def __init__(self, *args, **kwargs):
+        if 'data' in kwargs:
+            # If the form has been submitted, add the disabled city widget
+            # value to the data before continuing.  This is because otherwise,
+            # if the form fails validation then it doesn't show anything in the
+            # city widget the second time.
+            data = kwargs['data'].copy()
+            data['city'] = DriverJobRequest.CITY_LONDON
+            kwargs['data'] = data
+
         super(DriverJobRequestForm, self).__init__(*args, **kwargs)
 
         amount, currency = self.fields['client_pay_per_hour'].fields
@@ -71,7 +80,7 @@ class DriverJobRequestForm(CrispyFormMixin, PostcodeFormMixin,
         # Make sure the client is saved in the job request
         self.instance.client = client
         # Make sure the city of London is saved
-        self.instance.city = DriverJobRequest.CITY_LONDON
+        # self.instance.city = DriverJobRequest.CITY_LONDON
         self.instance.postcode = self.cleaned_data['postcode']
         return super(DriverJobRequestForm, self).save(commit)
 
@@ -111,3 +120,17 @@ class DriverJobRequestSignupInnerForm(SignupInnerForm):
         self.helper.layout[0].insert(0, layout.HTML(
             """<p>Please give us an email address and password that you
             can use to sign in to the site."""))
+
+
+class JobRequestCheckoutForm(CrispyFormMixin, forms.Form):
+    submit_text = 'Confirm and pay'
+    submit_context = {'icon_name': 'pay'}
+
+    def __init__(self, *args, **kwargs):
+        self.instance = kwargs.pop('instance')
+        super(JobRequestCheckoutForm, self).__init__(*args, **kwargs)
+
+    def save(self):
+        self.instance.open()
+        self.instance.save()
+

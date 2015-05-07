@@ -31,5 +31,5 @@
 {% endif %}
 
 {% if admin %}
-    <p><a href='{% base_url %}{% url object.get_absolute_url %}'>View job request</a></p>
+    <p><a href='{% base_url %}{{ object.get_absolute_url }}'>View job request</a></p>
 {% endif %}
