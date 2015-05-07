@@ -11,6 +11,11 @@ from django.forms.widgets import HiddenInput
 from apps.core.widgets import Bootstrap3SterlingMoneyWidget, Bootstrap3TextInput
 from django.forms import widgets
 from apps.location.forms import PostcodeFormMixin
+from apps.payment.utils import PaymentAPI, PaymentException
+import logging
+
+
+logger = logging.getLogger('project')
 
 
 class DriverJobRequestForm(CrispyFormMixin, PostcodeFormMixin,
@@ -120,17 +125,40 @@ class DriverJobRequestSignupInnerForm(SignupInnerForm):
         self.helper.layout[0].insert(0, layout.HTML(
             """<p>Please give us an email address and password that you
             can use to sign in to the site."""))
+        self.helper.layout.append(layout.Submit('Pay'))
 
 
 class JobRequestCheckoutForm(CrispyFormMixin, forms.Form):
     submit_text = 'Confirm and pay'
     submit_context = {'icon_name': 'pay'}
+    submit_template_name = 'payment/forms/buttons.html'
 
+    # This is the hidden field that the Braintree drop in UI fills out,
+    # which allows us to take the payment.
+    payment_method_nonce = forms.CharField(required=True,
+                                           widget=forms.HiddenInput)
     def __init__(self, *args, **kwargs):
         self.instance = kwargs.pop('instance')
         super(JobRequestCheckoutForm, self).__init__(*args, **kwargs)
+        self.helper.layout.insert(0, layout.Div(
+                                        css_id='payment-method-container'))
+
+    def clean(self):
+        cleaned_data = super(JobRequestCheckoutForm, self).clean()
+        # Check everything else is valid before attempting payment
+        if self.is_valid():
+            # Attempt payment
+            try:
+                api = PaymentAPI()
+                api.take_payment(self.cleaned_data['payment_method_nonce'],
+                                 amount=self.instance.client_total_cost.amount,
+                                 order_id=self.instance.reference_number)
+            except PaymentException as e:
+                logger.exception(e)
+                raise forms.ValidationError(
+                                   'Sorry, there was an issue taking payment.')
 
     def save(self):
+        # Payment will have been successfully processed
         self.instance.open()
         self.instance.save()
-

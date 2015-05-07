@@ -6,6 +6,7 @@
 
 BeautifulSoup==3.2.1
 boto==2.36.0
+braintree==3.13.0
 cssutils==1.0
 Django==1.7.6
 django-allauth==0.19.1
@@ -39,5 +40,3 @@ requests==2.6.0
 requests-oauthlib==0.4.2
 six==1.9.0
 sorl-thumbnail==12.2
-
-
