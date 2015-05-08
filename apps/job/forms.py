@@ -141,6 +141,7 @@ class JobRequestCheckoutForm(CrispyFormMixin, forms.Form):
     # which allows us to take the payment.
     payment_method_nonce = forms.CharField(required=True,
                                            widget=forms.HiddenInput)
+
     def __init__(self, *args, **kwargs):
         self.instance = kwargs.pop('instance')
         super(JobRequestCheckoutForm, self).__init__(*args, **kwargs)
@@ -157,6 +158,7 @@ class JobRequestCheckoutForm(CrispyFormMixin, forms.Form):
                 api.take_payment(self.cleaned_data['payment_method_nonce'],
                                  amount=self.instance.client_total_cost.amount,
                                  order_id=self.instance.reference_number)
+
             except PaymentException as e:
                 logger.exception(e)
                 raise forms.ValidationError(

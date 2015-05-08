@@ -31,12 +31,10 @@
       braintree.setup("{% payment_client_token client %}", 'dropin', {
           container: 'payment-method-container',
           onReady: function () {
-            // Enable the submit button
+            // Show the submit button once the form has loaded
             $('#pay-button').show();
           },
-      
         });
-      
     </script>
 {% endblock %}
 
