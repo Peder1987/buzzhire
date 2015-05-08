@@ -51,7 +51,7 @@ class DriverJobRequestCreateAnonymous(BaseSignupView):
     form_class = DriverJobRequestSignupInnerForm
     # The form prefix for the account form
     prefix = 'account'
-    success_url = reverse_lazy('driverjobrequest_complete')
+
     extra_forms = {
         'client': ClientInnerForm,
         'driverjobrequest': DriverJobRequestInnerForm,
@@ -88,7 +88,6 @@ class DriverJobRequestCreateAnonymous(BaseSignupView):
             })
         return kwargs
 
-
     def post(self, request, *args, **kwargs):
         "Standard post method adapted to validate both forms."
         form_class = self.get_form_class()
@@ -111,14 +110,19 @@ class DriverJobRequestCreateAnonymous(BaseSignupView):
         user = form.save(self.request)
         # Save extra forms too
         client = self.bound_forms['client'].save(user=user)
-        driverjobrequest = self.bound_forms['driverjobrequest'].save(
+        self.driverjobrequest = self.bound_forms['driverjobrequest'].save(
                                                                 client=client)
         # Send signal (see DriverJobRequestCreate for explanation)
         signals.driverjobrequest_created.send(sender=self.__class__,
-                                      driverjobrequest=driverjobrequest)
+                                      driverjobrequest=self.driverjobrequest)
         return complete_signup(self.request, user,
                                app_settings.EMAIL_VERIFICATION,
                                self.get_success_url())
+
+    def get_success_url(self):
+        return reverse('driverjobrequest_checkout',
+                       args=(self.driverjobrequest.pk,))
+
 
 
 class RequestedJobList(ClientOnlyMixin, ContextMixin, TabsMixin, ListView):
