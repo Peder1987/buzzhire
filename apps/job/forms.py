@@ -13,6 +13,7 @@ from django.forms import widgets
 from apps.location.forms import PostcodeFormMixin
 from apps.payment.utils import PaymentAPI, PaymentException
 import logging
+from __builtin__ import True
 
 
 logger = logging.getLogger('project')
@@ -25,6 +26,7 @@ class DriverJobRequestForm(CrispyFormMixin, PostcodeFormMixin,
     """
     submit_text = 'Book'
     submit_context = {'icon_name': 'driverjobrequest_create'}
+    postcode_required = True
 
     def __init__(self, *args, **kwargs):
         if 'data' in kwargs:
@@ -33,9 +35,10 @@ class DriverJobRequestForm(CrispyFormMixin, PostcodeFormMixin,
             # if the form fails validation then it doesn't show anything in the
             # city widget the second time.
             data = kwargs['data'].copy()
-            data['city'] = DriverJobRequest.CITY_LONDON
+            # The posted key is different if the form has a prefix
+            self.prefix = kwargs.get('prefix')
+            data[self.add_prefix('city')] = DriverJobRequest.CITY_LONDON
             kwargs['data'] = data
-
         super(DriverJobRequestForm, self).__init__(*args, **kwargs)
 
         amount, currency = self.fields['client_pay_per_hour'].fields
@@ -47,6 +50,7 @@ class DriverJobRequestForm(CrispyFormMixin, PostcodeFormMixin,
         self.fields['start_time'].widget = forms.TimeInput()
         self.fields['duration'].widget = Bootstrap3TextInput(addon_after='hours')
         self.fields['city'].widget.attrs = {'disabled': 'disabled'}
+
         self.fields['comments'].widget.attrs = {'rows': 3}
         self.helper.layout = layout.Layout(
             layout.Fieldset('Date and time',
