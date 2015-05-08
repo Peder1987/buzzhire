@@ -30,7 +30,25 @@
       {% endcomment %}
       braintree.setup("{% payment_client_token client %}", 'dropin', {
           container: 'payment-method-container',
+          onReady: function () {
+            // Enable the submit button
+            $('#pay-button').show();
+          },
+      
         });
       
     </script>
 {% endblock %}
+
+// disable submit button
+$('#submit-button').prop("disabled", true);
+braintree.setup('your-client-token', 'dropin', {
+container: 'dropin',
+paymentMethodNonceReceived: function (event, nonce) {
+// do something
+}, 
+onReady: function () {
+// enable your submit button
+$('#submit-button').prop("disabled", false);
+}
+});
