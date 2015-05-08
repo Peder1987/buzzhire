@@ -125,7 +125,7 @@ class DriverJobRequestSignupInnerForm(SignupInnerForm):
         self.helper.layout[0].insert(0, layout.HTML(
             """<p>Please give us an email address and password that you
             can use to sign in to the site."""))
-        self.helper.layout.append(layout.Submit('Pay'))
+
 
 
 class JobRequestCheckoutForm(CrispyFormMixin, forms.Form):
