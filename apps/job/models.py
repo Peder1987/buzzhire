@@ -210,9 +210,6 @@ class DriverJobRequest(JobRequest):
     vehicle_types_old = models.ManyToManyField(VehicleType,
            related_name='jobrequests_old')
 
-    # Vehicle type doesn't exactly map onto the VehicleType model.
-    # Instead, we exclude any include_under VehicleTypes and adjust the display
-    # of the field elsewhere
     vehicle_type = models.ForeignKey(FlexibleVehicleType,
            related_name='jobrequests',
            null=True,

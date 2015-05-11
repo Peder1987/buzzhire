@@ -7,7 +7,7 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('driver', '0021_vehicletype_include_under'),
+        ('driver', '0023_scooter_equivalent'),
         ('job', '0034_auto_20150511_1152'),
     ]
 
@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='driverjobrequest',
             name='vehicle_type',
-            field=models.ForeignKey(related_name='jobrequests', to='driver.VehicleType', help_text=b'Which types of vehicle would be appropriate for the job. (N.B. if you require a specific mixture of vehicles, such as one car and one van, then you should create these as separate bookings.)', null=True),
+            field=models.ForeignKey(related_name='jobrequests', to='driver.FlexibleVehicleType', help_text=b'Which type of vehicle would be appropriate for the job. ', null=True),
             preserve_default=True,
         ),
         migrations.AlterField(
