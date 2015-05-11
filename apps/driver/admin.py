@@ -12,6 +12,11 @@ class DriverAdmin(admin.ModelAdmin):
 class DriverVehicleTypeAdmin(admin.ModelAdmin):
     list_display = ('vehicle_type', 'driver', 'own_vehicle', 'delivery_box')
 
+
+class VehicleTypeAdmin(admin.ModelAdmin):
+    list_display = ('title', 'equivalent_to')
+
+
 admin.site.register(models.Driver, DriverAdmin)
-admin.site.register(models.VehicleType)
+admin.site.register(models.VehicleType, VehicleTypeAdmin)
 admin.site.register(models.DriverVehicleType, DriverVehicleTypeAdmin)

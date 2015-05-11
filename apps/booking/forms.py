@@ -10,7 +10,8 @@ from apps.core.widgets import Bootstrap3SterlingMoneyWidget
 from .models import Availability, Booking
 from apps.freelancer.models import client_to_freelancer_rate, Freelancer
 from apps.job.models import JobRequest
-from apps.driver.models import Driver, VehicleType, DriverVehicleType
+from apps.driver.models import Driver, VehicleType, DriverVehicleType, \
+                                            FlexibleVehicleType
 from apps.location.forms import PostcodeFormMixin
 from apps.core.forms import ConfirmForm
 from django.contrib.gis.measure import D
@@ -82,10 +83,9 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
                                 for value in Availability.SHIFTS])
     shift = forms.ChoiceField(choices=SHIFT_CHOICES, required=False)
 
-    vehicle_types = forms.ModelMultipleChoiceField(
-                                        queryset=VehicleType.objects.all(),
-                                        required=False,
-                                        widget=forms.CheckboxSelectMultiple)
+    vehicle_type = forms.ModelChoiceField(
+                                queryset=FlexibleVehicleType.objects.all(),
+                                required=False)
 #     DRIVING_EXPERIENCE_CHOICES = (
 #         (0, 'No preference'),
 #         (1, '1 year'),
@@ -139,8 +139,8 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
 
         # Other fields
         self.fields['raw_postcode'].initial = str(self.job_request.postcode)
-        self.fields['vehicle_types'].initial = \
-                                        self.job_request.vehicle_types.all()
+        self.fields['vehicle_type'].initial = \
+                                        self.job_request.vehicle_type
 
         self.fields['shift'].initial = Availability.shift_from_time(
                                                 self.job_request.start_time)
@@ -194,12 +194,15 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
     def filter_by_vehicle_requirements(self, results):
         "Filters by vehicle requirements."
 
-        if self.cleaned_data['vehicle_types']:
+        if self.cleaned_data['vehicle_type']:
+            # The supplied vehicle type is a FlexibleVehicleType; unpack it
+            # into individual VehicleTypes.
+            vehicle_types = self.cleaned_data['vehicle_type'].as_queryset()
             if self.cleaned_data['own_vehicle']:
                 # Filter by vehicle types that are owned
                 filter_kwargs = {
                     'drivervehicletype__vehicle_type': \
-                                    self.cleaned_data['vehicle_types'],
+                                    vehicle_types,
                     'drivervehicletype__own_vehicle': True
                 }
                 # Include delivery box filter, if specified
@@ -210,7 +213,7 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
             else:
                 # Just filter by vehicle types
                 filter_kwargs = {
-                    'vehicle_types': self.cleaned_data['vehicle_types']
+                    'vehicle_types': vehicle_types
                 }
             return results.filter(**filter_kwargs)
 

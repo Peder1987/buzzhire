@@ -51,6 +51,10 @@ class DriverJobRequestForm(CrispyFormMixin, PostcodeFormMixin,
         self.fields['duration'].widget = Bootstrap3TextInput(addon_after='hours')
         self.fields['city'].widget.attrs = {'disabled': 'disabled'}
 
+        # Adjust display of radios
+        self.fields['vehicle_type'].empty_label = 'Any'
+        self.fields['vehicle_type'].initial = ''  # Set 'Any' radio as default
+
         self.fields['comments'].widget.attrs = {'rows': 3}
         self.helper.layout = layout.Layout(
             layout.Fieldset('Date and time',
@@ -62,7 +66,7 @@ class DriverJobRequestForm(CrispyFormMixin, PostcodeFormMixin,
                 'raw_postcode',
             ),
             layout.Fieldset('Vehicle',
-                'vehicle_types', 'own_vehicle',
+                'vehicle_type', 'own_vehicle',
                 'minimum_delivery_box',
             ),
             layout.Fieldset('Driver details',
@@ -98,14 +102,14 @@ class DriverJobRequestForm(CrispyFormMixin, PostcodeFormMixin,
         fields = ('date', 'start_time', 'duration',
                   'address1', 'address2', 'city',
                   'client_pay_per_hour',
-                  'vehicle_types', 'own_vehicle',
+                  'vehicle_type', 'own_vehicle',
                   'minimum_delivery_box',
                   'driving_experience',
                   'number_of_freelancers',
                   'phone_requirement',
                   'comments')
         widgets = {
-            'vehicle_types': widgets.CheckboxSelectMultiple,
+            'vehicle_type': widgets.RadioSelect,
         }
 
 

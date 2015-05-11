@@ -5,7 +5,8 @@ from datetime import date, datetime
 from django.core import validators
 from multiselectfield import MultiSelectField
 from djmoney.models.fields import MoneyField
-from apps.driver.models import Driver, VehicleType, DriverVehicleType
+from apps.driver.models import Driver, VehicleType, \
+                                DriverVehicleType, FlexibleVehicleType
 from apps.client.models import Client
 from apps.location.models import Postcode
 from apps.freelancer.models import client_to_freelancer_rate
@@ -205,12 +206,18 @@ class DriverJobRequestManager(models.Manager):
 class DriverJobRequest(JobRequest):
     """A JobRequest that is specifically for drivers to complete.
     """
-    vehicle_types = models.ManyToManyField(VehicleType,
+    # To delete
+    vehicle_types_old = models.ManyToManyField(VehicleType,
+           related_name='jobrequests_old')
+
+    # Vehicle type doesn't exactly map onto the VehicleType model.
+    # Instead, we exclude any include_under VehicleTypes and adjust the display
+    # of the field elsewhere
+    vehicle_type = models.ForeignKey(FlexibleVehicleType,
            related_name='jobrequests',
-           help_text="Which types of vehicle would be appropriate for the job. "
-            "(N.B. if you require a specific mixture of vehicles, "
-            "such as one car and one van, then you should create these as "
-            "separate bookings.)")
+           null=True,
+           help_text="Which type of vehicle would be appropriate for the job. ")
+
     minimum_delivery_box = models.PositiveSmallIntegerField(
             choices=DriverVehicleType.DELIVERY_BOX_CHOICES,
             default=DriverVehicleType.DELIVERY_BOX_NONE,
@@ -227,4 +234,3 @@ class DriverJobRequest(JobRequest):
                             default=True)
 
     objects = DriverJobRequestManager.from_queryset(JobRequestQuerySet)()
-

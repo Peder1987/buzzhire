@@ -1,0 +1,22 @@
+{# This code is for adjusting the checkboxes to behave more like radio buttons - probably won't use this #}
+<script type='text/javascript'>
+    function set_enabled_checkboxes_for_vehicle_types() {
+    	var clicked = this;
+    	var disabled = $(this).prop('checked');
+        $(this).closest('.form-group').find('input').each(function() {
+            if (clicked != this) {
+            	$(this).prop('checked', false);
+            	$(this).attr('disabled', disabled);	
+            }
+        });
+    }
+
+    $(function() {
+    	var control = $('#div_id_vehicle_types');
+    	$('input', control).each(function(index) {
+    		$(this).click(set_enabled_checkboxes_for_vehicle_types);
+    	})
+    });
+    
+
+</script>

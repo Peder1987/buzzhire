@@ -25,7 +25,7 @@
                     {% if form.freelancer_pay_per_hour %}<p class='help-block'>Calculated driver rate: <strong>&pound;{{ form.freelancer_pay_per_hour.amount }}</strong>.</p>{% endif %}
                 </div>
                 <div class='col-md-4'>
-                    {{ form.vehicle_types|as_crispy_field }}
+                    {{ form.vehicle_type|as_crispy_field }}
                     {{ form.own_vehicle|as_crispy_field }}
                     {{ form.minimum_delivery_box|as_crispy_field }}
                 </div>

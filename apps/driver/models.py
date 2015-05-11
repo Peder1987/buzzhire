@@ -26,12 +26,69 @@ class VehicleType(models.Model):
     """A type of vehicle that the driver may drive.
     """
     title = models.CharField(max_length=30)
+    equivalent_to = models.ForeignKey('driver.VehicleType',
+            help_text="Another vehicle type this should be treated as "
+                "equivalent to in certain circumstances, such as "
+                "in job requests.", blank=True, null=True,
+            related_name='equivalent_children')
+
+    objects = models.Manager()
 
     def __unicode__(self):
         return self.title
 
+    # TODO validation to prevent nested equivalence
     class Meta:
         ordering = ('title',)
+
+
+class FlexibleVehicleTypeManager(models.Manager):
+    """Manager for flexible vehicle types; excludes any vehicle types
+    that have an equivalent_to parent.
+    """
+    def get_queryset(self):
+        queryset = super(FlexibleVehicleTypeManager, self).get_queryset()
+        return queryset.filter(equivalent_to=None)
+
+
+class FlexibleVehicleType(VehicleType):
+    """Proxy model for vehicle types when we're more flexible about
+    the vehicle.
+    
+    For example, in job requests, certain vehicle types are as good as another:
+    it doesn't matter whether you have a scooter or a motorcycle.
+    
+    Our way of handling this is to choose one VehicleType in the database
+    to be the main one, and link the others via the equivalent_to field.
+    The equivalent_to field should only be used in one direction
+    
+    This should only be used in circumstances where collate_under is
+    relevant; for example, DriverJobRequests link to vehicle types and
+    want to take account of collation, while DriverVehicleTypes don't.
+    """
+    objects = FlexibleVehicleTypeManager()
+
+    def __unicode__(self):
+        """Incorporates any vehicle types
+        that are equivalent to this one.
+        For example, Motorcycle would be displayed as 'Motorcycle / scooter'.
+        """
+        children = self.equivalent_children.all()
+        if children:
+            children_text = '/'.join([str(i).lower() for i in children])
+            return "%s / %s" % (self.title, children_text)
+        return self.title
+
+    def as_queryset(self):
+        """Returns a queryset of all the valid VehicleType equivalents
+        to this FlexibleVehicleType.
+        """
+        pks = list(self.equivalent_children.values_list('pk', flat=True))
+        pks.append(self.pk)
+        return VehicleType.objects.filter(pk__in=pks)
+
+    class Meta:
+        proxy = True
 
 
 class Driver(Freelancer):
@@ -47,6 +104,7 @@ class Driver(Freelancer):
         (VEHICLE_TYPE_CAR, 'Car'),
         (VEHICLE_TYPE_VAN, 'Van'),
     )
+    # To delete
     vehicle_types_old = MultiSelectField(choices=VEHICLE_TYPE_CHOICES,
                                          blank=True)
 
@@ -86,6 +144,7 @@ class Driver(Freelancer):
 
     def get_absolute_url(self):
         return reverse('driver_detail', args=(self.pk,))
+
 
 
 class DriverVehicleTypeQuerySet(models.QuerySet):

@@ -11,7 +11,7 @@
 <p>{% include 'job/includes/location.html' %}</p>
 
 <h5>Vehicle</h5>
-<p><strong>Vehicle types:</strong> {% for vehicle_type in object.vehicle_types.all %}{{ vehicle_type }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+<p><strong>Vehicle type:</strong> {{ object.vehicle_type }}</p>
 <p><strong>Does the driver need to supply their own vehicle?</strong> {{ object.own_vehicle|yesno|capfirst }} </p>
 <p><strong>Minimum delivery box:</strong> {{ object.get_minimum_delivery_box_display }} </p>
 
