@@ -61,6 +61,30 @@ def notify_client_on_jobrequest_confirmed(sender, instance, name,
                    'bookings_email': settings.BOOKINGS_EMAIL},
                   from_email=settings.BOOKINGS_EMAIL)
 
+
+@receiver(post_transition)
+def notify_client_on_jobrequest_cancelled(sender, instance, name,
+                                          source, target, **kwargs):
+    """Sends a notification email to the client when a job request
+    is cancelled."""
+    if issubclass(sender, JobRequest):
+        # Only do JobRequests, or subclasses.
+        if sender is JobRequest:
+            # For now, we just manually load the DriverJobRequest
+            instance = DriverJobRequest.objects.get(pk=instance.pk)
+
+        if target == DriverJobRequest.STATUS_CANCELLED:
+            content = render_to_string(
+                'job/email/includes/driverjobrequest_cancelled.html',
+                {'object': instance})
+            send_mail(instance.client.user.email,
+                  'Your job request has been cancelled',
+                  'email/base',
+                  {'title': 'Your job request has been cancelled',
+                   'content': content,
+                   'bookings_email': settings.BOOKINGS_EMAIL},
+                  from_email=settings.BOOKINGS_EMAIL)
+
 #
 # @receiver(jobrequest_cancelled)
 # def notify_client_on_job_request_cancelled(sender, jobrequest, **kwargs):
