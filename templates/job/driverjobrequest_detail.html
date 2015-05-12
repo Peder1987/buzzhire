@@ -92,6 +92,12 @@
                         </td>
                     </tr>
                 {% endif %}
+                <tr>
+                    <th>Inclusive of tips?</th>
+                    <td>
+                        {{ object.tips_included|yesno|icon }}
+                    </td>
+                </tr>
              </table>
              <h5>Location and date</h5>
              <table class='table table-striped'>

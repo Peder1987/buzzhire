@@ -167,6 +167,8 @@ class DriverJobRequestCheckout(OwnedByClientMixin, SingleObjectMixin,
 
     def dispatch(self, *args, **kwargs):
         self.object = self.get_object()
+        if self.object.status != DriverJobRequest.STATUS_CHECKOUT:
+            return redirect(self.object.get_absolute_url())
         return super(DriverJobRequestCheckout, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, *args, **kwargs):

@@ -24,6 +24,7 @@
 {% block budget_details %}
     <p><strong>Pay per hour:</strong> &pound;{{ object.freelancer_pay_per_hour.amount }} </p>
 {% endblock %}
+<p><strong>Inclusive of tips:</strong> {{ object.tips_included|yesno|capfirst }} </p>
 
 {% if object.comments %}
 <h5>Comments</h5>

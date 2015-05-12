@@ -69,4 +69,3 @@ class ClientUpdateView(OwnerOnlyMixin, ContextMixin, UpdateView):
         messages.add_message(self.request, messages.SUCCESS, 'Saved.')
         return response
 
-

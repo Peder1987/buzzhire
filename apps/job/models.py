@@ -119,6 +119,10 @@ class JobRequest(models.Model):
                   help_text='How much you will pay per hour, for each driver.',
                   validators=[
                     validators.MinValueValidator(settings.CLIENT_MIN_WAGE)])
+
+    tips_included = models.BooleanField('Inclusive of tips', default=False,
+                                        blank=False)
+
     date = models.DateField(default=date.today)
     start_time = models.TimeField(default='9:00 AM')
     duration = models.PositiveSmallIntegerField(default=1,
@@ -208,7 +212,7 @@ class DriverJobRequest(JobRequest):
     """
     # To delete
     vehicle_types_old = models.ManyToManyField(VehicleType,
-           related_name='jobrequests_old')
+           related_name='jobrequests_old', blank=True, null=True)
 
     vehicle_type = models.ForeignKey(FlexibleVehicleType,
            related_name='jobrequests',
