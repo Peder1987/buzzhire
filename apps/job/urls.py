@@ -38,6 +38,10 @@ urlpatterns = [
         name='jobrequest_detail'),
 
 
+    url(r'^requests/(?P<pk>[\d]+)/edit/$',
+        views.DriverJobRequestUpdate.as_view(),
+        name='driverjobrequest_edit'),
+
 #     url(r'^requests/moderation/$', views.JobRequestsModeration.as_view(),
 #         name='jobrequest_moderation'),
 #

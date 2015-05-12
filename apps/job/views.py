@@ -1,6 +1,7 @@
 from django.views.generic import (CreateView, UpdateView, TemplateView,
                             ListView, DetailView, FormView)
 from django.views.generic.detail import SingleObjectMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy, reverse
 from allauth.account import app_settings
@@ -15,7 +16,8 @@ from apps.account.views import SignupView as BaseSignupView
 from . import signals
 from .models import DriverJobRequest
 from .forms import DriverJobRequestForm, DriverJobRequestInnerForm, \
-                    DriverJobRequestSignupInnerForm, JobRequestCheckoutForm
+                    DriverJobRequestSignupInnerForm, JobRequestCheckoutForm, \
+                    DriverJobRequestUpdateForm
 from django.http.response import HttpResponseRedirect
 
 
@@ -155,6 +157,20 @@ class DriverJobRequestDetail(OwnedByClientMixin, DetailView):
         context = super(DriverJobRequestDetail, self).get_context_data(*args,
                                                                        **kwargs)
         context['title'] = self.object
+        return context
+
+
+class DriverJobRequestUpdate(AdminOnlyMixin, SuccessMessageMixin, UpdateView):
+    "Edit page for driver job requests."
+    model = DriverJobRequest
+    form_class = DriverJobRequestUpdateForm
+    template_name = 'job/driverjobrequest_update.html'
+    success_message = 'Saved.'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(DriverJobRequestUpdate, self).get_context_data(*args,
+                                                                       **kwargs)
+        context['title'] = 'Edit %s' % self.object
         return context
 
 

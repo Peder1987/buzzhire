@@ -5,6 +5,8 @@ from django.conf import settings
 from .models import DriverJobRequest
 from apps.core.forms import CrispyFormMixin, ConfirmForm
 from apps.account.forms import SignupInnerForm
+from django.template.loader import render_to_string
+from apps.core.email import send_mail
 from crispy_forms import layout
 from django.core.exceptions import ValidationError
 from django.forms.widgets import HiddenInput
@@ -135,6 +137,39 @@ class DriverJobRequestSignupInnerForm(SignupInnerForm):
         self.helper.layout[0].insert(0, layout.HTML(
             """<p>Please give us an email address and password that you
             can use to sign in to the site."""))
+
+class DriverJobRequestUpdateForm(DriverJobRequestForm):
+    "Edit form for driver job requests."
+    submit_text = 'Save'
+    submit_context = {}
+
+    notify = forms.BooleanField(
+            label='Notify the client when saving this job.',
+            required=False, initial=True)
+
+    def __init__(self, *args, **kwargs):
+        super(DriverJobRequestUpdateForm, self).__init__(*args, **kwargs)
+        self.helper.layout.insert(-1,
+            layout.Fieldset('Notifications', 'notify')
+        )
+
+    def save(self, *args, **kwargs):
+        kwargs['client'] = self.instance.client
+        instance = super(DriverJobRequestUpdateForm, self).save(*args, **kwargs)
+        if self.cleaned_data['notify']:
+            # Notify the client
+            content = render_to_string(
+                'job/email/includes/driverjobrequest_changed.html',
+                {'object': instance})
+            send_mail(instance.client.user.email,
+                  'Your job request has been changed',
+                  'email/base',
+                  {'title':
+                   'Your job request has been changed',
+                   'content': content,
+                   'bookings_email': settings.BOOKINGS_EMAIL},
+                  from_email=settings.BOOKINGS_EMAIL)
+        return instance
 
 
 

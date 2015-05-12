@@ -21,6 +21,11 @@ class PostcodeFormMixin(forms.Form):
         super(PostcodeFormMixin, self).__init__(*args, **kwargs)
         self.fields['raw_postcode'].required = self.postcode_required
 
+        # For update forms, populate the raw_postcode with the postcode
+        instance = getattr(self, 'instance')
+        if instance.pk:
+            self.fields['raw_postcode'].initial = str(self.instance.postcode)
+
     def clean_raw_postcode(self):
         # We use the raw postcode form field to generate a postcode instance
         # to link with the postcode ForeignKey field.
