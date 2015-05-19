@@ -22,8 +22,8 @@ class PostcodeFormMixin(forms.Form):
         self.fields['raw_postcode'].required = self.postcode_required
 
         # For update forms, populate the raw_postcode with the postcode
-        instance = getattr(self, 'instance')
-        if instance.pk:
+        instance = getattr(self, 'instance', None)
+        if instance and instance.pk:
             self.fields['raw_postcode'].initial = str(self.instance.postcode)
 
     def clean_raw_postcode(self):
