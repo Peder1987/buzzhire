@@ -12,8 +12,9 @@ def profile_photo(freelancer, size='medium'):
     
     """
     DIMENSIONS = {
-        'small': '75x97',
-        'medium': '150x193',
+        'tiny': '20x20',
+        'small': '54x70',
+        'medium': '75x97',
         'large': '233x300',
     }
     return {

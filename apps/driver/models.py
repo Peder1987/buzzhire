@@ -2,6 +2,7 @@ from django.contrib.gis.db import models
 from django.contrib.auth.models import User
 from multiselectfield import MultiSelectField
 from apps.freelancer.models import Freelancer, PublishedFreelancerManager
+from django.core.urlresolvers import reverse
 
 
 def _is_driver(self):

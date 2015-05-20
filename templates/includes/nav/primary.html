@@ -1,4 +1,4 @@
-{% load thumbnail icons static staticthumbnail main_tags %}
+{% load thumbnail icons static staticthumbnail main_tags freelancer %}
 <div class="navbar navbar-default navbar-fixed-top menu-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
@@ -35,25 +35,13 @@
             {% else %}
                 {% url 'account_dashboard' as link_url %}
                 {% include 'includes/menu_link.html' with icon_name='dashboard' link_text='Dashboard' %}
-                <p class="navbar-text">Logged in as {{ request.user }}</p>
+                <p class="navbar-text">
+                    {% if request.user.is_driver %}
+                        {% profile_photo request.user.freelancer 'tiny' %}
+                    {% endif %}
+                    Logged in as {{ request.user }}
+                </p>
                 <p class="navbar-text"><a href="{% url 'account_logout' %}">{{ 'logout'|icon }} Log out</a></p>
-                {% comment %}
-                    <li class="dropdown" id='user-menu'>
-                      <a href="#" class="dropdown-toggle{% if request.path|is_in_dashboard %} active{% endif %}" data-toggle="dropdown" role="button" aria-expanded="false">
-                         {{ 'user'|icon }} {{ request.user }} <span class="caret"></span>
-                      </a>
-                      <ul class="dropdown-menu" role="menu">
-                        <li><a href="{% url 'account_dashboard' %}">{{ 'dashboard'|icon }} Dashboard</a></li>
-                        <li><a href="{% url 'account_change_password' %}">{{ 'password'|icon }} Change password</a></li>
-                        {% if request.user.is_admin %}
-                            <li class="divider"></li>
-                            <li><a href="{% url 'admin:index' %}">{{ 'admin'|icon }} Admin</a></li>
-                        {% endif %}
-                        <li class="divider"></li>
-                        <li><a href="{% url 'account_logout' %}">{{ 'logout'|icon }} Log out</a></li>
-                      </ul>
-                    </li>
-                {% endcomment %}
              {% endif %}
             </ul>
         </div> 

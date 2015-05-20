@@ -1,5 +1,5 @@
 {% extends 'account/dashboard_base.html' %}
-{% load icons booking %}
+{% load icons booking freelancer %}
 
 {% block page_actions %}
     {% if request.user.is_admin %}
@@ -10,6 +10,9 @@
 {% block content %}
      <div class='row'>
         <div class='col-md-4 col-md-push-8'>
+            <div class=' bottom-space'>
+                {% profile_photo object 'large' %}
+            </div>
             <h5>Contact</h5>
             <table class='table table-striped'>
                 <tr>

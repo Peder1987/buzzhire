@@ -1,5 +1,5 @@
 {% extends 'account/dashboard_base.html' %}
-{% load crispy_forms_tags icons booking %}
+{% load crispy_forms_tags icons booking freelancer %}
 
 {% block content %}
     {% if form.job_request %}
@@ -38,6 +38,7 @@
             {% include 'includes/paginator_results_count.html' with results_description='drivers' %}
             <table class='table table-striped'>
                 <thead>
+                    <th></th>
                     <th>Ref</th>
                     <th>Name</th>
                     <th>Location</th>
@@ -49,32 +50,35 @@
                 </thead>
                 <tbody>
                     {% for object in object_list %}
-                        <tr>
-                            <td><a href='{% url 'driver_detail' object.pk %}'>{{ object.reference_number }}</a></td>
-                            <td>{{ object.get_full_name }}</td>
-                            <td>{% if object.postcode %}
-                                    {{ object.postcode }}
-                                    {% if form.include_distances %}
-                                        {% with object.distance.mi|floatformat:'0' as distance %} 
-                                            <br>({{ distance }} mile{{ distance|pluralize }} away)
-                                        {% endwith %}
-                                    {% endif %}
-                                {% else %}unknown{% endif %}
-                            </td>
-                            <td>{% if object.postcode %}{{ object.travel_distance }} mile{{ object.travel_distance|pluralize }}{% endif %}</td>
-                            <td>{% for vehicle_type in object.vehicle_types.all %}<p class='compact'><span class='label label-default'>{{ vehicle_type }}</span></p>{% endfor %}</td>
-                            <td>{% for driver_vehicle_type in object.drivervehicletype_set.owned %}<p class='compact'><span class='label label-primary'>{{ driver_vehicle_type }}</span></p>{% endfor %}</td>
-                            <td>&pound;{{ object.minimum_pay_per_hour.amount }}</td>
-                            {% if form.job_request %}
-                                <td>
-                                    {% if form.job_request|booking_exists_for_freelancer:object %}
-                                        <span class='label label-success'>{{ 'confirm'|icon }} Booked</span>
-                                    {% else %}
-                                        <a class='btn btn-sm btn-default' href='{% url 'booking_create' form.job_request.pk object.pk %}'>{{ 'create'|icon }} Create booking</a>
-                                    {% endif %}
+                        {% with object.get_absolute_url as object_url %}
+                            <tr>
+                                <td><a href='{{ object_url }}'>{% profile_photo object 'small' %}</a></td>
+                                <td><a href='{{ object_url }}'>{{ object.reference_number }}</a></td>
+                                <td><a href='{{ object_url }}'>{{ object.get_full_name }}</a></td>
+                                <td>{% if object.postcode %}
+                                        {{ object.postcode }}
+                                        {% if form.include_distances %}
+                                            {% with object.distance.mi|floatformat:'0' as distance %} 
+                                                <br>({{ distance }} mile{{ distance|pluralize }} away)
+                                            {% endwith %}
+                                        {% endif %}
+                                    {% else %}unknown{% endif %}
                                 </td>
-                            {% endif %} 
-                        </tr>
+                                <td>{% if object.postcode %}{{ object.travel_distance }} mile{{ object.travel_distance|pluralize }}{% endif %}</td>
+                                <td>{% for vehicle_type in object.vehicle_types.all %}<p class='compact'><span class='label label-default'>{{ vehicle_type }}</span></p>{% endfor %}</td>
+                                <td>{% for driver_vehicle_type in object.drivervehicletype_set.owned %}<p class='compact'><span class='label label-primary'>{{ driver_vehicle_type }}</span></p>{% endfor %}</td>
+                                <td>&pound;{{ object.minimum_pay_per_hour.amount }}</td>
+                                {% if form.job_request %}
+                                    <td>
+                                        {% if form.job_request|booking_exists_for_freelancer:object %}
+                                            <span class='label label-success'>{{ 'confirm'|icon }} Booked</span>
+                                        {% else %}
+                                            <a class='btn btn-sm btn-default' href='{% url 'booking_create' form.job_request.pk object.pk %}'>{{ 'create'|icon }} Create booking</a>
+                                        {% endif %}
+                                    </td>
+                                {% endif %} 
+                            </tr>
+                        {% endwith %}
                     {% endfor %}
                 </tbody>
            </table>

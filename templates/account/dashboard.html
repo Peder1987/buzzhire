@@ -17,5 +17,11 @@
                 <p><a href='{% url 'availability_update' %}' class='btn btn-default'>{{ 'availability'|icon }} Save availability</a></p>
             </div>
         {% endif %}
+        {% if not request.user.freelancer.photo %}
+            <div class='alert alert-warning'>
+                <p>You have not provided a photo yet.</p>
+                <p><a href='{% url 'freelancer_photo_update' %}' class='btn btn-default'>{{ 'photo'|icon }} Upload photo</a></p>
+            </div>
+        {% endif %}
     {% endif %}
 {% endblock %}
