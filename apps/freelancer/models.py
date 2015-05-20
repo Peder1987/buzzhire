@@ -85,6 +85,9 @@ class Freelancer(models.Model):
                            'Please enter a valid UK mobile phone number in '
                            'the form 07xxx xxx xxx')])
 
+    photo = models.ImageField(upload_to='freelancer/photos/%Y/%m/%d',
+                              blank=True)
+
     FLUENCY_BASIC = 'BA'
     FLUENCY_CONVERSATIONAL = 'CO'
     FLUENCY_FLUENT = 'FL'

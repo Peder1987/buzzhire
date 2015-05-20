@@ -44,6 +44,8 @@ ICON_MAP = {
     'right_arrow': 'arrow-circle-right',
     'phone': 'phone',
     'pay': 'check-circle',
+    'photo': 'camera-retro',
+    'upload': 'upload',
 }
 
 @register.filter
