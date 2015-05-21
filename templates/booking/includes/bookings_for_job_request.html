@@ -30,15 +30,17 @@
     {% with object.bookings.published as bookings %} 
         {% if bookings %}
             <div class="panel panel-default driver-list">
-              <div class="panel-heading">Your driver{{ bookings|pluralize }}</div>
-                 <div class="list-group">
-                    {% for booking in bookings %}
-                        <a href="{% url 'driver_detail' booking.freelancer.pk %}" class="list-group-item">
-                            {% profile_photo booking.freelancer 'small'  %}
-                            <h5>{{ booking.freelancer.get_full_name }}</h5>
-                        </a>
-                    {% endfor %}
-                </div>
+              <div class="panel-heading">
+                <h3 class="panel-title">{{ 'driver'|icon }} Your driver{{ bookings|pluralize }}</h3>
+              </div>
+              <div class="list-group">
+                {% for booking in bookings %}
+                    <a href="{% url 'driver_detail' booking.freelancer.pk %}" class="list-group-item">
+                        {% profile_photo booking.freelancer 'small'  %}
+                        <h5>{{ booking.freelancer.get_full_name }}</h5>
+                    </a>
+                {% endfor %}
+              </div>
             </div>
         {% endif %}
     {% endwith %}
