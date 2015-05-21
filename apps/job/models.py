@@ -49,16 +49,16 @@ class JobRequest(models.Model):
     client = models.ForeignKey(Client, related_name='job_requests')
 
     # Status - for admin purposes
-    STATUS_CHECKOUT = 'IC'  # The client has not yet paid
     STATUS_OPEN = 'OP'  # Client has paid; the job request now ready for booking
     STATUS_CONFIRMED = 'CF'  # Freelancers have been assigned
     STATUS_COMPLETE = 'CP'  # The work has been completed
+    STATUS_CHECKOUT = 'IC'  # The client has not yet paid
     STATUS_CANCELLED = 'CA'  # Job request cancelled
     STATUS_CHOICES = (
-        (STATUS_CHECKOUT, 'In checkout'),
         (STATUS_OPEN, 'Open'),
         (STATUS_CONFIRMED, 'Confirmed'),
         (STATUS_COMPLETE, 'Complete'),
+        (STATUS_CHECKOUT, 'In checkout'),
         (STATUS_CANCELLED, 'Cancelled'),
     )
     status = FSMField(max_length=2, choices=STATUS_CHOICES,
@@ -216,7 +216,7 @@ class DriverJobRequest(JobRequest):
 
     vehicle_type = models.ForeignKey(FlexibleVehicleType,
            related_name='jobrequests',
-           null=True,
+           blank=True, null=True,
            help_text="Which type of vehicle would be appropriate for the job. ")
 
     minimum_delivery_box = models.PositiveSmallIntegerField(
@@ -235,3 +235,9 @@ class DriverJobRequest(JobRequest):
                             default=True)
 
     objects = DriverJobRequestManager.from_queryset(JobRequestQuerySet)()
+
+    def get_vehicle_type_display(self):
+        "Returns the vehicle type, or 'Any' if there is none."
+        if self.vehicle_type:
+            return self.vehicle_type
+        return 'Any'
