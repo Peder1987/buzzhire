@@ -52,7 +52,8 @@ def notify_client_on_jobrequest_confirmed(sender, instance, name,
         if target == DriverJobRequest.STATUS_CONFIRMED:
             content = render_to_string(
                 'job/email/includes/driverjobrequest_confirmed.html',
-                {'object': instance})
+                {'object': instance,
+                 'base_url': settings.BASE_URL})
             send_mail(instance.client.user.email,
                   'Your job request is now confirmed',
                   'email/base',

@@ -1,0 +1,45 @@
+{% load icons freelancer %}
+
+{% if request.user.is_admin %}
+    <h5>Bookings</h5>
+    {% if object.bookings.all %}
+        <table class='table middle-align'>
+            <thead>
+                <th>Driver</th>
+                <th>Booking reference</th>
+                <th></th>
+            </thead>
+            {% for booking in object.bookings.all %}
+               <tr>
+                  <td>
+                    <a href='{% url 'driver_detail' booking.freelancer.pk %}'>
+                        {% profile_photo booking.freelancer 'small' %}
+                        {{ booking.freelancer.get_full_name }}
+                    </a>
+                  </td>
+                  <td class='monospace'>{{ booking }}</td>
+                  <td class='text-right'><a class='btn btn-sm btn-default' href='{% url 'admin:booking_booking_change' booking.pk %}'>{{ 'edit'|icon }} edit</a>
+               </tr>
+            {% endfor %}
+        </table>
+        
+    {% else %}
+        <p>No bookings yet.</p>
+    {% endif %}
+{% else %}
+    {% with object.bookings.published as bookings %} 
+        {% if bookings %}
+            <div class="panel panel-default driver-list">
+              <div class="panel-heading">Your driver{{ bookings|pluralize }}</div>
+                 <div class="list-group">
+                    {% for booking in bookings %}
+                        <a href="{% url 'driver_detail' booking.freelancer.pk %}" class="list-group-item">
+                            {% profile_photo booking.freelancer 'small'  %}
+                            <h5>{{ booking.freelancer.get_full_name }}</h5>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    {% endwith %}
+{% endif %}

@@ -173,33 +173,8 @@
                 <div class='compact'>{{ object.comments|linebreaks }}</div>
             {% endif %}
             
-            {% if request.user.is_admin %}
-                <h5>Bookings</h5>
-                {% if object.bookings.all %}
-                    <table class='table middle-align'>
-                        <thead>
-                            <th>Driver</th>
-                            <th>Booking reference</th>
-                            <th></th>
-                        </thead>
-                        {% for booking in object.bookings.all %}
-                           <tr>
-                              <td>
-                                <a href='{% url 'driver_detail' booking.freelancer.pk %}'>
-                                    {% profile_photo booking.freelancer 'small' %}
-                                    {{ booking.freelancer.get_full_name }}
-                                </a>
-                              </td>
-                              <td class='monospace'>{{ booking }}</td>
-                              <td class='text-right'><a class='btn btn-sm btn-default' href='{% url 'admin:booking_booking_change' booking.pk %}'>{{ 'edit'|icon }} edit</a>
-                           </tr>
-                        {% endfor %}
-                    </table>
-                    
-                {% else %}
-                    <p>No bookings yet.</p>
-                {% endif %}
-            {% endif %}
+            {% include 'booking/includes/bookings_for_job_request.html' %}
+            
         </div>
     </div>
 {% endblock %}

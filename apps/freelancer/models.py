@@ -72,8 +72,7 @@ class Freelancer(models.Model):
 
     published = models.BooleanField(default=True,
         help_text='Whether or not the freelancer shows up in search '
-        'results. Note it is still possible for members of the public to '
-        'view the freelancer if they know the link.')
+        'results.')
 
     # A link to a user account.
     user = models.ForeignKey(settings.AUTH_USER_MODEL, unique=True)

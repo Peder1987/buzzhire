@@ -4,11 +4,17 @@ register = template.Library()
 
 
 @register.inclusion_tag('freelancer/includes/profile_photo.html')
-def profile_photo(freelancer, size='medium'):
+def profile_photo(freelancer, size='medium', base_url=''):
     """Renders the freelancer's profile photo, or a default image.
+    
+    For emails, optionally provide the base_url.
     
     Usage:
         {% profile_photo object 'large' %}
+    
+    Or for emails:
+    
+        {% profile_photo object 'http://domain.co/' %}
     
     """
     DIMENSIONS = {
@@ -22,5 +28,6 @@ def profile_photo(freelancer, size='medium'):
         'dimensions': DIMENSIONS[size],
         'width': '150',
         'height': '193',
+        'base_url': base_url,
     }
 

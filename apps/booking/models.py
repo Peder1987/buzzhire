@@ -26,6 +26,12 @@ class BookingQuerySet(models.QuerySet):
         "Filters by job requests that a freelancer has been allocated to."
         return self.filter(freelancer=freelancer)
 
+    def published(self):
+        """Filter by job requests are for freelancers who are published.
+        """
+        return self.filter(freelancer__published=True)
+
+
 
 class Booking(models.Model):
     """A Booking is an allocation of a single freelancer to a JobRequest.

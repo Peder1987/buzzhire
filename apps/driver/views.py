@@ -99,10 +99,19 @@ class SignupView(BaseSignupView):
                                self.get_success_url())
 
 
-class DriverDetailView(AdminOnlyMixin, DetailView):
-    """Detail view for admin to look at a Driver.
+class DriverDetailView(DetailView):
+    """Detail view for anyone to look at a Driver.
     """
     model = Driver
+
+    def get_object(self):
+        "Prevent non-admins from seeing unpublished drivers."
+        object = super(DriverDetailView, self).get_object()
+        if not object.published:
+            if not (self.request.user.is_authenticated() and
+                    self.request.user.is_admin):
+                raise PermissionDenied
+        return object
 
     def get_context_data(self, *args, **kwargs):
         context = super(DriverDetailView, self).get_context_data(*args,
