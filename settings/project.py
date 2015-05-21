@@ -34,6 +34,7 @@ class ProjectConfiguration(StandardConfiguration):
         'apps.payment',
         'apps.job',
         'apps.booking',
+        'apps.feedback',
         'apps.main',
     )
 
@@ -86,6 +87,7 @@ class ProjectConfiguration(StandardConfiguration):
     BOWER_INSTALLED_APPS = (
         'eternicode/bootstrap-datepicker',
         'acpmasquerade/bootstrap3-timepicker2',
+        'bootstrap-star-rating',
     )
 
     @property

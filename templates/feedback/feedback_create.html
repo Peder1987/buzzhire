@@ -1,0 +1,13 @@
+{% extends 'account/dashboard_base.html' %}
+
+{% block extrascripts %}
+    {{ block.super }}
+    <script type='text/javascript'>
+        $(function() {
+        	$('.rating-widget').rating({
+        		'showClear': false,
+        		'showCaption': false,
+        	})
+        });
+    </script>
+{% endblock %}
