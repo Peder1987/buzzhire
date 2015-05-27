@@ -46,6 +46,7 @@ ICON_MAP = {
     'pay': 'check-circle',
     'photo': 'camera-retro',
     'upload': 'upload',
+    'feedback': 'comment-o',
 }
 
 @register.filter

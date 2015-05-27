@@ -1,7 +1,44 @@
 {% extends 'account/dashboard_base.html' %}
+{% load crispy_forms_tags icons django_bootstrap_breadcrumbs freelancer %}
 
+{% block inner_breadcrumb %}
+  {{ block.super }}
+  {% breadcrumb object object.get_absolute_url %}
+{% endblock %}
+
+
+{% block content %}
+   <form method='post'>
+       {% for form in formset %}
+          {{ formset.management_form }}
+          <div class='row'>
+            <div class='col-md-3'>
+                {% with form.feedback_target as feedback_target %}
+                    <a href="{{ feedback_target.get_absolute_url }}">
+                        {% profile_photo feedback_target 'medium'  %}
+                        <h5>{{ feedback_target.get_full_name }}</h5>
+                    </a>
+                {% endwith %}
+            </div>
+            <div class='col-md-9'>
+                {% crispy form %}  
+            </div>
+          </div>
+          {% if not forloop.last %}<hr>{% endif %}
+       {% endfor %}
+       <div class='text-center'>
+         <button class='btn btn-lg btn-primary' name='submit' value='submit'>{{ 'feedback'|icon }} Leave feedback</button>
+       </div>
+   </form>
+{% endblock %}
+
+{% block extrastyles %}
+  {{ block.super }}
+  {{ formset.media.css }}
+{% endblock %}
+  
 {% block extrascripts %}
-    {{ block.super }}
+    {{ formset.media.js }}
     <script type='text/javascript'>
         $(function() {
         	$('.rating-widget').rating({

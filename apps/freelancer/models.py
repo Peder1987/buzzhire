@@ -167,6 +167,9 @@ class Freelancer(models.Model):
         return '%s %s' % (self.first_name,
                           self.last_name)
 
+    def get_absolute_url(self):
+        return reverse('driver_detail', args=(self.pk,))
+
     def __unicode__(self):
         return self.get_full_name()
 
