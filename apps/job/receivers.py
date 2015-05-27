@@ -77,7 +77,9 @@ def notify_client_on_jobrequest_cancelled(sender, instance, name,
         if target == DriverJobRequest.STATUS_CANCELLED:
             content = render_to_string(
                 'job/email/includes/driverjobrequest_cancelled.html',
-                {'object': instance})
+                {'object': instance,
+                 'bookings_email': settings.BOOKINGS_EMAIL
+                 })
             send_mail(instance.client.user.email,
                   'Your job request has been cancelled',
                   'email/base',
