@@ -1,8 +1,10 @@
 {% load feedback %}
-<div class='feedback'>
-    <h6>Your feedback</h6>
-    <p>{% feedback_score object.score %}</p>
-    {% if object.comment %}
-        <div class='feedback-comment'>{{ object.comment|linebreaks }}</div>
-    {% endif %}
-</div>
+{% if object %}
+    <div class='feedback'>
+        <h6>Your feedback</h6>
+        <p>{% feedback_score object.score %}</p>
+        {% if object.comment %}
+            <div class='feedback-comment'>{{ object.comment|linebreaks }}</div>
+        {% endif %}
+    </div>
+{% endif %}
