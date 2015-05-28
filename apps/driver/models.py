@@ -32,6 +32,10 @@ class VehicleType(models.Model):
                 "equivalent to in certain circumstances, such as "
                 "in job requests.", blank=True, null=True,
             related_name='equivalent_children')
+    delivery_box_applicable = models.BooleanField(blank=True,
+                  default=False,
+                  help_text='Whether or not delivery boxes are relevant '
+                    'to this type of vehicle.')
 
     objects = models.Manager()
 
