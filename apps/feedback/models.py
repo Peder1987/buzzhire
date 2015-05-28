@@ -34,6 +34,13 @@ class BookingFeedbackManager(models.Manager):
         return self.filter(author_type=BookingFeedback.AUTHOR_TYPE_CLIENT,
                            booking__jobrequest=job_request).exists()
 
+    def client_feedback_from_booking(self, booking):
+        """Returns the BookingFeedback given by the client for the supplied
+        booking.  Raises DoesNotExist on failure.
+        """
+        return self.get(author_type=BookingFeedback.AUTHOR_TYPE_CLIENT,
+                        booking=booking)
+
 
 class BookingFeedback(models.Model):
     """A feedback associated with a booking, for a client or freelancer."""
