@@ -1,6 +1,39 @@
 from django.db import models
 from django.core import validators
 from apps.booking.models import Booking
+from apps.freelancer.models import Freelancer
+from django.db.models import Avg
+
+def _average_score(self):
+    """Returns the average score for the Freelancer.
+     The algorithm should be all ratings for that driver,
+     but with the 5 most recent given double weighting, to one decimal point.
+    """
+    # Specify the querysets - giving double weighting to the most
+    # recent five feedbacks
+    feedback = BookingFeedback.objects.feedback_for_freelancer(self).order_by(
+                                                                    '-date')
+    weighted_feedback = (
+        (feedback[:5], 2),
+        (feedback[5:], 1),
+    )
+
+    # Assemble a list of averages which we will then average.  This allows
+    # us to 'weight' certain querysets by including them multiple times in
+    # the averages list.
+    averages = []
+    for feedbacks, weighting in weighted_feedback:
+        average = feedbacks.aggregate(Avg('score')).values()[0]
+        # Add the average as many times as the weighting specifies
+        # (not adding it if it's None)
+        [averages.append(average) for i in range(weighting) if average != None]
+
+    if not averages:
+        return None
+
+    return round(sum(averages) / len(averages), 1)
+
+Freelancer.average_score = _average_score
 
 
 class FakeQuerySet(list):
@@ -63,9 +96,11 @@ class BookingFeedback(models.Model):
                             'the client or the freelancer.')
     booking = models.ForeignKey(Booking)
 
+    MAX_SCORE = 5
+
     score = models.PositiveSmallIntegerField(
-                            validators=[validators.MinValueValidator(1),
-                                        validators.MaxValueValidator(5)])
+                        validators=[validators.MinValueValidator(1),
+                                    validators.MaxValueValidator(MAX_SCORE)])
 
     comment = models.TextField(blank=True)
 
@@ -93,3 +128,8 @@ class BookingFeedback(models.Model):
 
     class Meta:
         ordering = '-date',
+
+    def __unicode__(self):
+        return "%s for %s by %s" % (self.score,
+                                    self.get_target(),
+                                    self.get_author())

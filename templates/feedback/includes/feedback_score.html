@@ -1,4 +1,21 @@
 {% load icons %}
-<span class='feedback-score'>
-    {% for i in range %}{{ 'feedback_score'|icon }}{% endfor %}
-</span>
+{% if score %}
+    <span class='feedback-score-wrapper'>
+        <span class='feedback-score'>
+            {% for unit in split_score %}
+                {% if unit == 1 %}
+                    {{ 'feedback_score'|icon }}
+                {% elif unit == 0 %}
+                    {{ 'feedback_empty_score'|icon }}
+                {% else %}
+                    {{ 'feedback_half_score'|icon }}
+                {% endif %}
+            {% endfor %}
+        </span>
+        {% if include_value %}
+            <br>{{ score }}
+        {% endif %}
+    </span>
+{% else %}
+    <p class='no-reviews'>No reviews yet.</p>
+{% endif %}

@@ -66,6 +66,12 @@
                         </td>
                     </tr>
                     <tr>
+                        <th>Driving experience</th>
+                        <td>
+                            {{ object.get_driving_experience_display }}
+                        </td>
+                    </tr>
+                    <tr>
                         <th>Phone type</th>
                         <td>
                             {{ object.get_phone_type_display }}
@@ -84,6 +90,41 @@
                         </td>
                     </tr>
                 </table>
+            {% else %}
+                <h5>Details</h5>
+                <table class='table table-striped'>
+                    <tr>
+                        <th>Rating</th>
+                        <td>
+                            {% average_score object.average_score %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Driving experience</th>
+                        <td>
+                            {{ object.get_driving_experience_display }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Phone type</th>
+                        <td>
+                            {{ object.get_phone_type_display }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>English fluency</th>
+                        <td>
+                            {{ object.get_english_fluency_display }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Eligible to work in UK</th>
+                        <td>
+                            {{ object.eligible_to_work|yesno|icon }}
+                        </td>
+                    </tr>
+                </table>
+            
             {% endif %}
         </div>
         <div class='col-md-8 col-md-pull-4'>

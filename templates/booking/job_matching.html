@@ -1,5 +1,5 @@
 {% extends 'account/dashboard_base.html' %}
-{% load crispy_forms_tags icons booking freelancer %}
+{% load crispy_forms_tags icons booking freelancer feedback %}
 
 {% block content %}
     {% if form.job_request %}
@@ -39,8 +39,7 @@
             <table class='table table-striped'>
                 <thead>
                     <th></th>
-                    <th>Ref</th>
-                    <th>Name</th>
+                    <th></th>
                     <th>Location</th>
                     <th>Maximum travel distance</th>
                     <th>Can drive</th>
@@ -53,8 +52,10 @@
                         {% with object.get_absolute_url as object_url %}
                             <tr>
                                 <td><a href='{{ object_url }}'>{% profile_photo object 'medium' %}</a></td>
-                                <td><a href='{{ object_url }}'>{{ object.reference_number }}</a></td>
-                                <td><a href='{{ object_url }}'>{{ object.get_full_name }}</a></td>
+                                <td>
+                                    <a href='{{ object_url }}'>{{ object.get_full_name }}</a><br>
+                                    {% average_score object.average_score %}
+                                </td>
                                 <td>{% if object.postcode %}
                                         {{ object.postcode }}
                                         {% if form.include_distances %}

@@ -46,11 +46,16 @@
                 {% for booking in bookings %}
                     <a href="{% url 'driver_detail' booking.freelancer.pk %}" class="list-group-item">
                         <div class='row'>
-                            <div class='col-md-6'>
+                            <div class='col-md-2'>
                                 {% profile_photo booking.freelancer 'small'  %}
-                                <h5>{{ booking.freelancer.get_full_name }}</h5>
                             </div>
-                            <div class='col-md-6'>
+                            <div class='col-md-5'>
+                                <h5>{{ booking.freelancer.get_full_name }}</h5>
+                                <div class='average-feedback-score'>
+                                    {% average_score booking.freelancer.average_score %}
+                                </div>
+                            </div>
+                            <div class='col-md-5'>
                                 {% feedback_for_freelancer_own booking %}
                             </div>
                         </div>
