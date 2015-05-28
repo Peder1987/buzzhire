@@ -16,13 +16,13 @@ def client_feedback_exists(job_request):
     return BookingFeedback.objects.client_feedback_exists(job_request)
 
 
-@register.inclusion_tag('feedback/includes/client_feedback.html')
-def client_feedback(booking):
-    """Outputs the client's feedback, give the booking.
+@register.inclusion_tag('feedback/includes/feedback_for_freelancer_own.html')
+def feedback_for_freelancer_own(booking):
+    """Outputs the client's own feedback for a freelancer, given the booking.
     
     Usage:
     
-        {% client_feedback booking %}
+        {% feedback_for_freelancer_own booking %}
     """
     try:
         feedback = BookingFeedback.objects.client_feedback_from_booking(booking)
@@ -30,6 +30,19 @@ def client_feedback(booking):
         feedback = None
     return {
         'object': feedback
+    }
+
+@register.inclusion_tag('feedback/includes/feedback_for_freelancer_all.html')
+def feedback_for_freelancer_all(freelancer):
+    """Outputs the all the client feedback for a freelancer.
+    
+    Usage:
+    
+        {% feedback_for_freelancer_all freelancer %}
+    """
+    return {
+        'object_list': BookingFeedback.objects.feedback_for_freelancer(
+                                                                    freelancer)
     }
 
 

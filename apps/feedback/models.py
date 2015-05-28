@@ -41,6 +41,12 @@ class BookingFeedbackManager(models.Manager):
         return self.get(author_type=BookingFeedback.AUTHOR_TYPE_CLIENT,
                         booking=booking)
 
+    def feedback_for_freelancer(self, freelancer):
+        """Returns all the feedback for a particular freelancer.
+        """
+        return self.filter(author_type=BookingFeedback.AUTHOR_TYPE_CLIENT,
+                           booking__freelancer=freelancer)
+
 
 class BookingFeedback(models.Model):
     """A feedback associated with a booking, for a client or freelancer."""
@@ -63,6 +69,8 @@ class BookingFeedback(models.Model):
 
     comment = models.TextField(blank=True)
 
+    date = models.DateTimeField(auto_now_add=True)
+
     objects = BookingFeedbackManager()
 
     TARGET_MAP = {
@@ -82,3 +90,6 @@ class BookingFeedback(models.Model):
         opposite_author_type = [i for i in self.TARGET_MAP.keys()
                                if i != self.author_type][0]
         return self.TARGET_MAP[opposite_author_type](self.booking)
+
+    class Meta:
+        ordering = '-date',

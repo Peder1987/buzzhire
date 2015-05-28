@@ -1,5 +1,5 @@
 {% extends 'account/dashboard_base.html' %}
-{% load icons booking freelancer %}
+{% load icons booking freelancer feedback %}
 
 {% block page_actions %}
     {% if request.user.is_admin %}
@@ -95,6 +95,7 @@
                 <h5>Availability</h5>
                 {% include 'booking/includes/availability_summary.html' with form=object|availability_form_for_freelancer %}
             {% endif %}
+            {% feedback_for_freelancer_all object %}
         </div>
         
      </div>    
