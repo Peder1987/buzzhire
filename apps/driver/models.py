@@ -146,6 +146,10 @@ class Driver(Freelancer):
     def get_absolute_url(self):
         return reverse('driver_detail', args=(self.pk,))
 
+    @classmethod
+    def driver_from_freelancer(self, freelancer):
+        "Returns the driver instance, given the freelancer instance."
+        return Driver.objects.get(pk=freelancer.pk)
 
 
 class DriverVehicleTypeQuerySet(models.QuerySet):

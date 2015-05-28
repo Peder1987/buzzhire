@@ -1,4 +1,4 @@
-{% load icons freelancer feedback %}
+{% load icons freelancer feedback driver %}
 
 {% if request.user.is_admin %}
     <h5>Bookings</h5>
@@ -44,23 +44,25 @@
               </div>
               <div class="list-group">
                 {% for booking in bookings %}
-                    <a href="{% url 'driver_detail' booking.freelancer.pk %}" class="list-group-item">
-                        <div class='row'>
-                            <div class='col-md-2'>
-                                {% profile_photo booking.freelancer 'small'  %}
-                            </div>
-                            <div class='col-md-5'>
-                                <h5>{{ booking.freelancer.get_full_name }}</h5>
-                                <div class='average-feedback-score'>
-                                    {% average_score booking.freelancer.average_score %}
+                    {% with driver=booking.freelancer|driver_from_freelancer %}
+                        <a href="{{ driver.get_absolute_url }}" class="list-group-item">
+                            <div class='row'>
+                                <div class='col-md-2'>
+                                    {% profile_photo driver 'small'  %}
+                                </div>
+                                <div class='col-md-6'>
+                                    <h5>{{ driver.get_full_name }}</h5>
+                                    <div class='average-feedback-score'>
+                                        {% average_score driver.average_score %}
+                                    </div>
+                                    {{ driver.get_driving_experience_display }} of experience.
+                                </div>
+                                <div class='col-md-4'>
+                                    {% feedback_for_freelancer_own booking %}
                                 </div>
                             </div>
-                            <div class='col-md-5'>
-                                {% feedback_for_freelancer_own booking %}
-                            </div>
-                        </div>
-                                                
-                    </a>
+                        </a>
+                     {% endwith %}
                 {% endfor %}
               </div>
             </div>
