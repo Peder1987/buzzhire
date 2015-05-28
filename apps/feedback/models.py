@@ -2,8 +2,13 @@ from django.db import models
 from django.core import validators
 from apps.booking.models import Booking
 
+
 class FakeQuerySet(list):
+    """An object that can be used to 'fake' a queryset, but which is actually a
+    list of, for example, unsaved model instances.
+    """
     ordered = True
+
 
 class BookingFeedbackManager(models.Manager):
     "Model manager for BookingFeedbacks."
@@ -21,6 +26,13 @@ class BookingFeedbackManager(models.Manager):
             feedback_list.append(feedback)
 
         return feedback_list
+
+    def client_feedback_exists(self, job_request):
+        """Returns whether or not client feedback exists for the supplied
+        job request.
+        """
+        return self.filter(author_type=BookingFeedback.AUTHOR_TYPE_CLIENT,
+                           booking__jobrequest=job_request).exists()
 
 
 class BookingFeedback(models.Model):
