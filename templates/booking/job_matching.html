@@ -52,7 +52,7 @@
                     {% for object in object_list %}
                         {% with object.get_absolute_url as object_url %}
                             <tr>
-                                <td><a href='{{ object_url }}'>{% profile_photo object 'small' %}</a></td>
+                                <td><a href='{{ object_url }}'>{% profile_photo object 'medium' %}</a></td>
                                 <td><a href='{{ object_url }}'>{{ object.reference_number }}</a></td>
                                 <td><a href='{{ object_url }}'>{{ object.get_full_name }}</a></td>
                                 <td>{% if object.postcode %}
