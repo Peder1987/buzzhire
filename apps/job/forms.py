@@ -9,6 +9,7 @@ from django.template.loader import render_to_string
 from apps.core.email import send_mail
 from crispy_forms import layout
 from django.core.exceptions import ValidationError
+from apps.core.widgets import IndividualAttrsRadioSelect
 from django.forms.widgets import HiddenInput
 from apps.core.widgets import Bootstrap3SterlingMoneyWidget, Bootstrap3TextInput
 from django.forms import widgets
@@ -113,7 +114,8 @@ class DriverJobRequestForm(CrispyFormMixin, PostcodeFormMixin,
                   'phone_requirement',
                   'comments')
         widgets = {
-            'vehicle_type': widgets.RadioSelect,
+            'vehicle_type': IndividualAttrsRadioSelect(
+                                                individual_attrs={'hello'}),
         }
 
 
