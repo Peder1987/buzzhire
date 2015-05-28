@@ -65,12 +65,20 @@ class BookingFeedback(models.Model):
 
     objects = BookingFeedbackManager()
 
+    TARGET_MAP = {
+        AUTHOR_TYPE_CLIENT:
+                lambda booking: booking.freelancer,
+        AUTHOR_TYPE_FREELANCER:
+                lambda booking: booking.jobrequest.client,
+    }
+
     def get_target(self):
         "Returns the client / freelancer that the feedback is for."
-        MAP = {
-            self.AUTHOR_TYPE_CLIENT:
-                    lambda booking: booking.freelancer,
-            self.AUTHOR_TYPE_FREELANCER:
-                    lambda booking: booking.jobrequest.client,
-        }
-        return MAP[self.author_type](self.booking)
+        return self.TARGET_MAP[self.author_type](self.booking)
+
+    def get_author(self):
+        "Returns the client / freelancer who authored the feedback."
+        # Just get the opposite author type so we can use the TARGET_MAP
+        opposite_author_type = [i for i in self.TARGET_MAP.keys()
+                               if i != self.author_type][0]
+        return self.TARGET_MAP[opposite_author_type](self.booking)
