@@ -1,4 +1,4 @@
-{% load freelancer %}
+{% load freelancer feedback %}
 <p>Dear {{ object.client.first_name }},</p>
 
 {% with object.bookings.published as bookings %} 
@@ -32,6 +32,10 @@
                 <tr>
                   <td>
                     <h5><a href='{{ base_url }}{{ driver_url }}'>{{ booking.freelancer.get_full_name }}</a></h5>
+                    <br>
+                    {% average_score booking.freelancer.average_score for_email=True %}
+                    <br>
+                    <strong>Driving experience:</strong> {{ object.get_driving_experience_display }}
                   </td>
                   <td class="expander"></td>
                 </tr>

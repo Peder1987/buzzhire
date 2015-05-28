@@ -47,9 +47,9 @@ ICON_MAP = {
     'photo': 'camera-retro',
     'upload': 'upload',
     'feedback': 'comment-o',
-    'feedback_score': 'star',
-    'feedback_empty_score': 'star-o',
-    'feedback_half_score': 'star-half-o',
+    'score_full': 'star',
+    'score_empty': 'star-o',
+    'score_half': 'star-half-o',
 }
 
 @register.filter

@@ -1,5 +1,7 @@
 from django import template
 from ..models import BookingFeedback
+from django.conf import settings
+from apps.main.templatetags.icons import icon
 from django.contrib.admin.templatetags.admin_list import items_for_result
 
 
@@ -67,29 +69,60 @@ def split_score(score):
 
 
 @register.inclusion_tag('feedback/includes/feedback_score.html')
-def feedback_score(score):
+def feedback_score(score, for_email=False):
     """Outputs the given score using icons.
+    
+    Can optionally specify whether it's for including in an email.  If it is,
+    the icons will be shown as images instead.
     
     Usage:
     
         {% feedback_score feedback.score %}
     """
+    context = {'score': score,
+               'for_email': for_email}
     if score:
-        return {'score': score, 'split_score': split_score(score)}
-    else:
-        return {'score': score}
+        context['split_score'] = split_score(score)
+    return context
 
 
 @register.inclusion_tag('feedback/includes/feedback_score.html')
-def average_score(score):
+def average_score(score, for_email=False):
     """Outputs the average score using icons.
+
+    Can optionally specify whether it's for including in an email.  If it is,
+    the icons will be shown as images instead.
+
     
     Usage:
     
         {% average_score feedback.average_score %}
     """
+    context = {'score': score,
+               'for_email': for_email,
+               'include_value': True}
     if score:
-        return {'score': score, 'split_score': split_score(score),
-            'include_value': True}
+        context['split_score'] = split_score(score)
+    return context
+
+
+@register.inclusion_tag('feedback/includes/feedback_icon.html')
+def feedback_icon(unit, for_email=False):
+    """Outputs an icon or image suitable for the unit supplied;
+    Unit is 0, 1 or a fraction.
+    If for_email is True, output as an image instead.
+    """
+    if unit == 1:
+        name = 'score_full'
+    elif unit == 0:
+        name = 'score_empty'
     else:
-        return {'score': score}
+        name = 'score_half'
+    context = {'for_email': for_email}
+    if for_email:
+        context['image_path'] = 'img/email/feedback/%s.png' % name
+        context['base_url'] = settings.BASE_URL
+    else:
+        context['icon_name'] = name
+
+    return context
