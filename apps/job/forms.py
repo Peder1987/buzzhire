@@ -9,10 +9,11 @@ from django.template.loader import render_to_string
 from apps.core.email import send_mail
 from crispy_forms import layout
 from django.core.exceptions import ValidationError
-from apps.core.widgets import IndividualAttrsRadioSelect
+from apps.core.widgets import ChoiceAttrsRadioSelect
 from django.forms.widgets import HiddenInput
 from apps.core.widgets import Bootstrap3SterlingMoneyWidget, Bootstrap3TextInput
 from django.forms import widgets
+from apps.driver.models import VehicleType
 from apps.location.forms import PostcodeFormMixin
 from apps.payment.utils import PaymentAPI, PaymentException
 import logging
@@ -21,6 +22,38 @@ from __builtin__ import True
 
 logger = logging.getLogger('project')
 
+
+class DriverJobRequestForm(CrispyFormMixin,
+                           forms.ModelForm):
+    """Form for submitting a job request.
+    Should be instantiated with a Client object.
+    """
+    submit_text = 'Book'
+    submit_context = {'icon_name': 'driverjobrequest_create'}
+    postcode_required = True
+
+    def __init__(self, *args, **kwargs):
+        super(DriverJobRequestForm, self).__init__(*args, **kwargs)
+        # Adjust display of radios
+        self.fields['vehicle_type'].empty_label = 'Any'
+        self.fields['vehicle_type'].initial = ''  # Set 'Any' radio as default
+
+        self.helper.layout = layout.Layout(
+            layout.Fieldset('Vehicle',
+                layout.Div('vehicle_type', css_class="radios-wrapper"),
+                'own_vehicle',
+                'minimum_delivery_box',
+            ),
+        )
+
+        # Add the submit button, but allow subclassing forms to suppress it
+        if self.submit_name:
+            self.helper.layout.append(self.get_submit_button())
+
+    class Meta:
+        model = DriverJobRequest
+        fields = ('vehicle_type', 'own_vehicle',
+                  'minimum_delivery_box',)
 
 class DriverJobRequestForm(CrispyFormMixin, PostcodeFormMixin,
                            forms.ModelForm):
@@ -54,9 +87,7 @@ class DriverJobRequestForm(CrispyFormMixin, PostcodeFormMixin,
         self.fields['duration'].widget = Bootstrap3TextInput(addon_after='hours')
         self.fields['city'].widget.attrs = {'disabled': 'disabled'}
 
-        # Adjust display of radios
-        self.fields['vehicle_type'].empty_label = 'Any'
-        self.fields['vehicle_type'].initial = ''  # Set 'Any' radio as default
+        self.adjust_vehicle_type_widget()
 
         self.fields['comments'].widget.attrs = {'rows': 3}
         self.helper.layout = layout.Layout(
@@ -91,6 +122,26 @@ class DriverJobRequestForm(CrispyFormMixin, PostcodeFormMixin,
         if self.submit_name:
             self.helper.layout.append(self.get_submit_button())
 
+    def adjust_vehicle_type_widget(self):
+        """Adjusts the vehicle type widget so it has
+        'data-delivery-box_applicable' set on any radios that need a delivery
+        box.  The javascript will use this to hide/show the delivery box field. 
+        """
+        # Adjust display of radios
+        self.fields['vehicle_type'].empty_label = 'Any'
+        self.fields['vehicle_type'].initial = ''  # Set 'Any' radio as default
+
+        # Build list of the vehicle types that need a delivery box
+        vehicle_type_choices = list(VehicleType.objects.filter(
+                    delivery_box_applicable=True).values_list('pk', flat=True))
+        vehicle_type_choices.append('')  # Also add the 'any' choice
+        vehicle_type_attrs = dict(
+            [(i, {'data-delivery-box-applicable': 'true'}) \
+             for i in vehicle_type_choices])
+        self.fields['vehicle_type'].widget = ChoiceAttrsRadioSelect(
+                                choice_attrs=vehicle_type_attrs)
+
+
     def save(self, client, commit=True):
         """We require the client to be passed at save time.  This is
         to make it easier to include the form before the client is created,
@@ -114,8 +165,8 @@ class DriverJobRequestForm(CrispyFormMixin, PostcodeFormMixin,
                   'phone_requirement',
                   'comments')
         widgets = {
-            'vehicle_type': IndividualAttrsRadioSelect(
-                                                individual_attrs={'hello'}),
+            'vehicle_type': ChoiceAttrsRadioSelect(
+                                        choice_attrs={'hello': 'there'}),
         }
 
 

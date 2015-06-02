@@ -40,76 +40,21 @@ class Bootstrap3TextInput(TextInput):
         return '<div class="input-group">%s</div>' % output
 
 
-class AttributeStoreDict(dict):
-    """Dictionary-like object that allows us to set an attribute too."""
-    def __init__(self, original):
-        super(AttributeStoreDict, self).__init__()
-        self.__dict__ = original
-
-
-class IndividualAttrsRadioFieldRenderer(RadioFieldRenderer):
-    def render(self):
-        """
-        Outputs a <ul> for this set of choice fields.
-        If an id was given to the field, it is applied to the <ul> (each
-        item in the list will get an id of `$id_$i`).
-        """
-        a = self.attrs
-        assert False
-        id_ = self.attrs.get('id', None)
-        start_tag = format_html('<ul id="{0}">', id_) if id_ else '<ul>'
-        output = [start_tag]
-        for i, choice in enumerate(self.choices):
-            choice_value, choice_label = choice
-            if isinstance(choice_label, (tuple, list)):
-                attrs_plus = self.attrs.copy()
-                if id_:
-                    attrs_plus['id'] += '_{0}'.format(i)
-                sub_ul_renderer = ChoiceFieldRenderer(name=self.name,
-                                                      value=self.value,
-                                                      attrs=attrs_plus,
-                                                      choices=choice_label)
-                sub_ul_renderer.choice_input_class = self.choice_input_class
-                output.append(format_html('<li>{0}{1}</li>', choice_value,
-                                          sub_ul_renderer.render()))
-            else:
-                w = self.choice_input_class(self.name, self.value,
-                                            self.attrs.copy(), choice, i)
-                output.append(format_html('<li>{0}</li>', force_text(w)))
-        output.append('</ul>')
-        return mark_safe('\n'.join(output))
-
-class IndividualAttrsRadioSelect(RadioSelect):
+class ChoiceAttrsRadioSelect(RadioSelect):
     """Widget that allows you to specify custom attrs for each 
-    individual choice.
+    individual choice.  Needs to be used in tandem with a renderer that
+    process the choice attrs dictionary using the flatatt_for_choice filter.
+    
+    See templates/bootstrap3/layout/radioselect.html for an example of
+    a template.
+    
+    Usage:
+    
+        widget = ChoiceAttrsRadioSelect(choice_attrs={
+            1: {'foo': 'bar'},
+            2: {'fizz': 'buzz'},
+        })
     """
-    renderer = IndividualAttrsRadioFieldRenderer
-
     def __init__(self, *args, **kwargs):
-        self.individual_attrs = kwargs.pop('individual_attrs', [])
-        super(IndividualAttrsRadioSelect, self).__init__(*args, **kwargs)
-
-    def build_attrs(self, *args, **kwargs):
-        final_attrs = super(IndividualAttrsRadioSelect, self).build_attrs(
-                                                                    *args,
-                                                                    **kwargs)
-
-        return final_attrs
-        # TODO - work out how to set an extra attribute on the dict
-
-        new_final_attrs = AttributeStoreDict(final_attrs)
-        new_final_attrs.individual_attrs = self.individual_attrs
-        assert False
-
-        return new_final_attrs
-
-#     def get_renderer(self, name, value, attrs=None, choices=()):
-#         """Returns an instance of the renderer.
-#         This is lifted from RendererMixin.get_renderer(), it just passes
-#         the individual_attrs to the renderer too."""
-#         if value is None:
-#             value = self._empty_value
-#         final_attrs = self.build_attrs(attrs)
-#         choices = list(chain(self.choices, choices))
-#         return self.renderer(name, value, final_attrs, choices)
-
+        self.choice_attrs = kwargs.pop('choice_attrs', [])
+        super(ChoiceAttrsRadioSelect, self).__init__(*args, **kwargs)
