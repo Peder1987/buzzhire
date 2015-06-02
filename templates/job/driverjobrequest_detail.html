@@ -142,21 +142,23 @@
                     </td>
                 </tr>
                  <tr>
-                    <th>Minimum delivery box</th>
+                    <th>Must the driver supply their own vehicle?</th>
                     <td>
-                        {{ object.get_minimum_delivery_box_display }}
+                        {{ object.own_vehicle|yesno|icon }}
                     </td>
                 </tr>
+                 {% if object.delivery_box_applicable %}
+                     <tr>
+                        <th>Minimum delivery box</th>
+                        <td>
+                            {{ object.get_minimum_delivery_box_display }}
+                        </td>
+                    </tr>
+                 {% endif %}
                  <tr>
                     <th>Minimum driving experience</th>
                     <td>
                         {{ object.get_driving_experience_display }}
-                    </td>
-                </tr>
-                 <tr>
-                    <th>Must the driver supply their own vehicle?</th>
-                    <td>
-                        {{ object.own_vehicle|yesno|icon }}
                     </td>
                 </tr>
 

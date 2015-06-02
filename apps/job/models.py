@@ -241,3 +241,8 @@ class DriverJobRequest(JobRequest):
         if self.vehicle_type:
             return self.vehicle_type
         return 'Any'
+
+    @property
+    def delivery_box_applicable(self):
+        "Returns whether or not the minimum delivery box is applicable."
+        return self.own_vehicle and self.vehicle_type.delivery_box_applicable

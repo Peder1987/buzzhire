@@ -21,4 +21,5 @@
 {% block extrascripts %}
     {{ block.super }}
     {% include 'includes/forms/datetime_form_js.html' %}
+    {% include 'job/includes/forms/driverjobrequest_form_js.html' with form=extra_forms.0 %}
 {% endblock %}

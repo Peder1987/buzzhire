@@ -16,7 +16,7 @@
 <p></p>
 <p><strong>Vehicle type:</strong> {{ object.get_vehicle_type_display }}</p>
 <p><strong>Does the driver need to supply their own vehicle?</strong> {{ object.own_vehicle|yesno|capfirst }} </p>
-<p><strong>Minimum delivery box:</strong> {{ object.get_minimum_delivery_box_display }} </p>
+{% if object.delivery_box_applicable %}<p><strong>Minimum delivery box:</strong> {{ object.get_minimum_delivery_box_display }} </p>{% endif %}
 
 <h5>Driver details</h5>
 <p></p>
