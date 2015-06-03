@@ -18,7 +18,7 @@ django-bower==5.0.3
 django-braces==1.4.0
 django-compressor==1.4
 django-configurations==0.8
-django-configurations-seddonym==0.1.1
+django-configurations-seddonym==0.1.2
 django-crispy-forms==1.4.0
 django-dbbackup==2.0.4
 django-extensions==1.5.2
