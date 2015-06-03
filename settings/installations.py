@@ -26,7 +26,7 @@ class Dev(BraintreeSandboxMixin,
     DOMAIN = 'dev.buzzhire.co'
     WEBFACTION_USER = 'buzzhire'
     EMAIL_HOST_USER = 'buzzhire_dev'
-    EMAIL_HOST = 'smtp.webfaction.com'
+
     ACCOUNT_PASSWORD_MIN_LENGTH = 1
 
     def BOOKINGS_EMAIL(self):
@@ -36,10 +36,10 @@ class Dev(BraintreeSandboxMixin,
 
 class Live(installations.WebfactionLiveMixin, ProjectConfiguration):
     DOMAIN = 'buzzhire.co'
-    EMAIL_HOST_USER = 'buzzhire_live'
-    ACCOUNT_PASSWORD_MIN_LENGTH = 6
-
     WEBFACTION_USER = 'buzzhire'
+    EMAIL_HOST_USER = 'buzzhire_live'
+
+    ACCOUNT_PASSWORD_MIN_LENGTH = 6
 
     def BOOKINGS_EMAIL(self):
         return self.CONTACT_EMAIL
