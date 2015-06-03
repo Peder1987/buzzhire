@@ -20,7 +20,7 @@ def live():
     env.wsgi_reload_file = '/home/buzzhire/tmp/live.reload'
     env.nginx_process = 'live_nginx'
     env.uwsgi_process = 'live_uwsgi'
-    env.backup_on_deploy = False
+    env.backup_on_deploy = True
     env.django_configuration = 'Live'
 
 
@@ -77,16 +77,23 @@ def deploy(skip_backup=False):
         run("pip install -r requirements.pip")
 
         if env.backup_on_deploy and not skip_backup:
-            backup()
+            dbbackup()
 
         reload_wsgi()
         run("./manage.py migrate")
         run('./manage.py collectstatic --noinput')
 
 @task
-def backup():
-    "Backs up the site uploaded files and database to Amazon S3."
-    utils.fastprint('Backups are not yet configured.')
-#     with virtualenv():
-#         run('./manage.py dbbackup')
-#         run('./manage.py mediabackup')
+def dbbackup():
+    """Backs up the site database to Amazon S3.
+    Doesn't back up uploaded files."""
+    with virtualenv():
+        run('./manage.py dbbackup --configuration=%s' \
+                % env.django_configuration)
+
+@task
+def mediabackup():
+    """Backs up uploaded files to Amazon S3."""
+    with virtualenv():
+        run('./manage.py sync_s3 --media-only --configuration=%s' \
+                % env.django_configuration)
