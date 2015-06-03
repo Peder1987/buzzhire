@@ -10,6 +10,8 @@
           {% if driver %}
             {% url 'driver_change' driver.pk as link_url %}
             {% include 'includes/panel_link.html' with icon_name='driver_profile_change' link_text='Edit profile' %}
+            {% url 'freelancer_photo' as link_url %}
+            {% include 'includes/panel_link.html' with icon_name='photo' link_text='Photo' %}
             {% url 'drivervehicletype_list' as link_url %}
             {% include 'includes/panel_link.html' with icon_name='vehicletypes' link_text='Vehicles' %}
           {% endif %}

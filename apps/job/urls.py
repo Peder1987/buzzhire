@@ -3,7 +3,13 @@ from . import views
 from apps.job.models import JobRequest
 
 
+
 urlpatterns = [
+     url(r'^admin/$', views.AdminJobList.as_view(),
+         name='driverjobrequest_admin_list'),
+     url(r'^admin/(?P<status>[\w]+)/$', views.AdminJobList.as_view(),
+        name='driverjobrequest_admin_list_tab'),
+
      url(r'^requested/$', views.RequestedJobList.as_view(),
          name='requested_jobs'),
 
@@ -20,13 +26,24 @@ urlpatterns = [
      url(r'^create/new-client/$', views.DriverJobRequestCreateAnonymous.as_view(),
          name='driverjobrequest_create_anon'),
 
-     url(r'^create/done/$', views.DriverJobRequestComplete.as_view(),
-         name='driverjobrequest_complete'),
+    url(r'^requests/(?P<pk>[\d]+)/checkout/$',
+        views.DriverJobRequestCheckout.as_view(),
+        name='driverjobrequest_checkout'),
+
+     url(r'^requests/(?P<pk>[\d]+)/done/$',
+         views.DriverJobRequestDone.as_view(),
+         name='driverjobrequest_done'),
+
+    url(r'^requests/(?P<pk>[\d]+)/$', views.DriverJobRequestDetail.as_view(),
+        name='jobrequest_detail'),
+
+
+    url(r'^requests/(?P<pk>[\d]+)/edit/$',
+        views.DriverJobRequestUpdate.as_view(),
+        name='driverjobrequest_edit'),
 
 #     url(r'^requests/moderation/$', views.JobRequestsModeration.as_view(),
 #         name='jobrequest_moderation'),
-#     url(r'^requests/(?P<pk>[\d]+)/$', views.JobRequestDetail.as_view(),
-#         name='jobrequest_detail'),
 #
 #     url(r'^requests/(?P<pk>[\d]+)/open/$',
 #         views.JobRequestConfirmAction.as_view(status=JobRequest.STATUS_OPEN),

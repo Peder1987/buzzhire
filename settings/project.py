@@ -23,6 +23,7 @@ class ProjectConfiguration(StandardConfiguration):
         'compressor',
         'djangobower',
         'dbbackup',
+        'fsm_admin',
         'django_bootstrap_breadcrumbs',
         'apps.core',
         'apps.location',
@@ -30,8 +31,10 @@ class ProjectConfiguration(StandardConfiguration):
         'apps.freelancer',
         'apps.client',
         'apps.driver',
+        'apps.payment',
         'apps.job',
         'apps.booking',
+        'apps.feedback',
         'apps.main',
     )
 
@@ -84,6 +87,7 @@ class ProjectConfiguration(StandardConfiguration):
     BOWER_INSTALLED_APPS = (
         'eternicode/bootstrap-datepicker',
         'acpmasquerade/bootstrap3-timepicker2',
+        'bootstrap-star-rating',
     )
 
     @property
@@ -95,7 +99,7 @@ class ProjectConfiguration(StandardConfiguration):
     COMING_SOON = False
 
     # Min pay per hour, before commission
-    CLIENT_MIN_WAGE = 8.50
+    CLIENT_MIN_WAGE = 8.0
     # The percent commission we charge on client rates
     COMMISSION_PERCENT = 15
     # Number of pence to round to

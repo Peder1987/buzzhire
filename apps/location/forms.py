@@ -8,11 +8,23 @@ class PostcodeFormMixin(forms.Form):
     Defines a 'raw_postcode' field that should be displayed on the form
     (instead of the postcode field) and then the postcode will be populated.
     
+    Can set the attribute postcode_required to True to require the field.
+    
     TODO - consider whether this should be done using a widget/alternative
     form field instead.
     """
-    raw_postcode = forms.CharField(label='Postcode', max_length=10,
-                               required=False)
+    postcode_required = False
+    raw_postcode = forms.CharField(label='Postcode', max_length=10)
+
+
+    def __init__(self, *args, **kwargs):
+        super(PostcodeFormMixin, self).__init__(*args, **kwargs)
+        self.fields['raw_postcode'].required = self.postcode_required
+
+        # For update forms, populate the raw_postcode with the postcode
+        instance = getattr(self, 'instance', None)
+        if instance and instance.pk:
+            self.fields['raw_postcode'].initial = str(self.instance.postcode)
 
     def clean_raw_postcode(self):
         # We use the raw postcode form field to generate a postcode instance

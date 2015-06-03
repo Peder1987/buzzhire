@@ -1,0 +1,40 @@
+{% extends 'includes/forms/confirm_form_inner.html' %}
+{% load icons %}
+{% block after_question %}
+    <div class='row' style='margin-top: 3em;'>
+        <div class='col-md-5'>
+            <div class='well'>
+                {% with form.driver as object %}
+                    <p>
+                        <a class='monospace' href='{% url 'driver_detail' object.pk %}'>{{ object.reference_number }}</a><br>
+                        {{ 'driver'|icon }} {{ object.get_full_name }}<br>
+                    </p>
+                    <table class='table text-left'>
+                        <tbody>
+                            {% if object.postcode %}
+                                <tr> 
+                                    <th>Postcode</th>
+                                    <td>{{ object.postcode }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Travel distance</th>
+                                    <td>{{ object.travel_distance }} mile{{ object.travel_distance|pluralize }}</td>
+                                </tr>
+                            {% endif %}
+                            <tr>
+                                <th>Minimum pay per hour</th>
+                                <td>&pound;{{ object.minimum_pay_per_hour.amount }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                {% endwith %}
+            </div>    
+        </div>
+        <div class='col-md-2'>
+            <h3 class='light-icon'>{{ 'right_arrow'|icon }}</h3>
+        </div>
+        <div class='col-md-5'>
+            {% include 'job/includes/driverjobrequest_summary.html' with object=form.job_request %}
+        </div>
+    </div>
+{% endblock %}

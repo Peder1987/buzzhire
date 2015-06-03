@@ -24,6 +24,8 @@ class ConfirmForm(forms.Form):
         )
     """
 
+    inner_template_name = 'includes/forms/confirm_form_inner.html'
+
     def __init__(self, *args, **kwargs):
         self.cancel_url = kwargs.pop('cancel_url')
         self.question = kwargs.pop('question', 'Are you sure?')
@@ -39,8 +41,9 @@ class ConfirmForm(forms.Form):
         self.helper.layout.append(layout.HTML(self.get_inner_html()))
 
     def get_inner_html(self):
-        return render_to_string('includes/forms/confirm_form_inner.html',
-                            {'question': self.question,
+        return render_to_string(self.inner_template_name,
+                            {'form': self,
+                             'question': self.question,
                              'action_text': self.action_text,
                              'cancel_text': self.cancel_text,
                              'cancel_url': self.cancel_url,

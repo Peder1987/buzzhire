@@ -5,11 +5,14 @@ from datetime import date, datetime
 from django.core import validators
 from multiselectfield import MultiSelectField
 from djmoney.models.fields import MoneyField
-from apps.driver.models import Driver, VehicleType, DriverVehicleType
+from apps.driver.models import Driver, VehicleType, \
+                                DriverVehicleType, FlexibleVehicleType
 from apps.client.models import Client
 from apps.location.models import Postcode
 from apps.freelancer.models import client_to_freelancer_rate
 from decimal import Decimal
+from django_fsm import FSMField, transition
+from boto.ec2.instancestatus import Status
 
 
 class JobRequestQuerySet(models.QuerySet):
@@ -46,18 +49,65 @@ class JobRequest(models.Model):
     client = models.ForeignKey(Client, related_name='job_requests')
 
     # Status - for admin purposes
-    STATUS_OPEN = 'OP'
-    STATUS_CONFIRMED = 'CF'
-    STATUS_COMPLETE = 'CP'
-    STATUS_CANCELLED = 'CA'
+    STATUS_OPEN = 'OP'  # Client has paid; the job request now ready for booking
+    STATUS_CONFIRMED = 'CF'  # Freelancers have been assigned
+    STATUS_COMPLETE = 'CP'  # The work has been completed
+    STATUS_CHECKOUT = 'IC'  # The client has not yet paid
+    STATUS_CANCELLED = 'CA'  # Job request cancelled
     STATUS_CHOICES = (
         (STATUS_OPEN, 'Open'),
         (STATUS_CONFIRMED, 'Confirmed'),
         (STATUS_COMPLETE, 'Complete'),
+        (STATUS_CHECKOUT, 'In checkout'),
         (STATUS_CANCELLED, 'Cancelled'),
     )
-    status = models.CharField(max_length=2, choices=STATUS_CHOICES,
-                              default=STATUS_OPEN)
+    status = FSMField(max_length=2, choices=STATUS_CHOICES,
+                              default=STATUS_CHECKOUT, protected=True)
+
+    @transition(field=status, source=STATUS_CHECKOUT, target=STATUS_OPEN,
+                custom={'button_name':'Open'})
+    def open(self):
+        """Marks a job as open.
+        NB be wary of changing this method name as it will affect the
+        way receivers handle the signals."""
+        pass
+
+    @transition(field=status, source=[STATUS_CONFIRMED, STATUS_COMPLETE,
+                        STATUS_CANCELLED, STATUS_OPEN], target=STATUS_CHECKOUT,
+                custom={'button_name':'Back to checkout'})
+    def back_to_checkout(self):
+        """Marks a job as in the checkout again
+        (unlikely to need this transition, but just in case)."""
+        pass
+
+    @transition(field=status, source=STATUS_OPEN, target=STATUS_CONFIRMED,
+                custom={'button_name':'Confirm'})
+    def confirm(self):
+        """Marks a job as confirmed - i.e. the freelancers are all booked.
+        Note because of the decorator, this method doesn't need to do anything,
+        just avoid raising an exception."""
+        pass
+
+    @transition(field=status, source=[STATUS_CONFIRMED, STATUS_COMPLETE,
+                                        STATUS_CANCELLED], target=STATUS_OPEN,
+                custom={'button_name':'Reopen'})
+    def reopen(self):
+        "Marks a job as open - i.e. it needs some freelancers to be booked in."
+        pass
+
+    @transition(field=status, source=[STATUS_OPEN, STATUS_CHECKOUT],
+                target=STATUS_CANCELLED,
+                custom={'button_name':'Cancel'})
+    def cancel(self):
+        "Marks a job as cancelled."
+        pass
+
+    @transition(field=status, source=STATUS_CONFIRMED,
+                target=STATUS_COMPLETE,
+                custom={'button_name':'Complete'})
+    def complete(self):
+        "Marks a job as complete - the job has been performed."
+        pass
 
     # The date this form was submitted
     date_submitted = models.DateTimeField(auto_now_add=True)
@@ -69,6 +119,10 @@ class JobRequest(models.Model):
                   help_text='How much you will pay per hour, for each driver.',
                   validators=[
                     validators.MinValueValidator(settings.CLIENT_MIN_WAGE)])
+
+    tips_included = models.BooleanField('Inclusive of tips', default=False,
+                                        blank=False)
+
     date = models.DateField(default=date.today)
     start_time = models.TimeField(default='9:00 AM')
     duration = models.PositiveSmallIntegerField(default=1,
@@ -98,7 +152,6 @@ class JobRequest(models.Model):
     PHONE_REQUIREMENT_ANDROID = 'AN'
     PHONE_REQUIREMENT_IPHONE = 'IP'
     PHONE_REQUIREMENT_WINDOWS = 'WI'
-    PHONE_REQUIREMENT_OTHER = 'OT'
 
     PHONE_REQUIREMENT_CHOICES = (
         (PHONE_REQUIREMENT_NOT_REQUIRED, 'No smart phone needed'),
@@ -123,14 +176,21 @@ class JobRequest(models.Model):
         return self.reference_number
 
     @property
-    def driver_pay_per_hour(self):
-        "Returns the driver pay per hour for this job."
+    def freelancer_pay_per_hour(self):
+        "Returns the freelancer pay per hour for this job."
         return client_to_freelancer_rate(self.client_pay_per_hour)
+
+    @property
+    def client_total_cost(self):
+        "Returns the total cost to the client for this job."
+        return self.client_pay_per_hour * self.duration \
+                * self.number_of_freelancers
 
     @property
     def reference_number(self):
         "Returns a reference number for this request."
         return 'JR%s' % str(self.pk).zfill(5)
+
 
     def get_absolute_url(self):
         return reverse('jobrequest_detail', args=(self.pk,))
@@ -150,12 +210,15 @@ class DriverJobRequestManager(models.Manager):
 class DriverJobRequest(JobRequest):
     """A JobRequest that is specifically for drivers to complete.
     """
-    vehicle_types = models.ManyToManyField(VehicleType,
+    # To delete
+    vehicle_types_old = models.ManyToManyField(VehicleType,
+           related_name='jobrequests_old', blank=True, null=True)
+
+    vehicle_type = models.ForeignKey(FlexibleVehicleType,
            related_name='jobrequests',
-           help_text="Which types of vehicle would be appropriate for the job. "
-            "(N.B. if you require a specific mixture of vehicles, "
-            "such as one car and one van, then you should create these as "
-            "separate bookings.)")
+           blank=True, null=True,
+           help_text="Which type of vehicle would be appropriate for the job. ")
+
     minimum_delivery_box = models.PositiveSmallIntegerField(
             choices=DriverVehicleType.DELIVERY_BOX_CHOICES,
             default=DriverVehicleType.DELIVERY_BOX_NONE,
@@ -172,3 +235,14 @@ class DriverJobRequest(JobRequest):
                             default=True)
 
     objects = DriverJobRequestManager.from_queryset(JobRequestQuerySet)()
+
+    def get_vehicle_type_display(self):
+        "Returns the vehicle type, or 'Any' if there is none."
+        if self.vehicle_type:
+            return self.vehicle_type
+        return 'Any'
+
+    @property
+    def delivery_box_applicable(self):
+        "Returns whether or not the minimum delivery box is applicable."
+        return self.own_vehicle and self.vehicle_type.delivery_box_applicable

@@ -3,7 +3,16 @@ from configurations_seddonym import installations
 import os
 
 
-class Local(installations.LocalMixin, ProjectConfiguration):
+class BraintreeSandboxMixin(object):
+    """Settings for the Braintree sandbox.
+    Note: BRAINTREE_PRIVATE_KEY should be included in secret.py.
+    """
+    BRAINTREE_MERCHANT_ID = '8jv5gg39h7kq69qw'
+    BRAINTREE_PUBLIC_KEY = 'mwm76cyqycjc6hzq'
+    BRAINTREE_SANDBOX = True
+
+class Local(BraintreeSandboxMixin,
+            installations.LocalMixin, ProjectConfiguration):
     PROJECT_ROOT = '/home/david/www/buzzhire'
     BOOKINGS_EMAIL = 'bookingslocal@dev.buzzhire.co'
     EMAIL_HOST_USER = 'buzzhire_dev'
@@ -12,7 +21,8 @@ class Local(installations.LocalMixin, ProjectConfiguration):
     ACCOUNT_PASSWORD_MIN_LENGTH = 1
 
 
-class Dev(installations.WebfactionDevMixin, ProjectConfiguration):
+class Dev(BraintreeSandboxMixin,
+          installations.WebfactionDevMixin, ProjectConfiguration):
     DOMAIN = 'dev.buzzhire.co'
     WEBFACTION_USER = 'buzzhire'
     EMAIL_HOST_USER = 'buzzhire_dev'
@@ -21,6 +31,7 @@ class Dev(installations.WebfactionDevMixin, ProjectConfiguration):
 
     def BOOKINGS_EMAIL(self):
         return self.CONTACT_EMAIL
+
 
 
 class Live(installations.WebfactionLiveMixin, ProjectConfiguration):
@@ -48,3 +59,7 @@ class Live(installations.WebfactionLiveMixin, ProjectConfiguration):
     @property
     def DBBACKUP_S3_SECRET_KEY(self):
         return self.AWS_SECRET_ACCESS_KEY
+
+    BRAINTREE_MERCHANT_ID = 'q6xbcpbpcm4vtvcw'
+    BRAINTREE_PUBLIC_KEY = 'skmbrjfnnc4kfxq5'
+    BRAINTREE_SANDBOX = False

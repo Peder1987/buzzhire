@@ -72,8 +72,7 @@ class Freelancer(models.Model):
 
     published = models.BooleanField(default=True,
         help_text='Whether or not the freelancer shows up in search '
-        'results. Note it is still possible for members of the public to '
-        'view the freelancer if they know the link.')
+        'results.')
 
     # A link to a user account.
     user = models.ForeignKey(settings.AUTH_USER_MODEL, unique=True)
@@ -84,6 +83,9 @@ class Freelancer(models.Model):
             validators.RegexValidator(r'^07[0-9 ]*$',
                            'Please enter a valid UK mobile phone number in '
                            'the form 07xxx xxx xxx')])
+
+    photo = models.ImageField(upload_to='freelancer/photos/%Y/%m/%d',
+                              blank=True)
 
     FLUENCY_BASIC = 'BA'
     FLUENCY_CONVERSATIONAL = 'CO'
@@ -165,11 +167,11 @@ class Freelancer(models.Model):
         return '%s %s' % (self.first_name,
                           self.last_name)
 
+    def get_absolute_url(self):
+        return reverse('driver_detail', args=(self.pk,))
+
     def __unicode__(self):
         return self.get_full_name()
-
-    def get_absolute_url(self):
-        return reverse('freelancer_detail', args=(self.pk,))
 
     class Meta:
         ordering = 'last_name',

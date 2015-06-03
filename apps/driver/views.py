@@ -10,7 +10,7 @@ from django.conf import settings
 from allauth.account.utils import complete_signup
 from allauth.account import app_settings
 from apps.core.views import ContextMixin, OwnerOnlyMixin, ConfirmationMixin
-from apps.account.views import SignupView as BaseSignupView
+from apps.account.views import SignupView as BaseSignupView, AdminOnlyMixin
 from apps.account.forms import SignupInnerForm
 from . import forms
 from .models import Driver, DriverVehicleType
@@ -100,7 +100,18 @@ class SignupView(BaseSignupView):
 
 
 class DriverDetailView(DetailView):
+    """Detail view for anyone to look at a Driver.
+    """
     model = Driver
+
+    def get_object(self):
+        "Prevent non-admins from seeing unpublished drivers."
+        object = super(DriverDetailView, self).get_object()
+        if not object.published:
+            if not (self.request.user.is_authenticated() and
+                    self.request.user.is_admin):
+                raise PermissionDenied
+        return object
 
     def get_context_data(self, *args, **kwargs):
         context = super(DriverDetailView, self).get_context_data(*args,

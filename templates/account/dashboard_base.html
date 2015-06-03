@@ -1,5 +1,5 @@
 {% extends 'page_sidebar.html' %}
-{% load django_bootstrap_breadcrumbs crispy_forms_tags %}
+{% load django_bootstrap_breadcrumbs crispy_forms_tags icons %}
 
 {% block inner_breadcrumb %}
   {% url 'account_dashboard' as dashboard_url %} 
@@ -18,10 +18,22 @@
     {% include 'booking/includes/freelancer_dashboard_panel.html' %}
 {% endblock %}
 
+{% block page_title_sidebar %}
+   <div class='pull-left'>
+     {{ block.super }}
+   </div>
+   <div class='pull-right'>
+     {% block page_actions %}{% endblock %}
+   </div>
+   <div style='clear: both;'></div>
+{% endblock %}
 
 
 {% block content %}
-    {% if form %}{% crispy form %}{% endif %}
+    {% if form %}
+        {% include 'includes/forms/invalid_form_message.html' %}
+        {% crispy form %}
+    {% endif %}
 {% endblock %}
 
 {% block extrastyles %}

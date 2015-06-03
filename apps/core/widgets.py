@@ -1,5 +1,5 @@
 from djmoney.forms.widgets import MoneyWidget
-from django.forms.widgets import TextInput
+from django.forms.widgets import TextInput, RadioSelect, RadioFieldRenderer
 
 
 class Bootstrap3SterlingMoneyWidget(MoneyWidget):
@@ -38,3 +38,23 @@ class Bootstrap3TextInput(TextInput):
         if self.addon_after:
             output += '<span class="input-group-addon">%s</span>' % self.addon_after
         return '<div class="input-group">%s</div>' % output
+
+
+class ChoiceAttrsRadioSelect(RadioSelect):
+    """Widget that allows you to specify custom attrs for each 
+    individual choice.  Needs to be used in tandem with a renderer that
+    process the choice attrs dictionary using the flatatt_for_choice filter.
+    
+    See templates/bootstrap3/layout/radioselect.html for an example of
+    a template.
+    
+    Usage:
+    
+        widget = ChoiceAttrsRadioSelect(choice_attrs={
+            1: {'foo': 'bar'},
+            2: {'fizz': 'buzz'},
+        })
+    """
+    def __init__(self, *args, **kwargs):
+        self.choice_attrs = kwargs.pop('choice_attrs', [])
+        super(ChoiceAttrsRadioSelect, self).__init__(*args, **kwargs)

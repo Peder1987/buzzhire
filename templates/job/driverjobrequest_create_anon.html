@@ -9,6 +9,9 @@
     </p>
     <form method="post">
         {% csrf_token %}
+        {% if extra_forms.0.errors or extra_forms.1.errors or form.errors %}
+            {% include 'includes/forms/invalid_form_message.html' with force_show=True %}
+        {% endif %}
         {% crispy extra_forms.0 %}
         {% crispy extra_forms.1 %}
         {% crispy form %}
@@ -18,4 +21,5 @@
 {% block extrascripts %}
     {{ block.super }}
     {% include 'includes/forms/datetime_form_js.html' %}
+    {% include 'job/includes/forms/driverjobrequest_form_js.html' with form=extra_forms.0 %}
 {% endblock %}

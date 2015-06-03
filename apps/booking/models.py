@@ -1,6 +1,6 @@
 from django.db import models
 from django import forms
-from datetime import date
+from datetime import date, time
 import calendar
 from apps.freelancer.models import Freelancer
 from apps.job.models import JobRequest
@@ -26,13 +26,19 @@ class BookingQuerySet(models.QuerySet):
         "Filters by job requests that a freelancer has been allocated to."
         return self.filter(freelancer=freelancer)
 
+    def published(self):
+        """Filter by job requests are for freelancers who are published.
+        """
+        return self.filter(freelancer__published=True)
+
+
 
 class Booking(models.Model):
     """A Booking is an allocation of a single freelancer to a JobRequest.
     JobRequests can potentially have multiple Bookings.
     """
     freelancer = models.ForeignKey(Freelancer, related_name='bookings')
-    jobrequest = models.ForeignKey(JobRequest, related_name='jobrequests')
+    jobrequest = models.ForeignKey(JobRequest, related_name='bookings')
     created = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
@@ -57,10 +63,17 @@ class Availability(models.Model):
     of a particular freelancer."""
     freelancer = models.OneToOneField(Freelancer)
 
+    # Defines the shift times in the form: (name, start hour, end hour)
+    SHIFT_TIMES = (
+        ('early_morning', 2, 7),
+        ('morning', 7, 12),
+        ('afternoon', 12, 17),
+        ('evening', 17, 22),
+        ('night', 22, 2),
+    )
     # Specify the two dimensions for the fields, to help with processing
-    SHIFTS = ('early_morning', 'morning', 'afternoon', 'evening', 'night')
+    SHIFTS = [i[0] for i in SHIFT_TIMES]
     DAYS = [day.lower() for day in calendar.day_name]
-
 
     AVAILABILITY_CHOICES = ((True, 'Available'), (False, 'Not available'))
     FIELD_KWARGS = {
@@ -116,3 +129,20 @@ class Availability(models.Model):
     sunday_afternoon = models.BooleanField(**FIELD_KWARGS)
     sunday_evening = models.BooleanField(**FIELD_KWARGS)
     sunday_night = models.BooleanField(**FIELD_KWARGS)
+
+    @classmethod
+    def shift_from_time(cls, given_time):
+        "Returns a shift, based on a given time."
+        for shift, start_hour, end_hour in cls.SHIFT_TIMES:
+            if start_hour < end_hour:
+                # If the start hour is before the end hour, just see
+                # if the time is between them
+                if given_time >= time(start_hour) \
+                                               and given_time < time(end_hour):
+                    return shift
+            else:
+                # For the shift time that spans midnight, it's a different test
+                if given_time >= time(start_hour) \
+                                        or given_time < time(end_hour):
+                    return shift
+        raise ValueError('Could not find shift for time %s.' % given_time)

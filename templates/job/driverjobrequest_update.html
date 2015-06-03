@@ -1,0 +1,20 @@
+{% extends 'job/driverjobrequest_detail.html' %}
+{% load crispy_forms_tags django_bootstrap_breadcrumbs %}
+
+{% block inner_breadcrumb %}
+  {{ block.super }}
+  {% breadcrumb object object.get_absolute_url %}
+{% endblock %}
+
+{% block content %}
+    {% include 'includes/forms/invalid_form_message.html' %}
+    {% crispy form %}
+{% endblock %}
+
+{% block page_actions %}{% endblock %}
+
+{% block extrascripts %}
+    {{ block.super }}
+    {% include 'includes/forms/datetime_form_js.html' %}
+    {% include 'job/includes/forms/driverjobrequest_form_js.html' %}
+{% endblock %}

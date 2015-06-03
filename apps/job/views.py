@@ -1,18 +1,23 @@
-from django.views.generic import CreateView, UpdateView, TemplateView, ListView
+from django.views.generic import (CreateView, UpdateView, TemplateView,
+                            ListView, DetailView, FormView)
+from django.views.generic.detail import SingleObjectMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse_lazy, reverse
 from allauth.account import app_settings
 from allauth.account.utils import complete_signup
 from django.shortcuts import redirect
 from braces.views._access import AnonymousRequiredMixin
 from apps.core.views import ContextMixin, TabsMixin, ConfirmationMixin
-from apps.client.views import ClientOnlyMixin
+from apps.account.views import AdminOnlyMixin
+from apps.client.views import ClientOnlyMixin, OwnedByClientMixin
 from apps.client.forms import ClientInnerForm
 from apps.account.views import SignupView as BaseSignupView
 from . import signals
 from .models import DriverJobRequest
 from .forms import DriverJobRequestForm, DriverJobRequestInnerForm, \
-                    DriverJobRequestSignupInnerForm
+                    DriverJobRequestSignupInnerForm, JobRequestCheckoutForm, \
+                    DriverJobRequestUpdateForm
 from django.http.response import HttpResponseRedirect
 
 
@@ -20,7 +25,6 @@ class DriverJobRequestCreate(ClientOnlyMixin, ContextMixin, CreateView):
     "Creation page for submitting a driver job request."
     extra_context = {'title': 'Book a driver'}
     model = DriverJobRequest
-    success_url = reverse_lazy('driverjobrequest_complete')
     form_class = DriverJobRequestForm
     template_name = 'job/driverjobrequest_create.html'
 
@@ -28,24 +32,18 @@ class DriverJobRequestCreate(ClientOnlyMixin, ContextMixin, CreateView):
         # if not logged in, redirect to a job request pre-sign up page
         if request.user.is_anonymous():
             return redirect('driverjobrequest_create_anon')
-        return super(DriverJobRequestCreate, self).dispatch(request, *args, **kwargs)
+        return super(DriverJobRequestCreate, self).dispatch(request, *args,
+                                                            **kwargs)
+
+    def get_success_url(self):
+        return reverse('driverjobrequest_checkout', args=(self.object.pk,))
 
     def form_valid(self, form):
-        """Adapted version of form_valid that supplies the client
+        """Adapted version of ModelFormMixin.form_valid
+        that supplies the client.
         """
         self.object = form.save(client=self.client)
-        # Rather than use the standard post_save signal, we send a custom
-        # signal.  This is because we need to send it after the m2m fields
-        # have been saved.
-        signals.driverjobrequest_created.send(sender=self.__class__,
-                                              driverjobrequest=self.object)
         return HttpResponseRedirect(self.get_success_url())
-
-
-class DriverJobRequestComplete(ClientOnlyMixin, ContextMixin, TemplateView):
-    "Confirmation page on successful driver job request submission."
-    template_name = 'job/complete.html'
-    extra_context = {'title': 'Thanks for your booking'}
 
 
 class DriverJobRequestCreateAnonymous(BaseSignupView):
@@ -55,7 +53,7 @@ class DriverJobRequestCreateAnonymous(BaseSignupView):
     form_class = DriverJobRequestSignupInnerForm
     # The form prefix for the account form
     prefix = 'account'
-    success_url = reverse_lazy('driverjobrequest_complete')
+
     extra_forms = {
         'client': ClientInnerForm,
         'driverjobrequest': DriverJobRequestInnerForm,
@@ -92,7 +90,6 @@ class DriverJobRequestCreateAnonymous(BaseSignupView):
             })
         return kwargs
 
-
     def post(self, request, *args, **kwargs):
         "Standard post method adapted to validate both forms."
         form_class = self.get_form_class()
@@ -115,14 +112,19 @@ class DriverJobRequestCreateAnonymous(BaseSignupView):
         user = form.save(self.request)
         # Save extra forms too
         client = self.bound_forms['client'].save(user=user)
-        driverjobrequest = self.bound_forms['driverjobrequest'].save(
+        self.driverjobrequest = self.bound_forms['driverjobrequest'].save(
                                                                 client=client)
         # Send signal (see DriverJobRequestCreate for explanation)
         signals.driverjobrequest_created.send(sender=self.__class__,
-                                      driverjobrequest=driverjobrequest)
+                                      driverjobrequest=self.driverjobrequest)
         return complete_signup(self.request, user,
                                app_settings.EMAIL_VERIFICATION,
                                self.get_success_url())
+
+    def get_success_url(self):
+        return reverse('driverjobrequest_checkout',
+                       args=(self.driverjobrequest.pk,))
+
 
 
 class RequestedJobList(ClientOnlyMixin, ContextMixin, TabsMixin, ListView):
@@ -146,9 +148,98 @@ class RequestedJobList(ClientOnlyMixin, ContextMixin, TabsMixin, ListView):
             return queryset.future()
 
 
+class DriverJobRequestDetail(OwnedByClientMixin, DetailView):
+    "Detail page for driver job requests."
+    model = DriverJobRequest
+    allow_admin = True
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(DriverJobRequestDetail, self).get_context_data(*args,
+                                                                       **kwargs)
+        context['title'] = self.object
+        return context
+
+
+class DriverJobRequestUpdate(AdminOnlyMixin, SuccessMessageMixin, UpdateView):
+    "Edit page for driver job requests."
+    model = DriverJobRequest
+    form_class = DriverJobRequestUpdateForm
+    template_name = 'job/driverjobrequest_update.html'
+    success_message = 'Saved.'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(DriverJobRequestUpdate, self).get_context_data(*args,
+                                                                       **kwargs)
+        context['title'] = 'Edit %s' % self.object
+        return context
+
+
+class DriverJobRequestCheckout(OwnedByClientMixin, SingleObjectMixin,
+                               FormView):
+    "Checkout page where client pays for and opens the job request."
+    model = DriverJobRequest
+    template_name = 'job/driverjobrequest_checkout.html'
+    form_class = JobRequestCheckoutForm
+
+    def dispatch(self, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.status != DriverJobRequest.STATUS_CHECKOUT:
+            return redirect(self.object.get_absolute_url())
+        return super(DriverJobRequestCheckout, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(DriverJobRequestCheckout, self).get_context_data(*args,
+                                                                    **kwargs)
+        context['title'] = 'Confirm and pay'
+        return context
+
+    def get_form_kwargs(self, *args, **kwargs):
+        form_kwargs = super(DriverJobRequestCheckout,
+                            self).get_form_kwargs(*args, **kwargs)
+        # Pass the job request to the form
+        # import pdb; pdb.set_trace()
+        form_kwargs['instance'] = self.object
+        return form_kwargs
+
+    def form_valid(self, form):
+        form.save()
+        return super(DriverJobRequestCheckout, self).form_valid(form)
+
+    def get_success_url(self):
+        # Redirect to confirmation page
+        return reverse('driverjobrequest_done', args=(self.object.pk,))
+
 # class DriverJobRequestForFreelancerList(FreelancerOnlyMixin, ListView):
 #     """List of driver job requests accepted by a freelancer."""
 #     paginate_by = 2
 #
 #     def get_queryset(self, *args, **kwargs):
 #         return DriverJobRequest.objects.for_freelancer(self.freelancer)
+
+class DriverJobRequestDone(OwnedByClientMixin, ContextMixin, DetailView):
+    "Confirmation page on successful driver job request submission."
+    template_name = 'job/driverjobrequest_done.html'
+    extra_context = {'title': 'Thanks for your booking'}
+    model = DriverJobRequest
+
+
+class AdminJobList(AdminOnlyMixin, ContextMixin, TabsMixin, ListView):
+    """List of driver job requests for admin users.
+    """
+    paginate_by = 15
+    extra_context = {'title': 'Job requests'}
+
+    def get_tabs(self):
+        "Returns a list of two-tuples for the tabs."
+        tabs = []
+        for status_value, status_title in DriverJobRequest.STATUS_CHOICES:
+            tabs.append((status_title,
+                         reverse('driverjobrequest_admin_list_tab',
+                                 kwargs={'status': status_value})))
+        return tabs
+
+    def get_queryset(self, *args, **kwargs):
+
+        return DriverJobRequest.objects.filter(
+                    status=self.kwargs.get('status',
+                                           DriverJobRequest.STATUS_OPEN))

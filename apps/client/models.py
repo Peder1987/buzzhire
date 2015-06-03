@@ -4,6 +4,7 @@ from multiselectfield import MultiSelectField
 from apps.freelancer.models import Freelancer
 from django.conf import settings
 from django.core import validators
+from django.core.urlresolvers import reverse
 
 
 class Lead(models.Model):
@@ -66,7 +67,7 @@ class Client(models.Model):
         return self.get_full_name()
 
     def get_absolute_url(self):
-        return reverse('client_detail', args=(self.pk,))
+        return reverse('admin:client_client_change', args=(self.pk,))
 
     class Meta:
         ordering = 'last_name',

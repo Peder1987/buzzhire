@@ -1,7 +1,14 @@
 {% extends 'account/dashboard_base.html' %}
-{% load crispy_forms_tags icons %}
+{% load crispy_forms_tags icons booking freelancer feedback %}
 
 {% block content %}
+    {% if form.job_request %}
+        <p class='text-center'>
+            Job matching for <a href='{{ form.job_request.get_absolute_url }}'><span style='font-family: monospace;'>{{ form.job_request }}</span></a>
+            <a class='btn btn-default btn-xs' href='{% url 'job_matching' %}'>{{ 'clear'|icon }} Clear</a>
+        </p>
+    {% endif %}
+
     <div class='well'>
         <form method='get'>
             {% csrf_token %}
@@ -13,12 +20,12 @@
                     {# form.respect_travel_distance|as_crispy_field #}
                 </div>
                 <div class='col-md-4'>
-                    {{ form.phone_type|as_crispy_field }}
+                    {{ form.phone_requirement|as_crispy_field }}
                     {{ form.client_pay_per_hour|as_crispy_field }}
-                    {% if form.driver_pay_per_hour %}<p class='help-block'>Calculated driver rate: <strong>&pound;{{ form.driver_pay_per_hour.amount }}</strong>.</p>{% endif %}
+                    {% if form.freelancer_pay_per_hour %}<p class='help-block'>Calculated driver rate: <strong>&pound;{{ form.freelancer_pay_per_hour.amount }}</strong>.</p>{% endif %}
                 </div>
                 <div class='col-md-4'>
-                    {{ form.vehicle_types|as_crispy_field }}
+                    {{ form.vehicle_type|as_crispy_field }}
                     {{ form.own_vehicle|as_crispy_field }}
                     {{ form.minimum_delivery_box|as_crispy_field }}
                 </div>
@@ -31,35 +38,48 @@
             {% include 'includes/paginator_results_count.html' with results_description='drivers' %}
             <table class='table table-striped'>
                 <thead>
-                    <th>Ref</th>
-                    <th>Name</th>
+                    <th></th>
+                    <th></th>
                     <th>Location</th>
                     <th>Maximum travel distance</th>
                     <th>Can drive</th>
                     <th>Can provide</th>
                     <th>Minimum pay per hour</th>
-                    <th></th>
+                    {% if form.job_request %}<th></th>{% endif %}
                 </thead>
                 <tbody>
                     {% for object in object_list %}
-                        <tr>
-                            <td><a href='{% url 'admin:driver_driver_change' object.pk %}'>{{ object.reference_number }}</a></td>
-                            <td>{{ object.get_full_name }}</td>
-                            <td>{% if object.postcode %}
-                                    {{ object.postcode }}
-                                    {% if form.include_distances %}
-                                        {% with object.distance.mi|floatformat:'0' as distance %} 
-                                            <br>({{ distance }} mile{{ distance|pluralize }} away)
-                                        {% endwith %}
-                                    {% endif %}
-                                {% else %}unknown{% endif %}
-                            </td>
-                            <td>{% if object.postcode %}{{ object.travel_distance }} mile{{ object.travel_distance|pluralize }}{% endif %}</td>
-                            <td>{% for vehicle_type in object.vehicle_types.all %}<span class='label label-default'>{{ vehicle_type }}</span><br>{% endfor %}</td>
-                            <td>{% for driver_vehicle_type in object.drivervehicletype_set.owned %}<span class='label label-primary'>{{ driver_vehicle_type }}</span><br>{% endfor %}</td>
-                            <td>&pound;{{ object.minimum_pay_per_hour.amount }}</td>
-                            <td><a class='btn btn-sm btn-default' href='{% url 'admin:booking_booking_add' %}'>{{ 'create'|icon }} Add booking</a> 
-                        </tr>
+                        {% with object.get_absolute_url as object_url %}
+                            <tr>
+                                <td><a href='{{ object_url }}'>{% profile_photo object 'medium' %}</a></td>
+                                <td>
+                                    <a href='{{ object_url }}'>{{ object.get_full_name }}</a><br>
+                                    {% average_score object.average_score %}
+                                </td>
+                                <td>{% if object.postcode %}
+                                        {{ object.postcode }}
+                                        {% if form.include_distances %}
+                                            {% with object.distance.mi|floatformat:'0' as distance %} 
+                                                <br>({{ distance }} mile{{ distance|pluralize }} away)
+                                            {% endwith %}
+                                        {% endif %}
+                                    {% else %}unknown{% endif %}
+                                </td>
+                                <td>{% if object.postcode %}{{ object.travel_distance }} mile{{ object.travel_distance|pluralize }}{% endif %}</td>
+                                <td>{% for vehicle_type in object.vehicle_types.all %}<p class='compact'><span class='label label-default'>{{ vehicle_type }}</span></p>{% endfor %}</td>
+                                <td>{% for driver_vehicle_type in object.drivervehicletype_set.owned %}<p class='compact'><span class='label label-primary'>{{ driver_vehicle_type }}</span></p>{% endfor %}</td>
+                                <td>&pound;{{ object.minimum_pay_per_hour.amount }}</td>
+                                {% if form.job_request %}
+                                    <td>
+                                        {% if form.job_request|booking_exists_for_freelancer:object %}
+                                            <span class='label label-success'>{{ 'confirm'|icon }} Booked</span>
+                                        {% else %}
+                                            <a class='btn btn-sm btn-default' href='{% url 'booking_create' form.job_request.pk object.pk %}'>{{ 'create'|icon }} Create booking</a>
+                                        {% endif %}
+                                    </td>
+                                {% endif %} 
+                            </tr>
+                        {% endwith %}
                     {% endfor %}
                 </tbody>
            </table>

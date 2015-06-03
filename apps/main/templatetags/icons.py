@@ -18,6 +18,7 @@ ICON_MAP = {
     'admin': 'cogs',
     'edit': 'edit',
     'delete': 'trash',
+    'clear': 'times',
     'password': 'lock',
     'book': 'calendar',
     'date': 'calendar',
@@ -39,6 +40,16 @@ ICON_MAP = {
     'yes': 'check',
     'no': 'times',
     'location': 'map-marker',
+    'search': 'search',
+    'right_arrow': 'arrow-circle-right',
+    'phone': 'phone',
+    'pay': 'check-circle',
+    'photo': 'camera-retro',
+    'upload': 'upload',
+    'feedback': 'comment-o',
+    'score_full': 'star',
+    'score_empty': 'star-o',
+    'score_half': 'star-half-o',
 }
 
 @register.filter
