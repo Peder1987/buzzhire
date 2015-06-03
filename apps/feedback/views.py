@@ -9,21 +9,30 @@ from django.contrib import messages
 from django.shortcuts import redirect
 
 
-class ClientFeedbackDoesNotExistMixin(object):
-    """Views mixin - redirects to job request page if the client has already
-    provided feedback on this job request.
+class ClientFeedbackAllowedMixin(object):
+    """Views mixin - redirects to job request page, with an appropriate
+    error message, if the client is not allowed to provide feedback on
+    this job request.
     """
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if BookingFeedback.objects.client_feedback_exists(self.object):
+
+        message = None
+        if self.object.status != JobRequest.STATUS_COMPLETE:
+            message = "You cannot leave feedback for a job that " \
+                        "hasn't finished yet."
+        elif BookingFeedback.objects.client_feedback_exists(self.object):
+            message = 'You have already left feedback for this job.'
+        if message:
+            messages.error(self.request, message)
             return redirect(self.object.get_absolute_url())
 
-        return super(ClientFeedbackDoesNotExistMixin, self).dispatch(request,
+        return super(ClientFeedbackAllowedMixin, self).dispatch(request,
                                                            *args, **kwargs)
 
 
 class BookingFeedbackCreate(OwnedByClientMixin,
-                            ClientFeedbackDoesNotExistMixin,
+                            ClientFeedbackAllowedMixin,
                             ContextMixin, SingleObjectMixin,
                             FormSetView):
     """Page for a client to leave feedback on the freelancers

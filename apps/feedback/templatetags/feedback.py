@@ -1,4 +1,5 @@
 from django import template
+from apps.job.models import JobRequest
 from ..models import BookingFeedback
 from django.conf import settings
 from apps.main.templatetags.icons import icon
@@ -8,15 +9,17 @@ from django.contrib.admin.templatetags.admin_list import items_for_result
 register = template.Library()
 
 @register.filter
-def client_feedback_exists(job_request):
-    """Returns whether or not the client has given feedback on the job request.
-    
+def client_feedback_allowed(job_request):
+    """Returns whether or not the client can give feedback on the job request.
+    Note this doesn't check whether the client owns the job request.
     Usage:
-        {% if object|client_feedback_exists %}
+        {% if object|client_feedback_allowed %}
             ...
         {% endif %}
     """
-    return BookingFeedback.objects.client_feedback_exists(job_request)
+    # Allow feedback on complete job requests that haven't already had feedback
+    return job_request.status == JobRequest.STATUS_COMPLETE and not \
+            BookingFeedback.objects.client_feedback_exists(job_request)
 
 
 @register.inclusion_tag('feedback/includes/feedback_for_freelancer_own.html')
