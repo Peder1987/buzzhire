@@ -34,6 +34,10 @@ class JobRequestQuerySet(models.QuerySet):
         "Filters by job requests that a client has requested."
         return self.filter(client=client)
 
+    def complete(self):
+        """Filter by job requests that are complete.
+        """
+        return self.filter(status=JobRequest.STATUS_COMPLETE)
 
 class JobRequest(models.Model):
     """A request by a client for a service for a particular

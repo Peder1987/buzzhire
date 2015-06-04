@@ -22,7 +22,7 @@ def client_feedback_allowed(job_request):
             BookingFeedback.objects.client_feedback_exists(job_request)
 
 
-@register.inclusion_tag('feedback/includes/feedback_for_freelancer_own.html')
+@register.inclusion_tag('feedback/includes/feedback.html')
 def feedback_for_freelancer_own(booking):
     """Outputs the client's own feedback for a freelancer, given the booking.
     
@@ -35,8 +35,27 @@ def feedback_for_freelancer_own(booking):
     except BookingFeedback.DoesNotExist:
         feedback = None
     return {
+        'object': feedback,
+        'heading': 'Your feedback',
+    }
+
+@register.inclusion_tag('feedback/includes/feedback.html')
+def feedback_for_client(booking):
+    """Outputs the freelancer's feedback for a client, given the booking.
+    
+    Usage:
+    
+        {% feedback_for_client booking %}
+    """
+    try:
+        feedback = BookingFeedback.objects.freelancer_feedback_from_booking(
+                                                    booking)
+    except BookingFeedback.DoesNotExist:
+        feedback = None
+    return {
         'object': feedback
     }
+
 
 @register.inclusion_tag('feedback/includes/feedback_for_freelancer_all.html')
 def feedback_for_freelancer_all(freelancer):

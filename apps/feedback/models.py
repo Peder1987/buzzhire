@@ -70,9 +70,9 @@ class FakeQuerySet(list):
 class BookingFeedbackManager(models.Manager):
     "Model manager for BookingFeedbacks."
 
-    def feedback_list(self, job_request):
+    def client_feedback_list(self, job_request):
         """Returns a list of non-saved BookingFeedback objects for the
-        job request.
+        job request, for the client.
         """
         feedback_list = FakeQuerySet()
         for booking in job_request.bookings.all():
@@ -81,7 +81,19 @@ class BookingFeedbackManager(models.Manager):
                 author_type=BookingFeedback.AUTHOR_TYPE_CLIENT
             )
             feedback_list.append(feedback)
+        return feedback_list
 
+    def freelancer_feedback_list(self, job_request, freelancer):
+        """Returns a list containing a single non-saved BookingFeedback object
+        for the job request, for the freelancer.
+        """
+        feedback_list = FakeQuerySet()
+
+        feedback = BookingFeedback(
+            booking=job_request.bookings.get(freelancer=freelancer),
+            author_type=BookingFeedback.AUTHOR_TYPE_FREELANCER
+        )
+        feedback_list.append(feedback)
         return feedback_list
 
     def client_feedback_exists(self, job_request):
@@ -91,6 +103,13 @@ class BookingFeedbackManager(models.Manager):
         return self.filter(author_type=BookingFeedback.AUTHOR_TYPE_CLIENT,
                            booking__jobrequest=job_request).exists()
 
+    def freelancer_feedback_exists(self, job_request, freelancer):
+        """Returns whether or not the supplied freelancer has left feedback
+        for the supplied job request.
+        """
+        return self.feedback_by_freelancer(freelancer).filter(
+                                    booking__jobrequest=job_request).exists()
+
     def client_feedback_from_booking(self, booking):
         """Returns the BookingFeedback given by the client for the supplied
         booking.  Raises DoesNotExist on failure.
@@ -98,10 +117,23 @@ class BookingFeedbackManager(models.Manager):
         return self.get(author_type=BookingFeedback.AUTHOR_TYPE_CLIENT,
                         booking=booking)
 
+    def freelancer_feedback_from_booking(self, booking):
+        """Returns the BookingFeedback given by the freelancer for the supplied
+        booking.  Raises DoesNotExist on failure.
+        """
+        return self.get(author_type=BookingFeedback.AUTHOR_TYPE_FREELANCER,
+                        booking=booking)
+
     def feedback_for_freelancer(self, freelancer):
         """Returns all the feedback for a particular freelancer.
         """
         return self.filter(author_type=BookingFeedback.AUTHOR_TYPE_CLIENT,
+                           booking__freelancer=freelancer)
+
+    def feedback_by_freelancer(self, freelancer):
+        """Returns all the feedback by a particular freelancer.
+        """
+        return self.filter(author_type=BookingFeedback.AUTHOR_TYPE_FREELANCER,
                            booking__freelancer=freelancer)
 
 
@@ -157,3 +189,18 @@ class BookingFeedback(models.Model):
         return "%s for %s by %s" % (self.score,
                                     self.get_target(),
                                     self.get_author())
+
+
+def get_bookings_awaiting_feedback_for_freelancer(freelancer):
+    """Returns all the Bookings that are awaiting feedback from the freelancer.
+    
+    Should return bookings:
+    - for job requests that are complete;
+    - for the supplied freelancer;
+    - where the supplied freelancer hasn't provided any feedback.
+    """
+    booking_pks = BookingFeedback.objects.feedback_by_freelancer(
+                            freelancer).values_list('booking__pk', flat=True)
+    return Booking.objects.for_freelancer(
+                freelancer=freelancer).complete().exclude(
+                                                        pk__in=booking_pks)

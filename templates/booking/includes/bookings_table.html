@@ -1,0 +1,36 @@
+{% load icons humanize feedback %}
+{% if object_list %}
+    <table class='table'>
+        <thead>
+            {% block table_headings %}
+                <th>Booking</th>
+                <th>Job</th>
+                <th>Start date and time</th>
+                <th>Duration</th>
+                <th>Location</th>
+                <th>Pay per hour</th>
+                <th>Status</th>
+                <th>Feedback</th>
+            {% endblock %}
+        </thead>
+        <tbody>
+            {% for object in object_list %}
+                <tr>
+                    {% block table_cells %}
+                        <td class='monospace'>{{ object.reference_number }}</td>
+                        <td class='monospace'>{{ object.jobrequest.reference_number }}</td>
+                        <td>{{ 'date'|icon }} {{ object.jobrequest.date }}<br>{{ 'time'|icon }} {{ object.jobrequest.start_time }}</td>
+                        <td>{{ object.jobrequest.duration }} hour{{ object.jobrequest.duration|pluralize }}</td>
+                        <td>{% include 'job/includes/location.html' with object=object.jobrequest %}</td>
+                        <td>&pound;{{ object.jobrequest.client_pay_per_hour.amount }}</td>
+                        <td>{{ object.jobrequest.get_status_display }}</td>
+                        <td>{% feedback_for_client object %}</td>
+                    {% endblock %}
+                </tr>
+            {% endfor %}        
+        </tbody>
+    </table>
+    {% include 'includes/paginator.html' %}
+{% else %}
+    <p class='well top-space'>No bookings.</p>
+{% endif %}   

@@ -7,6 +7,8 @@
           {% include 'includes/panel_link.html' with icon_name='availability' link_text='Availability' %}
           {% url 'freelancer_bookings_list' as link_url %}
           {% include 'includes/panel_link.html' with icon_name='freelancer_bookings' link_text='Bookings' %}
+          {% url 'freelancer_backlog' as link_url %}
+          {% include 'includes/panel_link.html' with icon_name='feedback' link_text='Jobs awaiting feedback' %}
       </div>
     </div>
 {% endif %}
