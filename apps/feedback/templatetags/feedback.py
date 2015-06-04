@@ -23,6 +23,22 @@ def client_feedback_allowed(job_request):
             BookingFeedback.objects.client_feedback_exists(job_request)
 
 
+@register.filter
+def freelancer_feedback_allowed(booking):
+    """Returns whether or not the freelancer can give feedback on
+    the supplied booking.
+    Note this doesn't check whether the freelancer owns the job request.
+    Usage:
+        {% if object|client_feedback_allowed %}
+            ...
+        {% endif %}
+    """
+    # Allow feedback on complete job requests that haven't already had feedback
+    return booking.jobrequest.status == JobRequest.STATUS_COMPLETE and not \
+            BookingFeedback.objects.freelancer_feedback_exists(
+                                    booking.jobrequest, booking.freelancer)
+
+
 @register.inclusion_tag('feedback/includes/feedback.html')
 def feedback_for_freelancer_own(booking):
     """Outputs the client's own feedback for a freelancer, given the booking.
