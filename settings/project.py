@@ -52,6 +52,10 @@ class ProjectConfiguration(StandardConfiguration):
         "allauth.account.auth_backends.AuthenticationBackend",
     )
 
+    MIDDLEWARE_CLASSES = StandardConfiguration.MIDDLEWARE_CLASSES + (
+       'apps.feedback.middleware.FeedbackMiddleware',
+    )
+
     CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
     ACCOUNT_EMAIL_REQUIRED = True
