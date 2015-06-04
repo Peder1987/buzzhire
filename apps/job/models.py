@@ -1,7 +1,8 @@
 from django.db import models
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
+from django.utils import timezone
 from django.core import validators
 from multiselectfield import MultiSelectField
 from djmoney.models.fields import MoneyField
@@ -19,16 +20,15 @@ class JobRequestQuerySet(models.QuerySet):
     "Custom queryset for JobRequests."
 
     def future(self):
-        """Filter by job requests that are in the future (i.e. started
-        today or later.
-        TODO - we may need to improve this so it takes into account duration.
+        """Filter by job requests that are in the future
+        (i.e. haven't yet finished).
         """
-        return self.filter(date__gte=date.today())
+        return self.filter(end_datetime__gte=datetime.now())
 
     def past(self):
         """Filter by job requests that are in the past (i.e. started
         yesterday or before."""
-        return self.exclude(date__gte=date.today())
+        return self.exclude(end_datetime__gte=datetime.now())
 
     def for_client(self, client):
         "Filters by job requests that a client has requested."
@@ -38,6 +38,13 @@ class JobRequestQuerySet(models.QuerySet):
         """Filter by job requests that are complete.
         """
         return self.filter(status=JobRequest.STATUS_COMPLETE)
+
+    def need_completing(self):
+        """Returns all JobRequests that aren't complete, but should be
+        (because they are now in the past).
+        This query is run periodically and the results are marked as complete.
+        """
+        return self.filter(status=self.JobRequest.STATUS_CONFIRMED).past()
 
 class JobRequest(models.Model):
     """A request by a client for a service for a particular
@@ -131,6 +138,10 @@ class JobRequest(models.Model):
     start_time = models.TimeField(default='9:00 AM')
     duration = models.PositiveSmallIntegerField(default=1,
                     help_text='Length of the job, in hours.')
+    end_datetime = models.DateTimeField(
+            help_text='Automatically generated, the time when this '
+                    'job request finishes.')
+
     number_of_freelancers = models.PositiveSmallIntegerField(
                                 'Number of drivers required',
                                 choices=[(i, i) for i in range(1, 10)],
@@ -195,9 +206,17 @@ class JobRequest(models.Model):
         "Returns a reference number for this request."
         return 'JR%s' % str(self.pk).zfill(5)
 
-
     def get_absolute_url(self):
         return reverse('jobrequest_detail', args=(self.pk,))
+
+    def save(self, *args, **kwargs):
+        # Fills out the end time before saving
+        self.end_datetime = datetime.combine(self.date, self.start_time) \
+                                + timedelta(hours=self.duration)
+        # Django's TimeField is not timezone-aware.  We need to convert it to
+        # UTC (which is how it's stored in the database) before saving.
+        self.end_datetime = timezone.make_aware(self.end_datetime, timezone.utc)
+        return super(JobRequest, self).save(*args, **kwargs)
 
     class Meta:
         ordering = '-date_submitted',

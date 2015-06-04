@@ -6,28 +6,6 @@ from apps.freelancer.models import Freelancer
 from django.db.models import Avg
 
 
-class JobRequestFeedback(models.Model):
-    """Model for storing the job request's feedback status.
-    Stored in a separate model (rather than merely a field on the JobRequest
-    model) to keep the feedback code within this app.
-    """
-    job_request = models.ForeignKey(JobRequest, unique=True)
-
-    STATUS_NOT_READY = 'NR'  # Not ready for feedback yet
-    STATUS_AWAITING = 'AW'  # Job has finished; awaiting feedback
-    STATUS_RECEIVED = 'RE'  # Feedback has been received
-    STATUS_CHOICES = (
-        (STATUS_NOT_READY, 'Not ready'),
-        (STATUS_AWAITING, 'Awaiting feedback'),
-        (STATUS_RECEIVED, 'Feedback received'),
-    )
-    status = models.CharField(max_length=2, choices=STATUS_CHOICES,
-                              default=STATUS_NOT_READY)
-
-    def __unicode__(self):
-        return '%s: %s' % (self.job_request, self.get_status_display())
-
-
 def _average_score(self):
     """Returns the average score for the Freelancer.
      The algorithm should be all ratings for that driver,

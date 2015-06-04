@@ -25,6 +25,7 @@ class ProjectConfiguration(StandardConfiguration):
         'dbbackup',
         'fsm_admin',
         'django_bootstrap_breadcrumbs',
+        'huey.djhuey',
         'apps.core',
         'apps.location',
         'apps.account',

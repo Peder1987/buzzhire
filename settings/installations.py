@@ -19,7 +19,13 @@ class Local(BraintreeSandboxMixin,
     EMAIL_HOST = 'smtp.webfaction.com'
     SERVER_EMAIL = 'local@dev.buzzhire.co'
     ACCOUNT_PASSWORD_MIN_LENGTH = 1
-
+    HUEY = {
+        'backend': 'huey.backends.redis_backend',
+        'name': 'buzzhire',
+        'connection': {'host': 'localhost', 'port': 6379},
+        'always_eager': False,
+        'consumer_options': {'workers': 1},
+    }
 
 class Dev(BraintreeSandboxMixin,
           installations.WebfactionDevMixin, ProjectConfiguration):
