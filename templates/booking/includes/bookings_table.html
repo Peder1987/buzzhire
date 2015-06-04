@@ -3,28 +3,25 @@
     <table class='table'>
         <thead>
             {% block table_headings %}
-                <th>Booking</th>
                 <th>Job</th>
-                <th>Start date and time</th>
-                <th>Duration</th>
+                <th>Date / time</th>
                 <th>Location</th>
                 <th>Pay per hour</th>
                 <th>Status</th>
-                <th>Feedback</th>
+                {% if not hide_feedback %}<th>Feedback</th>{% endif %}
             {% endblock %}
         </thead>
         <tbody>
             {% for object in object_list %}
                 <tr>
                     {% block table_cells %}
-                        <td class='monospace'>{{ object.reference_number }}</td>
                         <td class='monospace'>{{ object.jobrequest.reference_number }}</td>
-                        <td>{{ 'date'|icon }} {{ object.jobrequest.date }}<br>{{ 'time'|icon }} {{ object.jobrequest.start_time }}</td>
-                        <td>{{ object.jobrequest.duration }} hour{{ object.jobrequest.duration|pluralize }}</td>
+                        <td>{{ 'date'|icon }} {{ object.jobrequest.date }}<br>{{ 'time'|icon }} {{ object.jobrequest.start_time }}<br>
+                        For {{ object.jobrequest.duration }} hour{{ object.jobrequest.duration|pluralize }}</td>
                         <td>{% include 'job/includes/location.html' with object=object.jobrequest %}</td>
                         <td>&pound;{{ object.jobrequest.client_pay_per_hour.amount }}</td>
                         <td>{{ object.jobrequest.get_status_display }}</td>
-                        <td>{% feedback_for_client object %}</td>
+                        {% if not hide_feedback %}<td>{% feedback_for_client object %}</td>{% endif %}
                     {% endblock %}
                 </tr>
             {% endfor %}        
