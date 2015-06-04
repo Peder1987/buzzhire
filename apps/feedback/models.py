@@ -204,3 +204,19 @@ def get_bookings_awaiting_feedback_for_freelancer(freelancer):
     return Booking.objects.for_freelancer(
                 freelancer=freelancer).complete().exclude(
                                                         pk__in=booking_pks)
+
+
+def get_job_requests_awaiting_feedback_for_client(client):
+    """Returns all the JobRequests that are awaiting feedback from the client.
+    
+    Should return job requests:
+    - that are complete;
+    - for the supplied client;
+    - where the supplied client hasn't provided any feedback.
+    """
+    # Get job request pks for the client's job requests that don't have feedback
+    jobs_without_feedback = set(Booking.objects.for_client(
+                client).filter(bookingfeedback=None).values_list(
+                                                'jobrequest_id', flat=True))
+    # Return as queryset, excluding any that aren't complete
+    return JobRequest.objects.filter(pk__in=jobs_without_feedback).complete()

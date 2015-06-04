@@ -1,7 +1,8 @@
 from django import template
 from apps.job.models import JobRequest
 from ..models import BookingFeedback, \
-    get_bookings_awaiting_feedback_for_freelancer
+    get_bookings_awaiting_feedback_for_freelancer, \
+    get_job_requests_awaiting_feedback_for_client
 from django.conf import settings
 from apps.main.templatetags.icons import icon
 from django.contrib.admin.templatetags.admin_list import items_for_result
@@ -172,3 +173,10 @@ def freelancer_backlog_count(context):
     # TODO - this would be a good candidate for caching
     return get_bookings_awaiting_feedback_for_freelancer(
                                     context['request'].user.freelancer).count()
+
+
+@register.assignment_tag(takes_context=True)
+def client_backlog_count(context):
+    # TODO - this would be a good candidate for caching
+    return get_job_requests_awaiting_feedback_for_client(
+                                    context['request'].user.client).count()

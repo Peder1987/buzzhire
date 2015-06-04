@@ -31,6 +31,10 @@ class BookingQuerySet(models.QuerySet):
         "Filters by job requests that a freelancer has been allocated to."
         return self.filter(freelancer=freelancer)
 
+    def for_client(self, client):
+        "Filters by job requests created by the supplied client."
+        return self.filter(jobrequest__client=client)
+
     def published(self):
         """Filter by job requests are for freelancers who are published.
         """

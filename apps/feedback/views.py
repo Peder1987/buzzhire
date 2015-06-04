@@ -1,14 +1,15 @@
 from django.views.generic import ListView
 from django.views.generic.detail import SingleObjectMixin
 from extra_views import FormSetView
-from apps.client.views import OwnedByClientMixin
+from apps.client.views import OwnedByClientMixin, ClientOnlyMixin
 from apps.core.views import ContextMixin
 from apps.freelancer.views import FreelancerOnlyMixin
 from apps.job.models import JobRequest, DriverJobRequest
 from apps.booking.views import FreelancerHasBookingMixin
 from apps.booking.models import Booking
 from .models import BookingFeedback, \
-                            get_bookings_awaiting_feedback_for_freelancer
+                            get_bookings_awaiting_feedback_for_freelancer, \
+                            get_job_requests_awaiting_feedback_for_client
 from .forms import BookingFeedbackForm
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -55,11 +56,22 @@ class FreelancerBacklog(ContextMixin, FreelancerOnlyMixin, ListView):
     """List for the freelancer of completed job requests that are still
     waiting for their feedback.
     """
-    template_name = 'feedback/backlog.html'
+    template_name = 'feedback/freelancer_backlog.html'
     extra_context = {'title': 'Jobs awaiting feedback'}
 
     def get_queryset(self):
         return get_bookings_awaiting_feedback_for_freelancer(self.freelancer)
+
+
+class ClientBacklog(ContextMixin, ClientOnlyMixin, ListView):
+    """List for the client of completed job requests that are still
+    waiting for their feedback.
+    """
+    template_name = 'feedback/client_backlog.html'
+    extra_context = {'title': 'Jobs awaiting feedback'}
+
+    def get_queryset(self):
+        return get_job_requests_awaiting_feedback_for_client(self.client)
 
 
 class BaseFeedbackCreateView(FeedbackAllowedMixin,

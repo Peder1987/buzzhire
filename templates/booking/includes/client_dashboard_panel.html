@@ -1,4 +1,4 @@
-{% load icons %}
+{% load icons feedback %}
 {% if request.user.is_client %}
     <div class="panel panel-default">
       <div class="panel-heading">{{ 'book'|icon }} Booking</div>
@@ -7,6 +7,9 @@
           {% include 'includes/panel_link.html' with icon_name='driverjobrequest_create' link_text='Book a driver' %}
           {% url 'requested_jobs' as link_url %}
           {% include 'includes/panel_link.html' with icon_name='requested_jobs' link_text='Requested jobs' %}
+          {% url 'client_backlog' as link_url %}
+          {% client_backlog_count as feedback_action_number %}
+          {% include 'includes/panel_link.html' with icon_name='feedback' link_text='Jobs awaiting feedback' action_number=feedback_action_number %}
       </div>
     </div>
 {% endif %}

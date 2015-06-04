@@ -2,7 +2,9 @@ from django.conf.urls import patterns, url
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.FreelancerBacklog.as_view(),
+    url(r'^backlog/client/$', views.ClientBacklog.as_view(),
+        name='client_backlog'),
+    url(r'^backlog/freelancer/$', views.FreelancerBacklog.as_view(),
         name='freelancer_backlog'),
     url(r'^client/(?P<pk>[\d]+)/$',
         views.ClientFeedbackCreate.as_view(),
