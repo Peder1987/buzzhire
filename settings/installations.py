@@ -11,7 +11,23 @@ class BraintreeSandboxMixin(object):
     BRAINTREE_PUBLIC_KEY = 'mwm76cyqycjc6hzq'
     BRAINTREE_SANDBOX = True
 
-class Local(BraintreeSandboxMixin,
+class HueyMixin(object):
+    """Settings for the Huey task queue.
+    Should specify a HUEY_NAME that is unique for the redis process.
+    """
+    HUEY_NAME = ''
+    HUEY_PORT = 6379
+
+    def HUEY(self):
+        return {
+            'backend': 'huey.backends.redis_backend',
+            'name': self.HUEY_NAME,
+            'connection': {'host': 'localhost', 'port': self.HUEY_PORT},
+            'always_eager': False,
+            'consumer_options': {'workers': 1},
+        }
+
+class Local(BraintreeSandboxMixin, HueyMixin,
             installations.LocalMixin, ProjectConfiguration):
     PROJECT_ROOT = '/home/david/www/buzzhire'
     BOOKINGS_EMAIL = 'bookingslocal@dev.buzzhire.co'
@@ -19,21 +35,19 @@ class Local(BraintreeSandboxMixin,
     EMAIL_HOST = 'smtp.webfaction.com'
     SERVER_EMAIL = 'local@dev.buzzhire.co'
     ACCOUNT_PASSWORD_MIN_LENGTH = 1
-    HUEY = {
-        'backend': 'huey.backends.redis_backend',
-        'name': 'buzzhire',
-        'connection': {'host': 'localhost', 'port': 6379},
-        'always_eager': False,
-        'consumer_options': {'workers': 1},
-    }
+    HUEY_NAME = 'buzzhire'
 
-class Dev(BraintreeSandboxMixin,
+
+class Dev(BraintreeSandboxMixin, HueyMixin,
           installations.WebfactionDevMixin, ProjectConfiguration):
     DOMAIN = 'dev.buzzhire.co'
     WEBFACTION_USER = 'buzzhire'
     EMAIL_HOST_USER = 'buzzhire_dev'
 
     ACCOUNT_PASSWORD_MIN_LENGTH = 1
+
+    HUEY_NAME = 'dev'
+    HUEY_PORT = 17610
 
     def BOOKINGS_EMAIL(self):
         return self.CONTACT_EMAIL
@@ -46,6 +60,9 @@ class Live(installations.WebfactionLiveMixin, ProjectConfiguration):
     EMAIL_HOST_USER = 'buzzhire_live'
 
     ACCOUNT_PASSWORD_MIN_LENGTH = 6
+
+    HUEY_NAME = 'live'
+    HUEY_PORT = 17610
 
     def BOOKINGS_EMAIL(self):
         return self.CONTACT_EMAIL
