@@ -6,11 +6,17 @@ import logging
 
 logger = logging.getLogger('project')
 
-# @db_periodic_task(crontab(minute='*'))
+@db_periodic_task(crontab(minute='*/30'))
 def complete_job_requests():
     """Checks any open job requests to see if they need moving over to being complete.
     """
-    pass
+    count = 0
+    for job_request in JobRequest.objects.need_completing():
+        job_request.complete()
+        job_request.save()
+        count += 1
+    if count:
+        print('Automatically completed %d job requests.' % count)
 
 
 # @periodic_task(crontab(hour='10', minute='00'))

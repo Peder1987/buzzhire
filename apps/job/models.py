@@ -23,12 +23,12 @@ class JobRequestQuerySet(models.QuerySet):
         """Filter by job requests that are in the future
         (i.e. haven't yet finished).
         """
-        return self.filter(end_datetime__gte=datetime.now())
+        return self.filter(end_datetime__gte=timezone.now())
 
     def past(self):
         """Filter by job requests that are in the past (i.e. started
         yesterday or before."""
-        return self.exclude(end_datetime__gte=datetime.now())
+        return self.exclude(end_datetime__gte=timezone.now())
 
     def for_client(self, client):
         "Filters by job requests that a client has requested."
@@ -44,7 +44,7 @@ class JobRequestQuerySet(models.QuerySet):
         (because they are now in the past).
         This query is run periodically and the results are marked as complete.
         """
-        return self.filter(status=self.JobRequest.STATUS_CONFIRMED).past()
+        return self.filter(status=JobRequest.STATUS_CONFIRMED).past()
 
 class JobRequest(models.Model):
     """A request by a client for a service for a particular

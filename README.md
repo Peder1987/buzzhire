@@ -13,7 +13,10 @@ Local development
 5. The site uses django-configurations to handle settings.  You will need
    to create a class for your installation in `settings/installations.py`.
    This should be based on `settings.installations.Local`.  This needs the
-   standard Django things set up such as database, media folder etc. 
+   standard Django things set up such as database, media folder etc.
+6. If you're not using the `Local` configuration class, you need to make
+   sure the `DJANGO_CONFIGURATION` environment variable is set to the
+   name of your class.
 6. Sensitive settings should be put in `settings/secret.py`, which will not
    be under version control.  These are the minimum settings:  
 
@@ -25,7 +28,7 @@ Local development
    If you're using an SMTP server, `EMAIL_HOST_PASSWORD` should be included
    in `secret.py`.
 8. Set up a Braintree sandbox account and add the settings to your
-   installation settings class, and `BRAINTREE_PRIVATE_KEY` to `secret.py`.
+   configuration class, and `BRAINTREE_PRIVATE_KEY` to `secret.py`.
 9. Run `./manage.py migrate`.
 
  
