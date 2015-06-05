@@ -3,8 +3,7 @@ from apps.core.email import send_mail
 from .models import JobRequest
 
 
-# @db_periodic_task(crontab(minute='*/15'))
-@db_periodic_task(crontab(minute='*'))
+@db_periodic_task(crontab(minute='*/15'))
 def complete_job_requests():
     """This task gets autodiscovered by the huey task queue.
     Every fifteen minutes, checks any open job requests to see if
