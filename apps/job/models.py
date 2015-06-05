@@ -211,11 +211,20 @@ class JobRequest(models.Model):
 
     def save(self, *args, **kwargs):
         # Fills out the end time before saving
-        self.end_datetime = datetime.combine(self.date, self.start_time) \
-                                + timedelta(hours=self.duration)
-        # Django's TimeField is not timezone-aware.  We need to convert it to
-        # UTC (which is how it's stored in the database) before saving.
-        self.end_datetime = timezone.make_aware(self.end_datetime, timezone.utc)
+        # First, calculate the timezone-aware datetime based on the date
+        # and start time.  Both the date and time are naive, so at this point
+        # we need to assume that the date and time are provided as the default
+        # timezone.  For example, if someone has specified a date during British
+        # Summertime, we need to take that into account.
+        local_start_datetime = timezone.make_aware(
+                                datetime.combine(self.date, self.start_time),
+                                timezone.get_current_timezone())
+
+        local_end_datetime = local_start_datetime + timedelta(
+                                                        hours=self.duration)
+        # Now we have a correct timezone aware datetime, we need to convert it
+        # to UTC (which is how it's stored in the database) before saving.
+        self.end_datetime = local_end_datetime.astimezone(timezone.utc)
         return super(JobRequest, self).save(*args, **kwargs)
 
     class Meta:

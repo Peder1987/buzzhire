@@ -54,7 +54,8 @@ class Dev(BraintreeSandboxMixin, HueyMixin,
 
 
 
-class Live(installations.WebfactionLiveMixin, ProjectConfiguration):
+class Live(HueyMixin,
+           installations.WebfactionLiveMixin, ProjectConfiguration):
     DOMAIN = 'buzzhire.co'
     WEBFACTION_USER = 'buzzhire'
     EMAIL_HOST_USER = 'buzzhire_live'

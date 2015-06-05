@@ -20,6 +20,7 @@ def live():
     env.wsgi_reload_file = '/home/buzzhire/tmp/live.reload'
     env.nginx_process = 'live_nginx'
     env.uwsgi_process = 'live_uwsgi'
+    env.huey_process = 'live_huey'
     env.backup_on_deploy = True
     env.django_configuration = 'Live'
 
@@ -37,6 +38,7 @@ def dev():
     env.wsgi_reload_file = '/home/buzzhire/tmp/dev.reload'
     env.nginx_process = 'dev_nginx'
     env.uwsgi_process = 'dev_uwsgi'
+    env.huey_process = 'dev_huey'
     env.backup_on_deploy = False
     env.django_configuration = 'Dev'
 
@@ -67,6 +69,13 @@ def reload_nginx():
 
 
 @task
+def restart_huey():
+    """
+    Restart the huey process.
+    """
+    run('supervisorctl restart %s' % env.huey_process)
+
+@task
 def deploy(skip_backup=False):
     """
     To deploy and skip backup:
@@ -79,9 +88,10 @@ def deploy(skip_backup=False):
         if env.backup_on_deploy and not skip_backup:
             dbbackup()
 
-        reload_wsgi()
         run("./manage.py migrate")
         run('./manage.py collectstatic --noinput')
+        reload_wsgi()
+        restart_huey()
 
 @task
 def dbbackup():
