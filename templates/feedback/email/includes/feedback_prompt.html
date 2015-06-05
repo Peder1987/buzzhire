@@ -3,10 +3,22 @@
 {% if client %}drivers{% else %}client{% endif %}.</p>
 
 {% if client %}
-  <p><a href='{% base_url %}{% url 'client_feedback_create' object.pk %}'>Leave feedback</a></p>
+  <table class="button">
+    <tr>
+      <td>
+        <a href='{% base_url %}{% url 'client_feedback_create' object.pk %}'>Leave feedback</a>
+      </td>
+    </tr>
+  </table>
   {% include 'job/email/includes/client_driverjobrequest.html' %}
 {% else %}
-  <p><a href='{% base_url %}{% url 'freelancer_feedback_create' object.pk %}'>Leave feedback</a></p>
+  <table class="button">
+    <tr>
+      <td>
+        <a href='{% base_url %}{% url 'freelancer_feedback_create' object.pk %}'>Leave feedback</a>
+      </td>
+    </tr>
+  </table>
   {% include 'job/email/includes/driver_driverjobrequest.html' %}
 {% endif %}
 
