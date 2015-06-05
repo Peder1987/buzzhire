@@ -1,0 +1,13 @@
+{% load core_tags %}
+<p>The following job has now finished.  We'd love to hear your feedback on the
+{% if client %}drivers{% else %}client{% endif %}.</p>
+
+{% if client %}
+  <p><a href='{% base_url %}{% url 'client_feedback_create' object.pk %}'>Leave feedback</a></p>
+  {% include 'job/email/includes/client_driverjobrequest.html' %}
+{% else %}
+  <p><a href='{% base_url %}{% url 'freelancer_feedback_create' object.pk %}'>Leave feedback</a></p>
+  {% include 'job/email/includes/driver_driverjobrequest.html' %}
+{% endif %}
+
+ 
