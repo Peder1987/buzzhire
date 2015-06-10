@@ -23,7 +23,7 @@ router.register(r'job-requests', JobRequestViewSet,
                 base_name='job_requests')
 router.register(r'driver-job-requests', DriverJobRequestViewSet,
                 base_name='driver_job_requests')
-router.register(r'bookings/freelancer', FreelancerBookingViewSet,
+router.register(r'bookings/for-freelancer', FreelancerBookingViewSet,
                 base_name='bookings_for_freelancer')
 
 
