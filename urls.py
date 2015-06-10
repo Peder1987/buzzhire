@@ -17,6 +17,12 @@ urlpatterns = [
 
 ]
 
+# Include API, if enabled
+if settings.API_ACTIVE:
+    urlpatterns += patterns('',
+        url(r"^api/", include('apps.api.urls')),
+    )
+
 
 if settings.DEBUG:
     urlpatterns += patterns('django.contrib.staticfiles.views',

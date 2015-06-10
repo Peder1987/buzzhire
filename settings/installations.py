@@ -36,6 +36,7 @@ class Local(BraintreeSandboxMixin, HueyMixin,
     SERVER_EMAIL = 'local@dev.buzzhire.co'
     ACCOUNT_PASSWORD_MIN_LENGTH = 1
     HUEY_NAME = 'buzzhire'
+    API_ACTIVE = True
 
 
 class Dev(BraintreeSandboxMixin, HueyMixin,
@@ -48,6 +49,8 @@ class Dev(BraintreeSandboxMixin, HueyMixin,
 
     HUEY_NAME = 'dev'
     HUEY_PORT = 17610
+
+    API_ACTIVE = True
 
     def BOOKINGS_EMAIL(self):
         return self.CONTACT_EMAIL

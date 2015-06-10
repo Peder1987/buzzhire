@@ -26,6 +26,8 @@ class ProjectConfiguration(StandardConfiguration):
         'fsm_admin',
         'django_bootstrap_breadcrumbs',
         'huey.djhuey',
+        'rest_framework',
+        'rest_framework.authtoken',
         'apps.core',
         'apps.location',
         'apps.account',
@@ -36,6 +38,7 @@ class ProjectConfiguration(StandardConfiguration):
         'apps.job',
         'apps.booking',
         'apps.feedback',
+        'apps.api',
         'apps.main',
     )
 
@@ -109,3 +112,12 @@ class ProjectConfiguration(StandardConfiguration):
     COMMISSION_PERCENT = 15
     # Number of pence to round to
     COMMISSION_ROUND_PENCE = 25
+
+    # API
+    API_ACTIVE = False
+    REST_FRAMEWORK = {
+        'DEFAULT_AUTHENTICATION_CLASSES': (
+            'rest_framework.authentication.TokenAuthentication',
+            'rest_framework.authentication.SessionAuthentication',
+        )
+    }

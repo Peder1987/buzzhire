@@ -15,24 +15,3 @@ def complete_job_requests():
         job_request.save()
         count += 1
     print('Automatically completed %d job requests.' % count)
-
-
-# @periodic_task(crontab(hour='10', minute='00'))
-# def send_customer_reminder_emails():
-#     "Send reminder emails to any customers with slots coming up tomorrow."
-#     slots = Slot.objects.booked_for_tomorrow()
-#     total = slots.count()
-#     count = 0
-#     for slot in slots:
-#         try:
-#             subject = 'Reminder: your booking with with %s' % \
-#                                                             slot.practitioner
-#             send_mail(slot.customer.user,
-#                       subject,
-#                       'booking/email/booking_reminder',
-#                       {'object': slot})
-#             count += 1
-#         except Exception as e:
-#             logger.error('Could not send a reminder email for slot '
-#                          'number %d: %s' % (slot.pk, e))
-#     logger.info('Sent %d of %d reminder emails.' % (count, total))
