@@ -12,4 +12,4 @@ class BookingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Booking
-        fields = ('id', 'freelancer', 'job_request', 'created')
+        fields = ('id', 'reference_number', 'freelancer', 'job_request', 'created')
