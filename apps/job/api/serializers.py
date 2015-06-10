@@ -11,6 +11,7 @@ class JobRequestSerializer(serializers.ModelSerializer):
             'value': obj.status,
             'text': obj.get_status_display(),
         }
+
     class Meta:
         model = JobRequest
         fields = ('id', 'client', 'status')
