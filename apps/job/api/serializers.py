@@ -1,5 +1,6 @@
 from django.forms import widgets
 from rest_framework import serializers
+from apps.api.serializers import ChoiceField, MoneyField
 from ..models import JobRequest, DriverJobRequest
 
 
@@ -7,12 +8,7 @@ class JobRequestSerializer(serializers.ModelSerializer):
     client = serializers.HyperlinkedRelatedField(read_only=True,
                                             view_name='clients-detail')
 
-    status = serializers.SerializerMethodField('_status')
-    def _status(self, obj):
-        return {
-            'value': obj.status,
-            'text': obj.get_status_display(),
-        }
+    status = ChoiceField()
 
     address = serializers.SerializerMethodField('_address')
     def _address(self, obj):
@@ -23,20 +19,9 @@ class JobRequestSerializer(serializers.ModelSerializer):
             'postcode': str(obj.postcode),
         }
 
-    phone_requirement = serializers.SerializerMethodField('_phone_requirement')
-    def _phone_requirement(self, obj):
-        return {
-            'value': obj.phone_requirement,
-            'text': obj.get_phone_requirement_display(),
-        }
+    phone_requirement = ChoiceField()
 
-    freelancer_pay_per_hour = serializers.SerializerMethodField(
-                                                    '_freelancer_pay_per_hour')
-    def _freelancer_pay_per_hour(self, obj):
-        return {
-            'amount': obj.freelancer_pay_per_hour.amount,
-            'currency': str(obj.freelancer_pay_per_hour.currency),
-        }
+    freelancer_pay_per_hour = MoneyField()
 
     class Meta:
         model = JobRequest
@@ -47,13 +32,8 @@ class JobRequestSerializer(serializers.ModelSerializer):
 
 
 class DriverJobRequestSerializer(JobRequestSerializer):
-    driving_experience = serializers.SerializerMethodField(
-                                                        '_driving_experience')
-    def _driving_experience(self, obj):
-        return {
-            'value': obj.driving_experience,
-            'text': obj.get_driving_experience_display(),
-        }
+    driving_experience = ChoiceField()
+
     flexible_vehicle_type = serializers.HyperlinkedRelatedField(read_only=True,
                                     view_name='flexible_vehicle_types-detail',
                                     source='vehicle_type')

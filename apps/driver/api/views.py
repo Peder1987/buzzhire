@@ -1,7 +1,8 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from .serializers import VehicleTypeSerializer, FlexibleVehicleTypeSerializer
-from ..models import VehicleType, FlexibleVehicleType
+from .serializers import OwnDriverSerializer, VehicleTypeSerializer, \
+                        FlexibleVehicleTypeSerializer
+from ..models import VehicleType, FlexibleVehicleType, Driver
 
 
 class VehicleTypeViewSet(viewsets.ReadOnlyModelViewSet):
@@ -25,3 +26,17 @@ class FlexibleVehicleTypeViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         return FlexibleVehicleType.objects.all()
+
+
+class OwnDriverViewSet(viewsets.ModelViewSet):
+    """Returns the driver's own profile.
+    """
+    model = Driver
+    serializer_class = OwnDriverSerializer
+
+    def get_object(self):
+        return self.request.user.driver
+
+    def list(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
