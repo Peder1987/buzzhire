@@ -30,6 +30,8 @@ class FlexibleVehicleTypeViewSet(viewsets.ReadOnlyModelViewSet):
 
 class OwnDriverViewSet(viewsets.ModelViewSet):
     """Returns the driver's own profile.
+    
+    - `photo` - thumbnail of the driver, 75px x 97px.
     """
     model = Driver
     serializer_class = OwnDriverSerializer

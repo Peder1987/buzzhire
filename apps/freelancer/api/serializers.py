@@ -1,6 +1,9 @@
 from django.forms import widgets
 from rest_framework import serializers
+from sorl.thumbnail import get_thumbnail
+from django.conf import settings
 from apps.api.serializers import ChoiceField, MoneyField
+from apps.freelancer.templatetags.freelancer import PHOTO_DIMENSIONS
 from ..models import Freelancer
 
 
@@ -32,10 +35,10 @@ class OwnFreelancerSerializer(serializers.ModelSerializer):
     def get_postcode(self, obj):
         return str(obj.postcode)
 
-    # TODO - photo should return thumbnail
-    # photo = serializers.SerializerMethodField()
-    # def get_photo(self, obj):
-    #     pass
+    photo = serializers.SerializerMethodField()
+    def get_photo(self, obj):
+         return "%s%s" % (settings.BASE_URL,
+                get_thumbnail(obj.photo, PHOTO_DIMENSIONS['medium']).url)
 
     minimum_pay_per_hour = MoneyField()
 
