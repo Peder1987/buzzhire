@@ -2,7 +2,7 @@ from django.forms import widgets
 from rest_framework import serializers
 from sorl.thumbnail import get_thumbnail
 from django.conf import settings
-from apps.api.serializers import ChoiceField, MoneyField
+from apps.api.serializers import ChoiceField, MoneyField, ModelSerializer
 from apps.freelancer.templatetags.freelancer import PHOTO_DIMENSIONS
 from ..models import Freelancer
 
@@ -16,7 +16,7 @@ class PublicFreelancerSerializer(serializers.ModelSerializer):
         fields = ('id', 'first_name', 'last_name')
 
 
-class OwnFreelancerSerializer(serializers.ModelSerializer):
+class OwnFreelancerSerializer(ModelSerializer):
     """Serializer that exposes information on the freelancer
     profile for their own use.
     """
@@ -28,8 +28,9 @@ class OwnFreelancerSerializer(serializers.ModelSerializer):
     def get_full_name(self, obj):
         return obj.get_full_name()
 
-    english_fluency = ChoiceField()
-    phone_type = ChoiceField()
+    # english_fluency = ChoiceField()
+    # phone_type = ChoiceField()
+    # travel_distance = ChoiceField()
 
     postcode = serializers.SerializerMethodField()
     def get_postcode(self, obj):
@@ -49,6 +50,6 @@ class OwnFreelancerSerializer(serializers.ModelSerializer):
                   'mobile',
                   'photo', 'english_fluency', 'eligible_to_work',
                   'phone_type',
-                  'minimum_pay_per_hour',
+                  # 'minimum_pay_per_hour',
                   'postcode',
                   'travel_distance')

@@ -27,7 +27,7 @@ class OwnDriverSerializer(OwnFreelancerSerializer):
 #     vehicle_types = serializers.HyperlinkedRelatedField(read_only=True,
 #                                     view_name='driver_vehicle_types-detail')
 
-    driving_experience = ChoiceField()
+    # driving_experience = ChoiceField()
 
     class Meta:
         model = Driver
