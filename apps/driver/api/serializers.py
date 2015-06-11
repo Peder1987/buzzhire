@@ -3,7 +3,7 @@ from rest_framework import serializers
 from ..models import VehicleType, FlexibleVehicleType, Driver
 from apps.freelancer.api.serializers import OwnFreelancerSerializer
 from apps.api.serializers import ChoiceField
-from .permissions import DriverOnlyPermission
+
 
 class VehicleTypeSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField('_name')
@@ -23,8 +23,6 @@ class FlexibleVehicleTypeSerializer(VehicleTypeSerializer):
 
 class OwnDriverSerializer(OwnFreelancerSerializer):
     """Serializer for the driver's own profile."""
-
-    permission_classes = (DriverOnlyPermission,)
 
 #     vehicle_types = serializers.HyperlinkedRelatedField(read_only=True,
 #                                     view_name='driver_vehicle_types-detail')

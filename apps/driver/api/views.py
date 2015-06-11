@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from .serializers import OwnDriverSerializer, VehicleTypeSerializer, \
                         FlexibleVehicleTypeSerializer
 from ..models import VehicleType, FlexibleVehicleType, Driver
+from .permissions import DriverOnlyPermission
 
 
 class VehicleTypeViewSet(viewsets.ReadOnlyModelViewSet):
@@ -35,6 +36,8 @@ class OwnDriverViewSet(viewsets.ModelViewSet):
     """
     model = Driver
     serializer_class = OwnDriverSerializer
+
+    permission_classes = (DriverOnlyPermission,)
 
     def get_object(self):
         return self.request.user.driver
