@@ -28,10 +28,8 @@
             {% if request.user.is_anonymous %}
                 {% url 'driver_become' as link_url %}
                 {% include 'includes/menu_link.html' with icon_name='driver_register' link_text='Become a driver' %}
-                {% if not coming_soon %}
-                    {% url 'account_login' as link_url %}
-                    {% include 'includes/menu_link.html' with icon_name='login' link_text='Log in' %}
-                {% endif %}
+                {% url 'account_login' as link_url %}
+                {% include 'includes/menu_link.html' with icon_name='login' link_text='Log in' %}
             {% else %}
                 {% url 'account_dashboard' as link_url %}
                 {% include 'includes/menu_link.html' with icon_name='dashboard' link_text='Dashboard' %}

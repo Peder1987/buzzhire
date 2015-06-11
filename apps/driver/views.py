@@ -47,7 +47,7 @@ class SignupView(BaseSignupView):
     template_name = 'driver/signup.html'
     # The form prefix for the account form
     prefix = 'account'
-    success_url = reverse_lazy('driver_thankyou')
+    success_url = reverse_lazy('account_dashboard')
 
     def get_context_data(self, *args, **kwargs):
         context = super(SignupView, self).get_context_data(*args, **kwargs)
@@ -90,11 +90,7 @@ class SignupView(BaseSignupView):
         user = form.save(self.request)
         # Save driver form too
         self.driver_form.save(user)
-        if settings.COMING_SOON:
-            # Do not log them in
-            return redirect('driver_thankyou')
-        else:
-            return complete_signup(self.request, user,
+        return complete_signup(self.request, user,
                                app_settings.EMAIL_VERIFICATION,
                                self.get_success_url())
 
