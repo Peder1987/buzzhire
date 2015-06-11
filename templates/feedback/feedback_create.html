@@ -8,16 +8,30 @@
 
 
 {% block content %}
+   <div class='row'>
+     <div class='col-md-3'>
+        <p>Provide feedback for the following job:</p>     
+     </div>
+     <div class='col-md-9'>
+          {% include 'job/includes/driverjobrequest_summary.html' %}
+      </div>
+   </div>
    <form method='post'>
        {% for form in formset %}
           {{ formset.management_form }}
           <div class='row'>
             <div class='col-md-3'>
                 {% with form.feedback_target as feedback_target %}
-                    <a href="{{ feedback_target.get_absolute_url }}">
+                    {% if for_driver %}
+                        {# Clients don't have detail pages #}
                         {% profile_photo feedback_target 'medium'  %}
                         <h5>{{ feedback_target.get_full_name }}</h5>
-                    </a>
+                    {% else %}
+                        <a href="{{ feedback_target.get_absolute_url }}">
+                            {% profile_photo feedback_target 'medium'  %}
+                            <h5>{{ feedback_target.get_full_name }}</h5>
+                        </a>
+                    {% endif %}
                 {% endwith %}
             </div>
             <div class='col-md-9'>

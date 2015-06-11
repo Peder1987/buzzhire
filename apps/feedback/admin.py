@@ -15,7 +15,14 @@ class BookingFeedbackAdmin(admin.ModelAdmin):
                                         author)
     author.allow_tags = True
 
-    list_display = ('booking', 'target', 'author',
+    def job_request(self, obj):
+        return '<a href="%s">%s</a>' % (
+                        obj.booking.jobrequest.get_absolute_url(),
+                        obj.booking.jobrequest)
+    job_request.allow_tags = True
+
+
+    list_display = ('booking', 'job_request', 'target', 'author',
                     'author_type', 'score', 'comment')
 
 

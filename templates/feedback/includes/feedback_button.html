@@ -1,4 +1,4 @@
 {% load icons feedback %}
-{% if not object|client_feedback_exists %}
-    <a class='pull-right btn btn-primary' href='{% url 'booking_feedback_create' object.pk %}'>{{ 'feedback'|icon }} Leave feedback</a>
+{% if object|client_feedback_allowed %}
+    <a class='pull-right btn btn-primary' href='{% url 'client_feedback_create' object.pk %}'>{{ 'feedback'|icon }} Leave feedback</a>
 {% endif %}

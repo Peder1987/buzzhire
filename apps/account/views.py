@@ -1,13 +1,14 @@
 from allauth.account import views
 from apps.core.views import ContextMixin, ConfirmationMixin, \
                             ContextTemplateView
+from braces.views import LoginRequiredMixin
 from . import forms
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.views import redirect_to_login
 from django.core.exceptions import PermissionDenied
 
 
-class DashboardView(ContextTemplateView):
+class DashboardView(LoginRequiredMixin, ContextTemplateView):
     extra_context = {'title': 'Dashboard'}
     template_name = 'account/dashboard.html'
 

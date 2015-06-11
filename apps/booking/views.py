@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.contrib import messages
 from apps.account.views import AdminOnlyMixin
 from apps.core.views import ContextMixin, TabsMixin, ContextTemplateView, \
-    ConfirmationMixin
+    ConfirmationMixin, OwnerOnlyMixin
 from apps.driver.models import Driver
 from apps.freelancer.views import FreelancerOnlyMixin
 from apps.job.models import DriverJobRequest
@@ -12,6 +12,21 @@ from .forms import AvailabilityForm, JobMatchingForm, BookingConfirmForm
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import get_object_or_404, redirect
 from .signals import booking_created
+
+
+class FreelancerHasBookingMixin(FreelancerOnlyMixin, OwnerOnlyMixin):
+    """Mixin for single JobRequest views - freelancer must be booked
+    onto the job request.
+    """
+    def is_owner(self):
+        # We leverage the 'is_owner' method of OwnerOnlyMixin to determine
+        # whether the freelancer is booked
+        try:
+            self.booking = self.get_object().bookings.get(
+                                    freelancer=self.freelancer)
+            return True
+        except Booking.DoesNotExist:
+            return False
 
 
 class FreelancerBookingsList(FreelancerOnlyMixin,

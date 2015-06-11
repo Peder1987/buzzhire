@@ -14,6 +14,10 @@ def send_mail(to, subject, template_name, context, from_email=None):
     Can optionally specify a from_email, otherwise it will use
     CONTACT_EMAIL in the settings.
     """
+    # Make to a list, if it isn't already
+    if not isinstance(to, (list, tuple)):
+        to = [to]
+
     if not from_email:
         from_email = settings.CONTACT_EMAIL
 
@@ -28,6 +32,6 @@ def send_mail(to, subject, template_name, context, from_email=None):
     msg = EmailMultiAlternatives(subject,
                                  content['txt'],
                                  settings.DEFAULT_FROM_EMAIL,
-                                 [to])
+                                 to)
     msg.attach_alternative(content['html'], "text/html")
     msg.send()

@@ -1,30 +1,5 @@
 {% extends 'account/dashboard_base.html' %}
-{% load icons humanize %}
 {% block content %}
     {% include 'includes/tabs.html' %}  
-    {% if object_list %}
-        <table class='table'>
-            <thead>
-                <th>Reference</th>
-                <th>Start date and time</th>
-                <th>Duration</th>
-                <th>Location</th>
-                <th>Pay per hour</th>
-            </thead>
-            <tbody>
-                {% for object in object_list %}
-                    <tr>
-                        <td>{{ object.reference_number }}</td>
-                        <td>{{ 'date'|icon }} {{ object.jobrequest.date }}<br>{{ 'time'|icon }} {{ object.jobrequest.start_time }}</td>
-                        <td>{{ object.jobrequest.duration }} hour{{ object.jobrequest.duration|pluralize }}</td>
-                        <td>{{ object.jobrequest.get_postcode_area_display }}</td>
-                        <td>&pound;{{ object.jobrequest.client_pay_per_hour.amount }}</td>
-                    </tr>
-                {% endfor %}        
-            </tbody>
-        </table>
-        {% include 'includes/paginator.html' %}
-    {% else %}
-        <p class='well top-space'>No bookings.</p>
-    {% endif %}   
+    {% include 'booking/includes/bookings_table.html' %}
 {% endblock %}

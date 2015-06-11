@@ -2,37 +2,5 @@
 {% load icons humanize %}
 {% block content %}
     {% include 'includes/tabs.html' %}  
-    {% if object_list %}
-        <table class='table'>
-            <thead>
-                <th>Reference</th>
-                {% if request.user.is_admin %}
-                    <th>Client</th>
-                {% endif %}
-                <th>Start date and time</th>
-                <th>Duration</th>
-                <th>Location</th>
-                <th>Number of drivers</th>
-                <th>Status</th>
-            </thead>
-            <tbody>
-                {% for object in object_list %}
-                    <tr>
-                        <td><a href='{{ object.get_absolute_url }}'>{{ object.reference_number }}</a></td>
-                        {% if request.user.is_admin %}
-                            <td>{{ object.client }}</td>
-                        {% endif %}
-                        <td>{{ 'date'|icon }} {{ object.date }}<br>{{ 'time'|icon }} {{ object.start_time }}</td>
-                        <td>{{ object.duration }} hour{{ object.duration|pluralize }}</td>
-                        <td>{% include 'job/includes/location.html' %}</td>
-                        <td>{{ object.number_of_freelancers }}</td>
-                        <td>{{ object.get_status_display }}</td>
-                    </tr>
-                {% endfor %}        
-            </tbody>
-        </table>
-        {% include 'includes/paginator.html' %}
-    {% else %}
-        <p class='well top-space'>No jobs.</p>
-    {% endif %}   
+    {% include 'job/includes/driverjobrequest_table.html' %}
 {% endblock %}

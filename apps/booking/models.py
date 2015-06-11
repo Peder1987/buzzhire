@@ -22,9 +22,18 @@ class BookingQuerySet(models.QuerySet):
         return self  # TODO
         return self.exclude(jobrequest__date__gte=date.today())
 
+    def complete(self):
+        """Filter by job requests that have been completed.
+        """
+        return self.filter(jobrequest__status=JobRequest.STATUS_COMPLETE)
+
     def for_freelancer(self, freelancer):
         "Filters by job requests that a freelancer has been allocated to."
         return self.filter(freelancer=freelancer)
+
+    def for_client(self, client):
+        "Filters by job requests created by the supplied client."
+        return self.filter(jobrequest__client=client)
 
     def published(self):
         """Filter by job requests are for freelancers who are published.

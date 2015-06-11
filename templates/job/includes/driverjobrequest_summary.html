@@ -1,7 +1,11 @@
 {% load icons %}
 <div class='well'>
     <p class='text-center'>
-        <a class='monospace' href='{{ object.get_absolute_url }}'>{{ object.reference_number }}</a><br>
+        {% if for_driver %}
+            <span class='monospace'>{{ object.reference_number }}</span><br>
+        {% else %}
+            <a class='monospace' href='{{ object.get_absolute_url }}'>{{ object.reference_number }}</a><br>
+        {% endif %}
         {{ 'date'|icon }} {{ object.date }}, {{ object.start_time }} 
         
     </p>
@@ -19,12 +23,14 @@
                     <span class='label label-default'>{{ object.get_vehicle_type_display }}</span>
                 </td>
             </tr>
-            <tr>
-                <th>Number of drivers</th>
-                <td>
-                    {{ object.number_of_freelancers }}
-                </td>
-            </tr>
+            {% if not for_driver %}
+                <tr>
+                    <th>Number of drivers</th>
+                    <td>
+                        {{ object.number_of_freelancers }}
+                    </td>
+                </tr>
+            {% endif %}
             <tr>
                 <th>Location</th>
                 <td>
@@ -33,39 +39,41 @@
                     </address>
                 </td>
             </tr>
-            {% if request.user.is_admin %}
-                <tr>
-                    <th>Client</th>
+            {% if not for_driver %}
+                {% if request.user.is_admin %}
+                    <tr>
+                        <th>Client</th>
+                        <td>
+                            {{ object.client }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Client pay per hour</th>
+                        <td>
+                            &pound;{{ object.client_pay_per_hour.amount }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Driver pay per hour</th>
+                        <td>
+                            &pound;{{ object.freelancer_pay_per_hour.amount }}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <th>Pay per hour</th>
+                        <td>
+                            &pound;{{ object.client_pay_per_hour.amount }}
+                        </td>
+                    </tr>
+                {% endif %}
+                <tr style='font-size: 1.2em;'>
+                    <th>TOTAL COST</th>
                     <td>
-                        {{ object.client }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>Client pay per hour</th>
-                    <td>
-                        &pound;{{ object.client_pay_per_hour.amount }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>Driver pay per hour</th>
-                    <td>
-                        &pound;{{ object.freelancer_pay_per_hour.amount }}
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <th>Pay per hour</th>
-                    <td>
-                        &pound;{{ object.client_pay_per_hour.amount }}
+                        <strong>&pound;{{ object.client_total_cost.amount }}</strong>
                     </td>
                 </tr>
             {% endif %}
-            <tr style='font-size: 1.2em;'>
-                <th>TOTAL COST</th>
-                <td>
-                    <strong>&pound;{{ object.client_total_cost.amount }}</strong>
-                </td>
-            </tr>
         </tbody>
     </table>
 </div>

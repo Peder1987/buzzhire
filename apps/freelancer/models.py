@@ -116,6 +116,7 @@ class Freelancer(models.Model):
     phone_type = models.CharField(max_length=2, choices=PHONE_TYPE_CHOICES,
                                   blank=True)
 
+    # TODO - remove days_available and hours_available
     DAYS_OF_WEEK_CHOICES = [(calendar.day_abbr[i].lower(),
                                calendar.day_name[i]) for i in range(7)]
     days_available = MultiSelectField(

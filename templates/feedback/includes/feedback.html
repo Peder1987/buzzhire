@@ -1,7 +1,7 @@
 {% load feedback %}
 {% if object %}
     <div class='feedback'>
-        <h6>Your feedback</h6>
+        {% if heading %}<h6>{{ heading }}</h6>{% endif %}
         <p>{% feedback_score object.score %}</p>
         {% if object.comment %}
             <div class='feedback-comment'>{{ object.comment|linebreaks }}</div>

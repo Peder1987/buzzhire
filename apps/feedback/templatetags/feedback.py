@@ -1,5 +1,8 @@
 from django import template
-from ..models import BookingFeedback
+from apps.job.models import JobRequest
+from ..models import BookingFeedback, \
+    get_bookings_awaiting_feedback_for_freelancer, \
+    get_job_requests_awaiting_feedback_for_client
 from django.conf import settings
 from apps.main.templatetags.icons import icon
 from django.contrib.admin.templatetags.admin_list import items_for_result
@@ -8,18 +11,36 @@ from django.contrib.admin.templatetags.admin_list import items_for_result
 register = template.Library()
 
 @register.filter
-def client_feedback_exists(job_request):
-    """Returns whether or not the client has given feedback on the job request.
-    
+def client_feedback_allowed(job_request):
+    """Returns whether or not the client can give feedback on the job request.
+    Note this doesn't check whether the client owns the job request.
     Usage:
-        {% if object|client_feedback_exists %}
+        {% if object|client_feedback_allowed %}
             ...
         {% endif %}
     """
-    return BookingFeedback.objects.client_feedback_exists(job_request)
+    # Allow feedback on complete job requests that haven't already had feedback
+    return job_request.status == JobRequest.STATUS_COMPLETE and not \
+            BookingFeedback.objects.client_feedback_exists(job_request)
 
 
-@register.inclusion_tag('feedback/includes/feedback_for_freelancer_own.html')
+@register.filter
+def freelancer_feedback_allowed(booking):
+    """Returns whether or not the freelancer can give feedback on
+    the supplied booking.
+    Note this doesn't check whether the freelancer owns the job request.
+    Usage:
+        {% if object|client_feedback_allowed %}
+            ...
+        {% endif %}
+    """
+    # Allow feedback on complete job requests that haven't already had feedback
+    return booking.jobrequest.status == JobRequest.STATUS_COMPLETE and not \
+            BookingFeedback.objects.freelancer_feedback_exists(
+                                    booking.jobrequest, booking.freelancer)
+
+
+@register.inclusion_tag('feedback/includes/feedback.html')
 def feedback_for_freelancer_own(booking):
     """Outputs the client's own feedback for a freelancer, given the booking.
     
@@ -32,8 +53,27 @@ def feedback_for_freelancer_own(booking):
     except BookingFeedback.DoesNotExist:
         feedback = None
     return {
+        'object': feedback,
+        'heading': 'Your feedback',
+    }
+
+@register.inclusion_tag('feedback/includes/feedback.html')
+def feedback_for_client(booking):
+    """Outputs the freelancer's feedback for a client, given the booking.
+    
+    Usage:
+    
+        {% feedback_for_client booking %}
+    """
+    try:
+        feedback = BookingFeedback.objects.freelancer_feedback_from_booking(
+                                                    booking)
+    except BookingFeedback.DoesNotExist:
+        feedback = None
+    return {
         'object': feedback
     }
+
 
 @register.inclusion_tag('feedback/includes/feedback_for_freelancer_all.html')
 def feedback_for_freelancer_all(freelancer):
@@ -126,3 +166,17 @@ def feedback_icon(unit, for_email=False):
         context['icon_name'] = name
 
     return context
+
+
+@register.assignment_tag(takes_context=True)
+def freelancer_backlog_count(context):
+    # TODO - this would be a good candidate for caching
+    return get_bookings_awaiting_feedback_for_freelancer(
+                                    context['request'].user.freelancer).count()
+
+
+@register.assignment_tag(takes_context=True)
+def client_backlog_count(context):
+    # TODO - this would be a good candidate for caching
+    return get_job_requests_awaiting_feedback_for_client(
+                                    context['request'].user.client).count()

@@ -6,7 +6,6 @@
      {% block extrastyles %}{% endblock %}
   </head>
   <body{% if is_home %} id='home'{% endif %} data-spy="scroll" data-offset="80">
-        
         {% include 'includes/nav/primary.html' %}
         <div style='margin-top: 90px;'>
         {% block content_wrapper %}
