@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework import mixins
 from rest_framework.permissions import IsAuthenticated
-from .serializers import OwnDriverSerializer, VehicleTypeSerializer, \
+from .serializers import PrivateDriverSerializer, VehicleTypeSerializer, \
                         FlexibleVehicleTypeSerializer
 from ..models import VehicleType, FlexibleVehicleType, Driver
 from .permissions import DriverOnlyPermission
@@ -37,7 +37,7 @@ class OwnDriverViewSet(RetrieveAndUpdateViewset):
     - `photo` - thumbnail of the driver, 75px x 97px.
     """
     model = Driver
-    serializer_class = OwnDriverSerializer
+    serializer_class = PrivateDriverSerializer
 
     permission_classes = (DriverOnlyPermission,)
 

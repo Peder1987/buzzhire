@@ -1,7 +1,8 @@
 from django.conf.urls import patterns, url, include
 from rest_framework.authtoken import views
 from apps.booking.api.views import FreelancerBookingViewSet
-from apps.freelancer.api.views import PublicFreelancerViewSet
+from apps.freelancer.api.views import PublicFreelancerViewSet, \
+                                    OwnFreelancerViewSet
 from apps.client.api.views import PublicClientViewSet
 from apps.job.api.views import JobRequestViewSet, DriverJobRequestViewSet
 from apps.driver.api.views import OwnDriverViewSet, VehicleTypeViewSet, \
@@ -27,6 +28,8 @@ router.register(r'driver-job-requests', DriverJobRequestViewSet,
                 base_name='driver_job_requests')
 router.register(r'account/freelancer/bookings', FreelancerBookingViewSet,
                 base_name='bookings_for_freelancer')
+router.register(r'account/freelancer', OwnFreelancerViewSet,
+                base_name='freelancer_own')
 router.register(r'account/driver', OwnDriverViewSet,
                 base_name='driver_own')
 

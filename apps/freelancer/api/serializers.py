@@ -16,7 +16,7 @@ class PublicFreelancerSerializer(serializers.ModelSerializer):
         fields = ('id', 'first_name', 'last_name')
 
 
-class OwnFreelancerSerializer(serializers.ModelSerializer):
+class PrivateFreelancerSerializer(serializers.ModelSerializer):
     """Serializer that exposes information on the freelancer
     profile for their own use.
     """
@@ -52,6 +52,6 @@ class OwnFreelancerSerializer(serializers.ModelSerializer):
                   'mobile',
                   'photo', 'english_fluency', 'eligible_to_work',
                   'phone_type',
-                  # 'minimum_pay_per_hour',
+                  'minimum_pay_per_hour',
                   'postcode',
                   'travel_distance')
