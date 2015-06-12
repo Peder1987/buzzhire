@@ -5,7 +5,7 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from .models import Booking
 from apps.job.models import DriverJobRequest
-from .signals import booking_created
+from .signals import booking_created, invitation_created
 
 
 @receiver(booking_created)
@@ -25,6 +25,27 @@ def notify_freelancer_on_booking(sender, booking, **kwargs):
               subject,
               'email/base',
               {'title': 'Confirmation of booking',
+               'content': content},
+              from_email=settings.BOOKINGS_EMAIL)
+
+
+@receiver(invitation_created)
+def notify_freelancer_on_invitation(sender, invitation, **kwargs):
+    "Notifies the freelancer when they are invited to book a job."
+    title = 'A new job was just posted'
+    content = render_to_string(
+        'booking/email/includes/freelancer_invitation.html',
+        {
+            'object': invitation,
+            'driverjobrequest':
+                DriverJobRequest.objects.get_from_jobrequest(
+                                                    invitation.jobrequest)
+         }
+    )
+    send_mail(invitation.freelancer.user.email,
+              title,
+              'email/base',
+              {'title': title,
                'content': content},
               from_email=settings.BOOKINGS_EMAIL)
 

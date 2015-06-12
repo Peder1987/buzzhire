@@ -12,7 +12,7 @@ from .forms import AvailabilityForm, JobMatchingForm, \
                     BookingOrInvitationConfirmForm
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import get_object_or_404, redirect
-from .signals import booking_created
+from .signals import booking_created, invitation_created
 
 
 class FreelancerHasBookingMixin(FreelancerOnlyMixin, OwnerOnlyMixin):
@@ -139,7 +139,8 @@ class BaseInvitationOrBookingConfirm(AdminOnlyMixin, ConfirmationMixin, FormView
             pass
         else:
             # The booking already exists
-            messages.error(self.request, 'That booking already exists.')
+            messages.error(self.request, 'That %s already exists.' \
+                                    % self.model_class._meta.verbose_name)
             return redirect('driverjobrequest_admin_list')
         return super(BaseInvitationOrBookingConfirm, self).dispatch(
                                                             *args, **kwargs)
@@ -199,6 +200,5 @@ class InvitationConfirm(BaseInvitationOrBookingConfirm):
     def form_valid(self, *args, **kwargs):
         response = super(InvitationConfirm, self).form_valid(*args, **kwargs)
         # Dispatch signal
-        # TODO - enable
-        # invitation_created.send(sender=self, booking=self.instance)
+        invitation_created.send(sender=self, invitation=self.instance)
         return response

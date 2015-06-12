@@ -1,0 +1,12 @@
+{% load core_tags %}
+<p>A new job was created, which matches your profile.</p>
+
+<table class="button" style='margin-top: 10px; margin-bottom: 10px;'>
+    <tr>
+      <td>
+        <a href='{% base_url %}{# url 'jobrequest_accept' driverjobrequest.pk #}'>Accept this job</a>
+      </td>
+    </tr>
+</table>
+
+{% include 'job/email/includes/driver_driverjobrequest.html' with object=driverjobrequest %}
