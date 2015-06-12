@@ -1,0 +1,31 @@
+{% load icons humanize feedback %}
+{% if object_list %}
+    <table class='table'>
+        <thead>
+            <th>Job</th>
+            <th>Client</th>
+            <th>Date / time</th>
+            <th>Location</th>
+            <th>Pay per hour</th>
+            <th></th>
+        </thead>
+        <tbody>
+            {% for object in object_list %}
+                <tr>
+                    <td class='monospace'>{{ object.jobrequest.reference_number }}</td>
+                    <td>{{ object.jobrequest.client }}</td>
+                    <td>{{ 'date'|icon }} {{ object.jobrequest.date }}<br>{{ 'time'|icon }} {{ object.jobrequest.start_time }}<br>
+                    For {{ object.jobrequest.duration }} hour{{ object.jobrequest.duration|pluralize }}</td>
+                    <td>{% include 'job/includes/location.html' with object=object.jobrequest %}</td>
+                    <td>&pound;{{ object.jobrequest.client_pay_per_hour.amount }}</td>
+                    <td>
+                        <a href='{% url 'invitation_accept' object.pk %}' class='btn btn-primary'>{{ 'confirm'|icon }} Accept</a>
+                    </td>
+                </tr>
+            {% endfor %}        
+        </tbody>
+    </table>
+    {% include 'includes/paginator.html' %}
+{% else %}
+    <p class='well top-space'>You have no open invitations.</p>
+{% endif %}   

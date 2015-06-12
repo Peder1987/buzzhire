@@ -9,10 +9,11 @@ from apps.freelancer.views import FreelancerOnlyMixin
 from apps.job.models import DriverJobRequest
 from .models import Booking, Availability, Invitation
 from .forms import AvailabilityForm, JobMatchingForm, \
-                    BookingOrInvitationConfirmForm
+                    BookingOrInvitationConfirmForm, InvitationAcceptForm
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import get_object_or_404, redirect
 from .signals import booking_created, invitation_created
+from django.core.exceptions import PermissionDenied
 
 
 class FreelancerHasBookingMixin(FreelancerOnlyMixin, OwnerOnlyMixin):
@@ -50,6 +51,17 @@ class FreelancerBookingsList(FreelancerOnlyMixin,
             return queryset.past()
         else:
             return queryset.future()
+
+
+class FreelancerInvitationsList(FreelancerOnlyMixin,
+                                ContextMixin, ListView):
+    """List of current invitations for a freelancer.
+    """
+    paginate_by = 15
+    extra_context = {'title': 'Invitations'}
+
+    def get_queryset(self, *args, **kwargs):
+        return Invitation.objects.open_for_freelancer(self.freelancer)
 
 
 class AvailabilityUpdate(FreelancerOnlyMixin, SuccessMessageMixin,
@@ -115,7 +127,8 @@ class JobMatchingView(AdminOnlyMixin, ContextMixin, ListView):
             context['searched'] = True
         return context
 
-class BaseInvitationOrBookingConfirm(AdminOnlyMixin, ConfirmationMixin, FormView):
+class BaseInvitationOrBookingConfirm(AdminOnlyMixin, ConfirmationMixin,
+                                     FormView):
     """Base view for either inviting or booking a freelancer to a job.
     """
     question = 'Are you sure you want to invite this freelancer?'
@@ -135,10 +148,10 @@ class BaseInvitationOrBookingConfirm(AdminOnlyMixin, ConfirmationMixin, FormView
             self.model_class.objects.get(jobrequest=self.job_request,
                                 freelancer=self.driver)
         except self.model_class.DoesNotExist:
-            # This is what we want: the booking doesn't exist already
+            # This is what we want: the booking/invitation doesn't exist already
             pass
         else:
-            # The booking already exists
+            # The booking/invitation already exists
             messages.error(self.request, 'That %s already exists.' \
                                     % self.model_class._meta.verbose_name)
             return redirect('driverjobrequest_admin_list')
@@ -202,3 +215,67 @@ class InvitationConfirm(BaseInvitationOrBookingConfirm):
         # Dispatch signal
         invitation_created.send(sender=self, invitation=self.instance)
         return response
+
+
+class JobFullyBooked(Exception):
+    "Exception raised when a job is fully booked."
+    pass
+
+
+class InvitationAccept(FreelancerOnlyMixin, ConfirmationMixin,
+                       FormView):
+    """Confirmation form for the creation of a Booking
+    - i.e. assigning a freelancer to a job.
+    """
+    question = 'Are you sure you want to accept this job?'
+    action_text = 'Accept'
+    action_icon = 'confirm'
+    cancel_url = reverse_lazy('account_dashboard')
+    template_name = 'booking/accept.html'
+    form_class = InvitationAcceptForm
+
+    def dispatch(self, *args, **kwargs):
+        try:
+            return super(InvitationAccept, self).dispatch(*args, **kwargs)
+        except JobFullyBooked:
+            return render(self.request, 'booking/fully_booked.html')
+
+
+    def get_form_kwargs(self, *args, **kwargs):
+        # Pass the job request and freelancer to the form
+        try:
+            self.invitation = Invitation.objects.get(
+                                                pk=self.kwargs['invitation_pk'],
+                                                freelancer=self.freelancer)
+        except Invitation.DoesNotExist:
+            # The invitation either does not exist, or does not belong
+            # to the current freelancer
+            raise PermissionDenied
+        else:
+            self.job_request = self.invitation.jobrequest
+
+        # Check that the job request isn't fully booked
+        # TODO
+        form_kwargs = super(InvitationAccept,
+                            self).get_form_kwargs(*args, **kwargs)
+        form_kwargs.update({
+            'invitation': self.invitation,
+            'action_text': 'Accept',
+            'action_icon': 'confirm',
+        })
+        return form_kwargs
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(InvitationAccept, self).get_context_data(
+                                                            *args, **kwargs)
+        context['title'] = 'Accept job?'
+        context['job_request'] = self.job_request
+
+        return context
+
+    def form_valid(self, form):
+        self.booking = form.save()
+        messages.success(self.request, 'Your booking is now confirmed.')
+        # Dispatch signal
+        # booking_created.send(sender=self, booking=self.booking)
+        return redirect(self.booking.jobrequest.get_absolute_url())

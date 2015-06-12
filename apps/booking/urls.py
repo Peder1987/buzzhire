@@ -18,6 +18,14 @@ urlpatterns = [
          views.InvitationConfirm.as_view(),
          name='invitation_create'),
 
+    url(r'^invitations/$',
+         views.FreelancerInvitationsList.as_view(),
+         name='freelancer_invitations_list'),
+
+    url(r'^accept/(?P<invitation_pk>[\d]+)/$',
+         views.InvitationAccept.as_view(),
+         name='invitation_accept'),
+
     url(r'^availability/$', views.AvailabilityUpdate.as_view(),
          name='availability_update'),
 

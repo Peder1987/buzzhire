@@ -10,6 +10,8 @@
           {% url 'freelancer_backlog' as link_url %}
           {% freelancer_backlog_count as feedback_action_number %}
           {% include 'includes/panel_link.html' with icon_name='feedback' link_text='Jobs awaiting feedback' action_number=feedback_action_number %}
+          {% url 'freelancer_invitations_list' as link_url %}
+          {% include 'includes/panel_link.html' with icon_name='invitation' link_text='Open invitations' %}
       </div>
     </div>
 {% endif %}

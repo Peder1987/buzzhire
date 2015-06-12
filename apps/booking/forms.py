@@ -278,3 +278,14 @@ class BookingOrInvitationConfirmForm(ConfirmForm):
         self.job_request = kwargs.pop('job_request')
         self.driver = kwargs.pop('driver')
         super(BookingOrInvitationConfirmForm, self).__init__(*args, **kwargs)
+
+
+class InvitationAcceptForm(ConfirmForm):
+    def __init__(self, *args, **kwargs):
+        self.invitation = kwargs.pop('invitation')
+        super(InvitationAcceptForm, self).__init__(*args, **kwargs)
+
+    def save(self):
+        # Create the booking
+        return Booking.objects.create(jobrequest=self.invitation.jobrequest,
+                               freelancer=self.invitation.freelancer)

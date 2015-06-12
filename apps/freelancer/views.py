@@ -32,6 +32,7 @@ class FreelancerPhotoView(FreelancerOnlyMixin, ContextMixin, DetailView):
     def get_object(self):
         return self.freelancer
 
+
 class FreelancerPhotoUpdateView(FreelancerOnlyMixin, ContextMixin,
                                 SuccessMessageMixin, UpdateView):
     "Page for freelancer to upload their own photo."

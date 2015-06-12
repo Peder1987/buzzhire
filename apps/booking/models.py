@@ -40,6 +40,18 @@ class BookingOrInvitationQuerySet(models.QuerySet):
         """
         return self.filter(freelancer__published=True)
 
+
+class InvitationQuerySet(BookingOrInvitationQuerySet):
+    "Queryset for invitations."
+
+    def open_for_freelancer(self, freelancer):
+        """Returns all invitations that are currently 'open' for the supplied
+        freelancer.
+        """
+        # TODO
+        return self.filter(freelancer=freelancer)
+
+
 class Invitation(models.Model):
     """An invitation to a particular freelancer to book
     a particular job request.  They can be created by admins, or automatically,
@@ -65,7 +77,7 @@ class Invitation(models.Model):
         # A single freelancer can't be invited twice for the same job
         unique_together = (("freelancer", "jobrequest"),)
 
-    objects = BookingOrInvitationQuerySet.as_manager()
+    objects = InvitationQuerySet.as_manager()
 
 
 class Booking(models.Model):
