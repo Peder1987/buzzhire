@@ -1,4 +1,4 @@
-{% load icons freelancer feedback driver %}
+{% load humanize icons freelancer feedback driver %}
 
 {% if request.user.is_admin %}
     <h5>Bookings</h5>
@@ -26,6 +26,34 @@
     {% else %}
         <p>No bookings yet.</p>
     {% endif %}
+    <h5>Invitations</h5>
+    {% if object.invitations.all %}
+        <table class='table middle-align'>
+            <thead>
+                <th>Driver</th>
+                <th>Date invited</th>
+                <th>Date accepted</th>
+                <th></th>
+            </thead>
+            {% for invitation in object.invitations.all %}
+               <tr>
+                  <td>
+                    <a href='{% url 'driver_detail' invitation.freelancer.pk %}'>
+                        {% profile_photo invitation.freelancer 'small' %}
+                        {{ invitation.freelancer.get_full_name }}
+                    </a>
+                  </td>
+                  <td>{{ invitation.date_created|naturalday }}</td>
+                  <td>{% if invitation.date_accepted %}{{ invitation.date_accepted|naturalday }}{% endif %}</td>
+                  <td class='text-right'><a class='btn btn-sm btn-default' href='{% url 'admin:booking_invitation_change' invitation.pk %}'>{{ 'edit'|icon }} edit</a>
+               </tr>
+            {% endfor %}
+        </table>
+        
+    {% else %}
+        <p>No one has been invited yet.</p>
+    {% endif %}
+
 {% else %}
     {% with object.bookings.published as bookings %} 
         {% if bookings %}

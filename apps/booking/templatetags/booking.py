@@ -1,20 +1,33 @@
 from django import template
-from ..models import Booking, Availability
+from ..models import Booking, Availability, Invitation
 from ..forms import AvailabilityForm
 
 register = template.Library()
 
 @register.filter
-def booking_exists_for_freelancer(jobrequest, freelancer):
+def booking_exists_for_freelancer(job_request, freelancer):
     """Returns whether or not the freelancer is booked onto
     this job request.
     
     Usage:
-        {% if jobrequest|booking_exists_for_freelancer:freelancer %}
+        {% if job_request|booking_exists_for_freelancer:freelancer %}
             <p>Booking exists!</p>
         {% endif %}
     """
-    return Booking.objects.filter(jobrequest=jobrequest,
+    return Booking.objects.filter(jobrequest=job_request,
+                                  freelancer=freelancer).exists()
+
+@register.filter
+def invitation_exists_for_freelancer(job_request, freelancer):
+    """Returns whether or not the freelancer has an invitation for
+    this job request.
+    
+    Usage:
+        {% if job_request|invitation_exists_for_freelancer:freelancer %}
+            <p>Invitation exists!</p>
+        {% endif %}
+    """
+    return Invitation.objects.filter(jobrequest=job_request,
                                   freelancer=freelancer).exists()
 
 @register.filter

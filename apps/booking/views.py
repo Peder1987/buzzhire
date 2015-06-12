@@ -7,8 +7,9 @@ from apps.core.views import ContextMixin, TabsMixin, ContextTemplateView, \
 from apps.driver.models import Driver
 from apps.freelancer.views import FreelancerOnlyMixin
 from apps.job.models import DriverJobRequest
-from .models import Booking, Availability
-from .forms import AvailabilityForm, JobMatchingForm, BookingConfirmForm
+from .models import Booking, Availability, Invitation
+from .forms import AvailabilityForm, JobMatchingForm, \
+                    BookingOrInvitationConfirmForm
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import get_object_or_404, redirect
 from .signals import booking_created
@@ -114,17 +115,16 @@ class JobMatchingView(AdminOnlyMixin, ContextMixin, ListView):
             context['searched'] = True
         return context
 
-
-class BookingConfirm(AdminOnlyMixin, ConfirmationMixin, FormView):
-    """Confirmation form for the creation of a Booking
-    - i.e. assigning a freelancer to a job.
+class BaseInvitationOrBookingConfirm(AdminOnlyMixin, ConfirmationMixin, FormView):
+    """Base view for either inviting or booking a freelancer to a job.
     """
-    extra_context = {'title': 'Create booking'}
-    question = 'Are you sure you want to create this booking?'
+    question = 'Are you sure you want to invite this freelancer?'
     cancel_url = reverse_lazy('account_dashboard')
     template_name = 'account/dashboard_base.html'
-    form_class = BookingConfirmForm
-
+    form_class = BookingOrInvitationConfirmForm
+    model_class = None  # Override this when subclassing the view
+    action_text = ''
+    action_icon = ''
 
     def dispatch(self, *args, **kwargs):
         self.job_request = get_object_or_404(DriverJobRequest,
@@ -132,32 +132,73 @@ class BookingConfirm(AdminOnlyMixin, ConfirmationMixin, FormView):
         self.driver = get_object_or_404(Driver,
                                              pk=kwargs.pop('driver_pk'))
         try:
-            Booking.objects.get(jobrequest=self.job_request,
+            self.model_class.objects.get(jobrequest=self.job_request,
                                 freelancer=self.driver)
-        except Booking.DoesNotExist:
+        except self.model_class.DoesNotExist:
             # This is what we want: the booking doesn't exist already
             pass
         else:
             # The booking already exists
             messages.error(self.request, 'That booking already exists.')
             return redirect('driverjobrequest_admin_list')
-        return super(BookingConfirm, self).dispatch(*args, **kwargs)
+        return super(BaseInvitationOrBookingConfirm, self).dispatch(
+                                                            *args, **kwargs)
 
+    def get_context_data(self, *args, **kwargs):
+        context = super(BaseInvitationOrBookingConfirm, self).get_context_data(
+                                                            *args, **kwargs)
+        context['title'] = 'Create %s' % \
+                                    self.model_class._meta.verbose_name
+
+        return context
 
     def get_form_kwargs(self, *args, **kwargs):
         # Pass the job request and freelancer to the form
-        form_kwargs = super(BookingConfirm, self).get_form_kwargs(*args,
-                                                                  **kwargs)
+        form_kwargs = super(BaseInvitationOrBookingConfirm,
+                            self).get_form_kwargs(*args, **kwargs)
         form_kwargs.update({
             'job_request': self.job_request,
             'driver': self.driver,
+            'action_text': self.action_text,
+            'action_icon': self.action_icon,
         })
         return form_kwargs
 
     def form_valid(self, *args, **kwargs):
-        booking = Booking.objects.create(freelancer=self.driver,
+        self.instance = self.model_class.objects.create(freelancer=self.driver,
                                jobrequest=self.job_request)
-        # Dispatch signal
-        booking_created.send(sender=self, booking=booking)
-        messages.success(self.request, 'Created booking.')
+        messages.success(self.request, 'Created %s.'
+                         % self.model_class._meta.verbose_name)
         return redirect(self.job_request.get_absolute_url())
+
+
+class BookingConfirm(BaseInvitationOrBookingConfirm):
+    """Confirmation form for the creation of a Booking
+    - i.e. assigning a freelancer to a job.
+    """
+    question = 'Are you sure you want to create this booking?'
+    model_class = Booking
+    action_text = 'Book'
+    action_icon = 'confirm'
+
+    def form_valid(self, *args, **kwargs):
+        response = super(BookingConfirm, self).form_valid(*args, **kwargs)
+        # Dispatch signal
+        booking_created.send(sender=self, booking=self.instance)
+        return response
+
+
+class InvitationConfirm(BaseInvitationOrBookingConfirm):
+    """Confirmation form for inviting a freelancer to a job.
+    """
+    question = 'Are you sure you want to invite this freelancer?'
+    model_class = Invitation
+    action_text = 'Invite'
+    action_icon = 'invitation'
+
+    def form_valid(self, *args, **kwargs):
+        response = super(InvitationConfirm, self).form_valid(*args, **kwargs)
+        # Dispatch signal
+        # TODO - enable
+        # invitation_created.send(sender=self, booking=self.instance)
+        return response

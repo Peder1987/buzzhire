@@ -6,8 +6,8 @@ from apps.freelancer.models import Freelancer
 from apps.job.models import JobRequest
 
 
-class BookingQuerySet(models.QuerySet):
-    "Custom queryset for Bookings."
+class BookingOrInvitationQuerySet(models.QuerySet):
+    "Custom queryset for Bookings and Invitations."
 
     def future(self):
         """Filter by job requests that are in the future (i.e. started
@@ -40,6 +40,32 @@ class BookingQuerySet(models.QuerySet):
         """
         return self.filter(freelancer__published=True)
 
+class Invitation(models.Model):
+    """An invitation to a particular freelancer to book
+    a particular job request.  They can be created by admins, or automatically,
+    and they essentially give permission to freelancers to book themselves
+    onto a job request.
+    """
+    freelancer = models.ForeignKey(Freelancer, related_name='invitations')
+    jobrequest = models.ForeignKey(JobRequest, related_name='invitations')
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_accepted = models.DateTimeField(blank=True, null=True)
+    manual = models.BooleanField(default=True,
+                help_text='Whether this invitation was created manually.')
+
+    def __unicode__(self):
+        return self.reference_number
+
+    @property
+    def reference_number(self):
+        "Returns a reference number for this invitation."
+        return 'IN%s' % str(self.pk).zfill(7)
+
+    class Meta:
+        # A single freelancer can't be invited twice for the same job
+        unique_together = (("freelancer", "jobrequest"),)
+
+    objects = BookingOrInvitationQuerySet.as_manager()
 
 
 class Booking(models.Model):
@@ -62,8 +88,7 @@ class Booking(models.Model):
         # A single freelancer can't be booked in twice for the same job
         unique_together = (("freelancer", "jobrequest"),)
 
-
-    objects = BookingQuerySet.as_manager()
+    objects = BookingOrInvitationQuerySet.as_manager()
 
 
 

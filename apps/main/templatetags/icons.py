@@ -50,6 +50,7 @@ ICON_MAP = {
     'score_full': 'star',
     'score_empty': 'star-o',
     'score_half': 'star-half-o',
+    'invitation': 'paper-plane-o',
 }
 
 @register.filter

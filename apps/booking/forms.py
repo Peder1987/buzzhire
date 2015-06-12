@@ -270,10 +270,11 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
         return results
 
 
-class BookingConfirmForm(ConfirmForm):
-    "Form for creating/editing a booking."
-    inner_template_name = 'booking/includes/booking_confirm_form_inner.html'
+class BookingOrInvitationConfirmForm(ConfirmForm):
+    "Form for creating/editing a booking or invitation."
+    inner_template_name = \
+            'booking/includes/booking_or_invitation_confirm_form_inner.html'
     def __init__(self, *args, **kwargs):
         self.job_request = kwargs.pop('job_request')
         self.driver = kwargs.pop('driver')
-        super(BookingConfirmForm, self).__init__(*args, **kwargs)
+        super(BookingOrInvitationConfirmForm, self).__init__(*args, **kwargs)
