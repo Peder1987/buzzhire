@@ -34,7 +34,19 @@ class FlexibleVehicleTypeViewSet(viewsets.ReadOnlyModelViewSet):
 class OwnDriverViewSet(RetrieveAndUpdateViewset):
     """Returns the driver's own profile.
     
-    - `photo` - thumbnail of the driver, 75px x 97px.
+    ## Fields
+    
+    The generic fields are documented on the freelancer endpoint.
+    
+    These are the fields specific to drivers:
+    
+    - `driving_experience` The number of years of driving experience.
+        Integer.  Choices are:
+        - `0` - Less than 1 year
+        - `1` - 1 - 3 years
+        - `3` - 3 - 5 years
+        - `5` - More than 5 years
+     
     """
     model = Driver
     serializer_class = PrivateDriverSerializer

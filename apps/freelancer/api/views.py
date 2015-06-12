@@ -26,6 +26,8 @@ class OwnFreelancerViewSet(RetrieveAndUpdateViewset):
            more specific kinds of freelancer objects, such as drivers.
            Integer. Read only.
     - `reference_number` Public reference number for the freelancer.  Read only.
+    - `email` Their email address.  Read only.
+    - `full_name` Their full name.  Read only.
     - `first_name` Their first name.
     - `last_name` Their last namee.
     - `mobile` Their mobile telephone number (must be UK based).

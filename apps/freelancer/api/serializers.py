@@ -4,6 +4,7 @@ from sorl.thumbnail import get_thumbnail
 from django.conf import settings
 from apps.api.serializers import MoneyField
 from apps.freelancer.templatetags.freelancer import PHOTO_DIMENSIONS
+from apps.location.api.serializers import PostcodeField
 from ..models import Freelancer
 
 
@@ -28,13 +29,7 @@ class PrivateFreelancerSerializer(serializers.ModelSerializer):
     def get_full_name(self, obj):
         return obj.get_full_name()
 
-    # english_fluency = ChoiceField()
-    # phone_type = ChoiceField()
-    # travel_distance = ChoiceField()
-
-    postcode = serializers.SerializerMethodField()
-    def get_postcode(self, obj):
-        return str(obj.postcode)
+    postcode = PostcodeField()
 
     photo = serializers.SerializerMethodField()
     def get_photo(self, obj):
