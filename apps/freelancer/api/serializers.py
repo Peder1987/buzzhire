@@ -38,8 +38,10 @@ class OwnFreelancerSerializer(serializers.ModelSerializer):
 
     photo = serializers.SerializerMethodField()
     def get_photo(self, obj):
-         return "%s%s" % (settings.BASE_URL,
-                get_thumbnail(obj.photo, PHOTO_DIMENSIONS['medium']).url)
+        if obj.photo:
+             return "%s%s" % (settings.BASE_URL,
+                    get_thumbnail(obj.photo, PHOTO_DIMENSIONS['medium']).url)
+        return None
 
     minimum_pay_per_hour = MoneyField()
 

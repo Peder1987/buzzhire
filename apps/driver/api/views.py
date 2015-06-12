@@ -1,9 +1,11 @@
 from rest_framework import viewsets
+from rest_framework import mixins
 from rest_framework.permissions import IsAuthenticated
 from .serializers import OwnDriverSerializer, VehicleTypeSerializer, \
                         FlexibleVehicleTypeSerializer
 from ..models import VehicleType, FlexibleVehicleType, Driver
 from .permissions import DriverOnlyPermission
+from apps.api.views import RetrieveAndUpdateViewset
 
 
 class VehicleTypeViewSet(viewsets.ReadOnlyModelViewSet):
@@ -29,7 +31,7 @@ class FlexibleVehicleTypeViewSet(viewsets.ReadOnlyModelViewSet):
         return FlexibleVehicleType.objects.all()
 
 
-class OwnDriverViewSet(viewsets.ModelViewSet):
+class OwnDriverViewSet(RetrieveAndUpdateViewset):
     """Returns the driver's own profile.
     
     - `photo` - thumbnail of the driver, 75px x 97px.
@@ -41,7 +43,3 @@ class OwnDriverViewSet(viewsets.ModelViewSet):
 
     def get_object(self):
         return self.request.user.driver
-
-    def list(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
