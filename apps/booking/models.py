@@ -48,8 +48,21 @@ class InvitationQuerySet(BookingOrInvitationQuerySet):
         """Returns all invitations that are currently 'open' for the supplied
         freelancer.
         """
+        # Filter by freelancer
+        queryset = self.filter(freelancer=freelancer)
+
+        # Filter by job requests that aren't full
         # TODO
-        return self.filter(freelancer=freelancer)
+
+        # Filter by job requests that are open
+        queryset.filter(jobrequest__status=JobRequest.STATUS_OPEN)
+
+        # Filter by job requests that they aren't already booked on
+        already_booked_on = Booking.objects.for_freelancer(
+                            freelancer).values_list('jobrequest_id', flat=True)
+        queryset = queryset.exclude(jobrequest_id__in=already_booked_on)
+
+        return queryset
 
 
 class Invitation(models.Model):

@@ -40,3 +40,10 @@ def availability_form_for_freelancer(freelancer):
     except Availability.DoesNotExist:
         return False
     return AvailabilityForm(instance=availability)
+
+
+@register.assignment_tag(takes_context=True)
+def freelancer_open_invitations_count(context):
+    # TODO - this would be a good candidate for caching
+    return Invitation.objects.open_for_freelancer(
+                                context['request'].user.freelancer).count()
