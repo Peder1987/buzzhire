@@ -15,17 +15,18 @@ router.register(r'freelancers', PublicFreelancerViewSet,
                 base_name='freelancers')
 router.register(r'clients', PublicClientViewSet,
                 base_name='clients')
-router.register(r'vehicle-types/flexible', FlexibleVehicleTypeViewSet,
+router.register(r'flexible-vehicle-types', FlexibleVehicleTypeViewSet,
                 base_name='flexible_vehicle_types')
 router.register(r'vehicle-types', VehicleTypeViewSet,
                 base_name='vehicle_types')
-router.register(r'driver/own', OwnDriverViewSet,
-                base_name='driver_own')
 router.register(r'job-requests', JobRequestViewSet,
                 base_name='job_requests')
 router.register(r'driver-job-requests', DriverJobRequestViewSet,
                 base_name='driver_job_requests')
-router.register(r'bookings/for-freelancer', FreelancerBookingViewSet,
+
+router.register(r'account/driver', OwnDriverViewSet,
+                base_name='driver_own')
+router.register(r'account/freelancer/bookings', FreelancerBookingViewSet,
                 base_name='bookings_for_freelancer')
 
 

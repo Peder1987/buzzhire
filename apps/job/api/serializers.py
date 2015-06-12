@@ -1,14 +1,12 @@
 from django.forms import widgets
 from rest_framework import serializers
-from apps.api.serializers import ChoiceField, MoneyField
+from apps.api.serializers import MoneyField
 from ..models import JobRequest, DriverJobRequest
 
 
 class JobRequestSerializer(serializers.ModelSerializer):
     client = serializers.HyperlinkedRelatedField(read_only=True,
                                             view_name='clients-detail')
-
-    status = ChoiceField()
 
     address = serializers.SerializerMethodField('_address')
     def _address(self, obj):
@@ -18,8 +16,6 @@ class JobRequestSerializer(serializers.ModelSerializer):
             'city': obj.get_city_display(),
             'postcode': str(obj.postcode),
         }
-
-    phone_requirement = ChoiceField()
 
     freelancer_pay_per_hour = MoneyField()
 
@@ -32,7 +28,6 @@ class JobRequestSerializer(serializers.ModelSerializer):
 
 
 class DriverJobRequestSerializer(JobRequestSerializer):
-    driving_experience = ChoiceField()
 
     flexible_vehicle_type = serializers.HyperlinkedRelatedField(read_only=True,
                                     view_name='flexible_vehicle_types-detail',

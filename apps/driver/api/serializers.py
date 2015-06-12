@@ -2,7 +2,6 @@ from django.forms import widgets
 from rest_framework import serializers
 from ..models import VehicleType, FlexibleVehicleType, Driver
 from apps.freelancer.api.serializers import OwnFreelancerSerializer
-from apps.api.serializers import ChoiceField
 
 
 class VehicleTypeSerializer(serializers.ModelSerializer):
@@ -26,8 +25,6 @@ class OwnDriverSerializer(OwnFreelancerSerializer):
 
 #     vehicle_types = serializers.HyperlinkedRelatedField(read_only=True,
 #                                     view_name='driver_vehicle_types-detail')
-
-    # driving_experience = ChoiceField()
 
     class Meta:
         model = Driver
