@@ -49,7 +49,8 @@ class PasswordResetFromKeyDoneView(ContextMixin,
     extra_context = {'title': 'Password reset complete'}
 
 
-class PasswordChangeView(ContextMixin, views.PasswordChangeView):
+class PasswordChangeView(LoginRequiredMixin, ContextMixin,
+                         views.PasswordChangeView):
     extra_context = {'title': 'Change password'}
     form_class = forms.ChangePasswordForm
     template_name = 'account/dashboard_base.html'
