@@ -15,6 +15,16 @@
         <a class='btn btn-default' href='{% url 'job_matching_for_job_request' object.pk %}'>{{ 'job_matching'|icon }} Job matching</a>
         <a class='btn btn-default' href='{% url 'driverjobrequest_edit' object.pk %}'>{{ 'edit'|icon }} Edit</a>
         <a class='btn btn-default' href='{% url 'admin:job_driverjobrequest_change' object.pk %}'>{{ 'admin'|icon }} View in Django admin</a>
+    {% elif request.user.is_freelancer %}
+        {% if object|booking_exists_for_freelancer:request.user.freelancer %}
+            <span class='label label-success'>{{ 'yes'|icon }} Booked</span>
+        {% else %}
+            {% with object|invitation_for_freelancer:request.user.freelancer as invitation %}
+                {% if invitation %}
+                    <a class='btn btn-primary' href='{% url 'invitation_accept' invitation.pk %}'>{{ 'confirm'|icon }} Accept job</a>
+                {% endif %}
+            {% endwith %}
+        {% endif %}
     {% endif %}
 {% endblock %}
 
@@ -26,13 +36,6 @@
                 <a class='btn btn-lg btn-warning' href='{% url 'driverjobrequest_checkout' object.pk %}'>Confirm and pay</a>
             {% endif %}
         </div>
-    {% endif %}
-    {% if request.user.is_freelancer %}
-        {% if object|booking_exists_for_freelancer:request.user.freelancer %}
-            <div class='alert alert-success text-center'>
-                <p><strong>You are booked on this job.</strong></p>
-            </div>
-        {% endif %}
     {% endif %}
         
     <div class='row'>

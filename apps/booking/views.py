@@ -232,7 +232,6 @@ class InvitationAccept(FreelancerOnlyMixin, ConfirmationMixin,
     question = 'Are you sure you want to accept this job?'
     action_text = 'Accept'
     action_icon = 'confirm'
-    cancel_url = reverse_lazy('account_dashboard')
     template_name = 'booking/accept.html'
     form_class = InvitationAcceptForm
 
@@ -264,6 +263,7 @@ class InvitationAccept(FreelancerOnlyMixin, ConfirmationMixin,
             'invitation': self.invitation,
             'action_text': 'Accept',
             'action_icon': 'confirm',
+            'cancel_url': self.job_request.get_absolute_url()
         })
         return form_kwargs
 

@@ -31,6 +31,25 @@ def invitation_exists_for_freelancer(job_request, freelancer):
                                   freelancer=freelancer).exists()
 
 @register.filter
+def invitation_for_freelancer(job_request, freelancer):
+    """Returns the invitation the freelancer has received for
+    this job request.
+    
+    If the invitation doesn't exist, returns None.
+    
+    Usage:
+        {% with job_request|invitation_for_freelancer:freelancer as invitation %}
+            <p>Invitation is {{ invitation }}!</p>
+        {% endif %}
+    """
+    try:
+        return Invitation.objects.get(jobrequest=job_request,
+                                      freelancer=freelancer)
+    except Invitation.DoesNotExist:
+        return None
+
+
+@register.filter
 def availability_form_for_freelancer(freelancer):
     """Returns an availability form for the supplied freelancer,
     or False if it hasn't been filled out yet.
