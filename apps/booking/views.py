@@ -1,5 +1,6 @@
 from django.views.generic import ListView, UpdateView, CreateView, FormView
 from django.core.urlresolvers import reverse_lazy
+from django.shortcuts import render
 from django.contrib import messages
 from apps.account.views import AdminOnlyMixin
 from apps.core.views import ContextMixin, TabsMixin, ContextTemplateView, \
@@ -218,13 +219,13 @@ class InvitationConfirm(BaseInvitationOrBookingConfirm):
         invitation_created.send(sender=self, invitation=self.instance)
         return response
 
-
 class JobFullyBooked(Exception):
     "Exception raised when a job is fully booked."
     pass
 
 
-class InvitationAccept(FreelancerOnlyMixin, ConfirmationMixin,
+class InvitationAccept(FreelancerOnlyMixin,
+                       ConfirmationMixin,
                        FormView):
     """Confirmation form for the creation of a Booking
     - i.e. assigning a freelancer to a job.
@@ -239,7 +240,8 @@ class InvitationAccept(FreelancerOnlyMixin, ConfirmationMixin,
         try:
             return super(InvitationAccept, self).dispatch(*args, **kwargs)
         except JobFullyBooked:
-            return render(self.request, 'booking/fully_booked.html')
+            return render(self.request, 'booking/fully_booked.html',
+                          {'title': self.job_request})
 
 
     def get_form_kwargs(self, *args, **kwargs):
@@ -256,7 +258,9 @@ class InvitationAccept(FreelancerOnlyMixin, ConfirmationMixin,
             self.job_request = self.invitation.jobrequest
 
         # Check that the job request isn't fully booked
-        # TODO
+        if self.job_request.is_full:
+            raise JobFullyBooked()
+
         form_kwargs = super(InvitationAccept,
                             self).get_form_kwargs(*args, **kwargs)
         form_kwargs.update({

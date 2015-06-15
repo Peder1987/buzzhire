@@ -1,5 +1,6 @@
 from django.db import models
 from django import forms
+from django.db.models import Count, F
 from datetime import date, time
 import calendar
 from apps.freelancer.models import Freelancer
@@ -51,9 +52,6 @@ class InvitationQuerySet(BookingOrInvitationQuerySet):
         # Filter by freelancer
         queryset = self.filter(freelancer=freelancer)
 
-        # Filter by job requests that aren't full
-        # TODO
-
         # Filter by job requests that are open
         queryset.filter(jobrequest__status=JobRequest.STATUS_OPEN)
 
@@ -61,6 +59,14 @@ class InvitationQuerySet(BookingOrInvitationQuerySet):
         already_booked_on = Booking.objects.for_freelancer(
                             freelancer).values_list('jobrequest_id', flat=True)
         queryset = queryset.exclude(jobrequest_id__in=already_booked_on)
+
+        # Filter by job requests that aren't full
+        job_request_ids = queryset.values_list('jobrequest_id', flat=True)
+        not_full_job_requests = JobRequest.objects\
+                .filter(id__in=job_request_ids)\
+                .annotate(number_of_bookings=Count('bookings'))\
+                .filter(number_of_freelancers__gt=F('number_of_bookings'))
+        queryset = queryset.filter(jobrequest__in=not_full_job_requests)
 
         return queryset
 
@@ -205,3 +211,9 @@ class Availability(models.Model):
                                         or given_time < time(end_hour):
                     return shift
         raise ValueError('Could not find shift for time %s.' % given_time)
+
+
+def _is_full(self):
+    "Returns whether or not the job request is full."
+    return self.bookings.count() >= self.number_of_freelancers
+JobRequest.is_full = property(_is_full)

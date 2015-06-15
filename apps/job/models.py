@@ -13,7 +13,6 @@ from apps.location.models import Postcode
 from apps.freelancer.models import client_to_freelancer_rate
 from decimal import Decimal
 from django_fsm import FSMField, transition
-from boto.ec2.instancestatus import Status
 
 
 class JobRequestQuerySet(models.QuerySet):

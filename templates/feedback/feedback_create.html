@@ -3,8 +3,10 @@
 
 {% block inner_breadcrumb %}
   {{ block.super }}
+  {% breadcrumb 'Jobs awaiting feedback' 'freelancer_backlog' %}
   {% breadcrumb object object.get_absolute_url %}
 {% endblock %}
+
 
 
 {% block content %}
