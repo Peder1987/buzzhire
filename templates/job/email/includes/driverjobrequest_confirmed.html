@@ -3,7 +3,7 @@
 
 {% with object.bookings.published as bookings %} 
 
-    <p>Your driver{{ bookings|pluralize }} have now been booked for the job below.</p>
+    <p>Your driver{{ bookings|pluralize:' has,s have' }} }} now been booked for the job below.</p>
     
     {% include 'job/email/includes/client_driverjobrequest.html' %}
     
