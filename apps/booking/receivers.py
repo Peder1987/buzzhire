@@ -11,7 +11,8 @@ from .signals import booking_created, invitation_created
 @receiver(booking_created)
 def notify_freelancer_on_booking(sender, booking, **kwargs):
     "Notifies the freelancer when a booking is created."
-    subject = 'Confirmation of booking %s' % booking.reference_number
+    subject = 'Confirmation of booking for %s' % \
+                booking.job_request.reference_number
     content = render_to_string(
         'booking/email/includes/freelancer_booking_confirmation.html',
         {

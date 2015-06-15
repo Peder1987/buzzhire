@@ -283,7 +283,7 @@ class InvitationAccept(FreelancerOnlyMixin,
         self.booking = form.save()
         messages.success(self.request, 'Your booking is now confirmed.')
         # Dispatch signal
-        # booking_created.send(sender=self, booking=self.booking)
+        booking_created.send(sender=self, booking=self.booking)
         return redirect(self.booking.jobrequest.get_absolute_url())
 
 
