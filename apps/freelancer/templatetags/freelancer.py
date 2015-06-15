@@ -10,7 +10,7 @@ PHOTO_DIMENSIONS = {
 }
 
 @register.inclusion_tag('freelancer/includes/profile_photo.html')
-def profile_photo(freelancer, size='medium', base_url=''):
+def profile_photo(freelancer, size='medium', for_email=False):
     """Renders the freelancer's profile photo, or a default image.
     
     For emails, optionally provide the base_url.
@@ -20,13 +20,13 @@ def profile_photo(freelancer, size='medium', base_url=''):
     
     Or for emails:
     
-        {% profile_photo object 'http://domain.co/' %}
+        {% profile_photo object for_email=True %}
     
     """
 
     return {
         'object': freelancer,
         'dimensions': PHOTO_DIMENSIONS[size],
-        'base_url': base_url,
+        'for_email': for_email,
     }
 

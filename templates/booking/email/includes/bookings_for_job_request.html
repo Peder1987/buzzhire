@@ -9,7 +9,7 @@
             <tr>
               <td>
                 <a href='{% base_url %}{{ driver_url }}'>
-                    {% profile_photo booking.freelancer 'small' base_url %}
+                    {% profile_photo booking.freelancer 'small' for_email=True %}
                 </a>
               </td>
               <td class="expander"></td>
