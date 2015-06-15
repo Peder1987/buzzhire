@@ -54,7 +54,7 @@
         <p>No one has been invited yet.</p>
     {% endif %}
 
-{% else %}
+{% elif request.user.is_client %}
     {% with object.bookings.published as bookings %} 
         {% if bookings %}
             <div class="panel panel-default driver-list">

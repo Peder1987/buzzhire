@@ -1,5 +1,5 @@
 {% extends 'account/dashboard_base.html' %}
-{% load icons humanize django_bootstrap_breadcrumbs freelancer %}
+{% load icons humanize django_bootstrap_breadcrumbs freelancer booking %}
 
 {% block inner_breadcrumb %}
   {{ block.super }}
@@ -26,6 +26,13 @@
                 <a class='btn btn-lg btn-warning' href='{% url 'driverjobrequest_checkout' object.pk %}'>Confirm and pay</a>
             {% endif %}
         </div>
+    {% endif %}
+    {% if request.user.is_freelancer %}
+        {% if object|booking_exists_for_freelancer:request.user.freelancer %}
+            <div class='alert alert-success text-center'>
+                <p><strong>You are booked on this job.</strong></p>
+            </div>
+        {% endif %}
     {% endif %}
         
     <div class='row'>
@@ -89,7 +96,11 @@
                     <tr>
                         <th>Pay per hour</th>
                         <td>
-                            &pound;{{ object.client_pay_per_hour.amount }}
+                            {% if request.user.is_client %}
+                                &pound;{{ object.client_pay_per_hour.amount }}
+                            {% else %}
+                                &pound;{{ object.freelancer_pay_per_hour.amount }}
+                            {% endif %}
                         </td>
                     </tr>
                 {% endif %}

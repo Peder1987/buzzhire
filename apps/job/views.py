@@ -23,7 +23,7 @@ from .forms import DriverJobRequestForm, DriverJobRequestInnerForm, \
                     DriverJobRequestUpdateForm
 from django.http.response import HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
-from __builtin__ import True
+
 
 
 class DriverJobRequestCreate(ClientOnlyMixin, ContextMixin, CreateView):
@@ -155,6 +155,8 @@ class RequestedJobList(ClientOnlyMixin, ContextMixin, TabsMixin, ListView):
 
 class DriverJobRequestDetail(GrantCheckingMixin, DetailView):
     """Detail page for driver job requests.
+    We use the GrantCheckingMixin as we want other apps that this app
+    doesn't know about (e.g. bookings) to grant certain freelancers access.
     """
     model = DriverJobRequest
     require_login = True
@@ -176,6 +178,7 @@ class DriverJobRequestDetail(GrantCheckingMixin, DetailView):
         context = super(DriverJobRequestDetail, self).get_context_data(*args,
                                                                        **kwargs)
         context['title'] = self.object
+        context['client'] = self.client
         return context
 
 

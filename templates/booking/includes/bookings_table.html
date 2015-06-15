@@ -13,7 +13,7 @@
         <tbody>
             {% for object in object_list %}
                 <tr>
-                    <td class='monospace'>{{ object.jobrequest.reference_number }}</td>
+                    <td class='monospace'><a href='{{ object.jobrequest.get_absolute_url }}'>{{ object.jobrequest.reference_number }}</a></td>
                     <td>{{ object.jobrequest.client }}</td>
                     <td>{{ 'date'|icon }} {{ object.jobrequest.date }}<br>{{ 'time'|icon }} {{ object.jobrequest.start_time }}<br>
                     For {{ object.jobrequest.duration }} hour{{ object.jobrequest.duration|pluralize }}</td>

@@ -285,14 +285,16 @@ class InvitationAccept(FreelancerOnlyMixin, ConfirmationMixin,
 
 # Add the ability for booked freelancers to see job requests on the job
 # request detail view
-def _is_booked_freelancer(self):
+def _is_booked_or_invited_freelancer(self):
     # If the user is a freelancer, are they booked on this job?
     try:
         self.freelancer = self.request.user.freelancer
     except Freelancer.DoesNotExist:
         self.freelancer = False
     else:
-        return self.object.bookings.for_freelancer(self.freelancer).exists()
+        return self.object.bookings.for_freelancer(self.freelancer).exists() \
+            or self.object.invitations.for_freelancer(self.freelancer).exists()
 
-DriverJobRequestDetail.is_booked_freelancer = _is_booked_freelancer
-DriverJobRequestDetail.grant_methods.append('is_booked_freelancer')
+DriverJobRequestDetail.is_booked_or_invited_freelancer = \
+                                            _is_booked_or_invited_freelancer
+DriverJobRequestDetail.grant_methods.append('is_booked_or_invited_freelancer')
