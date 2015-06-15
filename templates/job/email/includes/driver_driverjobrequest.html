@@ -41,9 +41,13 @@
     <p>{{ object.comments|linebreaks }} </p>
     {% endif %}
     
-    {% if admin %}
-        <p><a href='{% base_url %}{{ object.get_absolute_url }}'>View job request</a></p>
-    {% endif %}
+    <table class="button" style='margin-top: 10px; margin-bottom: 10px;'>
+        <tr>
+          <td>
+            <a href='{% base_url %}{{ object.get_absolute_url }}'>View job request</a>
+          </td>
+        </tr>
+    </table>
 
     </td>
     <td class="expander"></td>

@@ -17,6 +17,7 @@ from django.shortcuts import get_object_or_404, redirect
 from .signals import booking_created, invitation_created
 from django.core.exceptions import PermissionDenied
 from apps.job.views import DriverJobRequestDetail
+from django.http.response import HttpResponseRedirect
 
 
 class FreelancerHasBookingMixin(FreelancerOnlyMixin, OwnerOnlyMixin):
@@ -223,6 +224,9 @@ class JobFullyBooked(Exception):
     "Exception raised when a job is fully booked."
     pass
 
+class JobAlreadyBookedByFreelancer(Exception):
+    "Exception raised when the freelancer has already been booked on the job."
+    pass
 
 class InvitationAccept(FreelancerOnlyMixin,
                        ConfirmationMixin,
@@ -242,7 +246,10 @@ class InvitationAccept(FreelancerOnlyMixin,
         except JobFullyBooked:
             return render(self.request, 'booking/fully_booked.html',
                           {'title': self.job_request})
-
+        except JobAlreadyBookedByFreelancer:
+            messages.add_message(self.request, messages.WARNING,
+                                 'You are already booked for this job.')
+            return redirect(self.job_request.get_absolute_url())
 
     def get_form_kwargs(self, *args, **kwargs):
         # Pass the job request and freelancer to the form
@@ -256,6 +263,10 @@ class InvitationAccept(FreelancerOnlyMixin,
             raise PermissionDenied
         else:
             self.job_request = self.invitation.jobrequest
+
+        # Check that they're not already booked
+        if self.job_request.bookings.for_freelancer(self.freelancer).exists():
+            raise JobAlreadyBookedByFreelancer()
 
         # Check that the job request isn't fully booked
         if self.job_request.is_full:

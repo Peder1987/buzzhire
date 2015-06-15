@@ -1,5 +1,12 @@
 {% extends 'account/dashboard_base.html' %}
-{% load crispy_forms_tags %}
+{% load crispy_forms_tags django_bootstrap_breadcrumbs  %}
+
+{% block inner_breadcrumb %}
+  {{ block.super }}
+  {% breadcrumb 'Open invitations' 'freelancer_invitations_list' %}
+  {% breadcrumb job_request job_request.get_absolute_url %}
+{% endblock %}
+
 {% block content %}
     <div class='row' style='margin-top: 3em;'>
         <div class='col-md-5'>

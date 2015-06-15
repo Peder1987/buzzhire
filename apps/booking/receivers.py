@@ -12,7 +12,7 @@ from .signals import booking_created, invitation_created
 def notify_freelancer_on_booking(sender, booking, **kwargs):
     "Notifies the freelancer when a booking is created."
     subject = 'Confirmation of booking for %s' % \
-                booking.job_request.reference_number
+                booking.jobrequest.reference_number
     content = render_to_string(
         'booking/email/includes/freelancer_booking_confirmation.html',
         {
@@ -28,6 +28,27 @@ def notify_freelancer_on_booking(sender, booking, **kwargs):
               {'title': 'Confirmation of booking',
                'content': content},
               from_email=settings.BOOKINGS_EMAIL)
+
+
+@receiver(booking_created)
+def notify_admin_on_booking(sender, booking, **kwargs):
+    "Notifies the admin when a booking is created that fully books a job."
+    job_request = DriverJobRequest.objects.get_from_jobrequest(
+                                                        booking.jobrequest)
+    if job_request.is_full:
+        subject = 'Job request %s now awaiting confirmation' % \
+                job_request.reference_number
+
+        content = render_to_string(
+            'booking/email/includes/admin_fully_booked.html',
+            {'object': job_request, 'admin': True}
+        )
+
+        send_mail(settings.BOOKINGS_EMAIL,
+                  subject,
+                  'email/base',
+                  {'title': subject,
+                   'content': content})
 
 
 @receiver(invitation_created)
