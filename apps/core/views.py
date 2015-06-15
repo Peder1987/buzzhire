@@ -5,6 +5,7 @@ import logging
 from .forms import ConfirmForm
 from django.contrib.auth.views import redirect_to_login
 from django.core.exceptions import PermissionDenied
+from django.apps.registry import apps
 
 # A GBP sign
 POUND_SIGN = u'\u00A3'
@@ -237,3 +238,71 @@ class OwnerOnlyMixin(object):
                 raise PermissionDenied
         return super(OwnerOnlyMixin, self).dispatch(request, *args, **kwargs)
 
+
+class GrantCheckingMixin(object):
+    """Views mixin for checking multiple grants, and allowing other apps
+    to register grants too.
+    
+    A grant is a function that receives the view, and returns True if the
+    user can proceed.
+    
+    # TODO - improve the API for this (decorators?)
+    
+    Usage:
+    
+        class MyView(GrantCheckingMixin, DetailView):
+            model = MyModel
+            grant_methods = ['is_foo']
+            
+            def is_foo(self):
+                # If the user can access the object, return True
+            
+        # In another app
+        
+        from apps.myapp.views import MyView
+        
+        def _is_bar(self):
+            # Return True or False
+        MyView.is_bar = _is_bar
+        MyView.grant_methods.append('is_bar')
+    """
+    require_login = True  # Whether to require the user is logged in
+    allow_admin = True  # Whether to allow admins access
+    # List of grant methods on the view class - can also be strings
+    grant_methods = []
+    # Whether to run self.object = self.get_object() before the grants
+    populate_object = True
+
+
+    def dispatch(self, request, *args, **kwargs):
+        # If the user is not logged in, give them the chance to
+        if self.require_login and self.request.user.is_anonymous():
+            return redirect_to_login(self.request.path)
+
+        if self.populate_object:
+            self.object = self.get_object()
+
+        granted = False
+        for method in self.get_grant_methods():
+            if method():
+                granted = True
+
+        if not granted:
+            # None of the grants returned True;
+            # Do a final check to see if the user is admin
+            if not (self.allow_admin and self.request.user.is_admin):
+                raise PermissionDenied
+
+        return super(GrantCheckingMixin, self).dispatch(request, *args,
+                                                        **kwargs)
+
+    def get_grant_methods(self):
+        """Returns list of grant methods, converting string based methods
+        to callable methods.
+        """
+        methods = []
+        for method in self.grant_methods:
+            # Convert it to callable
+            method = getattr(self, method)
+            methods.append(method)
+        return methods

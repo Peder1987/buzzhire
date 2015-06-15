@@ -8,10 +8,13 @@ from allauth.account import app_settings
 from allauth.account.utils import complete_signup
 from django.shortcuts import redirect
 from braces.views._access import AnonymousRequiredMixin
-from apps.core.views import ContextMixin, TabsMixin, ConfirmationMixin
+from apps.core.views import ContextMixin, TabsMixin, ConfirmationMixin, \
+                                            GrantCheckingMixin
 from apps.account.views import AdminOnlyMixin
 from apps.client.views import ClientOnlyMixin, OwnedByClientMixin
 from apps.client.forms import ClientInnerForm
+from apps.client.models import Client
+from apps.freelancer.models import Freelancer
 from apps.account.views import SignupView as BaseSignupView
 from . import signals
 from .models import DriverJobRequest
@@ -19,6 +22,8 @@ from .forms import DriverJobRequestForm, DriverJobRequestInnerForm, \
                     DriverJobRequestSignupInnerForm, JobRequestCheckoutForm, \
                     DriverJobRequestUpdateForm
 from django.http.response import HttpResponseRedirect
+from django.core.exceptions import PermissionDenied
+from __builtin__ import True
 
 
 class DriverJobRequestCreate(ClientOnlyMixin, ContextMixin, CreateView):
@@ -148,10 +153,24 @@ class RequestedJobList(ClientOnlyMixin, ContextMixin, TabsMixin, ListView):
             return queryset.future()
 
 
-class DriverJobRequestDetail(OwnedByClientMixin, DetailView):
-    "Detail page for driver job requests."
+class DriverJobRequestDetail(GrantCheckingMixin, DetailView):
+    """Detail page for driver job requests.
+    """
     model = DriverJobRequest
+    require_login = True
     allow_admin = True
+    grant_methods = ['is_owned_by_client']
+
+    def is_owned_by_client(self):
+        """Grant method - returns True if the user is a client, and they
+        own the job request.
+        """
+        try:
+            self.client = self.request.user.client
+        except Client.DoesNotExist:
+            self.client = False
+        else:
+            return self.object.client == self.client
 
     def get_context_data(self, *args, **kwargs):
         context = super(DriverJobRequestDetail, self).get_context_data(*args,

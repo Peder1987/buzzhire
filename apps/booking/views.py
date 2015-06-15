@@ -6,6 +6,7 @@ from apps.core.views import ContextMixin, TabsMixin, ContextTemplateView, \
     ConfirmationMixin, OwnerOnlyMixin
 from apps.driver.models import Driver
 from apps.freelancer.views import FreelancerOnlyMixin
+from apps.freelancer.models import Freelancer
 from apps.job.models import DriverJobRequest
 from .models import Booking, Availability, Invitation
 from .forms import AvailabilityForm, JobMatchingForm, \
@@ -14,6 +15,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import get_object_or_404, redirect
 from .signals import booking_created, invitation_created
 from django.core.exceptions import PermissionDenied
+from apps.job.views import DriverJobRequestDetail
 
 
 class FreelancerHasBookingMixin(FreelancerOnlyMixin, OwnerOnlyMixin):
@@ -279,3 +281,18 @@ class InvitationAccept(FreelancerOnlyMixin, ConfirmationMixin,
         # Dispatch signal
         # booking_created.send(sender=self, booking=self.booking)
         return redirect(self.booking.jobrequest.get_absolute_url())
+
+
+# Add the ability for booked freelancers to see job requests on the job
+# request detail view
+def _is_booked_freelancer(self):
+    # If the user is a freelancer, are they booked on this job?
+    try:
+        self.freelancer = self.request.user.freelancer
+    except Freelancer.DoesNotExist:
+        self.freelancer = False
+    else:
+        return self.object.bookings.for_freelancer(self.freelancer).exists()
+
+DriverJobRequestDetail.is_booked_freelancer = _is_booked_freelancer
+DriverJobRequestDetail.grant_methods.append('is_booked_freelancer')
