@@ -1,3 +1,4 @@
+import time
 from huey.djhuey import crontab, db_periodic_task, db_task
 from apps.core.email import send_mail
 from .models import JobRequest
@@ -14,4 +15,5 @@ def complete_job_requests():
         job_request.complete()
         job_request.save()
         count += 1
-    print('Automatically completed %d job requests.' % count)
+    print('[%s] Automatically completed %d job requests.' % (time.ctime(),
+                                                             count))
