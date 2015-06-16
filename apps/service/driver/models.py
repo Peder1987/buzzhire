@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from multiselectfield import MultiSelectField
 from apps.freelancer.models import Freelancer, PublishedFreelancerManager
 from django.core.urlresolvers import reverse
+from apps.job.models import JobRequest, JobRequestQuerySet
 
 
 def _is_driver(self):
@@ -200,3 +201,52 @@ class DriverVehicleType(models.Model):
     class Meta:
         unique_together = ('driver', 'vehicle_type')
         ordering = ('vehicle_type__title',)
+
+
+class DriverJobRequestManager(models.Manager):
+    """Manager for DriverJobRequests."""
+
+    def get_from_jobrequest(self, jobrequest):
+        "Gets a DriverJobRequest object from the JobRequest."""
+        return self.get(pk=jobrequest.pk)
+
+
+class DriverJobRequest(JobRequest):
+    """A JobRequest that is specifically for drivers to complete.
+    """
+    # To delete
+    vehicle_types_old = models.ManyToManyField(VehicleType,
+           related_name='jobrequests_old', blank=True, null=True)
+
+    vehicle_type = models.ForeignKey(FlexibleVehicleType,
+           related_name='jobrequests',
+           blank=True, null=True,
+           help_text="Which type of vehicle would be appropriate for the job. ")
+
+    minimum_delivery_box = models.PositiveSmallIntegerField(
+            choices=DriverVehicleType.DELIVERY_BOX_CHOICES,
+            default=DriverVehicleType.DELIVERY_BOX_NONE,
+            help_text='For scooters, motorcycles and bicycles, '
+                        'the minimum delivery box size.')
+
+    driving_experience = models.PositiveSmallIntegerField(
+                                'Minimum driving experience',
+                                choices=Driver.DRIVING_EXPERIENCE_CHOICES,
+                                default=Driver.DRIVING_EXPERIENCE_LESS_ONE)
+
+    own_vehicle = models.BooleanField(
+                            'The driver must supply their own vehicle.',
+                            default=True)
+
+    objects = DriverJobRequestManager.from_queryset(JobRequestQuerySet)()
+
+    def get_vehicle_type_display(self):
+        "Returns the vehicle type, or 'Any' if there is none."
+        if self.vehicle_type:
+            return self.vehicle_type
+        return 'Any'
+
+    @property
+    def delivery_box_applicable(self):
+        "Returns whether or not the minimum delivery box is applicable."
+        return self.own_vehicle and self.vehicle_type.delivery_box_applicable

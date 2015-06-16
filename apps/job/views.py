@@ -17,7 +17,7 @@ from apps.client.models import Client
 from apps.freelancer.models import Freelancer
 from apps.account.views import SignupView as BaseSignupView
 from . import signals
-from .models import DriverJobRequest
+from apps.service.driver.models import DriverJobRequest
 from .forms import DriverJobRequestForm, DriverJobRequestInnerForm, \
                     DriverJobRequestSignupInnerForm, JobRequestCheckoutForm, \
                     DriverJobRequestUpdateForm

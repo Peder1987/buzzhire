@@ -2,7 +2,7 @@ from decimal import Decimal
 from django import forms
 from django.forms import widgets
 from django.conf import settings
-from .models import DriverJobRequest
+from apps.service.driver.models import DriverJobRequest
 from apps.core.forms import CrispyFormMixin, ConfirmForm
 from apps.account.forms import SignupInnerForm
 from django.template.loader import render_to_string
@@ -13,7 +13,7 @@ from apps.core.widgets import ChoiceAttrsRadioSelect
 from django.forms.widgets import HiddenInput
 from apps.core.widgets import Bootstrap3SterlingMoneyWidget, Bootstrap3TextInput
 from django.forms import widgets
-from apps.driver.models import VehicleType
+from apps.service.driver.models import VehicleType
 from apps.location.forms import PostcodeFormMixin
 from apps.payment.utils import PaymentAPI, PaymentException
 import logging

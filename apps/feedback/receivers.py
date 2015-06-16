@@ -2,7 +2,8 @@ from django.dispatch import receiver
 from apps.core.email import send_mail
 from django.conf import settings
 from django.template.loader import render_to_string
-from apps.job.models import DriverJobRequest, JobRequest
+from apps.job.models import JobRequest
+from apps.service.driver.models import DriverJobRequest
 from django_fsm.signals import post_transition
 
 

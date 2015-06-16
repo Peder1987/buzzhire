@@ -5,10 +5,10 @@ from django.contrib import messages
 from apps.account.views import AdminOnlyMixin
 from apps.core.views import ContextMixin, TabsMixin, ContextTemplateView, \
     ConfirmationMixin, OwnerOnlyMixin
-from apps.driver.models import Driver
+from apps.service.driver.models import Driver
 from apps.freelancer.views import FreelancerOnlyMixin
 from apps.freelancer.models import Freelancer
-from apps.job.models import DriverJobRequest
+from apps.service.driver.models import DriverJobRequest
 from .models import Booking, Availability, Invitation
 from .forms import AvailabilityForm, JobMatchingForm, \
                     BookingOrInvitationConfirmForm, InvitationAcceptForm

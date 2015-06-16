@@ -4,7 +4,8 @@ from extra_views import FormSetView
 from apps.client.views import OwnedByClientMixin, ClientOnlyMixin
 from apps.core.views import ContextMixin
 from apps.freelancer.views import FreelancerOnlyMixin
-from apps.job.models import JobRequest, DriverJobRequest
+from apps.job.models import JobRequest
+from apps.service.driver.models import DriverJobRequest
 from apps.booking.views import FreelancerHasBookingMixin
 from apps.booking.models import Booking
 from .models import BookingFeedback, \

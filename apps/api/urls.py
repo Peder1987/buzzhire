@@ -5,7 +5,7 @@ from apps.freelancer.api.views import PublicFreelancerViewSet, \
                                     OwnFreelancerViewSet
 from apps.client.api.views import PublicClientViewSet
 from apps.job.api.views import JobRequestViewSet, DriverJobRequestViewSet
-from apps.driver.api.views import OwnDriverViewSet, VehicleTypeViewSet, \
+from apps.service.driver.api.views import OwnDriverViewSet, VehicleTypeViewSet, \
                                     FlexibleVehicleTypeViewSet
 from apps.api.routers import SingleObjectFriendlyRouter
 

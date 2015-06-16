@@ -4,7 +4,8 @@ from apps.core.email import send_mail
 from django.conf import settings
 from django.template.loader import render_to_string
 from .models import Booking
-from apps.job.models import DriverJobRequest, JobRequest
+from apps.job.models import JobRequest
+from apps.service.driver.models import DriverJobRequest
 from .signals import booking_created, invitation_created
 from django_fsm.signals import post_transition
 from . import tasks

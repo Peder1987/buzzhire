@@ -1,5 +1,5 @@
 from django.contrib import admin
-
+from apps.job.admin import JobRequestAdmin
 from . import models
 
 from apps.freelancer.templatetags.freelancer import profile_photo
@@ -32,3 +32,11 @@ class VehicleTypeAdmin(admin.ModelAdmin):
 admin.site.register(models.Driver, DriverAdmin)
 admin.site.register(models.VehicleType, VehicleTypeAdmin)
 admin.site.register(models.DriverVehicleType, DriverVehicleTypeAdmin)
+
+class DriverJobRequestAdmin(JobRequestAdmin):
+    list_display = ('reference_number', 'client', 'date', 'start_time',
+                    'duration', 'end_datetime',
+                    'client_pay_per_hour', 'number_of_freelancers',
+                    'status')
+
+admin.site.register(models.DriverJobRequest, DriverJobRequestAdmin)

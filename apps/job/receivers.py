@@ -3,7 +3,8 @@ from .signals import driverjobrequest_created
 from apps.core.email import send_mail
 from django.conf import settings
 from django.template.loader import render_to_string
-from .models import DriverJobRequest, JobRequest
+from .models import JobRequest
+from apps.service.driver.models import DriverJobRequest
 from django_fsm.signals import post_transition
 
 

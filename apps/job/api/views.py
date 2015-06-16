@@ -2,7 +2,8 @@ from django.db.models import Q
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from .serializers import JobRequestSerializer, DriverJobRequestSerializer
-from ..models import JobRequest, DriverJobRequest
+from ..models import JobRequest
+from apps.service.driver.models import DriverJobRequest
 
 
 class JobRequestViewSet(viewsets.ReadOnlyModelViewSet):

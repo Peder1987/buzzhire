@@ -2,7 +2,7 @@ import calendar
 from .models import Availability
 from apps.job.models import JobRequest
 from apps.freelancer.models import Freelancer, client_to_freelancer_rate
-from apps.driver.models import Driver
+from apps.service.driver.models import Driver
 
 
 class JobMatcher(object):

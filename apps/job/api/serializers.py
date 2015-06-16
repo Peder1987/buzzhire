@@ -1,7 +1,8 @@
 from django.forms import widgets
 from rest_framework import serializers
 from apps.api.serializers import MoneyField
-from ..models import JobRequest, DriverJobRequest
+from ..models import JobRequest
+from apps.service.driver.models import DriverJobRequest
 
 
 class JobRequestSerializer(serializers.ModelSerializer):
