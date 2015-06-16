@@ -15,6 +15,7 @@ from apps.driver.models import Driver, VehicleType, DriverVehicleType, \
 from apps.location.forms import PostcodeFormMixin
 from apps.core.forms import ConfirmForm
 from django.contrib.gis.measure import D
+from .utils import JobMatcher
 
 
 class AvailabilityForm(forms.ModelForm):
@@ -130,21 +131,9 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
 
     def set_initial_based_on_job_request(self):
         "Sets the initial data based on the job request."
-        # Set initial for flat fields (i.e. ones that directly map between
-        # form and job request attributes)
-        FLAT_FIELDS = ('date', 'minimum_delivery_box', 'client_pay_per_hour',
-                       'own_vehicle', 'phone_requirement')
-        for field in FLAT_FIELDS:
-            self.fields[field].initial = getattr(self.job_request, field)
-
-        # Other fields
-        self.fields['raw_postcode'].initial = str(self.job_request.postcode)
-        self.fields['vehicle_type'].initial = \
-                                        self.job_request.vehicle_type
-
-        self.fields['shift'].initial = Availability.shift_from_time(
-                                                self.job_request.start_time)
-
+        matcher = JobMatcher(self.job_request)
+        for name, value in matcher.search_terms.items():
+            self.fields[name].initial = value
 
     def clean(self):
         super(JobMatchingForm, self).clean()
@@ -159,114 +148,11 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
     def get_results(self):
         """Returns the results of a successful search.
         Should be called after the form has been successfully validated."""
-
-        results = Driver.published_objects.all()
-
-        results = self.filter_by_phone_requirement(results)
-        results = self.filter_by_vehicle_requirements(results)
-        results = self.filter_by_availability(results)
-        results = self.filter_by_pay_per_hour(results)
-        results = self.filter_by_location(results)
-
-        # Return unique results
-        return results.distinct()
-
-    def filter_by_phone_requirement(self, results):
-        "Filters by the phone requirement."
-        PHONE_REQUIREMENT_MAP = {
-            JobRequest.PHONE_REQUIREMENT_NOT_REQUIRED: lambda r: r,
-            JobRequest.PHONE_REQUIREMENT_ANY:
-                lambda r: r.exclude(
-                    phone_type__in=(Freelancer.PHONE_TYPE_NON_SMARTPHONE, '')),
-            JobRequest.PHONE_REQUIREMENT_ANDROID:
-                lambda r: r.filter(phone_type=Freelancer.PHONE_TYPE_ANDROID),
-            JobRequest.PHONE_REQUIREMENT_IPHONE:
-                lambda r: r.filter(phone_type=Freelancer.PHONE_TYPE_IPHONE),
-            JobRequest.PHONE_REQUIREMENT_WINDOWS:
-                lambda r: r.filter(phone_type=Freelancer.PHONE_TYPE_WINDOWS),
-        }
-
-        if self.cleaned_data['phone_requirement']:
-            results = PHONE_REQUIREMENT_MAP[
-                            self.cleaned_data['phone_requirement']](results)
-        return results
-
-    def filter_by_vehicle_requirements(self, results):
-        "Filters by vehicle requirements."
-
-        if self.cleaned_data['vehicle_type']:
-            # The supplied vehicle type is a FlexibleVehicleType; unpack it
-            # into individual VehicleTypes.
-            vehicle_types = self.cleaned_data['vehicle_type'].as_queryset()
-            if self.cleaned_data['own_vehicle']:
-                # Filter by vehicle types that are owned
-                filter_kwargs = {
-                    'drivervehicletype__vehicle_type': \
-                                    vehicle_types,
-                    'drivervehicletype__own_vehicle': True
-                }
-                # Include delivery box filter, if specified
-                if self.cleaned_data['minimum_delivery_box']:
-                    filter_kwargs['drivervehicletype__delivery_box__gte'] = \
-                                    self.cleaned_data['minimum_delivery_box']
-                results = results.filter(**filter_kwargs)
-            else:
-                # Just filter by vehicle types
-                filter_kwargs = {
-                    'vehicle_types': vehicle_types
-                }
-            return results.filter(**filter_kwargs)
-
-        return results
-
-    def filter_by_availability(self, results):
-        "Filters by availability, if it's been searched for."
-
-        if self.cleaned_data['date']:
-
-            # Get day of week for that date
-            day_name = calendar.day_name[
-                                self.cleaned_data['date'].weekday()].lower()
-
-            # Build filter kwargs
-            field_name = '%s_%s' % (day_name, self.cleaned_data['shift'])
-            filter_kwargs = {'availability__%s' % field_name: True}
-
-            # Filter
-            results = results.filter(**filter_kwargs)
-
-        return results
-
-    def filter_by_pay_per_hour(self, results):
-        """Filters the results based on the minimum pay per hour.
-        """
-
-        if self.cleaned_data['client_pay_per_hour']:
-            self.freelancer_pay_per_hour = client_to_freelancer_rate(
-                                    self.cleaned_data['client_pay_per_hour'])
-            return results.filter(
-                        minimum_pay_per_hour__lte=self.freelancer_pay_per_hour)
-        return results
-
-    def filter_by_location(self, results):
-        """Filters the results by the supplied postcode, checking that it's
-        within an acceptable distance for the driver."""
-        if self.cleaned_data.get('postcode'):
-            # Specific include distances so the template knows
-            self.include_distances = True
-            searched_point = self.cleaned_data['postcode'].point
-            results = results.distance(searched_point,
-                                       field_name='postcode__point')\
-                        .order_by('distance')
-
-            # if self.cleaned_data['respect_travel_distance']:
-                # Filter by only those drivers whose travel distance works
-                # with the postcode supplied
-                # TODO - get this working with their personal distance settings
-                # http://stackoverflow.com/questions/9547069/geodjango-distance-filter-with-distance-value-stored-within-model-query
-                # results = results.filter(
-                #      postcode__point__distance_lte=(searched_point, D(mi=4)))
-
+        matcher = JobMatcher(self.cleaned_data)
+        results = matcher.get_results()
+        # Also set the freelancer_pay_per_hour on the form
+        self.freelancer_pay_per_hour = getattr(matcher,
+                                            'freelancer_pay_per_hour', None)
         return results
 
 

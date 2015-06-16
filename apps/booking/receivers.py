@@ -4,8 +4,23 @@ from apps.core.email import send_mail
 from django.conf import settings
 from django.template.loader import render_to_string
 from .models import Booking
-from apps.job.models import DriverJobRequest
+from apps.job.models import DriverJobRequest, JobRequest
 from .signals import booking_created, invitation_created
+from django_fsm.signals import post_transition
+from . import tasks
+
+
+@receiver(post_transition)
+def invite_matching_freelancers(sender, instance, name,
+                                source, target, **kwargs):
+    """Invites all freelancers who match the job request,
+    when a new job request is opened."""
+    if name == 'open' and issubclass(sender, JobRequest):
+        # Only do JobRequests, or subclasses.
+        if sender is JobRequest:
+            # For now, we just manually load the DriverJobRequest
+            instance = DriverJobRequest.objects.get_from_jobrequest(instance)
+        tasks.invite_matching_freelancers(instance)
 
 
 @receiver(booking_created)
