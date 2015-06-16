@@ -4,9 +4,9 @@ from apps.booking.api.views import FreelancerBookingViewSet
 from apps.freelancer.api.views import PublicFreelancerViewSet, \
                                     OwnFreelancerViewSet
 from apps.client.api.views import PublicClientViewSet
-from apps.job.api.views import JobRequestViewSet, DriverJobRequestViewSet
-from apps.service.driver.api.views import OwnDriverViewSet, VehicleTypeViewSet, \
-                                    FlexibleVehicleTypeViewSet
+from apps.job.api.views import JobRequestViewSet
+from apps.service.driver.api.views import OwnDriverViewSet, \
+        VehicleTypeViewSet, FlexibleVehicleTypeViewSet, DriverJobRequestViewSet
 from apps.api.routers import SingleObjectFriendlyRouter
 
 # This app is where we define the endpoints for the API,

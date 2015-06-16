@@ -2,8 +2,8 @@ from rest_framework import viewsets
 from rest_framework import mixins
 from rest_framework.permissions import IsAuthenticated
 from .serializers import PrivateDriverSerializer, VehicleTypeSerializer, \
-                        FlexibleVehicleTypeSerializer
-from ..models import VehicleType, FlexibleVehicleType, Driver
+                    FlexibleVehicleTypeSerializer, DriverJobRequestSerializer
+from ..models import VehicleType, FlexibleVehicleType, Driver, DriverJobRequest
 from .permissions import DriverOnlyPermission
 from apps.api.views import RetrieveAndUpdateViewset
 
@@ -55,3 +55,16 @@ class OwnDriverViewSet(RetrieveAndUpdateViewset):
 
     def get_object(self):
         return self.request.user.driver
+
+
+class DriverJobRequestViewSet(viewsets.ReadOnlyModelViewSet):
+    """All driver job requests.  Publicly viewable information.
+    
+    * `flexible_vehicle_type`: The flexible vehicle type that would
+      be appropriate for the job, or null if any vehicle would be appropriate.
+    """
+    serializer_class = DriverJobRequestSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        return DriverJobRequest.objects.all()

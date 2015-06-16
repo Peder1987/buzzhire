@@ -20,7 +20,7 @@
     {% if request.user.is_admin %}
         <a class='btn btn-default' href='{% url 'job_matching_for_job_request' object.pk %}'>{{ 'job_matching'|icon }} Job matching</a>
         <a class='btn btn-default' href='{% url 'driverjobrequest_edit' object.pk %}'>{{ 'edit'|icon }} Edit</a>
-        <a class='btn btn-default' href='{% url 'admin:job_driverjobrequest_change' object.pk %}'>{{ 'admin'|icon }} View in Django admin</a>
+        <a class='btn btn-default' href='{% url 'admin:driver_driverjobrequest_change' object.pk %}'>{{ 'admin'|icon }} View in Django admin</a>
     {% elif request.user.is_freelancer %}
         {% if object|booking_exists_for_freelancer:request.user.freelancer %}
             <span class='label label-success'>{{ 'yes'|icon }} You have been booked</span>
