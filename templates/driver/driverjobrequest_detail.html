@@ -6,7 +6,7 @@
   {% if client %}
     {% breadcrumb 'Requested jobs' 'requested_jobs' %}
   {% elif request.user.is_admin %}
-    {% breadcrumb 'Job requests' 'driverjobrequest_admin_list' %}
+    {% breadcrumb 'Job requests' 'job_request_admin_list' %}
   {% else %}
     {% if object|booking_exists_for_freelancer:request.user.freelancer %}
         {% breadcrumb 'Bookings' 'freelancer_bookings_list' %}

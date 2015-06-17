@@ -4,7 +4,7 @@
       <div class="panel-heading">{{ 'admin'|icon }} Admin</div>
       <div class="list-group">
           
-          {% url 'driverjobrequest_admin_list' as link_url %}
+          {% url 'job_request_admin_list' as link_url %}
           {% include 'includes/panel_link.html' with icon_name='requested_jobs' link_text='Job requests' %}
           
           {% url 'job_matching' as link_url %}

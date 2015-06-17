@@ -170,6 +170,7 @@ class DriverVehicleType(models.Model):
     """'Through' model for storing information for a driver about
     a particular vehicle.
     """
+
     driver = models.ForeignKey(Driver)
     vehicle_type = models.ForeignKey(VehicleType,
         help_text='Note: you may only create one vehicle of each type.')
@@ -214,6 +215,8 @@ class DriverJobRequestManager(models.Manager):
 class DriverJobRequest(JobRequest):
     """A JobRequest that is specifically for drivers to complete.
     """
+    service = 'driver'
+
     # To delete
     vehicle_types_old = models.ManyToManyField(VehicleType,
            related_name='jobrequests_old', blank=True, null=True)

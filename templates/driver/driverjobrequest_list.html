@@ -1,6 +1,2 @@
-{% extends 'account/dashboard_base.html' %}
-{% load icons humanize %}
-{% block content %}
-    {% include 'includes/tabs.html' %}  
-    {% include 'job/includes/driverjobrequest_table.html' %}
-{% endblock %}
+{% extends 'job/jobrequest_list.html' %}
+{# TODO remove this and just change the template name in the view #}

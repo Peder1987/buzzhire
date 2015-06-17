@@ -158,7 +158,7 @@ class BaseInvitationOrBookingConfirm(AdminOnlyMixin, ConfirmationMixin,
             # The booking/invitation already exists
             messages.error(self.request, 'That %s already exists.' \
                                     % self.model_class._meta.verbose_name)
-            return redirect('driverjobrequest_admin_list')
+            return redirect('job_request_admin_list')
         return super(BaseInvitationOrBookingConfirm, self).dispatch(
                                                             *args, **kwargs)
 

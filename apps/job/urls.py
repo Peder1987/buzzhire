@@ -6,9 +6,9 @@ from apps.job.models import JobRequest
 
 urlpatterns = [
      url(r'^admin/$', views.AdminJobList.as_view(),
-         name='driverjobrequest_admin_list'),
+         name='job_request_admin_list'),
      url(r'^admin/(?P<status>[\w]+)/$', views.AdminJobList.as_view(),
-        name='driverjobrequest_admin_list_tab'),
+        name='job_request_admin_list_tab'),
 
      url(r'^requested/$', views.RequestedJobList.as_view(),
          name='requested_jobs'),

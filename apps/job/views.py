@@ -17,6 +17,7 @@ from apps.client.models import Client
 from apps.freelancer.models import Freelancer
 from apps.account.views import SignupView as BaseSignupView
 from . import signals
+from .models import JobRequest
 from apps.service.driver.models import DriverJobRequest
 from .forms import DriverJobRequestForm, DriverJobRequestInnerForm, \
                     DriverJobRequestSignupInnerForm, JobRequestCheckoutForm, \
@@ -246,7 +247,7 @@ class DriverJobRequestDone(OwnedByClientMixin, ContextMixin, DetailView):
 
 
 class AdminJobList(AdminOnlyMixin, ContextMixin, TabsMixin, ListView):
-    """List of driver job requests for admin users.
+    """List of job requests for admin users.
     """
     paginate_by = 15
     extra_context = {'title': 'Job requests'}
@@ -254,14 +255,14 @@ class AdminJobList(AdminOnlyMixin, ContextMixin, TabsMixin, ListView):
     def get_tabs(self):
         "Returns a list of two-tuples for the tabs."
         tabs = []
-        for status_value, status_title in DriverJobRequest.STATUS_CHOICES:
+        for status_value, status_title in JobRequest.STATUS_CHOICES:
             tabs.append((status_title,
-                         reverse('driverjobrequest_admin_list_tab',
+                         reverse('job_request_admin_list_tab',
                                  kwargs={'status': status_value})))
         return tabs
 
     def get_queryset(self, *args, **kwargs):
 
-        return DriverJobRequest.objects.filter(
+        return JobRequest.objects.filter(
                     status=self.kwargs.get('status',
-                                           DriverJobRequest.STATUS_OPEN))
+                                           JobRequest.STATUS_OPEN))
