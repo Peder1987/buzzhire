@@ -129,5 +129,5 @@ class FreelancerFeedbackCreate(FreelancerHasBookingMixin,
     def get_context_data(self, *args, **kwargs):
         context = super(FreelancerFeedbackCreate, self).get_context_data(*args,
                                                                     **kwargs)
-        context['for_driver'] = True
+        context['for_freelancer'] = True
         return context

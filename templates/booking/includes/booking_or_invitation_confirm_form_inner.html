@@ -34,7 +34,7 @@
             <h3 class='light-icon'>{{ 'right_arrow'|icon }}</h3>
         </div>
         <div class='col-md-5'>
-            {% include 'job/includes/driverjobrequest_summary.html' with object=form.job_request %}
+            {% job_request_summary form.job_request %}
         </div>
     </div>
 {% endblock %}

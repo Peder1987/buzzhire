@@ -1,5 +1,5 @@
-{% extends 'job/driverjobrequest_detail.html' %}
-{% load django_bootstrap_breadcrumbs humanize %}
+{% extends 'job/jobrequest_detail.html' %}
+{% load django_bootstrap_breadcrumbs humanize job %}
 
 {% block page_actions %}{% endblock %}
 
@@ -14,7 +14,7 @@
             <p>We will be in touch shortly to confirm your driver{{ object.number_of_freelancers|pluralize }}.</p>  
         </div>
         <div class='col-md-5'>
-            {% include 'job/includes/driverjobrequest_summary.html' %}    
+            {% job_request_summary object %}    
         </div>
     </div>
 {% endblock %}

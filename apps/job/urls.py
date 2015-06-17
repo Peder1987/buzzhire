@@ -28,12 +28,12 @@ urlpatterns = [
          name='driverjobrequest_create_anon'),
 
     url(r'^requests/(?P<pk>[\d]+)/checkout/$',
-        views.DriverJobRequestCheckout.as_view(),
-        name='driverjobrequest_checkout'),
+        views.JobRequestCheckout.as_view(),
+        name='job_request_checkout'),
 
      url(r'^requests/(?P<pk>[\d]+)/done/$',
-         views.DriverJobRequestDone.as_view(),
-         name='driverjobrequest_done'),
+         views.JobRequestDone.as_view(),
+         name='job_request_done'),
 
     url(r'^requests/(?P<pk>[\d]+)/$', views.JobRequestDetail.as_view(),
         name='jobrequest_detail'),

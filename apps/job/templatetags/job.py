@@ -2,6 +2,7 @@ from django import template
 from ..models import JobRequest
 from django.utils.safestring import mark_safe
 from .. import services
+from django.template.loader import render_to_string
 
 
 register = template.Library()
@@ -66,3 +67,16 @@ def get_services():
         {% endfor %} 
     """
     return services.values()
+
+
+@register.simple_tag
+def job_request_summary(job_request):
+    """Outputs a summary of the supplied job request.
+    Usage:
+    
+        {% job_request_summary object %}
+    """
+    template_name = '%s/includes/%s_summary.html' % (
+                                            job_request._meta.app_label,
+                                            job_request._meta.model_name)
+    return render_to_string(template_name, {'object': job_request})

@@ -1,5 +1,5 @@
-{% extends 'job/driverjobrequest_detail.html' %}
-{% load icons django_bootstrap_breadcrumbs crispy_forms_tags payment %}
+{% extends 'job/jobrequest_detail.html' %}
+{% load icons django_bootstrap_breadcrumbs crispy_forms_tags payment job %}
 
 {% block page_actions %}{% endblock %}
 
@@ -11,7 +11,7 @@
 {% block content %}
     <div class='row'>
         <div class='col-md-5'>
-            {% include 'job/includes/driverjobrequest_summary.html' %}    
+            {% job_request_summary object %}    
         </div>
         <div class='col-md-7'>
             {% crispy form %}    

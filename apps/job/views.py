@@ -60,7 +60,7 @@ class JobRequestCreate(ClientOnlyMixin, ServiceViewMixin,
         return context
 
     def get_success_url(self):
-        return reverse('driverjobrequest_checkout', args=(self.object.pk,))
+        return reverse('job_request_checkout', args=(self.object.pk,))
 
     def form_valid(self, form):
         """Adapted version of ModelFormMixin.form_valid
@@ -219,27 +219,27 @@ class JobRequestUpdate(AdminOnlyMixin, SuccessMessageMixin, UpdateView):
         return context
 
 
-class DriverJobRequestCheckout(OwnedByClientMixin, SingleObjectMixin,
+class JobRequestCheckout(OwnedByClientMixin, SingleObjectMixin,
                                FormView):
     "Checkout page where client pays for and opens the job request."
-    model = DriverJobRequest
-    template_name = 'job/driverjobrequest_checkout.html'
+    model = JobRequest
+    template_name = 'job/checkout.html'
     form_class = JobRequestCheckoutForm
 
     def dispatch(self, *args, **kwargs):
         self.object = self.get_object()
-        if self.object.status != DriverJobRequest.STATUS_CHECKOUT:
+        if self.object.status != JobRequest.STATUS_CHECKOUT:
             return redirect(self.object.get_absolute_url())
-        return super(DriverJobRequestCheckout, self).dispatch(*args, **kwargs)
+        return super(JobRequestCheckout, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, *args, **kwargs):
-        context = super(DriverJobRequestCheckout, self).get_context_data(*args,
+        context = super(JobRequestCheckout, self).get_context_data(*args,
                                                                     **kwargs)
         context['title'] = 'Confirm and pay'
         return context
 
     def get_form_kwargs(self, *args, **kwargs):
-        form_kwargs = super(DriverJobRequestCheckout,
+        form_kwargs = super(JobRequestCheckout,
                             self).get_form_kwargs(*args, **kwargs)
         # Pass the job request to the form
         # import pdb; pdb.set_trace()
@@ -248,11 +248,11 @@ class DriverJobRequestCheckout(OwnedByClientMixin, SingleObjectMixin,
 
     def form_valid(self, form):
         form.save()
-        return super(DriverJobRequestCheckout, self).form_valid(form)
+        return super(JobRequestCheckout, self).form_valid(form)
 
     def get_success_url(self):
         # Redirect to confirmation page
-        return reverse('driverjobrequest_done', args=(self.object.pk,))
+        return reverse('job_request_done', args=(self.object.pk,))
 
 # class DriverJobRequestForFreelancerList(FreelancerOnlyMixin, ListView):
 #     """List of driver job requests accepted by a freelancer."""
@@ -261,11 +261,11 @@ class DriverJobRequestCheckout(OwnedByClientMixin, SingleObjectMixin,
 #     def get_queryset(self, *args, **kwargs):
 #         return DriverJobRequest.objects.for_freelancer(self.freelancer)
 
-class DriverJobRequestDone(OwnedByClientMixin, ContextMixin, DetailView):
-    "Confirmation page on successful driver job request submission."
-    template_name = 'job/driverjobrequest_done.html'
+class JobRequestDone(OwnedByClientMixin, ContextMixin, DetailView):
+    "Confirmation page on successful job request submission."
+    template_name = 'job/done.html'
     extra_context = {'title': 'Thanks for your booking'}
-    model = DriverJobRequest
+    model = JobRequest
 
 
 class AdminJobList(AdminOnlyMixin, ContextMixin, TabsMixin, ListView):
