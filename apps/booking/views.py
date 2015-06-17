@@ -16,7 +16,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import get_object_or_404, redirect
 from .signals import booking_created, invitation_created
 from django.core.exceptions import PermissionDenied
-from apps.job.views import DriverJobRequestDetail
+from apps.job.views import JobRequestDetail
 from django.http.response import HttpResponseRedirect
 
 
@@ -311,6 +311,6 @@ def _is_booked_or_invited_freelancer(self):
         return self.object.bookings.for_freelancer(self.freelancer).exists() \
             or self.object.invitations.for_freelancer(self.freelancer).exists()
 
-DriverJobRequestDetail.is_booked_or_invited_freelancer = \
+JobRequestDetail.is_booked_or_invited_freelancer = \
                                             _is_booked_or_invited_freelancer
-DriverJobRequestDetail.grant_methods.append('is_booked_or_invited_freelancer')
+JobRequestDetail.grant_methods.append('is_booked_or_invited_freelancer')

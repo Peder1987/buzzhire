@@ -105,3 +105,9 @@ def flatatt_for_choice(widget, choice_value):
     except (AttributeError, KeyError):
         pass
     return flatatt_filter(choice_attrs)
+
+
+@register.filter
+def model_opts(instance):
+    "Returns the _meta attribute from the supplied model."
+    return instance._meta

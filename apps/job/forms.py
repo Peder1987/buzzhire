@@ -23,39 +23,7 @@ from __builtin__ import True
 logger = logging.getLogger('project')
 
 
-class DriverJobRequestForm(CrispyFormMixin,
-                           forms.ModelForm):
-    """Form for submitting a job request.
-    Should be instantiated with a Client object.
-    """
-    submit_text = 'Book'
-    submit_context = {'icon_name': 'driverjobrequest_create'}
-    postcode_required = True
-
-    def __init__(self, *args, **kwargs):
-        super(DriverJobRequestForm, self).__init__(*args, **kwargs)
-        # Adjust display of radios
-        self.fields['vehicle_type'].empty_label = 'Any'
-        self.fields['vehicle_type'].initial = ''  # Set 'Any' radio as default
-
-        self.helper.layout = layout.Layout(
-            layout.Fieldset('Vehicle',
-                layout.Div('vehicle_type', css_class="radios-wrapper"),
-                'own_vehicle',
-                'minimum_delivery_box',
-            ),
-        )
-
-        # Add the submit button, but allow subclassing forms to suppress it
-        if self.submit_name:
-            self.helper.layout.append(self.get_submit_button())
-
-    class Meta:
-        model = DriverJobRequest
-        fields = ('vehicle_type', 'own_vehicle',
-                  'minimum_delivery_box',)
-
-class DriverJobRequestForm(CrispyFormMixin, PostcodeFormMixin,
+class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
                            forms.ModelForm):
     """Form for submitting a job request.
     Should be instantiated with a Client object.
@@ -169,6 +137,9 @@ class DriverJobRequestForm(CrispyFormMixin, PostcodeFormMixin,
                                         choice_attrs={'hello': 'there'}),
         }
 
+class DriverJobRequestForm(JobRequestForm):
+    # Temp class to keep things working
+    pass
 
 class DriverJobRequestInnerForm(DriverJobRequestForm):
     """DriverJobRequestForm for including with other forms in a
@@ -191,7 +162,7 @@ class DriverJobRequestSignupInnerForm(SignupInnerForm):
             """<p>Please give us an email address and password that you
             can use to sign in to the site."""))
 
-class DriverJobRequestUpdateForm(DriverJobRequestForm):
+class JobRequestUpdateForm(DriverJobRequestForm):
     "Edit form for driver job requests."
     submit_text = 'Save'
     submit_context = {}

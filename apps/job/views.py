@@ -21,7 +21,7 @@ from .models import JobRequest
 from apps.service.driver.models import DriverJobRequest
 from .forms import DriverJobRequestForm, DriverJobRequestInnerForm, \
                     DriverJobRequestSignupInnerForm, JobRequestCheckoutForm, \
-                    DriverJobRequestUpdateForm
+                    JobRequestUpdateForm
 from django.http.response import HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
 
@@ -154,12 +154,12 @@ class RequestedJobList(ClientOnlyMixin, ContextMixin, TabsMixin, ListView):
             return queryset.future()
 
 
-class DriverJobRequestDetail(GrantCheckingMixin, DetailView):
-    """Detail page for driver job requests.
+class JobRequestDetail(GrantCheckingMixin, DetailView):
+    """Detail page for job requests.
     We use the GrantCheckingMixin as we want other apps that this app
     doesn't know about (e.g. bookings) to grant certain freelancers access.
     """
-    model = DriverJobRequest
+    model = JobRequest
     require_login = True
     allow_admin = True
     grant_methods = ['is_owned_by_client']
@@ -176,23 +176,23 @@ class DriverJobRequestDetail(GrantCheckingMixin, DetailView):
             return self.object.client == self.client
 
     def get_context_data(self, *args, **kwargs):
-        context = super(DriverJobRequestDetail, self).get_context_data(*args,
+        context = super(JobRequestDetail, self).get_context_data(*args,
                                                                        **kwargs)
         context['title'] = self.object
         context['client'] = self.client
         return context
 
 
-class DriverJobRequestUpdate(AdminOnlyMixin, SuccessMessageMixin, UpdateView):
-    "Edit page for driver job requests."
-    model = DriverJobRequest
-    form_class = DriverJobRequestUpdateForm
-    template_name = 'job/driverjobrequest_update.html'
+class JobRequestUpdate(AdminOnlyMixin, SuccessMessageMixin, UpdateView):
+    "Edit page for job requests."
+    model = JobRequest
+    form_class = JobRequestUpdateForm
+    template_name = 'job/job_request_update.html'
     success_message = 'Saved.'
 
     def get_context_data(self, *args, **kwargs):
-        context = super(DriverJobRequestUpdate, self).get_context_data(*args,
-                                                                       **kwargs)
+        context = super(JobRequestUpdate, self).get_context_data(*args,
+                                                                 **kwargs)
         context['title'] = 'Edit %s' % self.object
         return context
 

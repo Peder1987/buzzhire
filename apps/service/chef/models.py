@@ -9,7 +9,7 @@ from apps.job.models import JobRequest, JobRequestQuerySet
 class ChefJobRequest(JobRequest):
     """A JobRequest that is specifically for chefs to complete.
     """
-    service = 'chef'
+    service = 'kitchen staff'
 
     CERTIFICATION_CHEF = 'CH'
     CERTIFICATION_SOUS_CHEF = 'SC'
