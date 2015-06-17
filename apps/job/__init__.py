@@ -36,3 +36,13 @@ def autodiscover():
     """Automatically imports any services.py file in an app.
     """
     autodiscover_modules('services')
+
+
+def service_from_job_request(job_request):
+    # Returns the service for the supplied job request
+    for service in services.values():
+        if service.job_request_model == job_request.__class__:
+            return service
+    raise ValueError('Could not get find a service registered for '
+                     '%s job_request.' % job_request.__class__)
+

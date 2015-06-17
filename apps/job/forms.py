@@ -2,7 +2,6 @@ from decimal import Decimal
 from django import forms
 from django.forms import widgets
 from django.conf import settings
-from apps.service.driver.models import DriverJobRequest
 from apps.core.forms import CrispyFormMixin, ConfirmForm
 from apps.account.forms import SignupInnerForm
 from django.template.loader import render_to_string
@@ -16,8 +15,8 @@ from django.forms import widgets
 from apps.service.driver.models import VehicleType
 from apps.location.forms import PostcodeFormMixin
 from apps.payment.utils import PaymentAPI, PaymentException
+from .models import JobRequest
 import logging
-from __builtin__ import True
 
 
 logger = logging.getLogger('project')
@@ -41,9 +40,9 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
             data = kwargs['data'].copy()
             # The posted key is different if the form has a prefix
             self.prefix = kwargs.get('prefix')
-            data[self.add_prefix('city')] = DriverJobRequest.CITY_LONDON
+            data[self.add_prefix('city')] = JobRequest.CITY_LONDON
             kwargs['data'] = data
-        super(DriverJobRequestForm, self).__init__(*args, **kwargs)
+        super(JobRequestForm, self).__init__(*args, **kwargs)
 
         amount, currency = self.fields['client_pay_per_hour'].fields
         self.fields['client_pay_per_hour'].widget = Bootstrap3SterlingMoneyWidget(
@@ -55,8 +54,6 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
         self.fields['duration'].widget = Bootstrap3TextInput(addon_after='hours')
         self.fields['city'].widget.attrs = {'disabled': 'disabled'}
 
-        self.adjust_vehicle_type_widget()
-
         self.fields['comments'].widget.attrs = {'rows': 3}
         self.helper.layout = layout.Layout(
             layout.Fieldset('Date and time',
@@ -67,14 +64,8 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
                 'city',
                 'raw_postcode',
             ),
-            layout.Fieldset('Vehicle',
-                layout.Div('vehicle_type', css_class="radios-wrapper"),
-                'own_vehicle',
-                'minimum_delivery_box',
-            ),
-            layout.Fieldset('Driver details',
+            layout.Fieldset('Freelancer details',
                 'number_of_freelancers',
-                'driving_experience',
                 'phone_requirement',
             ),
             layout.Fieldset('Budget',
@@ -90,26 +81,6 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
         if self.submit_name:
             self.helper.layout.append(self.get_submit_button())
 
-    def adjust_vehicle_type_widget(self):
-        """Adjusts the vehicle type widget so it has
-        'data-delivery-box_applicable' set on any radios that need a delivery
-        box.  The javascript will use this to hide/show the delivery box field. 
-        """
-        # Adjust display of radios
-        self.fields['vehicle_type'].empty_label = 'Any'
-        self.fields['vehicle_type'].initial = ''  # Set 'Any' radio as default
-
-        # Build list of the vehicle types that need a delivery box
-        vehicle_type_choices = list(VehicleType.objects.filter(
-                    delivery_box_applicable=True).values_list('pk', flat=True))
-        vehicle_type_choices.append('')  # Also add the 'any' choice
-        vehicle_type_attrs = dict(
-            [(i, {'data-delivery-box-applicable': 'true'}) \
-             for i in vehicle_type_choices])
-        self.fields['vehicle_type'].widget = ChoiceAttrsRadioSelect(
-                                choice_attrs=vehicle_type_attrs)
-
-
     def save(self, client, commit=True):
         """We require the client to be passed at save time.  This is
         to make it easier to include the form before the client is created,
@@ -119,26 +90,20 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
         # Make sure the city of London is saved
         # self.instance.city = DriverJobRequest.CITY_LONDON
         self.instance.postcode = self.cleaned_data['postcode']
-        return super(DriverJobRequestForm, self).save(commit)
+        return super(JobRequestForm, self).save(commit)
 
     class Meta:
-        model = DriverJobRequest
+        model = JobRequest
         fields = ('date', 'start_time', 'duration',
                   'address1', 'address2', 'city',
                   'client_pay_per_hour', 'tips_included',
-                  'vehicle_type', 'own_vehicle',
-                  'minimum_delivery_box',
-                  'driving_experience',
                   'number_of_freelancers',
                   'phone_requirement',
                   'comments')
-        widgets = {
-            'vehicle_type': ChoiceAttrsRadioSelect(
-                                        choice_attrs={'hello': 'there'}),
-        }
+
 
 class DriverJobRequestForm(JobRequestForm):
-    # Temp class to keep things working
+    # TO DELETE - Temp class to keep things working
     pass
 
 class DriverJobRequestInnerForm(DriverJobRequestForm):
@@ -150,36 +115,43 @@ class DriverJobRequestInnerForm(DriverJobRequestForm):
     wrap_fieldset_title = 'Job details'
 
 
-class DriverJobRequestSignupInnerForm(SignupInnerForm):
+class JobRequestSignupInnerForm(SignupInnerForm):
     submit_name = 'book'
-    submit_text = 'Book a driver'
+    submit_text = 'Book a freelancer'
     submit_context = {'icon_name': 'book'}
 
     def __init__(self, *args, **kwargs):
-        super(DriverJobRequestSignupInnerForm, self).__init__(*args, **kwargs)
+        super(JobRequestSignupInnerForm, self).__init__(*args, **kwargs)
 
         self.helper.layout[0].insert(0, layout.HTML(
             """<p>Please give us an email address and password that you
             can use to sign in to the site."""))
 
-class JobRequestUpdateForm(DriverJobRequestForm):
-    "Edit form for driver job requests."
+
+class DriverJobRequestSignupInnerForm(JobRequestSignupInnerForm):
+    # Temp - to keep things working
+    pass
+
+class JobRequestUpdateMixin(object):
+    "Form mixin for job request edit forms."
     submit_text = 'Save'
     submit_context = {}
 
-    notify = forms.BooleanField(
+    def __init__(self, *args, **kwargs):
+        super(JobRequestUpdateMixin, self).__init__(*args, **kwargs)
+        # Add this field dynamically - the usual form field definition
+        # doesn't work for mixins not inheriting from forms.Form.
+        self.fields['notify'] = forms.BooleanField(
             label='Notify the client when saving this job.',
             required=False, initial=True)
 
-    def __init__(self, *args, **kwargs):
-        super(DriverJobRequestUpdateForm, self).__init__(*args, **kwargs)
         self.helper.layout.insert(-1,
             layout.Fieldset('Notifications', 'notify')
         )
 
     def save(self, *args, **kwargs):
         kwargs['client'] = self.instance.client
-        instance = super(DriverJobRequestUpdateForm, self).save(*args, **kwargs)
+        instance = super(JobRequestUpdateMixin, self).save(*args, **kwargs)
         if self.cleaned_data['notify']:
             # Notify the client
             content = render_to_string(

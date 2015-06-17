@@ -20,11 +20,10 @@ from . import signals
 from .models import JobRequest
 from apps.service.driver.models import DriverJobRequest
 from .forms import DriverJobRequestForm, DriverJobRequestInnerForm, \
-                    DriverJobRequestSignupInnerForm, JobRequestCheckoutForm, \
-                    JobRequestUpdateForm
+                    DriverJobRequestSignupInnerForm, JobRequestCheckoutForm
 from django.http.response import HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
-
+from . import services, service_from_job_request
 
 
 class DriverJobRequestCreate(ClientOnlyMixin, ContextMixin, CreateView):
@@ -183,12 +182,16 @@ class JobRequestDetail(GrantCheckingMixin, DetailView):
         return context
 
 
+
 class JobRequestUpdate(AdminOnlyMixin, SuccessMessageMixin, UpdateView):
     "Edit page for job requests."
     model = JobRequest
-    form_class = JobRequestUpdateForm
-    template_name = 'job/job_request_update.html'
     success_message = 'Saved.'
+
+    def get_form_class(self):
+        # Return the form registered on the service as job_request_edit_form
+        service = service_from_job_request(self.object)
+        return service.job_request_edit_form
 
     def get_context_data(self, *args, **kwargs):
         context = super(JobRequestUpdate, self).get_context_data(*args,

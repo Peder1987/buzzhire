@@ -142,7 +142,7 @@ class JobRequest(PolymorphicModel):
                     'job request finishes.')
 
     number_of_freelancers = models.PositiveSmallIntegerField(
-                                'Number of drivers required',
+                                'Number of freelancers required',
                                 choices=[(i, i) for i in range(1, 10)],
                                 default=1)
 
