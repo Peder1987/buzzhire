@@ -29,7 +29,7 @@ ICON_MAP = {
     'driver_profile_change': 'edit',
     'client_profile_change': 'edit',
     'client': 'briefcase',
-    'driverjobrequest_create': 'motorcycle',
+    'job_request_create': 'plus-circle',
     'requested_jobs': 'list',
     'freelancer_bookings': 'list',
     'availability': 'calendar',
@@ -51,6 +51,7 @@ ICON_MAP = {
     'score_empty': 'star-o',
     'score_half': 'star-half-o',
     'invitation': 'paper-plane-o',
+    'chef': 'cutlery',
 }
 
 @register.filter

@@ -21,3 +21,18 @@ class WeightedRegistry(Registry):
 
     def __iter__(self):
         return self._ordered_dict.__iter__()
+
+
+class classproperty(object):
+    """Decorator for class-level properties.
+    
+    Usage:
+    
+        class MyClass(object):
+            @classproperty(cls):
+                return cls.something
+    """
+    def __init__(self, fget):
+        self.fget = fget
+    def __get__(self, owner_self, owner_cls):
+        return self.fget(owner_cls)

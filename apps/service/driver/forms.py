@@ -15,6 +15,7 @@ from apps.core.widgets import ChoiceAttrsRadioSelect
 class DriverJobRequestForm(JobRequestForm):
     """Form for creating/editing driver job requests.
     """
+
     def __init__(self, *args, **kwargs):
         super(DriverJobRequestForm, self).__init__(*args, **kwargs)
         self.adjust_vehicle_type_widget()

@@ -3,7 +3,9 @@
 
 {% block inner_breadcrumb %}
   {{ block.super }}
-  {% breadcrumb object object.get_absolute_url %}
+  {% if object %}
+    {% breadcrumb object object.get_absolute_url %}
+  {% endif %}
 {% endblock %}
 
 {% block content %}

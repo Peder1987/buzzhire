@@ -23,22 +23,41 @@ from .forms import DriverJobRequestForm, DriverJobRequestInnerForm, \
                     DriverJobRequestSignupInnerForm, JobRequestCheckoutForm
 from django.http.response import HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
-from . import services, service_from_job_request
+from . import services, service_from_class
 
 
-class DriverJobRequestCreate(ClientOnlyMixin, ContextMixin, CreateView):
-    "Creation page for submitting a driver job request."
-    extra_context = {'title': 'Book a driver'}
-    model = DriverJobRequest
-    form_class = DriverJobRequestForm
-    template_name = 'job/driverjobrequest_create.html'
+class ServiceViewMixin(object):
+    """Views mixin for views connected to urls with a service_key
+    url component.
+    Sets self.service as equal to the service specified.
+    """
+    def dispatch(self, request, *args, **kwargs):
+        self.service = services[kwargs['service_key']]
+        return super(ServiceViewMixin, self).dispatch(request, *args, **kwargs)
+
+
+class JobRequestCreate(ClientOnlyMixin, ServiceViewMixin,
+                       ContextMixin, CreateView):
+    "Base view class for create a job request, intended to be subclassed."
+
+    @property
+    def model(self):
+        return self.service.job_request_model
+
+    def get_form_class(self):
+        return self.service.job_request_create_form
 
     def dispatch(self, request, *args, **kwargs):
         # if not logged in, redirect to a job request pre-sign up page
         if request.user.is_anonymous():
             return redirect('driverjobrequest_create_anon')
-        return super(DriverJobRequestCreate, self).dispatch(request, *args,
+        return super(JobRequestCreate, self).dispatch(request, *args,
                                                             **kwargs)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(JobRequestCreate, self).get_context_data(*args, **kwargs)
+        context['title'] = 'Book a %s' % self.service.title
+        return context
 
     def get_success_url(self):
         return reverse('driverjobrequest_checkout', args=(self.object.pk,))
@@ -190,7 +209,7 @@ class JobRequestUpdate(AdminOnlyMixin, SuccessMessageMixin, UpdateView):
 
     def get_form_class(self):
         # Return the form registered on the service as job_request_edit_form
-        service = service_from_job_request(self.object)
+        service = service_from_class(self.object.__class__)
         return service.job_request_edit_form
 
     def get_context_data(self, *args, **kwargs):

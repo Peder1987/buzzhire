@@ -1,10 +1,19 @@
-{% load icons feedback %}
+{% load icons feedback job %}
 {% if request.user.is_client %}
     <div class="panel panel-default">
-      <div class="panel-heading">{{ 'book'|icon }} Booking</div>
+      <div class="panel-heading">{{ 'create'|icon }} Create booking</div>
       <div class="list-group">
-          {% url 'driverjobrequest_create' as link_url %}
-          {% include 'includes/panel_link.html' with icon_name='driverjobrequest_create' link_text='Book a driver' %}
+          {% get_services as services %}
+          {% for service in services %}
+              {% url 'job_request_create' service.key as link_url %}
+              {% include 'includes/panel_link.html' with icon_name=service.key link_text='Book a '|add:service.title %}
+          {% endfor %}
+          
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">{{ 'book'|icon }} Bookings</div>
+      <div class="list-group">
           {% url 'requested_jobs' as link_url %}
           {% include 'includes/panel_link.html' with icon_name='requested_jobs' link_text='Requested jobs' %}
           {% url 'client_backlog' as link_url %}

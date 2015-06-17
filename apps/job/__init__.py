@@ -1,4 +1,4 @@
-from apps.core.utils import WeightedRegistry
+from apps.core.utils import WeightedRegistry, classproperty
 from django.utils.module_loading import autodiscover_modules
 
 
@@ -15,7 +15,7 @@ Usage:
 
    class MyService(Service):
        weight = 0
-       model = MyModel
+       job_request_model = MyModel
        
    services.register(MyService)
 """
@@ -29,7 +29,14 @@ class Service(object):
     as per the documentation above.
     """
     weight = 0
-    model = None
+    job_request_model = None
+
+    @classproperty
+    def title(cls):
+        """Human readable version of the service.  Should be the name of
+        the kind of person that performs the service.
+        """
+        return cls.job_request_model.service
 
 
 def autodiscover():
@@ -38,11 +45,11 @@ def autodiscover():
     autodiscover_modules('services')
 
 
-def service_from_job_request(job_request):
-    # Returns the service for the supplied job request
+def service_from_class(job_request_model_class):
+    # Returns the service for the supplied job request class
     for service in services.values():
-        if service.job_request_model == job_request.__class__:
+        if service.job_request_model == job_request_model_class:
             return service
     raise ValueError('Could not get find a service registered for '
-                     '%s job_request.' % job_request.__class__)
+                     '%s job_request.' % job_request_model_class)
 

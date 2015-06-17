@@ -16,6 +16,7 @@ from apps.service.driver.models import VehicleType
 from apps.location.forms import PostcodeFormMixin
 from apps.payment.utils import PaymentAPI, PaymentException
 from .models import JobRequest
+from . import service_from_class
 import logging
 
 
@@ -28,10 +29,15 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
     Should be instantiated with a Client object.
     """
     submit_text = 'Book'
-    submit_context = {'icon_name': 'driverjobrequest_create'}
     postcode_required = True
 
+    @property
+    def submit_context(self):
+        return {'icon_name': self.service.key}
+
     def __init__(self, *args, **kwargs):
+        self.service = service_from_class(self.Meta.model)
+
         if 'data' in kwargs:
             # If the form has been submitted, add the disabled city widget
             # value to the data before continuing.  This is because otherwise,

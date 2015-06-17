@@ -1,21 +1,24 @@
 from django import template
 from ..models import JobRequest
 from django.utils.safestring import mark_safe
+from .. import services
+
 
 register = template.Library()
 
+
 STATUS_MAP = {
-    JobRequest.STATUS_NEW: {
+    JobRequest.STATUS_OPEN: {
         'color': 'primary',
         'icon': 'circle-o'
     },
-    JobRequest.STATUS_OPEN: {
+    JobRequest.STATUS_CONFIRMED: {
         'color': 'success',
         'icon': 'check',
     },
-    JobRequest.STATUS_FOLLOW_UP: {
+    JobRequest.STATUS_CHECKOUT: {
         'color': 'warning',
-        'icon': 'clock-o',
+        'icon': 'cart',
     },
     JobRequest.STATUS_CANCELLED: {
         'color': 'danger',
@@ -51,3 +54,15 @@ def jobrequest_status_icon(status):
     """
     return mark_safe('<i class="fa fa-%s"></i>' % STATUS_MAP[status]['icon'])
 
+@register.assignment_tag
+def get_services():
+    """Assignment tag for getting the registered services.
+    
+    Usage:
+    
+        {% get_services as services %}
+        {% for service in services %}
+            {# Do something #}
+        {% endfor %} 
+    """
+    return services.values()
