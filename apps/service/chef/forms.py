@@ -1,4 +1,4 @@
-from apps.job.forms import JobRequestUpdateMixin, JobRequestForm
+from apps.job.forms import JobRequestForm
 from apps.freelancer.forms import FreelancerForm
 from .models import ChefJobRequest, Chef
 
@@ -12,11 +12,6 @@ class ChefJobRequestForm(JobRequestForm):
     class Meta(JobRequestForm.Meta):
          model = ChefJobRequest
          fields = JobRequestForm.Meta.fields + ('certification',)
-
-
-class ChefJobRequestUpdateForm(JobRequestUpdateMixin, ChefJobRequestForm):
-    """Edit form for chef job requests."""
-    pass
 
 
 class ChefForm(FreelancerForm):

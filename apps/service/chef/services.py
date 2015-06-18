@@ -1,6 +1,6 @@
 from apps.job import services, Service
 from .models import ChefJobRequest, Chef
-from .forms import ChefJobRequestForm, ChefJobRequestUpdateForm, ChefForm
+from .forms import ChefJobRequestForm, ChefForm
 
 
 class ChefService(Service):
@@ -8,8 +8,7 @@ class ChefService(Service):
     key = 'chef'
 
     job_request_model = ChefJobRequest
-    job_request_edit_form = ChefJobRequestUpdateForm
-    job_request_create_form = ChefJobRequestForm
+    job_request_form = ChefJobRequestForm
 
     freelancer_model = Chef
     freelancer_form = ChefForm

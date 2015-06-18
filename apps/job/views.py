@@ -20,7 +20,7 @@ from apps.account.views import SignupView as BaseSignupView
 from . import signals
 from .models import JobRequest
 from apps.service.driver.models import DriverJobRequest
-from .forms import JobRequestInnerFormMixin, \
+from .forms import JobRequestInnerFormMixin, JobRequestUpdateMixin, \
                     JobRequestSignupInnerForm, JobRequestCheckoutForm, \
                     ServiceSelectForm
 from django.http.response import HttpResponseRedirect
@@ -69,7 +69,7 @@ class JobRequestCreate(ClientOnlyMixin, ServiceViewMixin, ContextMixin,
         return self.service.job_request_model
 
     def get_form_class(self):
-        return self.service.job_request_create_form
+        return self.service.job_request_form
 
     def dispatch(self, request, *args, **kwargs):
         # if not logged in, redirect to a job request pre-sign up page
@@ -109,14 +109,14 @@ class JobRequestCreateAnonymous(ServiceViewMixin,
         # the service.  All this is doing is creating a class on the fly
         # that mixes in the JobRequestInnerFormMixin to the service specific
         # JobRequestForm that is defined on the service.
-        ServiceSpecificJobRequestInnerForm = type(
-                'ServiceSpecificJobRequestInnerForm',
+        job_request_form_class = type(
+                '%sInnerForm' % self.service.job_request_model.__name__,
                 (JobRequestInnerFormMixin,
-                 self.service.job_request_create_form),
+                 self.service.job_request_form),
                 {})
         return {
             'client': ClientInnerForm,
-            'job_request': ServiceSpecificJobRequestInnerForm,
+            'job_request': job_request_form_class,
         }
 
 
@@ -258,6 +258,13 @@ class JobRequestUpdate(AdminOnlyMixin, SuccessMessageMixin, UpdateView):
     def get_form_class(self):
         # Return the form registered on the service as job_request_edit_form
         service = service_from_class(self.object.__class__)
+        # Dynamically create a form class by mixing in the
+        # JobRequestUpdateMixin with the job request form for this service
+        form_class = type(
+            '%sJobRequestUpdateForm' % self.service.job_request_model.__name__,
+            (JobRequestUpdateMixin,
+            service.job_request_form),
+            {})
         return service.job_request_edit_form
 
     def get_context_data(self, *args, **kwargs):

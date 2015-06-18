@@ -1,10 +1,11 @@
 from django import forms
 from django.forms import widgets
+from crispy_forms import layout
 from django.core.exceptions import ValidationError
 from apps.core.forms import CrispyFormMixin
 from crispy_forms.helper import FormHelper
 from .models import Driver, DriverJobRequest, DriverVehicleType, VehicleType
-from apps.job.forms import JobRequestForm, JobRequestUpdateMixin
+from apps.job.forms import JobRequestForm
 from apps.core.widgets import ChoiceAttrsRadioSelect
 from apps.freelancer.forms import FreelancerForm
 
@@ -51,12 +52,6 @@ class DriverJobRequestForm(JobRequestForm):
          widgets = {
                 'vehicle_type': ChoiceAttrsRadioSelect(),
          }
-
-
-class DriverJobRequestUpdateForm(JobRequestUpdateMixin, DriverJobRequestForm):
-    """Edit form for driver job requests."""
-    # TODO - we can probably remove the need for this
-    pass
 
 
 class DriverForm(FreelancerForm):
