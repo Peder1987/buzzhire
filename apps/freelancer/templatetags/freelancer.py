@@ -1,4 +1,7 @@
 from django import template
+from django.core.urlresolvers import reverse
+from ..utils import service_for_freelancer
+
 
 register = template.Library()
 
@@ -30,3 +33,18 @@ def profile_photo(freelancer, size='medium', for_email=False):
         'for_email': for_email,
     }
 
+@register.filter
+def freelancer_profile_menu_items(freelancer):
+    """Returns list of menu items for the freelancer's profile.
+    
+    Each menu item is in the form (link_url, title, icon_name).
+    """
+    menu_items = [
+        (reverse('freelancer_change'), 'Edit profile',
+            'freelancer_profile_change'),
+        (reverse('freelancer_photo'), 'Photo', 'photo'),
+    ]
+    # Give service a change to add extra menu items
+    service = service_for_freelancer(freelancer)
+    menu_items.extend(service.freelancer_additional_menu_items)
+    return menu_items

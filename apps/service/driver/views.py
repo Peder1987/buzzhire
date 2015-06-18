@@ -39,8 +39,6 @@ class OwnedByDriverMixin(DriverOnlyMixin, OwnerOnlyMixin):
         return self.get_object().driver == self.driver
 
 
-
-
 class DriverDetailView(DetailView):
     """Detail view for anyone to look at a Driver.
     """
@@ -60,17 +58,6 @@ class DriverDetailView(DetailView):
                                                                  **kwargs)
         context['title'] = self.object.get_full_name()
         return context
-
-
-class DriverUpdateView(OwnerOnlyMixin, ContextMixin,
-                       SuccessMessageMixin, UpdateView):
-    "Profile edit page for drivers."
-    model = Driver
-    form_class = forms.DriverForm
-    template_name = 'account/dashboard_base.html'
-    success_url = reverse_lazy('account_dashboard')
-    extra_context = {'title': 'Edit profile'}
-    success_message = 'Saved.'
 
 
 class DriverVehicleTypeListView(DriverOnlyMixin, ContextMixin, ListView):

@@ -31,6 +31,7 @@ class Service(object):
     weight = 0
     job_request_model = None
     freelancer_model = None
+    freelancer_additional_menu_items = []
 
     @classproperty
     def title(cls):

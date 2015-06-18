@@ -1,7 +1,8 @@
 from django.shortcuts import redirect
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.views import redirect_to_login
-from apps.core.views import ContextMixin, PolymorphicTemplateMixin
+from apps.core.views import ContextMixin, PolymorphicTemplateMixin, \
+    OwnerOnlyMixin
 from allauth.account.utils import complete_signup
 from allauth.account import app_settings
 from .models import Freelancer
@@ -14,6 +15,7 @@ from apps.job.views import ServiceViewMixin
 from django.views.generic.edit import FormView
 from apps.account.views import SignupView as BaseSignupView
 from apps.account.forms import SignupInnerForm
+from .utils import service_for_freelancer
 
 
 class FreelancerOnlyMixin(object):
@@ -26,10 +28,40 @@ class FreelancerOnlyMixin(object):
             return redirect_to_login(self.request.path)
         try:
             self.freelancer = self.request.user.freelancer
+            self.service = service_for_freelancer(self.freelancer)
         except Freelancer.DoesNotExist:
             raise PermissionDenied
         return super(FreelancerOnlyMixin, self).dispatch(request,
                                                          *args, **kwargs)
+
+
+class OwnedByFreelancerMixin(FreelancerOnlyMixin, OwnerOnlyMixin):
+    """Views mixin - only allow drivers who own the object in question to
+    access the view.
+    """
+    def is_owner(self):
+        "Whether or not the current user should be treated as the 'owner'."
+        return self.get_object().freelancer == self.freelancer
+
+
+class FreelancerUpdateView(FreelancerOnlyMixin, ContextMixin,
+                       SuccessMessageMixin, UpdateView):
+    "Profile edit page for freelancers."
+
+    @property
+    def model(self):
+        return self.service.freelancer_model
+
+    def get_object(self):
+        return self.freelancer
+
+    def get_form_class(self):
+        return self.service.freelancer_form
+
+    template_name = 'account/dashboard_base.html'
+    success_url = reverse_lazy('account_dashboard')
+    extra_context = {'title': 'Edit profile'}
+    success_message = 'Saved.'
 
 
 class FreelancerPhotoView(FreelancerOnlyMixin, ContextMixin, DetailView):

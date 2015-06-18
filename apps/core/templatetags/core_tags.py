@@ -73,7 +73,9 @@ def startswith(test_string, start_string):
           <p>'{{ test_string }}' starts with '{{ start_string }}'!
       {% endif %}
     """
-    return test_string.startswith(start_string)
+    # Note we cast start_string as a string, in case it's been
+    # passed here using reverse_lazy
+    return test_string.startswith(str(start_string))
 
 
 @register.simple_tag

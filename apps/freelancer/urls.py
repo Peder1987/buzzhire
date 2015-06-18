@@ -15,6 +15,8 @@ urlpatterns = [
     url(r"^signup/(?P<service_key>[\w]+)/$", views.SignupView.as_view(),
         name="freelancer_signup"),
 
+    url(r"^edit/$", views.FreelancerUpdateView.as_view(),
+        name="freelancer_change"),
 
     url(r"^photo/$", views.FreelancerPhotoView.as_view(),
         name="freelancer_photo"),

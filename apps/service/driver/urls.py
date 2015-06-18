@@ -10,8 +10,6 @@ urlpatterns = [
 
     url(r"^(?P<pk>[\d]+)/$", views.DriverDetailView.as_view(),
         name="driver_detail"),
-    url(r"^(?P<pk>[\d]+)/edit/$", views.DriverUpdateView.as_view(),
-        name="driver_change"),
 
     url(r"^vehicles/$", views.DriverVehicleTypeListView.as_view(),
         name="drivervehicletype_list"),
