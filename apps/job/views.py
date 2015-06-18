@@ -38,8 +38,9 @@ class ServiceViewMixin(object):
         return super(ServiceViewMixin, self).dispatch(request, *args, **kwargs)
 
 
+
 class ServiceSelect(ContextMixin, FormView):
-    """View that allows them to select which service they want, and redirects them
+    """View that allows them to select which service they  want, and redirects them
     to the job request creation page for that service.
     """
     form_class = ServiceSelectForm

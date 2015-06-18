@@ -4,10 +4,13 @@ from crispy_forms import layout
 from django.core.exceptions import ValidationError
 from apps.core.forms import CrispyFormMixin
 from crispy_forms.helper import FormHelper
-from .models import Driver, DriverJobRequest, DriverVehicleType, VehicleType
+from .models import Driver, DriverJobRequest, DriverVehicleType, \
+                        VehicleType, FlexibleVehicleType
 from apps.job.forms import JobRequestForm
 from apps.core.widgets import ChoiceAttrsRadioSelect
 from apps.freelancer.forms import FreelancerForm
+from apps.booking.forms import JobMatchingForm
+from .utils import DriverJobMatcher
 
 
 class DriverJobRequestForm(JobRequestForm):
@@ -103,3 +106,32 @@ class DriverVehicleTypeForm(CrispyFormMixin, forms.ModelForm):
     class Meta:
         model = DriverVehicleType
         fields = ('vehicle_type', 'own_vehicle', 'delivery_box')
+
+
+class DriverJobMatchingForm(JobMatchingForm):
+    """Job matching form specifically for drivers.
+    """
+
+    job_matcher = DriverJobMatcher
+    vehicle_type = forms.ModelChoiceField(
+                                queryset=FlexibleVehicleType.objects.all(),
+                                required=False)
+#     DRIVING_EXPERIENCE_CHOICES = (
+#         (0, 'No preference'),
+#         (1, '1 year'),
+#         (3, '3 years'),
+#         (5, '5 years'),
+#     )
+
+#     driving_experience = forms.ChoiceField(label='Minimum driving experience',
+#                                     required=False,
+#                                     choices=DRIVING_EXPERIENCE_CHOICES)
+
+    own_vehicle = forms.BooleanField(
+                                label='The driver needs their own vehicle.',
+                                required=False)
+    minimum_delivery_box = forms.ChoiceField(required=False,
+                        choices=DriverVehicleType.DELIVERY_BOX_CHOICES,
+                        help_text='N.B. This will filter out any vehicle '
+                            'that does not have a delivery box of at least '
+                            'this size, including cars.')

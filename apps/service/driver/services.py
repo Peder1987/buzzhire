@@ -1,6 +1,6 @@
 from apps.job import services, Service
 from .models import DriverJobRequest, Driver
-from .forms import DriverJobRequestForm, DriverForm
+from .forms import DriverJobRequestForm, DriverForm, DriverJobMatchingForm
 from django.core.urlresolvers import reverse_lazy
 
 
@@ -18,5 +18,7 @@ class DriverService(Service):
         (reverse_lazy('drivervehicletype_list'),
          'Vehicles', 'vehicletypes')
     ]
+
+    job_matching_form = DriverJobMatchingForm
 
 services.register(DriverService)

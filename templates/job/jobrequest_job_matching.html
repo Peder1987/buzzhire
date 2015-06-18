@@ -5,7 +5,6 @@
     {% if form.job_request %}
         <p class='text-center'>
             Job matching for <a href='{{ form.job_request.get_absolute_url }}'><span style='font-family: monospace;'>{{ form.job_request }}</span></a>
-            <a class='btn btn-default btn-xs' href='{% url 'job_matching' %}'>{{ 'clear'|icon }} Clear</a>
         </p>
     {% endif %}
 
@@ -14,37 +13,38 @@
             {% csrf_token %}
             <div class='row'>
                 <div class='col-md-4'>
-                    {{ form.date|as_crispy_field }}
-                    {{ form.shift|as_crispy_field }}
-                    {{ form.raw_postcode|as_crispy_field }}
-                    {# form.respect_travel_distance|as_crispy_field #}
+                    {% block column_one_fields %}
+                        {{ form.date|as_crispy_field }}
+                        {{ form.shift|as_crispy_field }}
+                        {{ form.raw_postcode|as_crispy_field }}
+                        {# form.respect_travel_distance|as_crispy_field #}
+                    {% endblock %}
                 </div>
                 <div class='col-md-4'>
-                    {{ form.phone_requirement|as_crispy_field }}
-                    {{ form.client_pay_per_hour|as_crispy_field }}
-                    {% if form.freelancer_pay_per_hour %}<p class='help-block'>Calculated driver rate: <strong>&pound;{{ form.freelancer_pay_per_hour.amount }}</strong>.</p>{% endif %}
+                    {% block column_two_fields %}
+                        {{ form.phone_requirement|as_crispy_field }}
+                        {{ form.client_pay_per_hour|as_crispy_field }}
+                        {% if form.freelancer_pay_per_hour %}<p class='help-block'>Calculated freelancer rate: <strong>&pound;{{ form.freelancer_pay_per_hour.amount }}</strong>.</p>{% endif %}
+                    {% endblock %}
                 </div>
                 <div class='col-md-4'>
-                    {{ form.vehicle_type|as_crispy_field }}
-                    {{ form.own_vehicle|as_crispy_field }}
-                    {{ form.minimum_delivery_box|as_crispy_field }}
+                    {% block column_three_fields %}{% endblock %}
                 </div>
             </div>
-            {% include 'includes/forms/buttons.html' with submit_name='search' icon_name='job_matching' submit_text='Search drivers' cancel_url=request.path cancel_text='Reset' %} 
+            {% include 'includes/forms/buttons.html' with submit_name='search' icon_name='job_matching' submit_text='Search freelancers' cancel_url=request.path cancel_text='Reset' %} 
         </form>
     </div>
     {% if searched %}
         {% if object_list %}
-            {% include 'includes/paginator_results_count.html' with results_description='drivers' %}
+            {% include 'includes/paginator_results_count.html' with results_description='freelancers' %}
             <table class='table table-striped'>
                 <thead>
                     <th></th>
                     <th></th>
                     <th>Location</th>
                     <th>Maximum travel distance</th>
-                    <th>Can drive</th>
-                    <th>Can provide</th>
                     <th>Minimum pay per hour</th>
+                    {% block additional_headings %}{% endblock %}
                     {% if form.job_request %}<th></th>{% endif %}
                 </thead>
                 <tbody>
@@ -66,9 +66,8 @@
                                     {% else %}unknown{% endif %}
                                 </td>
                                 <td>{% if object.postcode %}{{ object.travel_distance }} mile{{ object.travel_distance|pluralize }}{% endif %}</td>
-                                <td>{% for vehicle_type in object.vehicle_types.all %}<p class='compact'><span class='label label-default'>{{ vehicle_type }}</span></p>{% endfor %}</td>
-                                <td>{% for driver_vehicle_type in object.drivervehicletype_set.owned %}<p class='compact'><span class='label label-primary'>{{ driver_vehicle_type }}</span></p>{% endfor %}</td>
                                 <td>&pound;{{ object.minimum_pay_per_hour.amount }}</td>
+                                {% block additional_cells %}{% endblock %}
                                 {% if form.job_request %}
                                     <td class='text-center'>
                                         {% if form.job_request|booking_exists_for_freelancer:object %}
@@ -94,7 +93,7 @@
         {% endif %}
     {% else %}
         <div class='alert alert-info'>
-            Use the filters to search for a driver.
+            Use the filters to search for a freelancers.
         </div>
     {% endif %}
     
