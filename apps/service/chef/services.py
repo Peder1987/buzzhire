@@ -1,6 +1,6 @@
 from apps.job import services, Service
 from .models import ChefJobRequest, Chef
-from .forms import ChefJobRequestForm, ChefForm
+from .forms import ChefJobRequestForm, ChefForm, ChefJobMatchingForm
 
 
 class ChefService(Service):
@@ -12,5 +12,7 @@ class ChefService(Service):
 
     freelancer_model = Chef
     freelancer_form = ChefForm
+
+    job_matching_form = ChefJobMatchingForm
 
 services.register(ChefService)

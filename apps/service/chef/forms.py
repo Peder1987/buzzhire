@@ -1,6 +1,9 @@
+from django import forms
 from apps.job.forms import JobRequestForm
 from apps.freelancer.forms import FreelancerForm
-from .models import ChefJobRequest, Chef
+from apps.booking.forms import JobMatchingForm
+from .models import ChefJobRequest, Chef, CERTIFICATION_CHOICES
+from .utils import ChefJobMatcher
 
 
 class ChefJobRequestForm(JobRequestForm):
@@ -23,3 +26,12 @@ class ChefForm(FreelancerForm):
 
     class Meta(FreelancerForm.Meta):
         model = Chef
+
+
+class ChefJobMatchingForm(JobMatchingForm):
+    """Job matching form specifically for chefs.
+    """
+
+    job_matcher = ChefJobMatcher
+    certification = forms.ChoiceField(required=False,
+                        choices=((None, '-------'),) + CERTIFICATION_CHOICES)
