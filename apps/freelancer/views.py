@@ -2,6 +2,8 @@ from django.shortcuts import redirect
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.views import redirect_to_login
 from apps.core.views import ContextMixin, PolymorphicTemplateMixin
+from allauth.account.utils import complete_signup
+from allauth.account import app_settings
 from .models import Freelancer
 from .forms import PhotoUploadForm, SignupFormFreelancerDetailsMixin
 from django.views.generic import DetailView, UpdateView

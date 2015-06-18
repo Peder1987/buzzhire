@@ -7,8 +7,6 @@ from django.core.exceptions import PermissionDenied
 from django.contrib.auth.views import redirect_to_login
 from django.contrib.messages.views import SuccessMessageMixin
 from django.conf import settings
-from allauth.account.utils import complete_signup
-from allauth.account import app_settings
 from apps.core.views import ContextMixin, OwnerOnlyMixin, ConfirmationMixin
 from apps.account.views import SignupView as BaseSignupView, AdminOnlyMixin
 from apps.account.forms import SignupInnerForm
