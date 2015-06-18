@@ -16,7 +16,7 @@ from apps.service.driver.models import VehicleType
 from apps.location.forms import PostcodeFormMixin
 from apps.payment.utils import PaymentAPI, PaymentException
 from .models import JobRequest
-from . import service_from_class
+from . import services, service_from_class
 import logging
 
 
@@ -211,3 +211,16 @@ class JobRequestCheckoutForm(CrispyFormMixin, forms.Form):
         # Payment will have been successfully processed
         self.instance.open()
         self.instance.save()
+
+
+class ServiceSelectForm(forms.Form):
+    """Form for selecting a service.
+    """
+    def __init__(self, *args, **kwargs):
+        super(ServiceSelectForm, self).__init__(*args, **kwargs)
+        service_choices = []
+        for service in services.values():
+            service_choices.append((service.key, service.title))
+        self.fields['service'] = forms.ChoiceField(choices=service_choices)
+        self.fields['service'].widget.attrs['class'] = 'form-control'
+

@@ -3,6 +3,7 @@ from django.views.generic import (CreateView, UpdateView, TemplateView,
 from django.views.generic.detail import SingleObjectMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
+from django.shortcuts import redirect
 from django.core.urlresolvers import reverse_lazy, reverse
 from allauth.account import app_settings
 from allauth.account.utils import complete_signup
@@ -20,7 +21,8 @@ from . import signals
 from .models import JobRequest
 from apps.service.driver.models import DriverJobRequest
 from .forms import DriverJobRequestForm, DriverJobRequestInnerForm, \
-                    DriverJobRequestSignupInnerForm, JobRequestCheckoutForm
+                    DriverJobRequestSignupInnerForm, JobRequestCheckoutForm, \
+                    ServiceSelectForm
 from django.http.response import HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
 from . import services, service_from_class
@@ -34,6 +36,16 @@ class ServiceViewMixin(object):
     def dispatch(self, request, *args, **kwargs):
         self.service = services[kwargs['service_key']]
         return super(ServiceViewMixin, self).dispatch(request, *args, **kwargs)
+
+
+class ServiceSelect(ContextMixin, FormView):
+    form_class = ServiceSelectForm
+    template_name = 'job/service_select.html'
+    extra_context = {'title': 'Book a freelancer'}
+
+    def form_valid(self, form):
+        return redirect('job_request_create',
+                       form.cleaned_data['service'])
 
 
 class JobRequestCreate(ClientOnlyMixin, ServiceViewMixin,

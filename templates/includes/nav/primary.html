@@ -21,8 +21,8 @@
             <ul class="nav navbar-nav navbar-right">
                 {% if not coming_soon %}
                     {% if request.user.is_anonymous or request.user.is_client %}
-                        {% url 'driverjobrequest_create' as link_url %}
-                        {% include 'includes/menu_link.html' with icon_name='book' link_text='Book a driver' %}
+                        {% url 'service_select' as link_url %}
+                        {% include 'includes/menu_link.html' with icon_name='book' link_text='Book a freelancer' %}
                     {% endif %}
                 {% endif %}
             {% if request.user.is_anonymous %}

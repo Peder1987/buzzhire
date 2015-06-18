@@ -16,6 +16,8 @@ urlpatterns = [
      url(r'^requested/past/$', views.RequestedJobList.as_view(past=True),
          name='requested_jobs_past'),
 
+    url(r'^create/$', views.ServiceSelect.as_view(), name='service_select'),
+
     url(r'^create/(?P<service_key>[\w]+)/$',
                        views.JobRequestCreate.as_view(),
                        name='job_request_create'),
