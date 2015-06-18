@@ -30,6 +30,7 @@ class Service(object):
     """
     weight = 0
     job_request_model = None
+    freelancer_model = None
 
     @classproperty
     def title(cls):

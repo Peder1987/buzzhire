@@ -1,5 +1,6 @@
 from apps.job.forms import JobRequestUpdateMixin, JobRequestForm
-from .models import ChefJobRequest
+from apps.freelancer.forms import FreelancerForm
+from .models import ChefJobRequest, Chef
 
 
 class ChefJobRequestForm(JobRequestForm):
@@ -16,3 +17,14 @@ class ChefJobRequestForm(JobRequestForm):
 class ChefJobRequestUpdateForm(JobRequestUpdateMixin, ChefJobRequestForm):
     """Edit form for chef job requests."""
     pass
+
+
+class ChefForm(FreelancerForm):
+    """Edit form for a chef's profile."""
+
+    def __init__(self, *args, **kwargs):
+        super(ChefForm, self).__init__(*args, **kwargs)
+        self.helper.layout[1].append('certification')
+
+    class Meta(FreelancerForm.Meta):
+        model = Chef

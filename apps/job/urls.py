@@ -26,11 +26,6 @@ urlpatterns = [
          views.JobRequestCreateAnonymous.as_view(),
          name='job_request_create_anon'),
 
-#
-#      url(r'^accepted/$', views.DriverJobRequestForFreelancerList.as_view(),
-#          name='freelancer_driverjobrequest_list'),
-
-
     url(r'^requests/(?P<pk>[\d]+)/checkout/$',
         views.JobRequestCheckout.as_view(),
         name='job_request_checkout'),

@@ -11,12 +11,11 @@ from allauth.account.utils import complete_signup
 from django.shortcuts import redirect
 from braces.views._access import AnonymousRequiredMixin
 from apps.core.views import ContextMixin, TabsMixin, ConfirmationMixin, \
-                                            GrantCheckingMixin
+                                GrantCheckingMixin, PolymorphicTemplateMixin
 from apps.account.views import AdminOnlyMixin
 from apps.client.views import ClientOnlyMixin, OwnedByClientMixin
 from apps.client.forms import ClientInnerForm
 from apps.client.models import Client
-from apps.freelancer.models import Freelancer
 from apps.account.views import SignupView as BaseSignupView
 from . import signals
 from .models import JobRequest
@@ -91,30 +90,19 @@ class JobRequestCreate(ClientOnlyMixin, ServiceViewMixin, ContextMixin,
 
 
 class JobRequestCreateAnonymous(ServiceViewMixin,
+                                PolymorphicTemplateMixin,
                                 BaseSignupView):
     """Page for anonymous users who want to create a job request.
     """
     form_class = JobRequestSignupInnerForm
     # The form prefix for the account form
     prefix = 'account'
+    template_suffix = '_create_anon'
 
     @property
     def model(self):
+        # Specify the model for the PolymorphicTemplateMixin
         return self.service.job_request_model
-
-    def get_template_names(self):
-        """Give subclassing job requests the chance to override the template,
-        falling back to a default - 'job/jobrequest_create_anon.html.
-        """
-        suffix = '_create_anon'
-        return [
-            "%s/%s%s.html" % (
-                    self.model._meta.app_label,
-                    self.model._meta.model_name,
-                    suffix
-                ),
-            "job/jobrequest%s.html" % suffix,
-        ]
 
     def get_extra_forms(self):
         # Dynamically generate a JobRequestInnerForm that is specific to
@@ -202,6 +190,9 @@ class JobRequestCreateAnonymous(ServiceViewMixin,
         return complete_signup(self.request, user,
                                app_settings.EMAIL_VERIFICATION,
                                self.get_success_url())
+
+    def get_authenticated_redirect_url(self):
+        return reverse('job_request_create', args=(self.service.key,))
 
     def get_success_url(self):
         return reverse('job_request_checkout', args=(self.job_request.pk,))
@@ -311,12 +302,6 @@ class JobRequestCheckout(OwnedByClientMixin, SingleObjectMixin,
         # Redirect to confirmation page
         return reverse('job_request_done', args=(self.object.pk,))
 
-# class DriverJobRequestForFreelancerList(FreelancerOnlyMixin, ListView):
-#     """List of driver job requests accepted by a freelancer."""
-#     paginate_by = 2
-#
-#     def get_queryset(self, *args, **kwargs):
-#         return DriverJobRequest.objects.for_freelancer(self.freelancer)
 
 class JobRequestDone(OwnedByClientMixin, ContextMixin, DetailView):
     "Confirmation page on successful job request submission."

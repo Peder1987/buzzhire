@@ -26,8 +26,8 @@
                     {% endif %}
                 {% endif %}
             {% if request.user.is_anonymous %}
-                {% url 'driver_become' as link_url %}
-                {% include 'includes/menu_link.html' with icon_name='driver_register' link_text='Become a driver' %}
+                {% url 'freelancer_signup_select' as link_url %}
+                {% include 'includes/menu_link.html' with icon_name='register' link_text='Become a freelancer' %}
                 {% url 'account_login' as link_url %}
                 {% include 'includes/menu_link.html' with icon_name='login' link_text='Log in' %}
             {% else %}

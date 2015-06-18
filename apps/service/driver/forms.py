@@ -3,13 +3,10 @@ from django.forms import widgets
 from django.core.exceptions import ValidationError
 from apps.core.forms import CrispyFormMixin
 from crispy_forms.helper import FormHelper
-from crispy_forms import layout
-from apps.core.widgets import Bootstrap3SterlingMoneyWidget
 from .models import Driver, DriverJobRequest, DriverVehicleType, VehicleType
-from apps.location.forms import PostcodeFormMixin
-from apps.freelancer.models import FREELANCER_MIN_WAGE
 from apps.job.forms import JobRequestForm, JobRequestUpdateMixin
 from apps.core.widgets import ChoiceAttrsRadioSelect
+from apps.freelancer.forms import FreelancerForm
 
 
 class DriverJobRequestForm(JobRequestForm):
@@ -58,85 +55,24 @@ class DriverJobRequestForm(JobRequestForm):
 
 class DriverJobRequestUpdateForm(JobRequestUpdateMixin, DriverJobRequestForm):
     """Edit form for driver job requests."""
+    # TODO - we can probably remove the need for this
     pass
 
-class DriverForm(CrispyFormMixin, PostcodeFormMixin, forms.ModelForm):
-    """Edit form for a driver's profile."""
-    submit_text = 'Save profile'
-    submit_context = {'icon_name': 'edit'}
 
+class DriverForm(FreelancerForm):
+    """Edit form for a driver's profile."""
 
     def __init__(self, *args, **kwargs):
         super(DriverForm, self).__init__(*args, **kwargs)
+        self.helper.layout[1].append('driving_experience')
 
-        amount, currency = self.fields['minimum_pay_per_hour'].fields
-        self.fields['minimum_pay_per_hour'].widget = \
-            Bootstrap3SterlingMoneyWidget(
-              amount_widget=widgets.NumberInput(
-                                        attrs={'min': FREELANCER_MIN_WAGE}),
-              currency_widget=widgets.HiddenInput,
-              attrs={'step': '0.25'}
-            )
-
-        self.fields['raw_postcode'].help_text = 'The postcode of where you ' \
-                'are based. This helps us match you with jobs that are nearby.'
-
-        # Prepopulate raw_postcode field if there is already a postcode
-        if self.instance.postcode:
-            self.fields['raw_postcode'].initial = str(self.instance.postcode)
-
-
-        self.helper.layout = layout.Layout(
-            layout.Fieldset(
-                'Contact details',
-                'first_name',
-                'last_name',
-                'mobile',
-            ),
-            layout.Fieldset(
-                'About you',
-                'english_fluency',
-                'eligible_to_work',
-                'driving_experience',
-            ),
-            layout.Fieldset(
-                'Your equipment',
-                'phone_type',
-            ),
-            layout.Fieldset(
-                'Your rates',
-                'minimum_pay_per_hour',
-            ),
-            layout.Fieldset(
-                'Your location',
-                'raw_postcode',
-                'travel_distance',
-            ),
-        )
-
-        self.helper.layout.append(self.get_submit_button())
-
-    class Meta:
+    class Meta(FreelancerForm.Meta):
         model = Driver
-        exclude = ('user', 'vehicle_types', 'motorcycle_licence', 'published')
+        exclude = FreelancerForm.Meta.exclude \
+                        + ('vehicle_types', 'motorcycle_licence')
         widgets = {
             'driving_experience': forms.widgets.Select,
         }
-
-
-
-class SignupFormDriverDetails(DriverForm):
-    """A form for filling out driver details, included with SignupForm in
-    a single html <form>.
-    """
-    form_tag = False
-    submit_text = 'Sign up'
-    submit_context = {'icon_name': 'login'}
-
-    def save(self, user):
-        "Saves the driver model, given the user."
-        self.instance.user = user
-        return super(SignupFormDriverDetails, self).save()
 
 
 class DriverVehicleTypeForm(CrispyFormMixin, forms.ModelForm):

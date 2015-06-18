@@ -306,3 +306,40 @@ class GrantCheckingMixin(object):
             method = getattr(self, method)
             methods.append(method)
         return methods
+
+
+class PolymorphicTemplateMixin(object):
+    """Views mixin to allow specifying template names for job requests
+    to override the template.  For example, if the template_suffix is '_detail'
+    and the model is DriverJobRequest, the view will look first for a template
+    driver/driverjobrequest_detail.html and then fall back to
+    job/jobrequest_detail.html.
+    
+    Usage:
+    
+        class MyView(PolymorphicTemplateMixin, FormView):
+            model = MyModel
+            template_suffix = '_register'
+            
+    """
+    template_suffix = ''
+
+    def get_template_names(self):
+        """Give subclassing job requests the chance to override the template,
+        falling back to a default.
+        """
+        # Build hierarchy of the model and its parent
+        meta_hierarchy = (
+            self.model._meta,
+            self.model._meta.get_parent_list().pop()._meta,
+        )
+        template_names = []
+        for meta in meta_hierarchy:
+            template_names.append(
+                "%s/%s%s.html" % (
+                    meta.app_label,
+                    meta.model_name,
+                    self.template_suffix
+                ),
+            )
+        return template_names

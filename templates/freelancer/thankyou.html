@@ -2,7 +2,7 @@
 {% load django_bootstrap_breadcrumbs icons %}
 
 {% block inner_breadcrumb %}
-    {% breadcrumb 'Become a driver' 'driver_become' %}
+    {% breadcrumb 'Become a freelancer' 'freelancer_signup' %}
     {{ block.super }}
 {% endblock %}
 
@@ -11,7 +11,7 @@
         <p>Thank you for your application.</p>
         <p>We'll be in touch soon to schedule an interview.</p>
         {% if not coming_soon %}
-            <p><a class='btn btn-lg btn-default' href='{% url 'account_dashboard' %}'>{{ 'dashboard'|icon }} Go to driver dashboard</a></p>
+            <p><a class='btn btn-lg btn-default' href='{% url 'account_dashboard' %}'>{{ 'dashboard'|icon }} Go to freelancer dashboard</a></p>
         {% endif %}
     </div>
 {% endblock %}
