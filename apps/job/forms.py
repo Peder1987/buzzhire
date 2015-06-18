@@ -108,13 +108,9 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
                   'comments')
 
 
-class DriverJobRequestForm(JobRequestForm):
-    # TO DELETE - Temp class to keep things working
-    pass
-
-class DriverJobRequestInnerForm(DriverJobRequestForm):
-    """DriverJobRequestForm for including with other forms in a
-    single html <form>.
+class JobRequestInnerFormMixin(object):
+    """Form mixin, designed to be used with forms subclassing JobRequestForm,
+    which are to be included with other forms in a single html <form>.
     """
     form_tag = False
     submit_name = None
@@ -133,10 +129,6 @@ class JobRequestSignupInnerForm(SignupInnerForm):
             """<p>Please give us an email address and password that you
             can use to sign in to the site."""))
 
-
-class DriverJobRequestSignupInnerForm(JobRequestSignupInnerForm):
-    # Temp - to keep things working
-    pass
 
 class JobRequestUpdateMixin(object):
     "Form mixin for job request edit forms."
@@ -218,6 +210,7 @@ class ServiceSelectForm(forms.Form):
     """
     def __init__(self, *args, **kwargs):
         super(ServiceSelectForm, self).__init__(*args, **kwargs)
+        # Populate the service field with each service
         service_choices = []
         for service in services.values():
             service_choices.append((service.key, service.title))

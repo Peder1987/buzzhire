@@ -1,6 +1,7 @@
 from django.views.generic import (CreateView, UpdateView, TemplateView,
                             ListView, DetailView, FormView)
-from django.views.generic.detail import SingleObjectMixin
+from django.views.generic.detail import SingleObjectMixin, \
+                                        SingleObjectTemplateResponseMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -20,8 +21,8 @@ from apps.account.views import SignupView as BaseSignupView
 from . import signals
 from .models import JobRequest
 from apps.service.driver.models import DriverJobRequest
-from .forms import DriverJobRequestForm, DriverJobRequestInnerForm, \
-                    DriverJobRequestSignupInnerForm, JobRequestCheckoutForm, \
+from .forms import JobRequestInnerFormMixin, \
+                    JobRequestSignupInnerForm, JobRequestCheckoutForm, \
                     ServiceSelectForm
 from django.http.response import HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
@@ -39,6 +40,9 @@ class ServiceViewMixin(object):
 
 
 class ServiceSelect(ContextMixin, FormView):
+    """View that allows them to select which service they want, and redirects them
+    to the job request creation page for that service.
+    """
     form_class = ServiceSelectForm
     template_name = 'job/service_select.html'
     extra_context = {'title': 'Book a freelancer'}
@@ -48,9 +52,18 @@ class ServiceSelect(ContextMixin, FormView):
                        form.cleaned_data['service'])
 
 
-class JobRequestCreate(ClientOnlyMixin, ServiceViewMixin,
-                       ContextMixin, CreateView):
-    "Base view class for create a job request, intended to be subclassed."
+class JobRequestCreate(ClientOnlyMixin, ServiceViewMixin, ContextMixin,
+                       CreateView):
+    """View class for logged in clients to create a job request,
+    intended to be subclassed.
+    """
+
+    def get_context_data(self, *args, **kwargs):
+        # Tailor the page title to the service
+        context = super(JobRequestCreate, self).get_context_data(
+                                                            *args, **kwargs)
+        context['title'] = 'Book a %s' % self.service.title
+        return context
 
     @property
     def model(self):
@@ -62,15 +75,10 @@ class JobRequestCreate(ClientOnlyMixin, ServiceViewMixin,
     def dispatch(self, request, *args, **kwargs):
         # if not logged in, redirect to a job request pre-sign up page
         if request.user.is_anonymous():
-            return redirect('driverjobrequest_create_anon')
+            return redirect('job_request_create_anon',
+                            services[kwargs['service_key']].key)
         return super(JobRequestCreate, self).dispatch(request, *args,
                                                             **kwargs)
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(JobRequestCreate, self).get_context_data(*args, **kwargs)
-        context['title'] = 'Book a %s' % self.service.title
-        return context
-
     def get_success_url(self):
         return reverse('job_request_checkout', args=(self.object.pk,))
 
@@ -82,28 +90,67 @@ class JobRequestCreate(ClientOnlyMixin, ServiceViewMixin,
         return HttpResponseRedirect(self.get_success_url())
 
 
-class DriverJobRequestCreateAnonymous(BaseSignupView):
-    "Page for anonymous users who want to create a job request."
-    template_name = 'job/driverjobrequest_create_anon.html'
-    extra_context = {'title': 'Book a driver'}
-    form_class = DriverJobRequestSignupInnerForm
+class JobRequestCreateAnonymous(ServiceViewMixin,
+                                BaseSignupView):
+    """Page for anonymous users who want to create a job request.
+    """
+    form_class = JobRequestSignupInnerForm
     # The form prefix for the account form
     prefix = 'account'
 
-    extra_forms = {
-        'client': ClientInnerForm,
-        'driverjobrequest': DriverJobRequestInnerForm,
-    }
+    @property
+    def model(self):
+        return self.service.job_request_model
+
+    def get_template_names(self):
+        """Give subclassing job requests the chance to override the template,
+        falling back to a default - 'job/jobrequest_create_anon.html.
+        """
+        suffix = '_create_anon'
+        return [
+            "%s/%s%s.html" % (
+                    self.model._meta.app_label,
+                    self.model._meta.model_name,
+                    suffix
+                ),
+            "job/jobrequest%s.html" % suffix,
+        ]
+
+    def get_extra_forms(self):
+        # Dynamically generate a JobRequestInnerForm that is specific to
+        # the service.  All this is doing is creating a class on the fly
+        # that mixes in the JobRequestInnerFormMixin to the service specific
+        # JobRequestForm that is defined on the service.
+        ServiceSpecificJobRequestInnerForm = type(
+                'ServiceSpecificJobRequestInnerForm',
+                (JobRequestInnerFormMixin,
+                 self.service.job_request_create_form),
+                {})
+        return {
+            'client': ClientInnerForm,
+            'job_request': ServiceSpecificJobRequestInnerForm,
+        }
+
 
     def get_context_data(self, *args, **kwargs):
-        context = super(DriverJobRequestCreateAnonymous, self).get_context_data(*args, **kwargs)
+        # Tailor the page title to the service
+        context = super(JobRequestCreateAnonymous, self).get_context_data(
+                                                            *args, **kwargs)
+        context['title'] = 'Book a %s' % self.service.title
+        return context
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(JobRequestCreateAnonymous,
+                        self).get_context_data(*args, **kwargs)
         context['extra_forms'] = []
         for prefix, form_class in self.extra_forms.items():
             context['extra_forms'].append(self.get_form(form_class, prefix))
         return context
 
     def get_form(self, form_class, prefix=None):
-        # Passes the prefix through to get_form_kwargs
+        # Now is a good time to set the extra_forms too
+        self.extra_forms = self.get_extra_forms()
+        # Pass the prefix through to get_form_kwargs
         return form_class(**self.get_form_kwargs(prefix))
 
     def get_form_kwargs(self, prefix=None):
@@ -141,25 +188,23 @@ class DriverJobRequestCreateAnonymous(BaseSignupView):
             return self.form_invalid(form)
 
     def form_valid(self, form):
-        """Adapted from BaseSignupView to save the driver too.
+        """Adapted from BaseSignupView to save the freelancer too.
         We do not currently run the complete_signup process, as we
-        don't want the driver to be logged in after sign up. 
+        don't want the freelancer to be logged in after sign up. 
         """
         user = form.save(self.request)
+
         # Save extra forms too
         client = self.bound_forms['client'].save(user=user)
-        self.driverjobrequest = self.bound_forms['driverjobrequest'].save(
-                                                                client=client)
-        # Send signal (see DriverJobRequestCreate for explanation)
-        signals.driverjobrequest_created.send(sender=self.__class__,
-                                      driverjobrequest=self.driverjobrequest)
+        self.job_request = self.bound_forms['job_request'].save(client=client)
+
+        # Complete sign up and log them in
         return complete_signup(self.request, user,
                                app_settings.EMAIL_VERIFICATION,
                                self.get_success_url())
 
     def get_success_url(self):
-        return reverse('driverjobrequest_checkout',
-                       args=(self.driverjobrequest.pk,))
+        return reverse('job_request_checkout', args=(self.job_request.pk,))
 
 
 

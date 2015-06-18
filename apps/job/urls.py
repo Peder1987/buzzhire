@@ -22,12 +22,14 @@ urlpatterns = [
                        views.JobRequestCreate.as_view(),
                        name='job_request_create'),
 
+    url(r'^create/(?P<service_key>[\w]+)/new-client/$',
+         views.JobRequestCreateAnonymous.as_view(),
+         name='job_request_create_anon'),
+
 #
 #      url(r'^accepted/$', views.DriverJobRequestForFreelancerList.as_view(),
 #          name='freelancer_driverjobrequest_list'),
 
-     url(r'^create/new-client/$', views.DriverJobRequestCreateAnonymous.as_view(),
-         name='driverjobrequest_create_anon'),
 
     url(r'^requests/(?P<pk>[\d]+)/checkout/$',
         views.JobRequestCheckout.as_view(),
