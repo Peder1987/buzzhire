@@ -208,14 +208,6 @@ class DriverVehicleType(models.Model):
         ordering = ('vehicle_type__title',)
 
 
-class DriverJobRequestManager(models.Manager):
-    """Manager for DriverJobRequests."""
-
-    def get_from_jobrequest(self, jobrequest):
-        "Gets a DriverJobRequest object from the JobRequest."""
-        return self.get(pk=jobrequest.pk)
-
-
 class DriverJobRequest(JobRequest):
     """A JobRequest that is specifically for drivers to complete.
     """
@@ -244,8 +236,6 @@ class DriverJobRequest(JobRequest):
     own_vehicle = models.BooleanField(
                             'The driver must supply their own vehicle.',
                             default=True)
-
-    objects = DriverJobRequestManager.from_queryset(JobRequestQuerySet)()
 
     def get_vehicle_type_display(self):
         "Returns the vehicle type, or 'Any' if there is none."

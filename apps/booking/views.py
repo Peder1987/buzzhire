@@ -275,8 +275,7 @@ class InvitationAccept(FreelancerOnlyMixin,
             # to the current freelancer
             raise PermissionDenied
         else:
-            self.job_request = JobRequest.objects.get_from_jobrequest(
-                                                    self.invitation.jobrequest)
+            self.job_request = self.invitation.jobrequest
 
         # Check that they're not already booked
         if self.job_request.bookings.for_freelancer(self.freelancer).exists():

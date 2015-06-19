@@ -6,6 +6,7 @@
     </p>
     <table class='table text-left'>
         <tbody>
+            {% block extra_rows_top %}{% endblock %}
             {% if object.postcode %}
                 <tr> 
                     <th>Postcode</th>
