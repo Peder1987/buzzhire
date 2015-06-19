@@ -1,7 +1,7 @@
 from django import template
 from ..models import JobRequest
 from django.utils.safestring import mark_safe
-from .. import services
+from .. import services, service_from_class
 from django.template.loader import render_to_string
 
 
@@ -69,3 +69,8 @@ def get_services():
     """
     return services.values()
 
+
+@register.filter
+def job_request_service(job_request):
+    """Outputs the service for the job request."""
+    return service_from_class(job_request.__class__)

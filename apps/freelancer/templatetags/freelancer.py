@@ -60,3 +60,4 @@ def freelancer_service(freelancer):
 def freelancer_service_key(freelancer):
     """Outputs the service key for the freelancer."""
     return service_for_freelancer(freelancer).key
+

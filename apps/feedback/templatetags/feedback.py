@@ -6,6 +6,8 @@ from ..models import BookingFeedback, \
 from django.conf import settings
 from apps.main.templatetags.icons import icon
 from django.contrib.admin.templatetags.admin_list import items_for_result
+from apps.core.utils import template_names_from_polymorphic_model
+from django.template.loader import render_to_string
 
 
 register = template.Library()
@@ -180,3 +182,17 @@ def client_backlog_count(context):
     # TODO - this would be a good candidate for caching
     return get_job_requests_awaiting_feedback_for_client(
                                     context['request'].user.client).count()
+
+@register.simple_tag
+def booking_feedback_summary(booking):
+    """Outputs a summary of the feedback for a booking.
+    Usage:
+    
+        {% booking_feedback_summary booking %}
+    """
+
+    template_names = template_names_from_polymorphic_model(
+                    booking.freelancer.__class__, '_booking_feedback_summary',
+                    'includes')
+    return render_to_string(template_names, {'booking': booking,
+                                             'freelancer': booking.freelancer})

@@ -19,7 +19,6 @@ from apps.client.models import Client
 from apps.account.views import SignupView as BaseSignupView
 from . import signals
 from .models import JobRequest
-from apps.service.driver.models import DriverJobRequest
 from .forms import JobRequestInnerFormMixin, JobRequestUpdateMixin, \
                     JobRequestSignupInnerForm, JobRequestCheckoutForm, \
                     ServiceSelectForm
@@ -214,7 +213,7 @@ class RequestedJobList(ClientOnlyMixin, ContextMixin, TabsMixin, ListView):
     past = False
 
     def get_queryset(self, *args, **kwargs):
-        queryset = DriverJobRequest.objects.for_client(self.client)
+        queryset = JobRequest.objects.for_client(self.client)
         if self.past:
             return queryset.past()
         else:
