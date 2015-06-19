@@ -49,7 +49,7 @@ def autodiscover():
 
 
 def service_from_class(job_request_model_class):
-    # Returns the service for the supplied job request class
+    "Returns the service for the supplied job request class."
     for service in services.values():
         if service.job_request_model == job_request_model_class:
             return service

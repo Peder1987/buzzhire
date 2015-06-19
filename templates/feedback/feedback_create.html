@@ -1,5 +1,5 @@
 {% extends 'account/dashboard_base.html' %}
-{% load crispy_forms_tags icons django_bootstrap_breadcrumbs freelancer %}
+{% load crispy_forms_tags icons django_bootstrap_breadcrumbs freelancer core_tags %}
 
 {% block inner_breadcrumb %}
   {{ block.super }}
@@ -15,7 +15,7 @@
         <p>Provide feedback for the following job:</p>     
      </div>
      <div class='col-md-9'>
-          {% job_request_summary object %}
+          {% summary object %}
       </div>
    </div>
    <form method='post'>

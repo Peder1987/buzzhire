@@ -36,3 +36,29 @@ class classproperty(object):
         self.fget = fget
     def __get__(self, owner_self, owner_cls):
         return self.fget(owner_cls)
+
+
+def template_names_from_polymorphic_model(model_class, suffix,
+                                          subdirectory=''):
+    """Returns a list of template names to test for the supplied polymorphic
+    model class.
+    """
+    # Build hierarchy of the model and its parent
+    meta_hierarchy = (
+        model_class._meta,
+        model_class._meta.get_parent_list().pop()._meta,
+    )
+
+    template_names = []
+    for meta in meta_hierarchy:
+        directory = meta.app_label
+        if subdirectory:
+            directory += '/%s' % subdirectory
+        template_names.append(
+            "%s/%s%s.html" % (
+                directory,
+                meta.model_name,
+                suffix
+            ),
+        )
+    return template_names

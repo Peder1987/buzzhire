@@ -48,3 +48,15 @@ def freelancer_profile_menu_items(freelancer):
     service = service_for_freelancer(freelancer)
     menu_items.extend(service.freelancer_additional_menu_items)
     return menu_items
+
+
+@register.filter
+def freelancer_service(freelancer):
+    """Outputs the service for the freelancer."""
+    return service_for_freelancer(freelancer)
+
+
+@register.filter
+def freelancer_service_key(freelancer):
+    """Outputs the service key for the freelancer."""
+    return service_for_freelancer(freelancer).key

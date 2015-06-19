@@ -144,7 +144,7 @@ class BookingOrInvitationConfirmForm(ConfirmForm):
             'booking/includes/booking_or_invitation_confirm_form_inner.html'
     def __init__(self, *args, **kwargs):
         self.job_request = kwargs.pop('job_request')
-        self.driver = kwargs.pop('driver')
+        self.freelancer = kwargs.pop('freelancer')
         super(BookingOrInvitationConfirmForm, self).__init__(*args, **kwargs)
 
 

@@ -6,6 +6,7 @@ from .forms import ConfirmForm
 from django.contrib.auth.views import redirect_to_login
 from django.core.exceptions import PermissionDenied
 from django.apps.registry import apps
+from .utils import template_names_from_polymorphic_model
 
 # A GBP sign
 POUND_SIGN = u'\u00A3'
@@ -338,18 +339,5 @@ class PolymorphicTemplateMixin(object):
         except AttributeError:
             model_class = self.model
 
-        # Build hierarchy of the model and its parent
-        meta_hierarchy = (
-            model_class._meta,
-            model_class._meta.get_parent_list().pop()._meta,
-        )
-        template_names = []
-        for meta in meta_hierarchy:
-            template_names.append(
-                "%s/%s%s.html" % (
-                    meta.app_label,
-                    meta.model_name,
-                    self.template_suffix
-                ),
-            )
-        return template_names
+        return template_names_from_polymorphic_model(model_class,
+                                                     self.template_suffix)

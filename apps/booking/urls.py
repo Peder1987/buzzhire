@@ -10,11 +10,11 @@ urlpatterns = [
     url(r'^bookings/past/$', views.FreelancerBookingsList.as_view(past=True),
          name='freelancer_bookings_list_past'),
 
-    url(r'^create/(?P<job_request_pk>[\d]+)/(?P<driver_pk>[\d]+)/$',
+    url(r'^create/(?P<job_request_pk>[\d]+)/(?P<freelancer_pk>[\d]+)/$',
          views.BookingConfirm.as_view(),
          name='booking_create'),
 
-    url(r'^invite/(?P<job_request_pk>[\d]+)/(?P<driver_pk>[\d]+)/$',
+    url(r'^invite/(?P<job_request_pk>[\d]+)/(?P<freelancer_pk>[\d]+)/$',
          views.InvitationConfirm.as_view(),
          name='invitation_create'),
 
@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^availability/$', views.AvailabilityUpdate.as_view(),
          name='availability_update'),
 
-    url(r'^job-matching/(?P<job_request_pk>[\d]+)/$', views.JobMatchingView.as_view(),
+    url(r'^job-matching/(?P<job_request_pk>[\d]+)/$',
+        views.JobMatchingView.as_view(),
          name='job_matching_for_job_request'),
 ]

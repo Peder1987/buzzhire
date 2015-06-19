@@ -1,7 +1,10 @@
 from django import template
+from django.template.loader import render_to_string
 from django.conf import settings
 from copy import copy
 from crispy_forms.templatetags.crispy_forms_filters import flatatt_filter
+from apps.core.utils import template_names_from_polymorphic_model
+
 
 
 register = template.Library()
@@ -113,3 +116,16 @@ def flatatt_for_choice(widget, choice_value):
 def model_opts(instance):
     "Returns the _meta attribute from the supplied model."
     return instance._meta
+
+
+@register.simple_tag
+def summary(model):
+    """Outputs a summary of the supplied model instance.
+    Usage:
+    
+        {% summary object %}
+    """
+    template_names = template_names_from_polymorphic_model(
+                                model.__class__, '_summary',
+                                'includes')
+    return render_to_string(template_names, {'object': model})

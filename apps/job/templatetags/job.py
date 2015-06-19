@@ -55,6 +55,7 @@ def jobrequest_status_icon(status):
     """
     return mark_safe('<i class="fa fa-%s"></i>' % STATUS_MAP[status]['icon'])
 
+
 @register.assignment_tag
 def get_services():
     """Assignment tag for getting the registered services.
@@ -68,15 +69,3 @@ def get_services():
     """
     return services.values()
 
-
-@register.simple_tag
-def job_request_summary(job_request):
-    """Outputs a summary of the supplied job request.
-    Usage:
-    
-        {% job_request_summary object %}
-    """
-    template_name = '%s/includes/%s_summary.html' % (
-                                            job_request._meta.app_label,
-                                            job_request._meta.model_name)
-    return render_to_string(template_name, {'object': job_request})

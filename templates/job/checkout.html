@@ -1,5 +1,5 @@
 {% extends 'job/jobrequest_detail.html' %}
-{% load icons django_bootstrap_breadcrumbs crispy_forms_tags payment job %}
+{% load icons django_bootstrap_breadcrumbs crispy_forms_tags payment core_tags %}
 
 {% block page_actions %}{% endblock %}
 
@@ -11,7 +11,7 @@
 {% block content %}
     <div class='row'>
         <div class='col-md-5'>
-            {% job_request_summary object %}    
+            {% summary object %}    
         </div>
         <div class='col-md-7'>
             {% crispy form %}    
