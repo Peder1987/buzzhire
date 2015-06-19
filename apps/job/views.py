@@ -261,12 +261,11 @@ class JobRequestUpdate(AdminOnlyMixin, SuccessMessageMixin, UpdateView):
         service = service_from_class(self.object.__class__)
         # Dynamically create a form class by mixing in the
         # JobRequestUpdateMixin with the job request form for this service
-        form_class = type(
-            '%sJobRequestUpdateForm' % self.service.job_request_model.__name__,
+        return type(
+            '%sJobRequestUpdateForm' % service.job_request_model.__name__,
             (JobRequestUpdateMixin,
             service.job_request_form),
             {})
-        return service.job_request_edit_form
 
     def get_context_data(self, *args, **kwargs):
         context = super(JobRequestUpdate, self).get_context_data(*args,

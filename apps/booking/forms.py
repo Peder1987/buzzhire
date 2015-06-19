@@ -113,7 +113,7 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
 
     def set_initial_based_on_job_request(self):
         "Sets the initial data based on the job request."
-        matcher = JobMatcher(self.job_request)
+        matcher = self.job_matcher(self.job_request)
         for name, value in matcher.search_terms.items():
             self.fields[name].initial = value
 

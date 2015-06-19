@@ -5,12 +5,7 @@ class DriverJobMatcher(JobMatcher):
     "JobMatcher tailored to matching drivers."
 
     flat_fields = JobMatcher.flat_fields + ('minimum_delivery_box',
-                                            'own_vehicle')
-
-    def set_search_terms_from_job_request(self, job_request):
-        super(DriverJobMatcher, self).set_search_terms_from_job_request(
-                                                                job_request)
-        self.search_terms['vehicle_type'] = self.job_request.vehicle_type
+                                            'own_vehicle', 'vehicle_type')
 
     def get_results(self, *args, **kwargs):
         results = super(DriverJobMatcher, self).get_results(*args, **kwargs)
