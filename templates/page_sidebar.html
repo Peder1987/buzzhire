@@ -17,7 +17,7 @@
                       {% include 'includes/messages.html' with top_space=False %}
                     {% endif %}
                 {% endblock %}
-                {% block page_title_sidebar %}<h4>{{ title }}</h4>{% endblock %}
+                {% block page_title_sidebar %}<h4>{% block page_title_inner %}{{ title }}{% endblock %}</h4>{% endblock %}
                 {% block content %}{% endblock %}
             </div>
         </div>

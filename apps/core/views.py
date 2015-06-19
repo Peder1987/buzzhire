@@ -315,6 +315,9 @@ class PolymorphicTemplateMixin(object):
     driver/driverjobrequest_detail.html and then fall back to
     job/jobrequest_detail.html.
     
+    It will try to get the model class from the self.object, failing that it
+    will use self.model.
+    
     Usage:
     
         class MyView(PolymorphicTemplateMixin, FormView):
@@ -328,10 +331,17 @@ class PolymorphicTemplateMixin(object):
         """Give subclassing job requests the chance to override the template,
         falling back to a default.
         """
+        # Prefer self.object to the model_class.  This is because for detail
+        # views, the model may be the parent class.
+        try:
+            model_class = self.object.__class__
+        except AttributeError:
+            model_class = self.model
+
         # Build hierarchy of the model and its parent
         meta_hierarchy = (
-            self.model._meta,
-            self.model._meta.get_parent_list().pop()._meta,
+            model_class._meta,
+            model_class._meta.get_parent_list().pop()._meta,
         )
         template_names = []
         for meta in meta_hierarchy:

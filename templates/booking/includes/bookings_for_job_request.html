@@ -12,7 +12,7 @@
             {% for booking in object.bookings.all %}
                <tr>
                   <td>
-                    <a href='{% url 'driver_detail' booking.freelancer.pk %}'>
+                    <a href='{% url 'freelancer_detail' booking.freelancer.pk %}'>
                         {% profile_photo booking.freelancer 'small' %}
                         {{ booking.freelancer.get_full_name }}
                     </a>
@@ -38,7 +38,7 @@
             {% for invitation in object.invitations.all %}
                <tr>
                   <td>
-                    <a href='{% url 'driver_detail' invitation.freelancer.pk %}'>
+                    <a href='{% url 'freelancer_detail' invitation.freelancer.pk %}'>
                         {% profile_photo invitation.freelancer 'small' %}
                         {{ invitation.freelancer.get_full_name }}
                     </a>

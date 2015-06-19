@@ -6,7 +6,7 @@
             <div class='well'>
                 {% with form.driver as object %}
                     <p>
-                        <a class='monospace' href='{% url 'driver_detail' object.pk %}'>{{ object.reference_number }}</a><br>
+                        <a class='monospace' href='{% url 'freelancer_detail' object.pk %}'>{{ object.reference_number }}</a><br>
                         {{ 'driver'|icon }} {{ object.get_full_name }}<br>
                     </p>
                     <table class='table text-left'>

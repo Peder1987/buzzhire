@@ -39,27 +39,6 @@ class OwnedByDriverMixin(DriverOnlyMixin, OwnerOnlyMixin):
         return self.get_object().driver == self.driver
 
 
-class DriverDetailView(DetailView):
-    """Detail view for anyone to look at a Driver.
-    """
-    model = Driver
-
-    def get_object(self):
-        "Prevent non-admins from seeing unpublished drivers."
-        object = super(DriverDetailView, self).get_object()
-        if not object.published:
-            if not (self.request.user.is_authenticated() and
-                    self.request.user.is_admin):
-                raise PermissionDenied
-        return object
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(DriverDetailView, self).get_context_data(*args,
-                                                                 **kwargs)
-        context['title'] = self.object.get_full_name()
-        return context
-
-
 class DriverVehicleTypeListView(DriverOnlyMixin, ContextMixin, ListView):
     """List of a driver's DriverVehicleTypes - i.e. information about which
     vehicles they can drive/own."""

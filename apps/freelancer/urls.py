@@ -18,6 +18,9 @@ urlpatterns = [
     url(r"^edit/$", views.FreelancerUpdateView.as_view(),
         name="freelancer_change"),
 
+    url(r"^(?P<pk>[\d]+)/$", views.FreelancerDetailView.as_view(),
+        name="freelancer_detail"),
+
     url(r"^photo/$", views.FreelancerPhotoView.as_view(),
         name="freelancer_photo"),
     url(r"^photo/add/$", views.FreelancerPhotoUpdateView.as_view(),

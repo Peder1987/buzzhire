@@ -6,6 +6,8 @@ from django.core.urlresolvers import reverse
 from apps.job.models import JobRequest, JobRequestQuerySet
 
 
+DRIVER_SERVICE_TITLE = 'driver'
+
 def _is_driver(self):
     """Custom method on User model.
     Returns whether or not the user account is a driver account,
@@ -100,6 +102,8 @@ class FlexibleVehicleType(VehicleType):
 class Driver(Freelancer):
     "A driver is a freelancer whose service is driving."
 
+    service = DRIVER_SERVICE_TITLE
+
     VEHICLE_TYPE_MOTORCYCLE = 'MC'
     VEHICLE_TYPE_BICYCLE = 'BI'
     VEHICLE_TYPE_CAR = 'CA'
@@ -149,7 +153,7 @@ class Driver(Freelancer):
     published_objects = PublishedFreelancerManager()
 
     def get_absolute_url(self):
-        return reverse('driver_detail', args=(self.pk,))
+        return reverse('freelancer_detail', args=(self.pk,))
 
     @classmethod
     def driver_from_freelancer(self, freelancer):
@@ -215,7 +219,7 @@ class DriverJobRequestManager(models.Manager):
 class DriverJobRequest(JobRequest):
     """A JobRequest that is specifically for drivers to complete.
     """
-    service = 'driver'
+    service = DRIVER_SERVICE_TITLE
 
     # To delete
     vehicle_types_old = models.ManyToManyField(VehicleType,

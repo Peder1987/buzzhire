@@ -8,9 +8,6 @@ urlpatterns = [
             extra_context={'title': 'Become a driver'}),
             name='driver_become'),
 
-    url(r"^(?P<pk>[\d]+)/$", views.DriverDetailView.as_view(),
-        name="driver_detail"),
-
     url(r"^vehicles/$", views.DriverVehicleTypeListView.as_view(),
         name="drivervehicletype_list"),
     url(r"^vehicles/add/$", views.DriverVehicleTypeCreateView.as_view(),

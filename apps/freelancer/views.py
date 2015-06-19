@@ -16,6 +16,7 @@ from django.views.generic.edit import FormView
 from apps.account.views import SignupView as BaseSignupView
 from apps.account.forms import SignupInnerForm
 from .utils import service_for_freelancer
+from apps.core.views import PolymorphicTemplateMixin
 
 
 class FreelancerOnlyMixin(object):
@@ -42,6 +43,28 @@ class OwnedByFreelancerMixin(FreelancerOnlyMixin, OwnerOnlyMixin):
     def is_owner(self):
         "Whether or not the current user should be treated as the 'owner'."
         return self.get_object().freelancer == self.freelancer
+
+
+class FreelancerDetailView(PolymorphicTemplateMixin, DetailView):
+    """Detail view for anyone to look at a Freelancer.
+    """
+    model = Freelancer
+    template_suffix = '_detail'
+
+    def get_object(self):
+        "Prevent non-admins from seeing unpublished freelancers."
+        object = super(FreelancerDetailView, self).get_object()
+        if not object.published:
+            if not (self.request.user.is_authenticated() and
+                    self.request.user.is_admin):
+                raise PermissionDenied
+        return object
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(FreelancerDetailView, self).get_context_data(*args,
+                                                                 **kwargs)
+        context['title'] = self.object.get_full_name()
+        return context
 
 
 class FreelancerUpdateView(FreelancerOnlyMixin, ContextMixin,

@@ -18,10 +18,12 @@ CERTIFICATION_CHOICES = (
     (CERTIFICATION_PORTER, 'Kitchen porter'),
 )
 
+CHEF_SERVICE_TITLE = 'kitchen staff'
+
 class ChefJobRequest(JobRequest):
     """A JobRequest that is specifically for chefs to complete.
     """
-    service = 'kitchen staff'
+    service = CHEF_SERVICE_TITLE
 
     certification = models.CharField(max_length=2,
                                      default=CERTIFICATION_CHEF,
@@ -33,6 +35,8 @@ class ChefJobRequest(JobRequest):
 
 class Chef(Freelancer):
     "A chef is a type of freelancer."
+
+    service = CHEF_SERVICE_TITLE
 
     certification = models.CharField(max_length=2,
                                      default=CERTIFICATION_CHEF,
