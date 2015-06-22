@@ -1,6 +1,5 @@
 import time
 from huey.djhuey import crontab, db_periodic_task, db_task
-from apps.core.email import send_mail
 from .models import JobRequest
 
 

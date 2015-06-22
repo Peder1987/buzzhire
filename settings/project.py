@@ -123,3 +123,12 @@ class ProjectConfiguration(StandardConfiguration):
             'rest_framework.authentication.SessionAuthentication',
         )
     }
+
+    def CONTACT_FROM_EMAIL(self):
+        return 'Buzzhire <%s>' % self.CONTACT_EMAIL
+
+    def BOOKINGS_EMAIL(self):
+        return self.CONTACT_EMAIL
+
+    def BOOKINGS_FROM_EMAIL(self):
+        return 'Buzzhire <%s>' % self.BOOKINGS_EMAIL

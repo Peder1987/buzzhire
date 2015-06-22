@@ -22,11 +22,7 @@
           <table class="nine columns">
             <tr>
               <td>
-                <h5><a href='{% base_url %}{{ freelancer_url }}'>{{ booking.freelancer.get_full_name }}</a></h5>
-                <br>
-                {% average_score booking.freelancer.average_score for_email=True %}
-                <br>
-                <strong>Driving experience:</strong> {{ object.get_driving_experience_display }}
+                {% summary_for_email booking.freelancer 'client' %}
               </td>
               <td class="expander"></td>
             </tr>

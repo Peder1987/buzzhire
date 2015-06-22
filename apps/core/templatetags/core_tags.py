@@ -1,5 +1,5 @@
 from django import template
-from django.template.loader import render_to_string
+from django.template.loader import render_to_string, select_template
 from django.conf import settings
 from copy import copy
 from crispy_forms.templatetags.crispy_forms_filters import flatatt_filter
@@ -119,13 +119,44 @@ def model_opts(instance):
 
 
 @register.simple_tag
-def summary(model):
+def summary(instance):
     """Outputs a summary of the supplied model instance.
     Usage:
     
         {% summary object %}
     """
     template_names = template_names_from_polymorphic_model(
-                                model.__class__, '_summary',
+                                instance.__class__, '_summary',
                                 'includes')
-    return render_to_string(template_names, {'object': model})
+    return render_to_string(template_names, {'object': instance})
+
+
+@register.simple_tag
+def summary_for_email(instance, audience):
+    """Outputs a summary of the supplied model instance, suitable for email,
+    for the appropriate audience ('freelancer', 'client', 'admin').
+    
+    Usage:
+    
+        {% summary_for_email driver_job_request 'client' %}
+        
+        This will pass the supplied driver job request to
+        'driver/email/includes/driverjobrequest_client_summary.html', falling
+        back to 'job/email/includes/jobrequest_client_summary.html'.
+    """
+
+    template_names = template_names_from_polymorphic_model(instance.__class__,
+                                            suffix='_%s_summary' % audience,
+                                            subdirectory='email/includes')
+    # Pass the available base template to the context.  This allows
+    # templates to extend the base template specific to the model type,
+    # without us needing to create specific templates for each suffix
+    # for that type.  For example, we can create a specific base template
+    # for DriverJobRequest without needing to have a specific DriverJobRequest
+    # client template to extend it.
+    base_template = select_template(template_names_from_polymorphic_model(
+                                    instance.__class__,
+                                    suffix='_base_summary',
+                                    subdirectory='email/includes')).name
+    return render_to_string(template_names, {'object': instance,
+                                             'base_template': base_template})
