@@ -153,7 +153,7 @@ class JobRequestUpdateMixin(object):
         if self.cleaned_data['notify']:
             # Notify the client
             content = render_to_string(
-                'job/email/includes/driverjobrequest_changed.html',
+                'job/email/includes/jobrequest_changed.html',
                 {'object': instance})
             send_mail(instance.client.user.email,
                   'Your job request has been changed',
@@ -162,7 +162,7 @@ class JobRequestUpdateMixin(object):
                    'Your job request has been changed',
                    'content': content,
                    'bookings_email': settings.BOOKINGS_EMAIL},
-                  from_email=settings.BOOKINGS_EMAIL)
+                  from_email=settings.BOOKINGS_FROM_EMAIL)
         return instance
 
 

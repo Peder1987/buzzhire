@@ -3,7 +3,6 @@ from apps.core.email import send_mail
 from django.conf import settings
 from django.template.loader import render_to_string
 from apps.job.models import JobRequest
-from apps.service.driver.models import DriverJobRequest
 from django_fsm.signals import post_transition
 
 
@@ -12,13 +11,8 @@ def prompt_client_and_drivers_for_feedback(sender, instance, name,
                                           source, target, **kwargs):
     """Emails the client and the drivers for feedback, when a job request
     is finished."""
-    # Only do JobRequests, or subclasses
-    if issubclass(sender, JobRequest) and \
-                                target == DriverJobRequest.STATUS_COMPLETE:
-
-        # For now, we just manually load the DriverJobRequest
-        if sender is JobRequest:
-            instance = DriverJobRequest.objects.get(pk=instance.pk)
+    if isinstance(instance, JobRequest) and \
+                                    target == JobRequest.STATUS_COMPLETE:
 
         # Email client
         content = render_to_string(
@@ -32,7 +26,7 @@ def prompt_client_and_drivers_for_feedback(sender, instance, name,
               {'title': 'Tell us how it went',
                'content': content,
                'bookings_email': settings.BOOKINGS_EMAIL},
-               from_email=settings.BOOKINGS_EMAIL)
+               from_email=settings.BOOKINGS_FROM_EMAIL)
 
         # Email freelancers
 
@@ -48,4 +42,4 @@ def prompt_client_and_drivers_for_feedback(sender, instance, name,
               {'title': 'Tell us how it went',
                'content': content,
                'bookings_email': settings.BOOKINGS_EMAIL},
-               from_email=settings.BOOKINGS_EMAIL)
+               from_email=settings.BOOKINGS_FROM_EMAIL)

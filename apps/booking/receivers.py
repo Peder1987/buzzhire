@@ -26,17 +26,13 @@ def notify_freelancer_on_booking(sender, booking, **kwargs):
                 booking.jobrequest.reference_number
     content = render_to_string(
         'booking/email/includes/freelancer_booking_confirmation.html',
-        {
-            'object': booking,
-            'driverjobrequest': booking.jobrequest
-         }
-    )
+        {'object': booking.jobrequest})
     send_mail(booking.freelancer.user.email,
               subject,
               'email/base',
               {'title': 'Confirmation of booking',
                'content': content},
-              from_email=settings.BOOKINGS_EMAIL)
+              from_email=settings.BOOKINGS_FROM_EMAIL)
 
 
 @receiver(booking_created)
@@ -49,7 +45,7 @@ def notify_admin_on_booking(sender, booking, **kwargs):
 
         content = render_to_string(
             'booking/email/includes/admin_fully_booked.html',
-            {'object': job_request, 'admin': True}
+            {'object': job_request}
         )
 
         send_mail(settings.BOOKINGS_EMAIL,
@@ -67,7 +63,7 @@ def notify_freelancer_on_invitation(sender, invitation, **kwargs):
         'booking/email/includes/freelancer_invitation.html',
         {
             'object': invitation,
-            'driverjobrequest': invitation.jobrequest
+            'job_request': invitation.jobrequest
          }
     )
     send_mail(invitation.freelancer.user.email,
@@ -75,7 +71,7 @@ def notify_freelancer_on_invitation(sender, invitation, **kwargs):
               'email/base',
               {'title': title,
                'content': content},
-              from_email=settings.BOOKINGS_EMAIL)
+              from_email=settings.BOOKINGS_FROM_EMAIL)
 
 # @receiver(booking_created)
 # def notify_client_on_booking(sender, booking, **kwargs):

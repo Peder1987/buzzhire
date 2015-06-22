@@ -1,6 +1,6 @@
 {% load core_tags %}
 <p>The following job has now finished.  We'd love to hear your feedback on the
-{% if client %}drivers{% else %}client{% endif %}.</p>
+{% if client %}freelancer{{ object.number_of_freelancer|pluralize }}{% else %}client{% endif %}.</p>
 
 {% if client %}
   <table class="button">
@@ -10,7 +10,7 @@
       </td>
     </tr>
   </table>
-  {% include 'job/email/includes/client_driverjobrequest.html' %}
+  {% summary_for_email object 'client' %}
 {% else %}
   <table class="button">
     <tr>
@@ -19,7 +19,5 @@
       </td>
     </tr>
   </table>
-  {% include 'job/email/includes/driver_driverjobrequest.html' %}
+  {% summary_for_email object 'freelancer' %}
 {% endif %}
-
- 

@@ -10,7 +10,7 @@ Please confirm it, which will notify the client.</p>
     </tr>
 </table>
 
-{% include 'job/email/includes/admin_driverjobrequest.html' %}
+{% summary_for_email object 'admin' %}
 
 {% with object.bookings.all as bookings %}
     <p></p>
