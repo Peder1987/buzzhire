@@ -1,0 +1,131 @@
+{% extends 'account/dashboard_base.html' %}
+{% load icons booking freelancer feedback humanize %}
+
+{% block page_actions %}
+    {% if request.user.is_admin %}
+        <a class='btn btn-default' href='{% url 'admin:driver_driver_change' object.pk %}'>{{ 'edit'|icon }} Edit</a>
+    {% endif %}
+{% endblock %}
+
+{% block page_title_inner %}{{ block.super }} &nbsp;&nbsp;<small><span class='label label-primary'>{{ object.service|capfirst }}</span></small>{% endblock %}
+
+{% block content %}
+     <div class='row'>
+        <div class='col-md-4 col-md-push-8'>
+            <div class=' bottom-space'>
+                {% profile_photo object 'large' %}
+            </div>
+            {% if request.user.is_admin %}
+                <h5>Contact</h5>
+                <table class='table table-striped'>
+                    <tr>
+                        <th>Name</th>
+                        <td>{{ object.get_full_name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Mobile</th>
+                        <td>{{ object.mobile }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ object.user.email }}</td>
+                    </tr>
+                    
+                </table>
+                <h5>Location</h5>
+                <table class='table table-striped'>
+                    <tr>
+                        <th>Postcode</th>
+                        <td>
+                            {{ object.postcode }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Travel distance</th>
+                        <td>
+                            {{ object.get_travel_distance_display }}
+                        </td>
+                    </tr>
+                 </table>
+                <h5>Other details</h5>
+                <table class='table table-striped'>
+                    <tr>
+                        <th>Reference</th>
+                        <td>
+                            <span style='font-family: monospace;'>{{ object.reference_number }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Published</th>
+                        <td>
+                            {{ object.published|yesno|icon }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Minimum pay per hour</th>
+                        <td>
+                            &pound;{{ object.minimum_pay_per_hour.amount }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Phone type</th>
+                        <td>
+                            {{ object.get_phone_type_display }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>English fluency</th>
+                        <td>
+                            {{ object.get_english_fluency_display }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Eligible to work in UK</th>
+                        <td>
+                            {{ object.eligible_to_work|yesno|icon }}
+                        </td>
+                    </tr>
+                    {% block additional_admin_fields %}{% endblock %}
+                </table>
+            {% else %}
+                <h5>Details</h5>
+                <table class='table table-striped'>
+                    <tr>
+                        <th>Rating</th>
+                        <td>
+                            {% average_score object.average_score %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Phone type</th>
+                        <td>
+                            {{ object.get_phone_type_display }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>English fluency</th>
+                        <td>
+                            {{ object.get_english_fluency_display }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Eligible to work in UK</th>
+                        <td>
+                            {{ object.eligible_to_work|yesno|icon }}
+                        </td>
+                    </tr>
+                    {% block additional_public_fields %}{% endblock %}
+                </table>
+            
+            {% endif %}
+        </div>
+        <div class='col-md-8 col-md-pull-4'>
+            {% block additional_sections %}{% endblock %}
+            {% if request.user.is_admin %}
+                <h5>Availability</h5>
+                {% include 'booking/includes/availability_summary.html' with form=object|availability_form_for_freelancer %}
+            {% endif %}
+            {% feedback_for_freelancer_all object %}
+        </div>
+     </div>    
+{% endblock %}

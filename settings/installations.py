@@ -27,6 +27,7 @@ class HueyMixin(object):
             'consumer_options': {'workers': 1},
         }
 
+
 class Local(BraintreeSandboxMixin, HueyMixin,
             installations.LocalMixin, ProjectConfiguration):
     PROJECT_ROOT = '/home/david/www/buzzhire'
@@ -37,6 +38,10 @@ class Local(BraintreeSandboxMixin, HueyMixin,
     ACCOUNT_PASSWORD_MIN_LENGTH = 1
     HUEY_NAME = 'buzzhire'
     API_ACTIVE = True
+
+    INSTALLED_APPS = ProjectConfiguration.INSTALLED_APPS + (
+        'debug_toolbar',
+    )
 
 
 class Dev(BraintreeSandboxMixin, HueyMixin,
@@ -52,10 +57,6 @@ class Dev(BraintreeSandboxMixin, HueyMixin,
 
     API_ACTIVE = True
 
-    def BOOKINGS_EMAIL(self):
-        return self.CONTACT_EMAIL
-
-
 
 class Live(HueyMixin,
            installations.WebfactionLiveMixin, ProjectConfiguration):
@@ -68,8 +69,7 @@ class Live(HueyMixin,
     HUEY_NAME = 'live'
     HUEY_PORT = 17610
 
-    def BOOKINGS_EMAIL(self):
-        return self.CONTACT_EMAIL
+    CONTACT_EMAIL = 'contact@buzzhire.co'
 
     COMING_SOON = True
 

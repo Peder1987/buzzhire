@@ -18,12 +18,3 @@ class JobRequestAdmin(FSMTransitionMixin, admin.ModelAdmin):
     status_display.short_description = 'Status'
 
 admin.site.register(models.JobRequest, JobRequestAdmin)
-
-
-class DriverJobRequestAdmin(JobRequestAdmin):
-    list_display = ('reference_number', 'client', 'date', 'start_time',
-                    'duration', 'end_datetime',
-                    'client_pay_per_hour', 'number_of_freelancers',
-                    'status')
-
-admin.site.register(models.DriverJobRequest, DriverJobRequestAdmin)

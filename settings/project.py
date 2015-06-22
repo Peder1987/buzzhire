@@ -24,6 +24,7 @@ class ProjectConfiguration(StandardConfiguration):
         'djangobower',
         'dbbackup',
         'fsm_admin',
+        'polymorphic',
         'django_bootstrap_breadcrumbs',
         'huey.djhuey',
         'rest_framework',
@@ -31,13 +32,14 @@ class ProjectConfiguration(StandardConfiguration):
         'apps.core',
         'apps.location',
         'apps.account',
-        'apps.freelancer',
         'apps.client',
-        'apps.driver',
         'apps.payment',
         'apps.job',
+        'apps.freelancer',
         'apps.booking',
         'apps.feedback',
+        'apps.service.driver',
+        'apps.service.chef',
         'apps.api',
         'apps.main',
     )
@@ -121,3 +123,12 @@ class ProjectConfiguration(StandardConfiguration):
             'rest_framework.authentication.SessionAuthentication',
         )
     }
+
+    def CONTACT_FROM_EMAIL(self):
+        return 'Buzzhire <%s>' % self.CONTACT_EMAIL
+
+    def BOOKINGS_EMAIL(self):
+        return self.CONTACT_EMAIL
+
+    def BOOKINGS_FROM_EMAIL(self):
+        return 'Buzzhire <%s>' % self.BOOKINGS_EMAIL

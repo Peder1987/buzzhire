@@ -1,5 +1,5 @@
 {% extends 'account/dashboard_base.html' %}
-{% load crispy_forms_tags icons django_bootstrap_breadcrumbs freelancer %}
+{% load crispy_forms_tags icons django_bootstrap_breadcrumbs freelancer core_tags %}
 
 {% block inner_breadcrumb %}
   {{ block.super }}
@@ -15,7 +15,7 @@
         <p>Provide feedback for the following job:</p>     
      </div>
      <div class='col-md-9'>
-          {% include 'job/includes/driverjobrequest_summary.html' %}
+          {% summary object %}
       </div>
    </div>
    <form method='post'>
@@ -24,7 +24,7 @@
           <div class='row'>
             <div class='col-md-3'>
                 {% with form.feedback_target as feedback_target %}
-                    {% if for_driver %}
+                    {% if for_freelancer %}
                         {# Clients don't have detail pages #}
                         {% profile_photo feedback_target 'medium'  %}
                         <h5>{{ feedback_target.get_full_name }}</h5>

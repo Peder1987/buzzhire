@@ -2,6 +2,8 @@ from decimal import Decimal
 from django.contrib.gis.db import models
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from polymorphic import PolymorphicModel
+from apps.core.models import GeoPolymorphicManager
 from django.conf import settings
 from datetime import date
 from django.core import validators
@@ -32,8 +34,6 @@ def _freelancer(self):
     return self.freelancer_set.get()
 User.freelancer = property(_freelancer)
 
-from decimal import Decimal
-
 
 def client_to_freelancer_rate(client_rate):
     """Given a client rate as a moneyed.Money object,
@@ -53,7 +53,7 @@ FREELANCER_MIN_WAGE = client_to_freelancer_rate(Money(settings.CLIENT_MIN_WAGE,
                                                   'GBP')).amount
 
 
-class PublishedFreelancerManager(models.GeoManager):
+class PublishedFreelancerManager(GeoPolymorphicManager):
     """Manager for published freelancers.
     Note that models inheriting Freelancer should redeclare it:
     
@@ -67,7 +67,7 @@ class PublishedFreelancerManager(models.GeoManager):
         return queryset.filter(published=True)
 
 
-class Freelancer(models.Model):
+class Freelancer(PolymorphicModel):
     "A freelancer is a person offering a professional service."
 
     published = models.BooleanField(default=True,
@@ -155,7 +155,7 @@ class Freelancer(models.Model):
         choices=DISTANCE_CHOICES, default=5,
         help_text='The maximum distance you are prepared to travel to a job.')
 
-    objects = models.GeoManager()
+    objects = GeoPolymorphicManager()
     published_objects = PublishedFreelancerManager()
 
     @property
@@ -169,7 +169,7 @@ class Freelancer(models.Model):
                           self.last_name)
 
     def get_absolute_url(self):
-        return reverse('driver_detail', args=(self.pk,))
+        return reverse('freelancer_detail', args=(self.pk,))
 
     def __unicode__(self):
         return self.get_full_name()

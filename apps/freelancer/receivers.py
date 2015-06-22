@@ -13,13 +13,10 @@ def notify_admin_on_freelancer_created(sender, instance, created, **kwargs):
         subject = 'New freelancer sign up: %s' % instance.get_full_name()
         content = render_to_string(
             'freelancer/email/includes/freelancer_created.html',
-            {
-                'object': instance,
-             }
+            {'object': instance}
         )
         send_mail(settings.CONTACT_EMAIL,
                   subject,
                   'email/base',
                   {'title': subject,
-                   'content': content},
-                  from_email=settings.CONTACT_EMAIL)
+                   'content': content})

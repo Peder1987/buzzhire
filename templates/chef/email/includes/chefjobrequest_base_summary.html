@@ -1,0 +1,5 @@
+{% extends 'job/email/includes/jobrequest_base_summary.html' %}
+
+{% block extra_freelancer_info %}
+    <p><strong>Certification:</strong> {{ object.get_certification_display }} </p>
+{% endblock %}

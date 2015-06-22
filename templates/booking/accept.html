@@ -1,5 +1,5 @@
 {% extends 'account/dashboard_base.html' %}
-{% load crispy_forms_tags django_bootstrap_breadcrumbs  %}
+{% load crispy_forms_tags django_bootstrap_breadcrumbs core_tags %}
 
 {% block inner_breadcrumb %}
   {{ block.super }}
@@ -10,7 +10,7 @@
 {% block content %}
     <div class='row' style='margin-top: 3em;'>
         <div class='col-md-5'>
-            {% include 'job/includes/driverjobrequest_summary.html' with object=job_request %}
+            {% summary job_request %}
         </div>
         <div class='col-md-2'></div>
         <div class='col-md-6'>

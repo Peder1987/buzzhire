@@ -6,6 +6,7 @@ from .forms import ConfirmForm
 from django.contrib.auth.views import redirect_to_login
 from django.core.exceptions import PermissionDenied
 from django.apps.registry import apps
+from .utils import template_names_from_polymorphic_model
 
 # A GBP sign
 POUND_SIGN = u'\u00A3'
@@ -306,3 +307,37 @@ class GrantCheckingMixin(object):
             method = getattr(self, method)
             methods.append(method)
         return methods
+
+
+class PolymorphicTemplateMixin(object):
+    """Views mixin to allow specifying template names for job requests
+    to override the template.  For example, if the template_suffix is '_detail'
+    and the model is DriverJobRequest, the view will look first for a template
+    driver/driverjobrequest_detail.html and then fall back to
+    job/jobrequest_detail.html.
+    
+    It will try to get the model class from the self.object, failing that it
+    will use self.model.
+    
+    Usage:
+    
+        class MyView(PolymorphicTemplateMixin, FormView):
+            model = MyModel
+            template_suffix = '_register'
+            
+    """
+    template_suffix = ''
+
+    def get_template_names(self):
+        """Give subclassing job requests the chance to override the template,
+        falling back to a default.
+        """
+        # Prefer self.object to the model_class.  This is because for detail
+        # views, the model may be the parent class.
+        try:
+            model_class = self.object.__class__
+        except AttributeError:
+            model_class = self.model
+
+        return template_names_from_polymorphic_model(model_class,
+                                                     self.template_suffix)

@@ -1,0 +1,14 @@
+{% extends 'account/signup.html' %}
+{% load django_bootstrap_breadcrumbs crispy_forms_tags %}
+
+{% block form_content %}
+    {% block form_message %} 
+        <p>Tell us about yourself.</p>
+    {% endblock %}
+    <form method="post">
+        {% csrf_token %}
+        {% crispy form %}
+        {% crispy freelancer_form %}
+    </form>
+    
+{% endblock %}

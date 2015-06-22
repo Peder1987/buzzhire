@@ -1,16 +1,16 @@
-{% load core_tags %}
+{% load core_tags admin_urls %}
 <p>The following job request is now fully booked.
 Please confirm it, which will notify the client.</p>
 
 <table class="button" style='margin-top: 10px; margin-bottom: 10px;'>
     <tr>
       <td>
-        <a href='{% base_url %}{% url 'admin:job_driverjobrequest_change' object.pk %}'>Confirm this job</a>
+        <a href='{% base_url %}{% url object|model_opts|admin_urlname:'change' object.pk %}'>Confirm this job</a>
       </td>
     </tr>
 </table>
 
-{% include 'job/email/includes/admin_driverjobrequest.html' %}
+{% summary_for_email object 'admin' %}
 
 {% with object.bookings.all as bookings %}
     <p></p>

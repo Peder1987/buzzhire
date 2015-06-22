@@ -5,10 +5,9 @@ from django.contrib import messages
 from apps.account.views import AdminOnlyMixin
 from apps.core.views import ContextMixin, TabsMixin, ContextTemplateView, \
     ConfirmationMixin, OwnerOnlyMixin
-from apps.driver.models import Driver
 from apps.freelancer.views import FreelancerOnlyMixin
 from apps.freelancer.models import Freelancer
-from apps.job.models import DriverJobRequest
+from apps.job.models import JobRequest
 from .models import Booking, Availability, Invitation
 from .forms import AvailabilityForm, JobMatchingForm, \
                     BookingOrInvitationConfirmForm, InvitationAcceptForm
@@ -16,8 +15,12 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import get_object_or_404, redirect
 from .signals import booking_created, invitation_created
 from django.core.exceptions import PermissionDenied
-from apps.job.views import DriverJobRequestDetail
+from apps.job.views import JobRequestDetail
 from django.http.response import HttpResponseRedirect
+from apps.job.forms import ServiceSelectForm
+from apps.job.views import ServiceViewMixin
+from apps.job import service_from_class
+from apps.core.views import PolymorphicTemplateMixin
 
 
 class FreelancerHasBookingMixin(FreelancerOnlyMixin, OwnerOnlyMixin):
@@ -87,34 +90,42 @@ class AvailabilityUpdate(FreelancerOnlyMixin, SuccessMessageMixin,
             return Availability(freelancer=self.freelancer)
 
 
-class JobMatchingView(AdminOnlyMixin, ContextMixin, ListView):
-    """View for searching drivers to match with jobs.
+class JobMatchingView(AdminOnlyMixin,
+                      PolymorphicTemplateMixin,
+                      ContextMixin, ListView):
+    """View for searching freelancers to match with a job request.
     """
-    template_name = 'booking/job_matching.html'
+    template_suffix = '_job_matching'
     paginate_by = 50
     extra_context = {'title': 'Job matching'}
+
+    @property
+    def model(self):
+        return self.job_request.__class__
 
     def get(self, request, *args, **kwargs):
         # We use a form, but with the GET method as it's a search form.
 
-        # First, handle the job request pk which may have been passed
-        # via the url.  If this is present, we should instantiate the form
-        # with that job request
-        job_request_pk = kwargs.get('job_request_pk', None)
-        if job_request_pk:
-            self.job_request = get_object_or_404(DriverJobRequest,
-                                                 pk=job_request_pk)
-            form_kwargs = {'job_request': self.job_request}
-        else:
-            form_kwargs = {}
+        # First, handle the job request pk passed via the url.
+        self.job_request = get_object_or_404(JobRequest,
+                                        pk=kwargs.pop('job_request_pk'))
+        form_kwargs = {'job_request': self.job_request}
 
         if self.request.GET.get('search', None):
             # A search has been made
             form_kwargs['data'] = self.request.GET
 
-        self.form = JobMatchingForm(**form_kwargs)
+        self.form = self.get_form_class()(**form_kwargs)
 
         return super(JobMatchingView, self).get(request, *args, **kwargs)
+
+    def get_form_class(self):
+        """Returns the job matching form suitable for this service.
+        """
+        service = service_from_class(self.job_request.__class__)
+        if service.job_matching_form:
+            return service.job_matching_form
+        return JobMatchingForm
 
     def get_queryset(self):
         "Called first by get()."
@@ -131,6 +142,7 @@ class JobMatchingView(AdminOnlyMixin, ContextMixin, ListView):
             context['searched'] = True
         return context
 
+
 class BaseInvitationOrBookingConfirm(AdminOnlyMixin, ConfirmationMixin,
                                      FormView):
     """Base view for either inviting or booking a freelancer to a job.
@@ -144,13 +156,13 @@ class BaseInvitationOrBookingConfirm(AdminOnlyMixin, ConfirmationMixin,
     action_icon = ''
 
     def dispatch(self, *args, **kwargs):
-        self.job_request = get_object_or_404(DriverJobRequest,
+        self.job_request = get_object_or_404(JobRequest,
                                              pk=kwargs.pop('job_request_pk'))
-        self.driver = get_object_or_404(Driver,
-                                             pk=kwargs.pop('driver_pk'))
+        self.freelancer = get_object_or_404(Freelancer,
+                                             pk=kwargs.pop('freelancer_pk'))
         try:
             self.model_class.objects.get(jobrequest=self.job_request,
-                                freelancer=self.driver)
+                                         freelancer=self.freelancer)
         except self.model_class.DoesNotExist:
             # This is what we want: the booking/invitation doesn't exist already
             pass
@@ -158,7 +170,7 @@ class BaseInvitationOrBookingConfirm(AdminOnlyMixin, ConfirmationMixin,
             # The booking/invitation already exists
             messages.error(self.request, 'That %s already exists.' \
                                     % self.model_class._meta.verbose_name)
-            return redirect('driverjobrequest_admin_list')
+            return redirect('job_request_admin_list')
         return super(BaseInvitationOrBookingConfirm, self).dispatch(
                                                             *args, **kwargs)
 
@@ -176,14 +188,15 @@ class BaseInvitationOrBookingConfirm(AdminOnlyMixin, ConfirmationMixin,
                             self).get_form_kwargs(*args, **kwargs)
         form_kwargs.update({
             'job_request': self.job_request,
-            'driver': self.driver,
+            'freelancer': self.freelancer,
             'action_text': self.action_text,
             'action_icon': self.action_icon,
         })
         return form_kwargs
 
     def form_valid(self, *args, **kwargs):
-        self.instance = self.model_class.objects.create(freelancer=self.driver,
+        self.instance = self.model_class.objects.create(
+                                freelancer=self.freelancer,
                                jobrequest=self.job_request)
         messages.success(self.request, 'Created %s.'
                          % self.model_class._meta.verbose_name)
@@ -262,8 +275,7 @@ class InvitationAccept(FreelancerOnlyMixin,
             # to the current freelancer
             raise PermissionDenied
         else:
-            self.job_request = DriverJobRequest.objects.get_from_jobrequest(
-                                                    self.invitation.jobrequest)
+            self.job_request = self.invitation.jobrequest
 
         # Check that they're not already booked
         if self.job_request.bookings.for_freelancer(self.freelancer).exists():
@@ -311,6 +323,6 @@ def _is_booked_or_invited_freelancer(self):
         return self.object.bookings.for_freelancer(self.freelancer).exists() \
             or self.object.invitations.for_freelancer(self.freelancer).exists()
 
-DriverJobRequestDetail.is_booked_or_invited_freelancer = \
+JobRequestDetail.is_booked_or_invited_freelancer = \
                                             _is_booked_or_invited_freelancer
-DriverJobRequestDetail.grant_methods.append('is_booked_or_invited_freelancer')
+JobRequestDetail.grant_methods.append('is_booked_or_invited_freelancer')

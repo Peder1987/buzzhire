@@ -1,0 +1,11 @@
+{% extends 'job/jobrequest_detail.html' %}
+{% load humanize icons %}
+
+{% block extra_job_requirements %}
+     <tr>
+        <th>Certification</th>
+        <td>
+            <span class='label label-default'>{{ object.get_certification_display }}</span>
+        </td>
+    </tr>
+{% endblock %}

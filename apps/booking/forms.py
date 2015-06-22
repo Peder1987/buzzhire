@@ -10,7 +10,7 @@ from apps.core.widgets import Bootstrap3SterlingMoneyWidget
 from .models import Availability, Booking
 from apps.freelancer.models import client_to_freelancer_rate, Freelancer
 from apps.job.models import JobRequest
-from apps.driver.models import Driver, VehicleType, DriverVehicleType, \
+from apps.service.driver.models import Driver, VehicleType, DriverVehicleType, \
                                             FlexibleVehicleType
 from apps.location.forms import PostcodeFormMixin
 from apps.core.forms import ConfirmForm
@@ -73,10 +73,13 @@ class AvailabilityForm(forms.ModelForm):
 
 
 class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
-    """Form for searching drivers to help match them to jobs.
-    Can be optionally instantiated with a job_request, which will prepopulate
-    the search fields based on the job request's values.
+    """Form for searching freelancers to help match them to a job.
+    Must be instantiated with a job_request, which will prepopulate
+    the search fields based on the job request's values, and allow
+    the form to know which type of freelancer to search for.
     """
+
+    job_matcher = JobMatcher
 
     date = forms.DateField(required=False)
     SHIFT_CHOICES = tuple([(None, '-- Enter shift --')] +
@@ -84,31 +87,9 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
                                 for value in Availability.SHIFTS])
     shift = forms.ChoiceField(choices=SHIFT_CHOICES, required=False)
 
-    vehicle_type = forms.ModelChoiceField(
-                                queryset=FlexibleVehicleType.objects.all(),
-                                required=False)
-#     DRIVING_EXPERIENCE_CHOICES = (
-#         (0, 'No preference'),
-#         (1, '1 year'),
-#         (3, '3 years'),
-#         (5, '5 years'),
-#     )
-
-#     driving_experience = forms.ChoiceField(label='Minimum driving experience',
-#                                     required=False,
-#                                     choices=DRIVING_EXPERIENCE_CHOICES)
 
     client_pay_per_hour = MoneyField(max_digits=5, decimal_places=2,
                                      required=False)
-
-    own_vehicle = forms.BooleanField(
-                                label='The driver needs their own vehicle.',
-                                required=False)
-    minimum_delivery_box = forms.ChoiceField(required=False,
-                        choices=DriverVehicleType.DELIVERY_BOX_CHOICES,
-                        help_text='N.B. This will filter out any vehicle '
-                            'that does not have a delivery box of at least '
-                            'this size, including cars.')
 
     phone_requirement = forms.ChoiceField(required=False,
                                 choices=JobRequest.PHONE_REQUIREMENT_CHOICES)
@@ -116,9 +97,11 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
     # respect_travel_distance = forms.BooleanField(required=False)
 
     def __init__(self, *args, **kwargs):
-        # Set the job request, if it's provided
-        self.job_request = kwargs.pop('job_request', None)
+        # Set the job request
+        self.job_request = kwargs.pop('job_request')
+
         super(JobMatchingForm, self).__init__(*args, **kwargs)
+
         amount, currency = self.fields['client_pay_per_hour'].fields
         self.fields['client_pay_per_hour'].widget = \
             Bootstrap3SterlingMoneyWidget(
@@ -126,12 +109,11 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
                currency_widget=widgets.HiddenInput(attrs={'value': 'GBP'}),
                attrs={'step': '0.25'})
 
-        if self.job_request:
-            self.set_initial_based_on_job_request()
+        self.set_initial_based_on_job_request()
 
     def set_initial_based_on_job_request(self):
         "Sets the initial data based on the job request."
-        matcher = JobMatcher(self.job_request)
+        matcher = self.job_matcher(self.job_request)
         for name, value in matcher.search_terms.items():
             self.fields[name].initial = value
 
@@ -148,7 +130,7 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
     def get_results(self):
         """Returns the results of a successful search.
         Should be called after the form has been successfully validated."""
-        matcher = JobMatcher(self.cleaned_data)
+        matcher = self.job_matcher(self.job_request, self.cleaned_data)
         results = matcher.get_results()
         # Also set the freelancer_pay_per_hour on the form
         self.freelancer_pay_per_hour = getattr(matcher,
@@ -162,7 +144,7 @@ class BookingOrInvitationConfirmForm(ConfirmForm):
             'booking/includes/booking_or_invitation_confirm_form_inner.html'
     def __init__(self, *args, **kwargs):
         self.job_request = kwargs.pop('job_request')
-        self.driver = kwargs.pop('driver')
+        self.freelancer = kwargs.pop('freelancer')
         super(BookingOrInvitationConfirmForm, self).__init__(*args, **kwargs)
 
 

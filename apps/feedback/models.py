@@ -194,7 +194,8 @@ def get_job_requests_awaiting_feedback_for_client(client):
     """
     # Get job request pks for the client's job requests that don't have feedback
     jobs_without_feedback = set(Booking.objects.for_client(
-                client).filter(bookingfeedback=None).values_list(
-                                                'jobrequest_id', flat=True))
+                client).exclude(bookingfeedback__author_type=\
+                                    BookingFeedback.AUTHOR_TYPE_CLIENT
+                ).values_list('jobrequest_id', flat=True))
     # Return as queryset, excluding any that aren't complete
     return JobRequest.objects.filter(pk__in=jobs_without_feedback).complete()

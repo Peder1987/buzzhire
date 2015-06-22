@@ -1,6 +1,5 @@
 import time
 from huey.djhuey import db_task
-from apps.core.email import send_mail
 from .models import Invitation
 from .forms import JobMatchingForm
 from .utils import JobMatcher

@@ -4,7 +4,7 @@ from extra_views import FormSetView
 from apps.client.views import OwnedByClientMixin, ClientOnlyMixin
 from apps.core.views import ContextMixin
 from apps.freelancer.views import FreelancerOnlyMixin
-from apps.job.models import JobRequest, DriverJobRequest
+from apps.job.models import JobRequest
 from apps.booking.views import FreelancerHasBookingMixin
 from apps.booking.models import Booking
 from .models import BookingFeedback, \
@@ -82,7 +82,7 @@ class BaseFeedbackCreateView(FeedbackAllowedMixin,
     """
     template_name = 'feedback/feedback_create.html'
     extra_context = {'title': 'Leave feedback'}
-    model = DriverJobRequest
+    model = JobRequest
     extra = 0
     form_class = BookingFeedbackForm
     author_type = None  # This should be overridden in the subclass
@@ -128,5 +128,5 @@ class FreelancerFeedbackCreate(FreelancerHasBookingMixin,
     def get_context_data(self, *args, **kwargs):
         context = super(FreelancerFeedbackCreate, self).get_context_data(*args,
                                                                     **kwargs)
-        context['for_driver'] = True
+        context['for_freelancer'] = True
         return context

@@ -1,0 +1,42 @@
+{% load icons humanize feedback %}
+{% if object_list %}
+    <table class='table'>
+        <thead>
+            <th>Reference</th>
+            {% if request.user.is_admin %}
+                <th>Client</th>
+            {% endif %}
+            <th>Start date and time</th>
+            <th>Duration</th>
+            <th>Location</th>
+            <th>Freelancer type</th>
+            <th>Number of freelancers</th>
+            <th>Status</th>
+            <th>Your feedback</th>
+        </thead>
+        <tbody>
+            {% for object in object_list %}
+                <tr>
+                    <td><a href='{{ object.get_absolute_url }}'>{{ object.reference_number }}</a></td>
+                    {% if request.user.is_admin %}
+                        <td>{{ object.client }}</td>
+                    {% endif %}
+                    <td>{{ 'date'|icon }} {{ object.date }}<br>{{ 'time'|icon }} {{ object.start_time }}</td>
+                    <td>{{ object.duration }} hour{{ object.duration|pluralize }}</td>
+                    <td>{% include 'job/includes/location.html' %}</td>
+                    <td><span class='label label-default'>{{ object.service|capfirst }}</span></td>
+                    <td>{{ object.number_of_freelancers }}</td>
+                    <td>{{ object.get_status_display }}</td>
+                    <td>
+                        {% if object|client_feedback_allowed %}
+                            <a href='{% url 'client_feedback_create' object.pk %}' class='btn btn-primary'>{{ 'feedback'|icon }} Leave feedback</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}        
+        </tbody>
+    </table>
+    {% include 'includes/paginator.html' %}
+{% else %}
+    <p class='well top-space'>No jobs.</p>
+{% endif %}   
