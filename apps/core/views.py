@@ -334,9 +334,9 @@ class PolymorphicTemplateMixin(object):
         """
         # Prefer self.object to the model_class.  This is because for detail
         # views, the model may be the parent class.
-        try:
+        if getattr(self, 'object', None):
             model_class = self.object.__class__
-        except AttributeError:
+        else:
             model_class = self.model
 
         return template_names_from_polymorphic_model(model_class,

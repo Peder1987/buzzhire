@@ -52,6 +52,9 @@ ICON_MAP = {
     'score_half': 'star-half-o',
     'invitation': 'paper-plane-o',
     'chef': 'cutlery',
+    'bar': 'beer',
+    'cleaner': 'tint',
+    'waiting': 'glass',
 }
 
 @register.filter

@@ -52,10 +52,11 @@ class ServiceSelect(ContextMixin, FormView):
 
 
 class JobRequestCreate(ClientOnlyMixin, ServiceViewMixin, ContextMixin,
-                       CreateView):
+                       PolymorphicTemplateMixin, CreateView):
     """View class for logged in clients to create a job request,
     intended to be subclassed.
     """
+    template_suffix = '_form'
 
     def get_context_data(self, *args, **kwargs):
         # Tailor the page title to the service
@@ -220,7 +221,8 @@ class RequestedJobList(ClientOnlyMixin, ContextMixin, TabsMixin, ListView):
             return queryset.future()
 
 
-class JobRequestDetail(GrantCheckingMixin, DetailView):
+class JobRequestDetail(GrantCheckingMixin, PolymorphicTemplateMixin,
+                       DetailView):
     """Detail page for job requests.
     We use the GrantCheckingMixin as we want other apps that this app
     doesn't know about (e.g. bookings) to grant certain freelancers access.
@@ -229,6 +231,7 @@ class JobRequestDetail(GrantCheckingMixin, DetailView):
     require_login = True
     allow_admin = True
     grant_methods = ['is_owned_by_client']
+    template_suffix = '_detail'
 
     def is_owned_by_client(self):
         """Grant method - returns True if the user is a client, and they

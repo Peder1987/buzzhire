@@ -40,6 +40,9 @@ class ProjectConfiguration(StandardConfiguration):
         'apps.feedback',
         'apps.service.driver',
         'apps.service.chef',
+        'apps.service.bar',
+        'apps.service.waiting',
+        'apps.service.cleaner',
         'apps.api',
         'apps.main',
     )
