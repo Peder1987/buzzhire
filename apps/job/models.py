@@ -48,11 +48,6 @@ class JobRequestQuerySet(PolymorphicQuerySet):
 class JobRequest(PolymorphicModel):
     """A request by a client for a service for a particular
     period of time, to be performed by one or more freelancers.
-    
-    For the moment, we will not really use this model directly,
-    but will use the DriverJobRequest model.  But it's sensible to split
-    up the generic job request code from the driver specific stuff
-    from the beginning.
     """
 
     # The client who is making the job request
@@ -123,12 +118,12 @@ class JobRequest(PolymorphicModel):
     date_submitted = models.DateTimeField(auto_now_add=True)
 
     client_pay_per_hour = MoneyField('Pay per hour',
-                  max_digits=5, decimal_places=2,
-                  default_currency='GBP',
-                  default=Decimal(settings.CLIENT_MIN_WAGE),
-                  help_text='How much you will pay per hour, for each driver.',
-                  validators=[
-                    validators.MinValueValidator(settings.CLIENT_MIN_WAGE)])
+              max_digits=5, decimal_places=2,
+              default_currency='GBP',
+              default=Decimal(settings.CLIENT_MIN_WAGE),
+              help_text='How much you will pay per hour, for each freelancer.',
+              validators=[
+                validators.MinValueValidator(settings.CLIENT_MIN_WAGE)])
 
     tips_included = models.BooleanField('Inclusive of tips', default=False,
                                         blank=False)
@@ -177,12 +172,12 @@ class JobRequest(PolymorphicModel):
     phone_requirement = models.CharField(max_length=2,
             choices=PHONE_REQUIREMENT_CHOICES,
             default=PHONE_REQUIREMENT_NOT_REQUIRED,
-            help_text='Whether the driver needs a smart phone to do '
+            help_text='Whether the freelancer needs a smart phone to do '
                 'this job (for example, if you need them to run an app).')
 
     comments = models.TextField(
                     blank=True,
-                    help_text='Anything else to tell the driver.')
+                    help_text='Anything else to tell the freelancer.')
 
     objects = JobRequestQuerySet.as_manager()
 

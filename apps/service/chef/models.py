@@ -29,9 +29,6 @@ class ChefJobRequest(JobRequest):
                                      default=CERTIFICATION_CHEF,
                                      choices=CERTIFICATION_CHOICES)
 
-    # TODO - make generic
-    # objects = DriverJobRequestManager.from_queryset(JobRequestQuerySet)()
-
 
 class Chef(Freelancer):
     "A chef is a type of freelancer."

@@ -201,7 +201,7 @@ class JobRequestCreateAnonymous(ServiceViewMixin,
 
 
 class RequestedJobList(ClientOnlyMixin, ContextMixin, TabsMixin, ListView):
-    """List of driver job requests ordered by a client.
+    """List of job requests ordered by a client.
     This view has two modes - if self.past is True, it will return the
     job requests in the past, otherwise it will show upcoming job requests.   
     """

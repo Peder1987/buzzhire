@@ -12,7 +12,6 @@ from apps.core.widgets import ChoiceAttrsRadioSelect
 from django.forms.widgets import HiddenInput
 from apps.core.widgets import Bootstrap3SterlingMoneyWidget, Bootstrap3TextInput
 from django.forms import widgets
-from apps.service.driver.models import VehicleType
 from apps.location.forms import PostcodeFormMixin
 from apps.payment.utils import PaymentAPI, PaymentException
 from .models import JobRequest
@@ -93,8 +92,6 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
         such as in the anonymous creation of bookings."""
         # Make sure the client is saved in the job request
         self.instance.client = client
-        # Make sure the city of London is saved
-        # self.instance.city = DriverJobRequest.CITY_LONDON
         self.instance.postcode = self.cleaned_data['postcode']
         return super(JobRequestForm, self).save(commit)
 
