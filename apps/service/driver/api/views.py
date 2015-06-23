@@ -60,8 +60,24 @@ class OwnDriverViewSet(RetrieveAndUpdateViewset):
 class DriverJobRequestViewSet(viewsets.ReadOnlyModelViewSet):
     """All driver job requests.  Publicly viewable information.
     
-    * `flexible_vehicle_type`: The flexible vehicle type that would
+    The generic fields are documented on the job request endpoint.
+    
+    - `flexible_vehicle_type`: The flexible vehicle type that would
       be appropriate for the job, or null if any vehicle would be appropriate.
+    - `driving_experience` The number of years of driving experience.
+        Integer.  Choices are:
+        - `0` - Less than 1 year
+        - `1` - 1 - 3 years
+        - `3` - 3 - 5 years
+        - `5` - More than 5 years
+    - `own_vehicle`: Whether the driver needs to supply their own vehicle.
+    - `delivery_box_applicable`: Whether the minimum delivery box requirement
+      is relevant. 
+    - `minimum_delivery_box`: The minimum size of delivery box required (only
+      relevant if `delivery_box_applicable` is `true`).  Integer.  Choices are:
+        - `0` - None
+        - `2` - Standard
+        - `4` - Pizza
     """
     serializer_class = DriverJobRequestSerializer
     permission_classes = (IsAuthenticated,)
