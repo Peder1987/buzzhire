@@ -8,6 +8,3 @@
     {% if object.delivery_box_applicable %}<p><strong>Minimum delivery box:</strong> {{ object.get_minimum_delivery_box_display }} </p>{% endif %}
 {% endblock %}
 
-{% block extra_freelancer_info %}
-    <p><strong>Minimum driving experience:</strong> {{ object.get_driving_experience_display }} </p>
-{% endblock %}

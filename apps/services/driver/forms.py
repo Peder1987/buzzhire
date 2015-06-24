@@ -27,7 +27,7 @@ class DriverJobRequestForm(JobRequestForm):
                 'minimum_delivery_box',
             )
         )
-        self.helper.layout[2].insert(1, 'driving_experience')
+
 
     def adjust_vehicle_type_widget(self):
         """Adjusts the vehicle type widget so it has
@@ -51,7 +51,7 @@ class DriverJobRequestForm(JobRequestForm):
     class Meta(JobRequestForm.Meta):
          model = DriverJobRequest
          fields = JobRequestForm.Meta.fields + ('vehicle_type', 'own_vehicle',
-                  'minimum_delivery_box', 'driving_experience')
+                  'minimum_delivery_box')
          widgets = {
                 'vehicle_type': ChoiceAttrsRadioSelect(),
          }
@@ -60,17 +60,11 @@ class DriverJobRequestForm(JobRequestForm):
 class DriverForm(FreelancerForm):
     """Edit form for a driver's profile."""
 
-    def __init__(self, *args, **kwargs):
-        super(DriverForm, self).__init__(*args, **kwargs)
-        self.helper.layout[1].append('driving_experience')
-
     class Meta(FreelancerForm.Meta):
         model = Driver
         exclude = FreelancerForm.Meta.exclude \
                         + ('vehicle_types', 'motorcycle_licence')
-        widgets = {
-            'driving_experience': forms.widgets.Select,
-        }
+
 
 
 class DriverVehicleTypeForm(CrispyFormMixin, forms.ModelForm):

@@ -1,7 +1,8 @@
 from django import template
 from ..models import JobRequest
 from django.utils.safestring import mark_safe
-from .. import services, service_from_class
+from .. import service_from_class
+from apps.service import services
 from django.template.loader import render_to_string
 
 
@@ -54,20 +55,6 @@ def jobrequest_status_icon(status):
         {{ object.status|jobrequest_status_icon }}
     """
     return mark_safe('<i class="fa fa-%s"></i>' % STATUS_MAP[status]['icon'])
-
-
-@register.assignment_tag
-def get_services():
-    """Assignment tag for getting the registered services.
-    
-    Usage:
-    
-        {% get_services as services %}
-        {% for service in services %}
-            {# Do something #}
-        {% endfor %} 
-    """
-    return services.values()
 
 
 @register.filter

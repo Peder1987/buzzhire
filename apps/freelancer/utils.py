@@ -1,4 +1,4 @@
-from apps.job import services
+from apps.service import services
 
 
 def service_for_freelancer(freelancer):

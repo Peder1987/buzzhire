@@ -10,8 +10,8 @@ from .forms import PhotoUploadForm, SignupFormFreelancerDetailsMixin
 from django.views.generic import DetailView, UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse_lazy
-from apps.job.forms import ServiceSelectForm
-from apps.job.views import ServiceViewMixin
+from apps.service.forms import ServiceSelectForm
+from apps.service.views import ServiceViewMixin
 from django.views.generic.edit import FormView
 from apps.account.views import SignupView as BaseSignupView
 from apps.account.forms import SignupInnerForm

@@ -1,4 +1,4 @@
-from apps.job import services, Service
+from apps.service import services, Service
 from .models import DriverJobRequest, Driver
 from .forms import DriverJobRequestForm, DriverForm, DriverJobMatchingForm
 from django.core.urlresolvers import reverse_lazy

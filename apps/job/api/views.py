@@ -6,7 +6,15 @@ from ..models import JobRequest
 
 
 class JobRequestViewSet(viewsets.ReadOnlyModelViewSet):
-    "All job requests.  Publicly viewable information."
+    """All job requests.  Publicly viewable information.
+    
+    - `years_experience` The minimum number of years of working experience
+       required. Integer.  Choices are:
+        - `0` - Less than 1 year
+        - `1` - 1 - 3 years
+        - `3` - 3 - 5 years
+        - `5` - More than 5 years
+    """
     serializer_class = JobRequestSerializer
     permission_classes = (IsAuthenticated,)
 

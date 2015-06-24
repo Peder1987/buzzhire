@@ -55,6 +55,12 @@ class OwnFreelancerViewSet(RetrieveAndUpdateViewset):
         - `10` - 10 miles
         - `20` - 20 miles
         - `50` - 50 miles
+    - `years_experience` The number of years of working experience.
+        Integer.  Choices are:
+        - `0` - Less than 1 year
+        - `1` - 1 - 3 years
+        - `3` - 3 - 5 years
+        - `5` - More than 5 years
     """
     model = Freelancer
     serializer_class = PrivateFreelancerSerializer

@@ -20,27 +20,18 @@ from apps.account.views import SignupView as BaseSignupView
 from . import signals
 from .models import JobRequest
 from .forms import JobRequestInnerFormMixin, JobRequestUpdateMixin, \
-                    JobRequestSignupInnerForm, JobRequestCheckoutForm, \
-                    ServiceSelectForm
+                    JobRequestSignupInnerForm, JobRequestCheckoutForm
+from apps.service.forms import ServiceSelectForm
 from django.http.response import HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
-from . import services, service_from_class
-
-
-class ServiceViewMixin(object):
-    """Views mixin for views connected to urls with a service_key
-    url component.
-    Sets self.service as equal to the service specified.
-    """
-    def dispatch(self, request, *args, **kwargs):
-        self.service = services[kwargs['service_key']]
-        return super(ServiceViewMixin, self).dispatch(request, *args, **kwargs)
-
+from . import service_from_class
+from apps.service import services
+from apps.service.views import ServiceViewMixin
 
 
 class ServiceSelect(ContextMixin, FormView):
-    """View that allows them to select which service they  want, and redirects them
-    to the job request creation page for that service.
+    """View that allows them to select which service they  want,
+    and redirects them to the job request creation page for that service.
     """
     form_class = ServiceSelectForm
     template_name = 'job/service_select.html'

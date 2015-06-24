@@ -49,4 +49,4 @@ class PrivateFreelancerSerializer(serializers.ModelSerializer):
                   'phone_type',
                   'minimum_pay_per_hour',
                   'postcode',
-                  'travel_distance')
+                  'travel_distance', 'years_experience')

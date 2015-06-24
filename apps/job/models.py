@@ -7,6 +7,7 @@ from django.core import validators
 from multiselectfield import MultiSelectField
 from djmoney.models.fields import MoneyField
 from apps.client.models import Client
+from apps.freelancer.models import Freelancer
 from apps.location.models import Postcode
 from apps.freelancer.models import client_to_freelancer_rate
 from decimal import Decimal
@@ -139,6 +140,17 @@ class JobRequest(PolymorphicModel):
     number_of_freelancers = models.PositiveSmallIntegerField(
                                 'Number of freelancers required',
                                 choices=[(i, i) for i in range(1, 10)],
+                                default=1)
+
+    YEARS_EXPERIENCE_CHOICES = (
+        (0, 'No preference'),
+        (1, '1 year'),
+        (3, '3 years'),
+        (5, '5 years'),
+    )
+    years_experience = models.PositiveSmallIntegerField(
+                                'Minimum years of experience',
+                                choices=YEARS_EXPERIENCE_CHOICES,
                                 default=1)
 
     address1 = models.CharField('Address line 1', max_length=75)

@@ -1,4 +1,4 @@
-from apps.job import services, Service
+from apps.service import services, Service
 from .models import ChefJobRequest, Chef
 from .forms import ChefJobRequestForm, ChefForm, ChefJobMatchingForm
 

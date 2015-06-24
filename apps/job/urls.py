@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from . import views, services
+from . import views
 from apps.job.models import JobRequest
 
 

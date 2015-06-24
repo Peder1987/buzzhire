@@ -171,6 +171,12 @@
                         {{ object.get_phone_requirement_display }}
                     </td>
                 </tr>
+                <tr>
+                    <th>Minimum years of experience</th>
+                    <td>
+                        {{ object.get_years_experience_display }}
+                    </td>
+                </tr>
                 {% block extra_job_requirements %}{% endblock %}
             </table>
             {% if object.comments %}

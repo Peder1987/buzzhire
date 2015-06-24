@@ -10,7 +10,7 @@ from apps.core.widgets import Bootstrap3SterlingMoneyWidget
 from .models import Availability, Booking
 from apps.freelancer.models import client_to_freelancer_rate, Freelancer
 from apps.job.models import JobRequest
-from apps.service.driver.models import Driver, VehicleType, DriverVehicleType, \
+from apps.services.driver.models import Driver, VehicleType, DriverVehicleType, \
                                             FlexibleVehicleType
 from apps.location.forms import PostcodeFormMixin
 from apps.core.forms import ConfirmForm

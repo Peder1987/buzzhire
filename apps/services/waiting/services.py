@@ -1,4 +1,4 @@
-from apps.job import services, Service
+from apps.service import services, Service
 from .models import WaitingJobRequest, WaitingFreelancer
 from .forms import WaitingJobRequestForm, WaitingFreelancerForm
 

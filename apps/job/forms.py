@@ -15,7 +15,7 @@ from django.forms import widgets
 from apps.location.forms import PostcodeFormMixin
 from apps.payment.utils import PaymentAPI, PaymentException
 from .models import JobRequest
-from . import services, service_from_class
+from . import service_from_class
 import logging
 
 
@@ -72,6 +72,7 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
             layout.Fieldset('Freelancer details',
                 'number_of_freelancers',
                 'phone_requirement',
+                'years_experience',
             ),
             layout.Fieldset('Budget',
                 'client_pay_per_hour',
@@ -100,7 +101,7 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
         fields = ('date', 'start_time', 'duration',
                   'address1', 'address2', 'city',
                   'client_pay_per_hour', 'tips_included',
-                  'number_of_freelancers',
+                  'number_of_freelancers', 'years_experience',
                   'phone_requirement',
                   'comments')
 
@@ -200,17 +201,4 @@ class JobRequestCheckoutForm(CrispyFormMixin, forms.Form):
         # Payment will have been successfully processed
         self.instance.open()
         self.instance.save()
-
-
-class ServiceSelectForm(forms.Form):
-    """Form for selecting a service.
-    """
-    def __init__(self, *args, **kwargs):
-        super(ServiceSelectForm, self).__init__(*args, **kwargs)
-        # Populate the service field with each service
-        service_choices = []
-        for service in services.values():
-            service_choices.append((service.key, service.title))
-        self.fields['service'] = forms.ChoiceField(choices=service_choices)
-        self.fields['service'].widget.attrs['class'] = 'form-control'
 

@@ -155,6 +155,22 @@ class Freelancer(PolymorphicModel):
         choices=DISTANCE_CHOICES, default=5,
         help_text='The maximum distance you are prepared to travel to a job.')
 
+    # The integer stored in experience denotes that they have
+    # AT LEAST that number of years experience.
+    YEARS_EXPERIENCE_LESS_ONE = 0
+    YEARS_EXPERIENCE_ONE = 1
+    YEARS_EXPERIENCE_THREE = 3
+    YEARS_EXPERIENCE_FIVE = 5
+    YEARS_EXPERIENCE_CHOICES = (
+        (YEARS_EXPERIENCE_LESS_ONE, 'Less than 1 year'),
+        (YEARS_EXPERIENCE_ONE, '1 - 3 years'),
+        (YEARS_EXPERIENCE_THREE, '3 - 5 years'),
+        (YEARS_EXPERIENCE_FIVE, 'More than 5 years'),
+    )
+    years_experience = models.PositiveSmallIntegerField(
+                                default=YEARS_EXPERIENCE_ONE,
+                                choices=YEARS_EXPERIENCE_CHOICES)
+
     objects = GeoPolymorphicManager()
     published_objects = PublishedFreelancerManager()
 

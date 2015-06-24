@@ -29,7 +29,7 @@ class PrivateDriverSerializer(PrivateFreelancerSerializer):
 
     class Meta:
         model = Driver
-        fields = PrivateFreelancerSerializer.Meta.fields + ('driving_experience',)
+        fields = PrivateFreelancerSerializer.Meta.fields
 
 
 
@@ -42,5 +42,4 @@ class DriverJobRequestSerializer(JobRequestSerializer):
         model = DriverJobRequest
         fields = JobRequestSerializer.Meta.fields + \
                   ('flexible_vehicle_type', 'minimum_delivery_box',
-                   'delivery_box_applicable',
-                   'driving_experience', 'own_vehicle',)
+                   'delivery_box_applicable', 'own_vehicle',)

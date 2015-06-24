@@ -18,7 +18,8 @@ class DriverAdmin(admin.ModelAdmin):
                     'first_name', 'last_name',
                     'published', 'postcode')
     list_filter = ('published',)
-    exclude = ('driving_experience_old', 'vehicle_types_old')
+    exclude = ('driving_experience_old', 'driving_experience_old_2',
+               'vehicle_types_old')
 
 
 class DriverVehicleTypeAdmin(admin.ModelAdmin):
@@ -38,5 +39,6 @@ class DriverJobRequestAdmin(JobRequestAdmin):
                     'duration', 'end_datetime',
                     'client_pay_per_hour', 'number_of_freelancers',
                     'status')
+    exclude = ('driving_experience_old',)
 
 admin.site.register(models.DriverJobRequest, DriverJobRequestAdmin)

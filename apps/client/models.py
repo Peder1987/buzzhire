@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from multiselectfield import MultiSelectField
-from apps.freelancer.models import Freelancer
 from django.conf import settings
 from django.core import validators
 from django.core.urlresolvers import reverse

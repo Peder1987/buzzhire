@@ -17,8 +17,8 @@ from .signals import booking_created, invitation_created
 from django.core.exceptions import PermissionDenied
 from apps.job.views import JobRequestDetail
 from django.http.response import HttpResponseRedirect
-from apps.job.forms import ServiceSelectForm
-from apps.job.views import ServiceViewMixin
+from apps.service.forms import ServiceSelectForm
+from apps.service.views import ServiceViewMixin
 from apps.job import service_from_class
 from apps.core.views import PolymorphicTemplateMixin
 

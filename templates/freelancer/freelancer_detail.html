@@ -85,6 +85,12 @@
                             {{ object.eligible_to_work|yesno|icon }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>Years of experience</th>
+                        <td>
+                            {{ object.get_years_experience_display }}
+                        </td>
+                    </tr>
                     {% block additional_admin_fields %}{% endblock %}
                 </table>
             {% else %}
@@ -112,6 +118,12 @@
                         <th>Eligible to work in UK</th>
                         <td>
                             {{ object.eligible_to_work|yesno|icon }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Years of experience</th>
+                        <td>
+                            {{ object.get_years_experience_display }}
                         </td>
                     </tr>
                     {% block additional_public_fields %}{% endblock %}

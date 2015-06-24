@@ -11,5 +11,3 @@ class JobConfig(AppConfig):
         # import signal handlers
         from . import receivers
 
-        # Autodiscover services.py files in other apps
-        self.module.autodiscover()

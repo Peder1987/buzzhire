@@ -40,12 +40,7 @@ class OwnDriverViewSet(RetrieveAndUpdateViewset):
     
     These are the fields specific to drivers:
     
-    - `driving_experience` The number of years of driving experience.
-        Integer.  Choices are:
-        - `0` - Less than 1 year
-        - `1` - 1 - 3 years
-        - `3` - 3 - 5 years
-        - `5` - More than 5 years
+    - Currently no fields.
      
     """
     model = Driver
@@ -64,12 +59,6 @@ class DriverJobRequestViewSet(viewsets.ReadOnlyModelViewSet):
     
     - `flexible_vehicle_type`: The flexible vehicle type that would
       be appropriate for the job, or null if any vehicle would be appropriate.
-    - `driving_experience` The number of years of driving experience.
-        Integer.  Choices are:
-        - `0` - Less than 1 year
-        - `1` - 1 - 3 years
-        - `3` - 3 - 5 years
-        - `5` - More than 5 years
     - `own_vehicle`: Whether the driver needs to supply their own vehicle.
     - `delivery_box_applicable`: Whether the minimum delivery box requirement
       is relevant. 

@@ -77,6 +77,7 @@ class FreelancerForm(CrispyFormMixin, PostcodeFormMixin, forms.ModelForm):
                 'About you',
                 'english_fluency',
                 'eligible_to_work',
+                'years_experience',
             ),
             layout.Fieldset(
                 'Your equipment',
@@ -98,3 +99,6 @@ class FreelancerForm(CrispyFormMixin, PostcodeFormMixin, forms.ModelForm):
     class Meta:
         model = Freelancer
         exclude = ('user', 'published')
+        widgets = {
+            'years_experience': forms.widgets.Select,
+        }

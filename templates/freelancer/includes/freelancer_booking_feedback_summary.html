@@ -8,6 +8,7 @@
         <div class='average-feedback-score'>
             {% average_score freelancer.average_score %}
         </div>
+        {{ freelancer.get_years_experience_display }} of experience.
         {% block extra_fields %}{% endblock %}
     </div>
     <div class='col-md-4'>

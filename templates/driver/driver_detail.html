@@ -1,23 +1,5 @@
 {% extends 'freelancer/freelancer_detail.html' %}
 
-{% block additional_admin_fields %}
-    <tr>
-        <th>Driving experience</th>
-        <td>
-            {{ object.get_driving_experience_display }}
-        </td>
-    </tr>
-{% endblock %}
-
-{% block additional_public_fields %}
-    <tr>
-        <th>Driving experience</th>
-        <td>
-            {{ object.get_driving_experience_display }}
-        </td>
-    </tr>
-{% endblock %}
-
 {% block additional_sections %}
     <h5>Vehicles</h5>
     {% with object_list=object.drivervehicletype_set.all %}

@@ -146,7 +146,8 @@ class Driver(Freelancer):
     driving_experience_old = models.CharField(blank=True,
                                             max_length=3,
                                             choices=DRIVING_EXPERIENCE_CHOICES)
-    driving_experience = models.PositiveSmallIntegerField(default=1,
+    # Legacy field - to be deleted
+    driving_experience_old_2 = models.PositiveSmallIntegerField(default=1,
                                         choices=DRIVING_EXPERIENCE_CHOICES)
 
     objects = models.GeoManager()
@@ -228,7 +229,8 @@ class DriverJobRequest(JobRequest):
             help_text='For scooters, motorcycles and bicycles, '
                         'the minimum delivery box size.')
 
-    driving_experience = models.PositiveSmallIntegerField(
+    # Legacy field - to be deleted
+    driving_experience_old = models.PositiveSmallIntegerField(
                                 'Minimum driving experience',
                                 choices=Driver.DRIVING_EXPERIENCE_CHOICES,
                                 default=Driver.DRIVING_EXPERIENCE_LESS_ONE)
