@@ -47,8 +47,9 @@ class PrivateFreelancerSerializer(PublicFreelancerSerializer):
     """Serializer that exposes information on the freelancer
     profile for their own use.
     """
-    specific_object = SpecificFreelancerIdentityField(
-                                        view_name='freelancers-detail')
+    specific_object = serializers.SerializerMethodField()
+    def get_specific_object(self, obj):
+        return
 
     email = serializers.SerializerMethodField()
     def get_email(self, obj):

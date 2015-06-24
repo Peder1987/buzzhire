@@ -16,7 +16,9 @@ class PublicFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
            more specific kinds of freelancer objects, such as drivers.
            Integer. Read only.
     - `reference_number` Public reference number for the freelancer.  Read only.
-    - `service` What service the freelancer offers.
+    - `specific_object` API URL for the service-specific version
+       of the freelancer, which may contain additional service-specific fields.  
+    - `service_key` The name of the service the freelancer offers.
     - `full_name` Their full name.  Read only.
     - `first_name` Their first name.
     - `last_name` Their last namee.
@@ -38,7 +40,7 @@ class OwnFreelancerViewSet(RetrieveAndUpdateViewset):
            more specific kinds of freelancer objects, such as drivers.
            Integer. Read only.
     - `reference_number` Public reference number for the freelancer.  Read only.
-    - `service` What service the freelancer offers.
+    - `service` The name of the service the freelancer offers.
     - `email` Their email address.  Read only.
     - `full_name` Their full name.  Read only.
     - `first_name` Their first name.
