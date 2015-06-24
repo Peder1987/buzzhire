@@ -5,7 +5,10 @@ from ..models import BarFreelancer, BarJobRequest
 
 
 class PublicBarFreelancerViewSet(PublicFreelancerViewSet):
-    "All published bar staff - publicly available information."
+    """All published bar staff - publicly available information.
+    
+    The generic fields are documented on the freelancer endpoint.
+    """
 
     def get_queryset(self):
         return BarFreelancer.published_objects.all()

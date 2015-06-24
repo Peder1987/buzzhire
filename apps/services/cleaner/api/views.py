@@ -5,7 +5,10 @@ from ..models import Cleaner, CleanerJobRequest
 
 
 class PublicCleanerViewSet(PublicFreelancerViewSet):
-    "All published cleaners - publicly available information."
+    """All published cleaners - publicly available information.
+    
+    The generic fields are documented on the freelancer endpoint.
+    """
 
     def get_queryset(self):
         return Cleaner.published_objects.all()

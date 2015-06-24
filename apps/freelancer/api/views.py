@@ -8,7 +8,19 @@ from ..models import Freelancer
 
 
 class PublicFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
-    "All published freelancers - publicly available information."
+    """All published freelancers - publicly available information.
+    
+    ## Fields
+    
+    - `id` Unique id for the freelancer.  Can be used as a unique id for 
+           more specific kinds of freelancer objects, such as drivers.
+           Integer. Read only.
+    - `reference_number` Public reference number for the freelancer.  Read only.
+    - `service` What service the freelancer offers.
+    - `full_name` Their full name.  Read only.
+    - `first_name` Their first name.
+    - `last_name` Their last namee.
+    """
     serializer_class = PublicFreelancerSerializer
 
     permission_classes = (IsAuthenticated,)
@@ -26,6 +38,7 @@ class OwnFreelancerViewSet(RetrieveAndUpdateViewset):
            more specific kinds of freelancer objects, such as drivers.
            Integer. Read only.
     - `reference_number` Public reference number for the freelancer.  Read only.
+    - `service` What service the freelancer offers.
     - `email` Their email address.  Read only.
     - `full_name` Their full name.  Read only.
     - `first_name` Their first name.

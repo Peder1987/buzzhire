@@ -5,7 +5,10 @@ from ..models import Chef, ChefJobRequest
 
 
 class PublicChefViewSet(PublicFreelancerViewSet):
-    "All published kitchen staff - publicly available information."
+    """All published kitchen staff - publicly available information.
+    
+    The generic fields are documented on the freelancer endpoint.
+    """
 
     def get_queryset(self):
         return Chef.published_objects.all()

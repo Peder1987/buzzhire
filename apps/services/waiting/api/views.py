@@ -5,7 +5,10 @@ from ..models import WaitingFreelancer, WaitingJobRequest
 
 
 class PublicWaitingFreelancerViewSet(PublicFreelancerViewSet):
-    "All published waiting staff - publicly available information."
+    """All published waiting staff - publicly available information.
+    
+    The generic fields are documented on the freelancer endpoint.
+    """
 
     def get_queryset(self):
         return WaitingFreelancer.published_objects.all()

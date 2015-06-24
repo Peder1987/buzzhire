@@ -12,24 +12,24 @@ class PublicFreelancerSerializer(serializers.ModelSerializer):
     """Serializer that exposes information on the freelancer
     appropriate for public use.
     """
+
+    full_name = serializers.SerializerMethodField()
+    def get_full_name(self, obj):
+        return obj.get_full_name()
+
     class Meta:
         model = Freelancer
-        fields = ('id', 'first_name', 'last_name')
+        fields = ('id', 'reference_number',
+                  'service', 'full_name', 'first_name', 'last_name')
 
 
-class PrivateFreelancerSerializer(serializers.ModelSerializer):
+class PrivateFreelancerSerializer(PublicFreelancerSerializer):
     """Serializer that exposes information on the freelancer
     profile for their own use.
     """
     email = serializers.SerializerMethodField()
     def get_email(self, obj):
         return obj.user.email
-
-    full_name = serializers.SerializerMethodField()
-    def get_full_name(self, obj):
-        return obj.get_full_name()
-
-    postcode = PostcodeField()
 
     photo = serializers.SerializerMethodField()
     def get_photo(self, obj):
@@ -40,11 +40,10 @@ class PrivateFreelancerSerializer(serializers.ModelSerializer):
 
     minimum_pay_per_hour = MoneyField()
 
-    class Meta:
-        model = Freelancer
-        fields = ('id', 'reference_number', 'email', 'full_name',
-                  'first_name', 'last_name',
-                  'mobile',
+    postcode = PostcodeField()
+
+    class Meta(PublicFreelancerSerializer.Meta):
+        fields = PublicFreelancerSerializer.Meta.fields + ('mobile',
                   'photo', 'english_fluency', 'eligible_to_work',
                   'phone_type',
                   'minimum_pay_per_hour',

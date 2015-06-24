@@ -12,7 +12,10 @@ from apps.api.views import RetrieveAndUpdateViewset
 
 
 class PublicDriverViewSet(PublicFreelancerViewSet):
-    "All published freelancers - publicly available information."
+    """All published drivers - publicly available information.
+    
+    The generic fields are documented on the freelancer endpoint.
+    """
 
     def get_queryset(self):
         return Driver.published_objects.all()

@@ -70,6 +70,8 @@ class PublishedFreelancerManager(GeoPolymorphicManager):
 class Freelancer(PolymorphicModel):
     "A freelancer is a person offering a professional service."
 
+    service = None  # Needed for API
+
     published = models.BooleanField(default=True,
         help_text='Whether or not the freelancer shows up in search '
         'results.')
