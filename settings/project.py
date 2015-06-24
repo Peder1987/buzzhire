@@ -136,3 +136,7 @@ class ProjectConfiguration(StandardConfiguration):
 
     def BOOKINGS_FROM_EMAIL(self):
         return 'Buzzhire <%s>' % self.BOOKINGS_EMAIL
+
+
+    # The minimum number of hours notice allowed to create a job request
+    JOB_REQUEST_MINIMUM_HOURS_NOTICE = 4

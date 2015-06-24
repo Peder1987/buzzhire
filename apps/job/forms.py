@@ -1,4 +1,5 @@
 from decimal import Decimal
+from datetime import date, datetime, timedelta
 from django import forms
 from django.forms import widgets
 from django.conf import settings
@@ -86,6 +87,25 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
         # Add the submit button, but allow subclassing forms to suppress it
         if self.submit_name:
             self.helper.layout.append(self.get_submit_button())
+
+    def clean(self):
+        cleaned_data = super(JobRequestForm, self).clean()
+
+        # Validate the date and time
+        start_date = cleaned_data.get('date')
+        start_time = cleaned_data.get('start_time')
+        if start_date < date.today():
+            self.add_error('date', 'Your job must be in the future.')
+        elif start_date == date.today():
+            # If it's today, make sure are giving enough notice
+            allowed_time = (datetime.now() + \
+                    timedelta(hours=settings.JOB_REQUEST_MINIMUM_HOURS_NOTICE)
+                    ).time()
+            if start_time < allowed_time:
+                 self.add_error('start_time',
+                    'Your job must be at least %s hours from now.' \
+                    % settings.JOB_REQUEST_MINIMUM_HOURS_NOTICE)
+
 
     def save(self, client, commit=True):
         """We require the client to be passed at save time.  This is
