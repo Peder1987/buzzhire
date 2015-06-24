@@ -1,7 +1,8 @@
 from django.forms import widgets
 from rest_framework import serializers
 from ..models import VehicleType, FlexibleVehicleType, Driver, DriverJobRequest
-from apps.freelancer.api.serializers import PrivateFreelancerSerializer
+from apps.freelancer.api.serializers import (PrivateFreelancerSerializer,
+                                             PublicFreelancerSerializer)
 from apps.job.api.serializers import JobRequestSerializer
 
 

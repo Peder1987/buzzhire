@@ -12,6 +12,7 @@ class JobRequestViewSet(viewsets.ReadOnlyModelViewSet):
            more specific kinds of job request objects,
            such as driver job requests. Integer. Read only.
     - `reference_number` Public reference number for the job request.  Read only.
+    - `service` Name of the service provided.
     - `client` The client who created the job request.  API endpoint.  Read only.
     - `status` The status of the job request:  Choices are:
         - `"IC"` - The client has created the job request but has not yet paid.

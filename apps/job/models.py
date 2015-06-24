@@ -50,6 +50,7 @@ class JobRequest(PolymorphicModel):
     """A request by a client for a service for a particular
     period of time, to be performed by one or more freelancers.
     """
+    service = None  # This is needed for the API serializer
 
     # The client who is making the job request
     client = models.ForeignKey(Client, related_name='job_requests')

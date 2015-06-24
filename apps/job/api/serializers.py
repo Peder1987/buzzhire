@@ -22,8 +22,10 @@ class JobRequestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = JobRequest
-        fields = ('id', 'reference_number', 'client', 'status',
+        fields = ('id', 'reference_number', 'service',
+                  'client', 'status',
                   'tips_included', 'date', 'start_time', 'duration',
                   'number_of_freelancers', 'address',
                   'phone_requirement', 'client_pay_per_hour',
-                  'freelancer_pay_per_hour', 'years_experience', 'comments')
+                  'freelancer_pay_per_hour', 'years_experience', 'comments'
+                  )
