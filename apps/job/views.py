@@ -244,10 +244,12 @@ class JobRequestDetail(GrantCheckingMixin, PolymorphicTemplateMixin,
 
 
 
-class JobRequestUpdate(AdminOnlyMixin, SuccessMessageMixin, UpdateView):
+class JobRequestUpdate(AdminOnlyMixin, SuccessMessageMixin,
+                       PolymorphicTemplateMixin, UpdateView):
     "Edit page for job requests."
     model = JobRequest
     success_message = 'Saved.'
+    template_suffix = '_form'
 
     def get_form_class(self):
         # Return the form registered on the service as job_request_edit_form

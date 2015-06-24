@@ -17,12 +17,13 @@ class JobRequestSerializer(serializers.ModelSerializer):
             'postcode': str(obj.postcode),
         }
 
+    client_pay_per_hour = MoneyField()
     freelancer_pay_per_hour = MoneyField()
 
     class Meta:
         model = JobRequest
         fields = ('id', 'reference_number', 'client', 'status',
                   'tips_included', 'date', 'start_time', 'duration',
-                  'end_datetime', 'number_of_freelancers', 'address',
-                  'phone_requirement', 'comments', 'freelancer_pay_per_hour',
-                  'years_experience')
+                  'number_of_freelancers', 'address',
+                  'phone_requirement', 'client_pay_per_hour',
+                  'freelancer_pay_per_hour', 'years_experience', 'comments')
