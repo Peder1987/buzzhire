@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from apps.core.views import POUND_SIGN
 from moneyed import Money
-
+from apps.job import service_from_class
 
 # class ChoiceField(serializers.ChoiceField):
 #     """Serializer field that outputs a ChoiceField in the form:
@@ -58,3 +58,4 @@ class MoneyField(serializers.Field):
             return Money(data)
         except:
             self.fail('incorrect_format')
+

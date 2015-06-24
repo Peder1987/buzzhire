@@ -4,13 +4,13 @@ from apps.freelancer.admin import FreelancerAdmin
 from . import models
 
 
-class ChefAdmin(admin.ModelAdmin):
+class KitchenFreelancerAdmin(admin.ModelAdmin):
     list_display = FreelancerAdmin.list_display + ('certification',)
 
-admin.site.register(models.Chef, ChefAdmin)
+admin.site.register(models.KitchenFreelancer, KitchenFreelancerAdmin)
 
 
-class ChefJobRequestAdmin(JobRequestAdmin):
+class KitchenJobRequestAdmin(JobRequestAdmin):
     list_display = JobRequestAdmin.list_display + ('certification',)
 
-admin.site.register(models.ChefJobRequest, ChefJobRequestAdmin)
+admin.site.register(models.KitchenJobRequest, KitchenJobRequestAdmin)

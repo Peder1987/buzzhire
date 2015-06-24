@@ -12,9 +12,9 @@ from apps.services.driver.api.views import (OwnDriverViewSet,
 from apps.services.cleaner.api.views import (PublicCleanerViewSet,
                                              OwnCleanerViewSet,
                                              CleanerJobRequestViewSet)
-from apps.services.chef.api.views import (PublicChefViewSet,
-                                             OwnChefViewSet,
-                                             ChefJobRequestViewSet)
+from apps.services.kitchen.api.views import (PublicKitchenFreelancerViewSet,
+                                             OwnKitchenFreelancerViewSet,
+                                             KitchenJobRequestViewSet)
 from apps.services.bar.api.views import (PublicBarFreelancerViewSet,
                                              OwnBarFreelancerViewSet,
                                              BarJobRequestViewSet)
@@ -43,7 +43,7 @@ router.register(r'account/freelancer', OwnFreelancerViewSet,
 router.register(r'driver/freelancers', PublicDriverViewSet,
                 base_name='driver_freelancers')
 router.register(r'driver/account/freelancer', OwnDriverViewSet,
-                base_name='driver_own')
+                base_name='driver_freelancer_own')
 router.register(r'driver/job-requests', DriverJobRequestViewSet,
                 base_name='driver_job_requests')
 router.register(r'driver/vehicle-types', VehicleTypeViewSet,
@@ -55,16 +55,16 @@ router.register(r'driver/flexible-vehicle-types', FlexibleVehicleTypeViewSet,
 router.register(r'cleaner/freelancers', PublicCleanerViewSet,
                 base_name='cleaner_freelancers')
 router.register(r'cleaner/account/freelancer', OwnCleanerViewSet,
-                base_name='cleaner_own')
+                base_name='cleaner_freelancer_own')
 router.register(r'cleaner/job-requests', CleanerJobRequestViewSet,
                 base_name='cleaner_job_requests')
 
-# Chef specific
-router.register(r'kitchen/freelancers', PublicChefViewSet,
+# KitchenFreelancer specific
+router.register(r'kitchen/freelancers', PublicKitchenFreelancerViewSet,
                 base_name='kitchen_freelancers')
-router.register(r'kitchen/account/freelancer', OwnChefViewSet,
-                base_name='kitchen_own')
-router.register(r'kitchen/job-requests', ChefJobRequestViewSet,
+router.register(r'kitchen/account/freelancer', OwnKitchenFreelancerViewSet,
+                base_name='kitchen_freelancer_own')
+router.register(r'kitchen/job-requests', KitchenJobRequestViewSet,
                 base_name='kitchen_job_requests')
 
 
@@ -72,7 +72,7 @@ router.register(r'kitchen/job-requests', ChefJobRequestViewSet,
 router.register(r'bar/freelancers', PublicBarFreelancerViewSet,
                 base_name='bar_freelancers')
 router.register(r'bar/account/freelancer', OwnBarFreelancerViewSet,
-                base_name='bar_own')
+                base_name='bar_freelancer_own')
 router.register(r'bar/job-requests', BarJobRequestViewSet,
                 base_name='bar_job_requests')
 
@@ -80,7 +80,7 @@ router.register(r'bar/job-requests', BarJobRequestViewSet,
 router.register(r'waiting/freelancers', PublicWaitingFreelancerViewSet,
                 base_name='waiting_freelancers')
 router.register(r'waiting/account/freelancer', OwnWaitingFreelancerViewSet,
-                base_name='waiting_own')
+                base_name='waiting_freelancer_own')
 router.register(r'waiting/job-requests', WaitingJobRequestViewSet,
                 base_name='waiting_job_requests')
 

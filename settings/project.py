@@ -40,7 +40,7 @@ class ProjectConfiguration(StandardConfiguration):
         'apps.booking',
         'apps.feedback',
         'apps.services.driver',
-        'apps.services.chef',
+        'apps.services.kitchen',
         'apps.services.bar',
         'apps.services.waiting',
         'apps.services.cleaner',

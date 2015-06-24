@@ -1,20 +1,20 @@
 from apps.freelancer.api.views import (PublicFreelancerViewSet,
                                        OwnFreelancerViewSet)
 from apps.job.api.views import JobRequestViewSet
-from ..models import Chef, ChefJobRequest
+from ..models import KitchenFreelancer, KitchenJobRequest
 
 
-class PublicChefViewSet(PublicFreelancerViewSet):
+class PublicKitchenFreelancerViewSet(PublicFreelancerViewSet):
     """All published kitchen staff - publicly available information.
     
     The generic fields are documented on the freelancer endpoint.
     """
 
     def get_queryset(self):
-        return Chef.published_objects.all()
+        return KitchenFreelancer.published_objects.all()
 
 
-class OwnChefViewSet(OwnFreelancerViewSet):
+class OwnKitchenFreelancerViewSet(OwnFreelancerViewSet):
     """Returns the kitchen staff's own profile.
     
     ## Fields
@@ -29,7 +29,7 @@ class OwnChefViewSet(OwnFreelancerViewSet):
     pass
 
 
-class ChefJobRequestViewSet(JobRequestViewSet):
+class KitchenJobRequestViewSet(JobRequestViewSet):
     """All kitchen staff job requests.  Publicly viewable information.
     
     The generic fields are documented on the job request endpoint.
@@ -40,4 +40,4 @@ class ChefJobRequestViewSet(JobRequestViewSet):
  
     """
     def get_queryset(self):
-        return ChefJobRequest.objects.all()
+        return KitchenJobRequest.objects.all()

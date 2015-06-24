@@ -51,7 +51,7 @@ ICON_MAP = {
     'score_empty': 'star-o',
     'score_half': 'star-half-o',
     'invitation': 'paper-plane-o',
-    'chef': 'cutlery',
+    'kitchen': 'cutlery',
     'bar': 'beer',
     'cleaner': 'tint',
     'waiting': 'glass',

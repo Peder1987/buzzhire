@@ -5,12 +5,13 @@ from django.db import models, migrations
 from apps.core.perms import add_admin_perms
 
 def setup_perms(apps, schema_editor):
-    add_admin_perms(apps.get_model('chef', 'Chef'))
+    add_admin_perms(apps.get_model('kitchen', 'KitchenJobRequest'))
+    add_admin_perms(apps.get_model('kitchen', 'KitchenFreelancer'))
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('chef', '0003_chef'),
+        ('kitchen', '0001_initial'),
     ]
 
     operations = [
