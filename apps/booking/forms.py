@@ -94,6 +94,10 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
     phone_requirement = forms.ChoiceField(required=False,
                                 choices=JobRequest.PHONE_REQUIREMENT_CHOICES)
 
+    years_experience = forms.ChoiceField(label='Minimum years of experience',
+                                required=False,
+                                choices=JobRequest.YEARS_EXPERIENCE_CHOICES)
+
     # respect_travel_distance = forms.BooleanField(required=False)
 
     def __init__(self, *args, **kwargs):

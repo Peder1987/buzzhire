@@ -24,6 +24,7 @@
                     {% block column_two_fields %}
                         {{ form.phone_requirement|as_crispy_field }}
                         {{ form.client_pay_per_hour|as_crispy_field }}
+                        {{ form.years_experience|as_crispy_field }}
                         {% if form.freelancer_pay_per_hour %}<p class='help-block'>Calculated freelancer rate: <strong>&pound;{{ form.freelancer_pay_per_hour.amount }}</strong>.</p>{% endif %}
                     {% endblock %}
                 </div>
@@ -51,7 +52,7 @@
                     {% for object in object_list %}
                         {% with object.get_absolute_url as object_url %}
                             <tr>
-                                <td><a href='{{ object_url }}'>{% profile_photo object 'medium' %}</a></td>
+                                <td><a href='{{ object_url }}'>{% profile_photo object 'medium' %}</a>{{ object.get_years_experience_display }}</td>
                                 <td class='min-width-row'>
                                     <a href='{{ object_url }}'>{{ object.get_full_name }}</a><br>
                                     {% average_score object.average_score %}

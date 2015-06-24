@@ -15,7 +15,8 @@ class JobMatcher(object):
         matcher = JobMatcher(job_request, cleaned_data)
         freelancers = matcher.get_results()
     """
-    flat_fields = ('date', 'client_pay_per_hour', 'phone_requirement')
+    flat_fields = ('date', 'client_pay_per_hour', 'phone_requirement',
+                   'years_experience')
 
     def __init__(self, job_request, cleaned_data=None):
         # We always need to know what job request we're searching for,
@@ -53,6 +54,7 @@ class JobMatcher(object):
         results = result_class.published_objects.all()
 
         results = self.filter_by_phone_requirement(results)
+        results = self.filter_by_years_experience(results)
         if not ignore_availability:
             results = self.filter_by_availability(results)
         results = self.filter_by_pay_per_hour(results)
@@ -80,6 +82,14 @@ class JobMatcher(object):
             results = PHONE_REQUIREMENT_MAP[
                             self.search_terms['phone_requirement']](results)
         return results
+
+    def filter_by_years_experience(self, results):
+        "Filters by minimum years of experience."
+        if self.search_terms['years_experience']:
+            results = results.filter(
+                years_experience__gte=self.search_terms['years_experience'])
+        return results
+
 
     def filter_by_availability(self, results):
         "Filters by availability, if it's been searched for."
