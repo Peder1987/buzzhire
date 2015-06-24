@@ -1,6 +1,7 @@
 from django.forms import widgets
 from rest_framework import serializers
-from ..models import VehicleType, FlexibleVehicleType, Driver, DriverJobRequest
+from ..models import (VehicleType, FlexibleVehicleType, Driver,
+                      DriverJobRequest, DriverVehicleType)
 from apps.freelancer.api.serializers import (PrivateFreelancerSerializer,
                                              PublicFreelancerSerializer)
 from apps.job.api.serializers import JobRequestSerializer
@@ -44,3 +45,14 @@ class DriverJobRequestSerializer(JobRequestSerializer):
         fields = JobRequestSerializer.Meta.fields + \
                   ('flexible_vehicle_type', 'minimum_delivery_box',
                    'delivery_box_applicable', 'own_vehicle',)
+
+
+class DriverVehicleTypeSerializer(serializers.ModelSerializer):
+    """Serializer for driver vehicle types for the logged in driver.
+    """
+    vehicle_type = serializers.HyperlinkedRelatedField(read_only=True,
+                                    view_name='vehicle_types-detail')
+
+    class Meta:
+        model = DriverVehicleType
+        fields = ('id', 'vehicle_type', 'own_vehicle', 'delivery_box')

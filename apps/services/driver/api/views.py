@@ -2,12 +2,15 @@ from rest_framework import viewsets
 from rest_framework import mixins
 from rest_framework.permissions import IsAuthenticated
 from apps.job.api.views import JobRequestViewSet
+from apps.freelancer.api.permissions import FreelancerOnlyPermission
 from apps.freelancer.api.views import (PublicFreelancerViewSet,
                                        OwnFreelancerViewSet)
 from .serializers import (PrivateDriverSerializer, VehicleTypeSerializer,
-                    FlexibleVehicleTypeSerializer, DriverJobRequestSerializer)
-from ..models import VehicleType, FlexibleVehicleType, Driver, DriverJobRequest
-from apps.freelancer.api.permissions import FreelancerOnlyPermission
+                    FlexibleVehicleTypeSerializer, DriverJobRequestSerializer,
+                    DriverVehicleTypeSerializer)
+from ..models import (VehicleType, FlexibleVehicleType, Driver,
+                      DriverJobRequest, DriverVehicleType)
+from .permissions import DriverOnlyPermission
 from apps.api.views import RetrieveAndUpdateViewset
 
 
@@ -81,3 +84,23 @@ class FlexibleVehicleTypeViewSet(viewsets.ReadOnlyModelViewSet):
         return FlexibleVehicleType.objects.all()
 
 
+class DriverVehicleTypeViewSet(viewsets.ModelViewSet):
+    """All the vehicles belonging to the currently logged in driver
+    (aka 'driver vehicles').
+    
+    ## Fields
+    
+    - `id` Unique id for the driver vehicle.  Read only.
+    - `vehicle_type` The type of vehicle.  Read only.
+    - `own_vehicle` Whether the driver can provide the vehicle on a job.
+    - `delivery_box` If applicable, the size of delivery box.  Integer. Choices:
+        - `0` - None.
+        - `2` - Standard.
+        - `4` - Pizza.
+    """
+    serializer_class = DriverVehicleTypeSerializer
+
+    permission_classes = (DriverOnlyPermission,)
+
+    def get_queryset(self):
+        return self.request.user.driver.drivervehicletype_set.all()

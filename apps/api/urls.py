@@ -8,7 +8,7 @@ from apps.job.api.views import JobRequestViewSet
 from apps.api.routers import SingleObjectFriendlyRouter
 from apps.services.driver.api.views import (OwnDriverViewSet,
     PublicDriverViewSet, VehicleTypeViewSet, FlexibleVehicleTypeViewSet,
-    DriverJobRequestViewSet)
+    DriverJobRequestViewSet, DriverVehicleTypeViewSet)
 from apps.services.cleaner.api.views import (PublicCleanerViewSet,
                                              OwnCleanerViewSet,
                                              CleanerJobRequestViewSet)
@@ -44,6 +44,9 @@ router.register(r'driver/freelancers', PublicDriverViewSet,
                 base_name='driver_freelancers')
 router.register(r'driver/account/freelancer', OwnDriverViewSet,
                 base_name='driver_freelancer_own')
+router.register(r'driver/account/vehicle-types', DriverVehicleTypeViewSet,
+                base_name='driver_vehicle_types')
+
 router.register(r'driver/job-requests', DriverJobRequestViewSet,
                 base_name='driver_job_requests')
 router.register(r'driver/vehicle-types', VehicleTypeViewSet,
