@@ -24,7 +24,12 @@ class PublicDriverViewSet(PublicFreelancerViewSet):
     
     - `vehicles` List of vehicles that the driver has.
       See documentation on the 'Driver vehicles' endpoint for details.
-   
+    - `phone_type` What kind of phone they have.  Choices are:
+        - `"AN"` - Android
+        - `"IP"` - iPhone
+        - `"WI"` - Windows
+        - `"OT"` - Other smartphone
+        - `"NS"` - Non smartphone       
     """
     serializer_class = PublicDriverSerializer
 

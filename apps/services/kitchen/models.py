@@ -18,6 +18,8 @@ ROLE_CHOICES = (
 
 KITCHEN_SERVICE_TITLE = 'kitchen staff'
 
+
+
 class KitchenJobRequest(JobRequest):
     """A JobRequest that is specifically for kitchen staff to complete.
     """

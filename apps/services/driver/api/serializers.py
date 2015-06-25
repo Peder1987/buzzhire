@@ -37,7 +37,9 @@ class PublicDriverSerializer(PublicFreelancerSerializer):
         return vehicles_list
 
     class Meta(PublicFreelancerSerializer.Meta):
-        fields = PublicFreelancerSerializer.Meta.fields + ('vehicles',)
+        model = Driver
+        fields = PublicFreelancerSerializer.Meta.fields + ('vehicles',
+                                                           'phone_type')
 
 
 class PrivateDriverSerializer(PrivateFreelancerSerializer):
