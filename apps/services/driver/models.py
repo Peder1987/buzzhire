@@ -148,7 +148,8 @@ class Driver(Freelancer):
                                             choices=DRIVING_EXPERIENCE_CHOICES)
     # Legacy field - to be deleted
     driving_experience_old_2 = models.PositiveSmallIntegerField(default=1,
-                                        choices=DRIVING_EXPERIENCE_CHOICES)
+                                        choices=DRIVING_EXPERIENCE_CHOICES,
+                                        blank=True, null=True)
 
     PHONE_TYPE_ANDROID = 'AN'
     PHONE_TYPE_IPHONE = 'IP'
