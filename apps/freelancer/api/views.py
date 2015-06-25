@@ -21,7 +21,7 @@ class PublicFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
     - `service_key` The name of the service the freelancer offers.
     - `full_name` Their full name.  Read only.
     - `first_name` Their first name.
-    - `last_name` Their last namee.
+    - `last_name` Their last name.
     """
     serializer_class = PublicFreelancerSerializer
 
@@ -44,7 +44,7 @@ class OwnFreelancerViewSet(RetrieveAndUpdateViewset):
     - `email` Their email address.  Read only.
     - `full_name` Their full name.  Read only.
     - `first_name` Their first name.
-    - `last_name` Their last namee.
+    - `last_name` Their last name.
     - `mobile` Their mobile telephone number (must be UK based).
     - `photo` A thumbnail image, 75px x 97px.  Read only.
     - `english_fluency` Their English fluency level.  Choices are:

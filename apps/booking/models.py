@@ -105,7 +105,7 @@ class Booking(models.Model):
     """
     freelancer = models.ForeignKey(Freelancer, related_name='bookings')
     jobrequest = models.ForeignKey(JobRequest, related_name='bookings')
-    created = models.DateTimeField(auto_now_add=True)
+    date_created = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
         return self.reference_number

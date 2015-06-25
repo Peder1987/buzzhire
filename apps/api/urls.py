@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, url, include
 from rest_framework.authtoken import views
-from apps.booking.api.views import FreelancerBookingViewSet
+from apps.booking.api.views import (FreelancerBookingViewSet,
+                                    FreelancerInvitationViewSet)
 from apps.freelancer.api.views import PublicFreelancerViewSet, \
                                     OwnFreelancerViewSet
 from apps.client.api.views import PublicClientViewSet
@@ -35,6 +36,8 @@ router.register(r'job-requests', JobRequestViewSet,
                 base_name='job_requests')
 
 router.register(r'account/freelancer/bookings', FreelancerBookingViewSet,
+                base_name='bookings_for_freelancer')
+router.register(r'account/freelancer/invitations', FreelancerInvitationViewSet,
                 base_name='bookings_for_freelancer')
 router.register(r'account/freelancer', OwnFreelancerViewSet,
                 base_name='freelancer_own')
