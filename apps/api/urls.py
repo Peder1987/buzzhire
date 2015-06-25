@@ -44,7 +44,7 @@ router.register(r'driver/freelancers', PublicDriverViewSet,
                 base_name='driver_freelancers')
 router.register(r'driver/account/freelancer', OwnDriverViewSet,
                 base_name='driver_freelancer_own')
-router.register(r'driver/account/vehicle-types', DriverVehicleViewSet,
+router.register(r'driver/account/vehicles', DriverVehicleViewSet,
                 base_name='driver_vehicle_types')
 
 router.register(r'driver/job-requests', DriverJobRequestViewSet,

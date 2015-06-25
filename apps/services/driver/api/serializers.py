@@ -23,6 +23,23 @@ class FlexibleVehicleTypeSerializer(VehicleTypeSerializer):
         fields = VehicleTypeSerializer.Meta.fields
 
 
+class PublicDriverSerializer(PublicFreelancerSerializer):
+    """Serializer for public views of driver."""
+    vehicles = serializers.SerializerMethodField()
+    def get_vehicles(self, obj):
+        vehicles_list = []
+        for vehicle in obj.drivervehicletype_set.all():
+            vehicles_list.append({
+                'vehicle_type_name': str(vehicle),
+                'own_vehicle': vehicle.own_vehicle,
+                'delivery_box': vehicle.delivery_box}
+        )
+        return vehicles_list
+
+    class Meta(PublicFreelancerSerializer.Meta):
+        fields = PublicFreelancerSerializer.Meta.fields + ('vehicles',)
+
+
 class PrivateDriverSerializer(PrivateFreelancerSerializer):
     """Serializer for the driver's own profile."""
 

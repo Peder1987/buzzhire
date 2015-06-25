@@ -5,7 +5,8 @@ from apps.job.api.views import JobRequestViewSet
 from apps.freelancer.api.permissions import FreelancerOnlyPermission
 from apps.freelancer.api.views import (PublicFreelancerViewSet,
                                        OwnFreelancerViewSet)
-from .serializers import (PrivateDriverSerializer, VehicleTypeSerializer,
+from .serializers import (PublicDriverSerializer,
+                          PrivateDriverSerializer, VehicleTypeSerializer,
                     FlexibleVehicleTypeSerializer, DriverJobRequestSerializer,
                     DriverVehicleTypeSerializer)
 from ..models import (VehicleType, FlexibleVehicleType, Driver,
@@ -18,7 +19,14 @@ class PublicDriverViewSet(PublicFreelancerViewSet):
     """All published drivers - publicly available information.
     
     The generic fields are documented on the freelancer endpoint.
+    
+    ## Specific fields
+    
+    - `vehicles` List of vehicles that the driver has.
+      See documentation on the 'Driver vehicles' endpoint for details.
+    
     """
+    serializer_class = PublicDriverSerializer
 
     def get_queryset(self):
         return Driver.published_objects.all()
@@ -31,9 +39,9 @@ class OwnDriverViewSet(OwnFreelancerViewSet):
     
     The generic fields are documented on the freelancer endpoint.
     
-    These are the fields specific to drivers:
+    ## Specific fields
     
-    - Currently no fields.
+    - None.
      
     """
     pass
