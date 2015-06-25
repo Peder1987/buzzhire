@@ -169,12 +169,12 @@ class JobRequest(PolymorphicModel):
     postcode = models.ForeignKey(Postcode)
 
 
+    # Legacy field - to delete once migrated
     PHONE_REQUIREMENT_NOT_REQUIRED = 'NR'
     PHONE_REQUIREMENT_ANY = 'AY'
     PHONE_REQUIREMENT_ANDROID = 'AN'
     PHONE_REQUIREMENT_IPHONE = 'IP'
     PHONE_REQUIREMENT_WINDOWS = 'WI'
-
     PHONE_REQUIREMENT_CHOICES = (
         (PHONE_REQUIREMENT_NOT_REQUIRED, 'No smart phone needed'),
         (PHONE_REQUIREMENT_ANY, 'Any smart phone'),
@@ -182,7 +182,7 @@ class JobRequest(PolymorphicModel):
         (PHONE_REQUIREMENT_IPHONE, 'iPhone'),
         (PHONE_REQUIREMENT_WINDOWS, 'Windows'),
     )
-    phone_requirement = models.CharField(max_length=2,
+    phone_requirement_old = models.CharField(max_length=2,
             choices=PHONE_REQUIREMENT_CHOICES,
             default=PHONE_REQUIREMENT_NOT_REQUIRED,
             help_text='Whether the freelancer needs a smart phone to do '

@@ -20,6 +20,7 @@ class DriverJobRequestForm(JobRequestForm):
     def __init__(self, *args, **kwargs):
         super(DriverJobRequestForm, self).__init__(*args, **kwargs)
         self.adjust_vehicle_type_widget()
+        self.helper.layout[2].insert(1, 'phone_requirement')
         self.helper.layout.insert(3,
             layout.Fieldset('Vehicle',
                 layout.Div('vehicle_type', css_class="radios-wrapper"),
@@ -51,7 +52,7 @@ class DriverJobRequestForm(JobRequestForm):
     class Meta(JobRequestForm.Meta):
          model = DriverJobRequest
          fields = JobRequestForm.Meta.fields + ('vehicle_type', 'own_vehicle',
-                  'minimum_delivery_box')
+                  'minimum_delivery_box', 'phone_requirement')
          widgets = {
                 'vehicle_type': ChoiceAttrsRadioSelect(),
          }
@@ -59,6 +60,16 @@ class DriverJobRequestForm(JobRequestForm):
 
 class DriverForm(FreelancerForm):
     """Edit form for a driver's profile."""
+
+    def __init__(self, *args, **kwargs):
+        super(DriverForm, self).__init__(*args, **kwargs)
+        self.helper.layout.insert(2,
+            layout.Fieldset(
+                'Your equipment',
+                'phone_type',
+            ),
+        )
+
 
     class Meta(FreelancerForm.Meta):
         model = Driver
@@ -110,6 +121,10 @@ class DriverJobMatchingForm(JobMatchingForm):
     vehicle_type = forms.ModelChoiceField(
                                 queryset=FlexibleVehicleType.objects.all(),
                                 required=False)
+
+
+    phone_requirement = forms.ChoiceField(required=False,
+                        choices=DriverJobRequest.PHONE_REQUIREMENT_CHOICES)
 #     DRIVING_EXPERIENCE_CHOICES = (
 #         (0, 'No preference'),
 #         (1, '1 year'),

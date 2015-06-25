@@ -72,7 +72,6 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
             ),
             layout.Fieldset('Freelancer details',
                 'number_of_freelancers',
-                'phone_requirement',
                 'years_experience',
             ),
             layout.Fieldset('Budget',
@@ -122,7 +121,6 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
                   'address1', 'address2', 'city',
                   'client_pay_per_hour', 'tips_included',
                   'number_of_freelancers', 'years_experience',
-                  'phone_requirement',
                   'comments')
 
 

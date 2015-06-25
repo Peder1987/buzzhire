@@ -80,10 +80,6 @@ class FreelancerForm(CrispyFormMixin, PostcodeFormMixin, forms.ModelForm):
                 'years_experience',
             ),
             layout.Fieldset(
-                'Your equipment',
-                'phone_type',
-            ),
-            layout.Fieldset(
                 'Your rates',
                 'minimum_pay_per_hour',
             ),

@@ -53,12 +53,6 @@ class OwnFreelancerViewSet(RetrieveAndUpdateViewset):
         - `"FL"` - Fluent
         - `"NA"` - Native
     - `eligible_to_work` Whether they are eligible to work in the UK. Boolean.
-    - `phone_type` What kind of phone they have.  Choices are:
-        - `"AN"` - Android
-        - `"IP"` - iPhone
-        - `"WI"` - Windows
-        - `"OT"` - Other smartphone
-        - `"NS"` - Non smartphone
     - `minimum_pay_per_hour` The minimum pay they will accept per hour, in GBP.
        Decimal.
     - `postcode` The freelancer's home postcode.

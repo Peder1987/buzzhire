@@ -91,9 +91,6 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
     client_pay_per_hour = MoneyField(max_digits=5, decimal_places=2,
                                      required=False)
 
-    phone_requirement = forms.ChoiceField(required=False,
-                                choices=JobRequest.PHONE_REQUIREMENT_CHOICES)
-
     years_experience = forms.ChoiceField(label='Minimum years of experience',
                                 required=False,
                                 choices=JobRequest.YEARS_EXPERIENCE_CHOICES)

@@ -15,8 +15,7 @@ class JobMatcher(object):
         matcher = JobMatcher(job_request, cleaned_data)
         freelancers = matcher.get_results()
     """
-    flat_fields = ('date', 'client_pay_per_hour', 'phone_requirement',
-                   'years_experience')
+    flat_fields = ('date', 'client_pay_per_hour', 'years_experience')
 
     def __init__(self, job_request, cleaned_data=None):
         # We always need to know what job request we're searching for,
@@ -53,7 +52,6 @@ class JobMatcher(object):
         result_class = service.freelancer_model
         results = result_class.published_objects.all()
 
-        results = self.filter_by_phone_requirement(results)
         results = self.filter_by_years_experience(results)
         if not ignore_availability:
             results = self.filter_by_availability(results)
@@ -63,25 +61,6 @@ class JobMatcher(object):
         # Return unique results
         return results.distinct()
 
-    def filter_by_phone_requirement(self, results):
-        "Filters by the phone requirement."
-        PHONE_REQUIREMENT_MAP = {
-            JobRequest.PHONE_REQUIREMENT_NOT_REQUIRED: lambda r: r,
-            JobRequest.PHONE_REQUIREMENT_ANY:
-                lambda r: r.exclude(
-                    phone_type__in=(Freelancer.PHONE_TYPE_NON_SMARTPHONE, '')),
-            JobRequest.PHONE_REQUIREMENT_ANDROID:
-                lambda r: r.filter(phone_type=Freelancer.PHONE_TYPE_ANDROID),
-            JobRequest.PHONE_REQUIREMENT_IPHONE:
-                lambda r: r.filter(phone_type=Freelancer.PHONE_TYPE_IPHONE),
-            JobRequest.PHONE_REQUIREMENT_WINDOWS:
-                lambda r: r.filter(phone_type=Freelancer.PHONE_TYPE_WINDOWS),
-        }
-
-        if self.search_terms['phone_requirement']:
-            results = PHONE_REQUIREMENT_MAP[
-                            self.search_terms['phone_requirement']](results)
-        return results
 
     def filter_by_years_experience(self, results):
         "Filters by minimum years of experience."

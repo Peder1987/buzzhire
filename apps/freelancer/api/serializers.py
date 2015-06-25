@@ -69,7 +69,6 @@ class PrivateFreelancerSerializer(PublicFreelancerSerializer):
     class Meta(PublicFreelancerSerializer.Meta):
         fields = PublicFreelancerSerializer.Meta.fields + ('email', 'mobile',
                   'photo', 'english_fluency', 'eligible_to_work',
-                  'phone_type',
                   'minimum_pay_per_hour',
                   'postcode',
                   'travel_distance', 'years_experience')

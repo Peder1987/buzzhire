@@ -34,13 +34,6 @@ class JobRequestViewSet(viewsets.ReadOnlyModelViewSet):
         - `address2` - Second line of address.
         - `city` - City.  Must be `"London"`.
         - `postcode` - A valid London postcode.
-    - `phone_requirement` The kind of phone the freelancer needs to do the job.
-      Choices are:
-        - `"NR"` - No smart phone needed.
-        - `"AY"` - Any smart phone.
-        - `"AN"` - Android.
-        - `"IP"` - iPhone.
-        - `"WI"` - Windows.
     - `client_pay_per_hour`: The amount, in GBP, that the client will
       pay per hour.  Not visible to freelancers (TODO). Decimal.
     - `freelancer_pay_per_hour`: The amount, in GBP, that the freelancer will

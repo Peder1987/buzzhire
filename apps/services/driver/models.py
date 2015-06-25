@@ -150,6 +150,21 @@ class Driver(Freelancer):
     driving_experience_old_2 = models.PositiveSmallIntegerField(default=1,
                                         choices=DRIVING_EXPERIENCE_CHOICES)
 
+    PHONE_TYPE_ANDROID = 'AN'
+    PHONE_TYPE_IPHONE = 'IP'
+    PHONE_TYPE_WINDOWS = 'WI'
+    PHONE_TYPE_OTHER = 'OT'
+    PHONE_TYPE_NON_SMARTPHONE = 'NS'
+    PHONE_TYPE_CHOICES = (
+        (PHONE_TYPE_ANDROID, 'Android'),
+        (PHONE_TYPE_IPHONE, 'iPhone'),
+        (PHONE_TYPE_WINDOWS, 'Windows'),
+        (PHONE_TYPE_OTHER, 'Other smartphone'),
+        (PHONE_TYPE_NON_SMARTPHONE, 'Non smartphone'),
+    )
+    phone_type = models.CharField(max_length=2, choices=PHONE_TYPE_CHOICES,
+                                  blank=True)
+
     objects = models.GeoManager()
     published_objects = PublishedFreelancerManager()
 
@@ -239,6 +254,25 @@ class DriverJobRequest(JobRequest):
     own_vehicle = models.BooleanField(
                             'The driver must supply their own vehicle.',
                             default=True)
+
+    PHONE_REQUIREMENT_NOT_REQUIRED = 'NR'
+    PHONE_REQUIREMENT_ANY = 'AY'
+    PHONE_REQUIREMENT_ANDROID = 'AN'
+    PHONE_REQUIREMENT_IPHONE = 'IP'
+    PHONE_REQUIREMENT_WINDOWS = 'WI'
+    PHONE_REQUIREMENT_CHOICES = (
+        (PHONE_REQUIREMENT_NOT_REQUIRED, 'No smart phone needed'),
+        (PHONE_REQUIREMENT_ANY, 'Any smart phone'),
+        (PHONE_REQUIREMENT_ANDROID, 'Android'),
+        (PHONE_REQUIREMENT_IPHONE, 'iPhone'),
+        (PHONE_REQUIREMENT_WINDOWS, 'Windows'),
+    )
+    phone_requirement = models.CharField(max_length=2,
+            choices=PHONE_REQUIREMENT_CHOICES,
+            default=PHONE_REQUIREMENT_NOT_REQUIRED,
+            help_text='Whether the driver needs a smart phone to do '
+                'this job (for example, if you need them to run an app).')
+
 
     def get_vehicle_type_display(self):
         "Returns the vehicle type, or 'Any' if there is none."

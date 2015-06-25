@@ -24,7 +24,7 @@ class PublicDriverViewSet(PublicFreelancerViewSet):
     
     - `vehicles` List of vehicles that the driver has.
       See documentation on the 'Driver vehicles' endpoint for details.
-    
+   
     """
     serializer_class = PublicDriverSerializer
 
@@ -40,9 +40,12 @@ class OwnDriverViewSet(OwnFreelancerViewSet):
     The generic fields are documented on the freelancer endpoint.
     
     ## Specific fields
-    
-    - None.
-     
+    - `phone_type` What kind of phone they have.  Choices are:
+        - `"AN"` - Android
+        - `"IP"` - iPhone
+        - `"WI"` - Windows
+        - `"OT"` - Other smartphone
+        - `"NS"` - Non smartphone      
     """
     pass
 
@@ -62,6 +65,13 @@ class DriverJobRequestViewSet(JobRequestViewSet):
         - `0` - None
         - `2` - Standard
         - `4` - Pizza
+    - `phone_requirement` The kind of phone the freelancer needs to do the job.
+      Choices are:
+        - `"NR"` - No smart phone needed.
+        - `"AY"` - Any smart phone.
+        - `"AN"` - Android.
+        - `"IP"` - iPhone.
+        - `"WI"` - Windows.
     """
     serializer_class = DriverJobRequestSerializer
 

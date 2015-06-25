@@ -48,7 +48,7 @@ class JobRequestSerializer(serializers.ModelSerializer):
                   'client', 'status',
                   'tips_included', 'date', 'start_time', 'duration',
                   'number_of_freelancers', 'address',
-                  'phone_requirement', 'client_pay_per_hour',
+                  'client_pay_per_hour',
                   'freelancer_pay_per_hour', 'years_experience', 'comments'
                   )
 

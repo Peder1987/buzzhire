@@ -103,6 +103,7 @@ class Freelancer(PolymorphicModel):
     eligible_to_work = models.BooleanField('I am eligible to work in the UK.',
                                            default=False)
 
+    # TODO - Legacy field, remove once migrated
     PHONE_TYPE_ANDROID = 'AN'
     PHONE_TYPE_IPHONE = 'IP'
     PHONE_TYPE_WINDOWS = 'WI'
@@ -115,7 +116,7 @@ class Freelancer(PolymorphicModel):
         (PHONE_TYPE_OTHER, 'Other smartphone'),
         (PHONE_TYPE_NON_SMARTPHONE, 'Non smartphone'),
     )
-    phone_type = models.CharField(max_length=2, choices=PHONE_TYPE_CHOICES,
+    phone_type_old = models.CharField(max_length=2, choices=PHONE_TYPE_CHOICES,
                                   blank=True)
 
     # TODO - remove days_available and hours_available
