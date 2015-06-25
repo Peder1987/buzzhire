@@ -207,6 +207,7 @@ class DriverVehicleType(models.Model):
     class Meta:
         unique_together = ('driver', 'vehicle_type')
         ordering = ('vehicle_type__title',)
+        verbose_name = 'driver vehicle'
 
 
 class DriverJobRequest(JobRequest):

@@ -84,7 +84,7 @@ class FlexibleVehicleTypeViewSet(viewsets.ReadOnlyModelViewSet):
         return FlexibleVehicleType.objects.all()
 
 
-class DriverVehicleTypeViewSet(viewsets.ModelViewSet):
+class DriverVehicleViewSet(viewsets.ModelViewSet):
     """All the vehicles belonging to the currently logged in driver
     (aka 'driver vehicles').
     
@@ -92,6 +92,7 @@ class DriverVehicleTypeViewSet(viewsets.ModelViewSet):
     
     - `id` Unique id for the driver vehicle.  Read only.
     - `vehicle_type` The type of vehicle.  Read only.
+    - `vehicle_type_name` The human readable name of the vehicle type.  Read only.
     - `own_vehicle` Whether the driver can provide the vehicle on a job.
     - `delivery_box` If applicable, the size of delivery box.  Integer. Choices:
         - `0` - None.

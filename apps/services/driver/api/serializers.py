@@ -53,6 +53,11 @@ class DriverVehicleTypeSerializer(serializers.ModelSerializer):
     vehicle_type = serializers.HyperlinkedRelatedField(read_only=True,
                                     view_name='vehicle_types-detail')
 
+    vehicle_type_name = serializers.SerializerMethodField()
+    def get_vehicle_type_name(self, obj):
+        return str(obj.vehicle_type)
+
     class Meta:
         model = DriverVehicleType
-        fields = ('id', 'vehicle_type', 'own_vehicle', 'delivery_box')
+        fields = ('id', 'vehicle_type', 'vehicle_type_name',
+                  'own_vehicle', 'delivery_box')
