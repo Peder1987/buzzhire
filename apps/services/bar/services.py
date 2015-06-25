@@ -1,6 +1,6 @@
 from apps.service import services, Service
 from .models import BarJobRequest, BarFreelancer
-from .forms import BarJobRequestForm, BarFreelancerForm
+from .forms import BarJobRequestForm, BarFreelancerForm, BarJobMatchingForm
 
 
 class BarService(Service):
@@ -13,5 +13,6 @@ class BarService(Service):
     freelancer_model = BarFreelancer
     freelancer_form = BarFreelancerForm
 
+    job_matching_form = BarJobMatchingForm
 
 services.register(BarService)

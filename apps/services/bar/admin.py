@@ -4,5 +4,13 @@ from apps.freelancer.admin import FreelancerAdmin
 from . import models
 
 
-admin.site.register(models.BarFreelancer, FreelancerAdmin)
-admin.site.register(models.BarJobRequest, JobRequestAdmin)
+class BarFreelancerAdmin(admin.ModelAdmin):
+    list_display = FreelancerAdmin.list_display + ('role',)
+
+admin.site.register(models.BarFreelancer, BarFreelancerAdmin)
+
+
+class BarJobRequestAdmin(JobRequestAdmin):
+    list_display = JobRequestAdmin.list_display + ('role',)
+
+admin.site.register(models.BarJobRequest, BarJobRequestAdmin)

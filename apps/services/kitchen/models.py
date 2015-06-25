@@ -7,7 +7,6 @@ from apps.job.models import JobRequest, JobRequestQuerySet
 
 
 ROLE_CHEF = 'CH'
-ROLE_SOUS_CHEF = 'SC'
 ROLE_ASSISTANT = 'KA'
 ROLE_PORTER = 'PO'
 
