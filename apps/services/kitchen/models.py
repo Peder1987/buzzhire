@@ -6,16 +6,15 @@ from django.core.urlresolvers import reverse
 from apps.job.models import JobRequest, JobRequestQuerySet
 
 
-CERTIFICATION_CHEF = 'CH'
-CERTIFICATION_SOUS_CHEF = 'SC'
-CERTIFICATION_ASSISTANT = 'KA'
-CERTIFICATION_PORTER = 'PO'
+ROLE_CHEF = 'CH'
+ROLE_SOUS_CHEF = 'SC'
+ROLE_ASSISTANT = 'KA'
+ROLE_PORTER = 'PO'
 
-CERTIFICATION_CHOICES = (
-    (CERTIFICATION_CHEF, 'Chef'),
-    (CERTIFICATION_SOUS_CHEF, 'Sous chef'),
-    (CERTIFICATION_ASSISTANT, 'Kitchen assistant'),
-    (CERTIFICATION_PORTER, 'Kitchen porter'),
+ROLE_CHOICES = (
+    (ROLE_CHEF, 'Chef'),
+    (ROLE_ASSISTANT, 'Kitchen assistant'),
+    (ROLE_PORTER, 'Kitchen porter'),
 )
 
 KITCHEN_SERVICE_TITLE = 'kitchen staff'
@@ -25,9 +24,9 @@ class KitchenJobRequest(JobRequest):
     """
     service = KITCHEN_SERVICE_TITLE
 
-    certification = models.CharField(max_length=2,
-                                     default=CERTIFICATION_CHEF,
-                                     choices=CERTIFICATION_CHOICES)
+    role = models.CharField(max_length=2,
+                                     default=ROLE_CHEF,
+                                     choices=ROLE_CHOICES)
 
 
 class KitchenFreelancer(Freelancer):
@@ -35,9 +34,9 @@ class KitchenFreelancer(Freelancer):
 
     service = KITCHEN_SERVICE_TITLE
 
-    certification = models.CharField(max_length=2,
-                                     default=CERTIFICATION_CHEF,
-                                     choices=CERTIFICATION_CHOICES)
+    role = models.CharField(max_length=2,
+                                     default=ROLE_CHEF,
+                                     choices=ROLE_CHOICES)
 
     objects = models.GeoManager()
     published_objects = PublishedFreelancerManager()

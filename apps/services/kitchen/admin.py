@@ -5,12 +5,12 @@ from . import models
 
 
 class KitchenFreelancerAdmin(admin.ModelAdmin):
-    list_display = FreelancerAdmin.list_display + ('certification',)
+    list_display = FreelancerAdmin.list_display + ('role',)
 
 admin.site.register(models.KitchenFreelancer, KitchenFreelancerAdmin)
 
 
 class KitchenJobRequestAdmin(JobRequestAdmin):
-    list_display = JobRequestAdmin.list_display + ('certification',)
+    list_display = JobRequestAdmin.list_display + ('role',)
 
 admin.site.register(models.KitchenJobRequest, KitchenJobRequestAdmin)
