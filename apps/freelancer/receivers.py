@@ -20,3 +20,19 @@ def notify_admin_on_freelancer_created(sender, instance, created, **kwargs):
                   'email/base',
                   {'title': subject,
                    'content': content})
+
+
+# @receiver(post_save)
+# def welcome_freelancer_on_sign_up(sender, instance, created, **kwargs):
+#     "Sends a welcome email when a freelancer signs up."
+#     if created and isinstance(instance, Freelancer):
+#         subject = 'Welcome to Buzzhire!'
+#         content = render_to_string(
+#             'freelancer/email/includes/freelancer_welcome.html',
+#             {'object': instance}
+#         )
+#         send_mail(instance.user.email,
+#                   subject,
+#                   'email/base',
+#                   {'title': subject,
+#                    'content': content})

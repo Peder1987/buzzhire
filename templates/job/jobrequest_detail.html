@@ -54,13 +54,15 @@
                         <span style='font-family: monospace;'>{{ object.reference_number }}</span>
                     </td>
                 </tr>
-                {% if request.user.is_admin %}
+                {% if not request.user.is_client %}
                     <tr>
                         <th>Client</th>
                         <td>
                             {{ object.client }}
                         </td>
                     </tr>
+                {% endif %}
+                {% if request.user.is_admin %}
                     <tr>
                         <th>Client email</th>
                         <td>
