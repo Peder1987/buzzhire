@@ -1,10 +1,12 @@
 from ...freelancer.views import (FreelancerForClientViewSet,
                                        OwnFreelancerViewSet)
-from ...job.views import JobRequestForFreelancerViewSet
+from ...job.views import (JobRequestForFreelancerViewSet,
+                          JobRequestForClientViewSet)
 from apps.services.kitchen.models import KitchenFreelancer, KitchenJobRequest
 from .serializers import (KitchenFreelancerForClientSerializer,
                           PrivateKitchenFreelancerSerializer,
-                          KitchenJobRequestForFreelancerSerializer)
+                          KitchenJobRequestForFreelancerSerializer,
+                          KitchenJobRequestForClientSerializer)
 
 
 class KitchenFreelancerForClientViewSet(FreelancerForClientViewSet):
@@ -43,6 +45,24 @@ class OwnKitchenFreelancerViewSet(OwnFreelancerViewSet):
     """
     serializer_class = PrivateKitchenFreelancerSerializer
 
+
+class KitchenJobRequestForClientViewSet(JobRequestForClientViewSet):
+    """Kitchen staff job requests for the currently logged in client.
+    
+    ## Fields
+    
+    The generic fields are documented on the job request
+    endpoint for the client.
+    
+    These are the fields specific to kitchen staff job requests:
+    
+    - `role`: The role of the freelancer.  Choices are:
+        - `"CH"` - Chef
+        - `"KA"` - Kitchen assistant
+        - `"PO"` - Porter 
+    """
+    serializer_class = KitchenJobRequestForClientSerializer
+    model_class = KitchenJobRequest
 
 class KitchenJobRequestForFreelancerViewSet(JobRequestForFreelancerViewSet):
     """All kitchen staff job requests.  Publicly viewable information.

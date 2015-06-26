@@ -35,12 +35,10 @@ class BaseJobRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobRequest
         fields = ('id', 'reference_number', 'service_key',
-                  'specific_object',
-                  'client', 'status',
+                  'specific_object', 'status',
                   'tips_included', 'date', 'start_time', 'duration',
                   'number_of_freelancers', 'address',
-                  'client_pay_per_hour',
-                  'freelancer_pay_per_hour', 'years_experience', 'comments'
+                  'years_experience', 'comments'
                   )
 
 class JobRequestForFreelancerSerializer(BaseJobRequestSerializer):

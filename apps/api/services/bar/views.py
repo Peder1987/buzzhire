@@ -1,10 +1,12 @@
 from ...freelancer.views import (FreelancerForClientViewSet,
                                        OwnFreelancerViewSet)
-from ...job.views import JobRequestForFreelancerViewSet
+from ...job.views import (JobRequestForFreelancerViewSet,
+                          JobRequestForClientViewSet)
 from apps.services.bar.models import BarFreelancer, BarJobRequest
 from .serializers import (BarFreelancerForClientSerializer,
                           PrivateBarFreelancerSerializer,
-                          BarJobRequestForFreelancerSerializer)
+                          BarJobRequestForFreelancerSerializer,
+                          BarJobRequestForClientSerializer)
 
 
 class BarFreelancerForClientViewSet(FreelancerForClientViewSet):
@@ -42,6 +44,26 @@ class OwnBarFreelancerViewSet(OwnFreelancerViewSet):
         - `"BT"` - Barista
     """
     serializer_class = PrivateBarFreelancerSerializer
+
+
+class BarJobRequestForClientViewSet(JobRequestForClientViewSet):
+    """Bar staff job requests for the currently logged in client.
+    
+    ## Fields
+    
+    The generic fields are documented on the job request
+    endpoint for the client.
+    
+    These are the fields specific to bar staff job requests:
+    
+    - `role`: The role of the freelancer.  Choices are:
+        - `"MX"` - Mixologist
+        - `"BM"` - Barman
+        - `"BT"` - Barista
+ 
+    """
+    model_class = BarJobRequest
+    serializer_class = BarJobRequestForClientSerializer
 
 
 class BarJobRequestForFreelancerViewSet(JobRequestForFreelancerViewSet):

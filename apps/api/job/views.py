@@ -34,8 +34,6 @@ class JobRequestForClientViewSet(viewsets.ReadOnlyModelViewSet):
         - `address2` - Second line of address.
         - `city` - City.  Must be `"London"`.
         - `postcode` - A valid London postcode.
-    - `client_pay_per_hour`: The amount, in GBP, that the client will
-      pay per hour.  Decimal.
     - `years_experience` The minimum number of years of working experience
        required. Integer.  Choices are:
         - `0` - No preference
@@ -44,12 +42,15 @@ class JobRequestForClientViewSet(viewsets.ReadOnlyModelViewSet):
         - `5` - 5 years
     - `comments` Any extra information the client wants to tell the freelancer.
       Free text.    
+    - `client_pay_per_hour`: The amount, in GBP, that the client will
+      pay per hour.  Decimal.
     """
     serializer_class = JobRequestForClientSerializer
     permission_classes = (ClientOnlyPermission,)
+    model_class = JobRequest
 
     def get_queryset(self):
-        return JobRequest.objects.for_client(self.request.user.client)
+        return self.model_class.objects.for_client(self.request.user.client)
 
 
 class JobRequestForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
@@ -65,7 +66,6 @@ class JobRequestForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
     - `service_key` Name of the service provided.
     - `specific_object` API URL for the service-specific version
        of the job request, which may contain additional service-specific fields.  
-    - `client` The client who created the job request.  API endpoint.  Read only.
     - `status` The status of the job request:  Choices are:
         - `"IC"` - The client has created the job request but has not yet paid.
         - `"OP"` -  Open.  The client has paid and the job request is now ready for booking.
@@ -84,11 +84,6 @@ class JobRequestForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
         - `address2` - Second line of address.
         - `city` - City.  Must be `"London"`.
         - `postcode` - A valid London postcode.
-    - `client_pay_per_hour`: The amount, in GBP, that the client will
-      pay per hour.  Not visible to freelancers (TODO). Decimal.
-    - `freelancer_pay_per_hour`: The amount, in GBP, that the freelancer will
-      be paid per hour.  This is based on the `client_pay_per_hour` field.
-      Not visible to clients (TODO). Decimal.  Read only.
     - `years_experience` The minimum number of years of working experience
        required. Integer.  Choices are:
         - `0` - No preference
@@ -97,6 +92,10 @@ class JobRequestForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
         - `5` - 5 years
     - `comments` Any extra information the client wants to tell the freelancer.
       Free text.    
+    - `client` The client who created the job request.  API endpoint.  Read only.
+    - `freelancer_pay_per_hour`: The amount, in GBP, that the freelancer will
+      be paid per hour.  This is based on the `client_pay_per_hour` field.
+      Decimal.  Read only.
     """
     serializer_class = JobRequestForFreelancerSerializer
     permission_classes = (FreelancerOnlyPermission,)

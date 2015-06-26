@@ -1,13 +1,16 @@
 from rest_framework import viewsets
 from rest_framework import mixins
 from rest_framework.permissions import IsAuthenticated
-from ...job.views import JobRequestForFreelancerViewSet
+from ...job.views import (JobRequestForFreelancerViewSet,
+                          JobRequestForClientViewSet)
 from ...freelancer.permissions import FreelancerOnlyPermission
 from ...freelancer.views import (FreelancerForClientViewSet,
                                        OwnFreelancerViewSet)
 from .serializers import (DriverForClientSerializer,
-                          PrivateDriverSerializer, VehicleTypeSerializer,
-                    FlexibleVehicleTypeSerializer, DriverJobRequestForFreelancerSerializer,
+                    PrivateDriverSerializer, VehicleTypeSerializer,
+                    FlexibleVehicleTypeSerializer,
+                    DriverJobRequestForFreelancerSerializer,
+                    DriverJobRequestForClientSerializer,
                     DriverVehicleTypeSerializer)
 from apps.services.driver.models import (VehicleType, FlexibleVehicleType, Driver,
                       DriverJobRequest, DriverVehicleType)
@@ -82,6 +85,39 @@ class DriverJobRequestForFreelancerViewSet(JobRequestForFreelancerViewSet):
 
     def get_queryset(self):
         return DriverJobRequest.objects.all()
+
+
+class DriverJobRequestForClientViewSet(JobRequestForClientViewSet):
+    """Driver job requests for the currently logged in client.
+    
+    ## Fields
+    
+    The generic fields are documented on the job request
+    endpoint for the client.
+    
+    These are the fields specific to driver job requests:
+    
+    - `flexible_vehicle_type`: The flexible vehicle type that would
+      be appropriate for the job, or null if any vehicle would be appropriate.
+    - `own_vehicle`: Whether the driver needs to supply their own vehicle.
+    - `delivery_box_applicable`: Whether the minimum delivery box requirement
+      is relevant. 
+    - `minimum_delivery_box`: The minimum size of delivery box required (only
+      relevant if `delivery_box_applicable` is `true`).  Integer.  Choices are:
+        - `0` - None
+        - `2` - Standard
+        - `4` - Pizza
+    - `phone_requirement` The kind of phone the freelancer needs to do the job.
+      Choices are:
+        - `"NR"` - No smart phone needed.
+        - `"AY"` - Any smart phone.
+        - `"AN"` - Android.
+        - `"IP"` - iPhone.
+        - `"WI"` - Windows.
+ 
+    """
+    model_class = DriverJobRequest
+    serializer_class = DriverJobRequestForClientSerializer
 
 
 class VehicleTypeViewSet(viewsets.ReadOnlyModelViewSet):
