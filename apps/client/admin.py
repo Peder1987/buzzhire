@@ -7,7 +7,8 @@ class LeadAdmin(admin.ModelAdmin):
 
 
 class ClientAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name', 'user', 'mobile')
+    list_display = ('first_name', 'last_name', 'user',
+                    'company_name', 'mobile')
 
 
 admin.site.register(models.Lead, LeadAdmin)

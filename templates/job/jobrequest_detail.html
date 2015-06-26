@@ -61,6 +61,14 @@
                             {{ object.client }}
                         </td>
                     </tr>
+                    {% if object.client.company_name %}
+                        <tr>
+                            <th>Company</th>
+                            <td>
+                                {{ object.client.company_name }}
+                            </td>
+                        </tr>
+                    {% endif %}
                 {% endif %}
                 {% if request.user.is_admin %}
                     <tr>
