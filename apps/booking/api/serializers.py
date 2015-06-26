@@ -18,10 +18,9 @@ class BookingOrInvitationSerializer(serializers.ModelSerializer):
 class BookingSerializer(BookingOrInvitationSerializer):
     class Meta(BookingOrInvitationSerializer.Meta):
         model = Booking
-        fields = BookingOrInvitationSerializer.Meta.fields
+
 
 
 class InvitationSerializer(BookingOrInvitationSerializer):
     class Meta(BookingOrInvitationSerializer.Meta):
         model = Invitation
-        fields = BookingOrInvitationSerializer.Meta.fields + ('date_accepted',)

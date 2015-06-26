@@ -26,7 +26,7 @@ class FreelancerBookingViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class FreelancerInvitationViewSet(viewsets.ReadOnlyModelViewSet):
-    """All invitations for the currently logged in freelancer.
+    """All open invitations for the currently logged in freelancer.
     
     Note: you must be logged in as a freelancer.
     
@@ -36,12 +36,10 @@ class FreelancerInvitationViewSet(viewsets.ReadOnlyModelViewSet):
     - `reference_number` Public reference number for the invitation.  Read only.
     - `job_request` API URL for the job request the invitation is for.  
     - `date_created` Date and time of when the invitation was created.
-    - `date_accepted` Date and time of when the invitation was accepted,
-       or null if it has not yet been accepted.
     """
     serializer_class = InvitationSerializer
 
     permission_classes = (FreelancerOnlyPermission,)
 
     def get_queryset(self):
-        return Invitation.objects.for_freelancer(self.request.user.freelancer)
+        return Invitation.objects.open_for_freelancer(self.request.user.freelancer)
