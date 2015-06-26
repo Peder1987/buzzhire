@@ -38,7 +38,7 @@ router.register(r'job-requests', JobRequestViewSet,
 router.register(r'account/freelancer/bookings', FreelancerBookingViewSet,
                 base_name='bookings_for_freelancer')
 router.register(r'account/freelancer/invitations', FreelancerInvitationViewSet,
-                base_name='bookings_for_freelancer')
+                base_name='invitations_for_freelancer')
 router.register(r'account/freelancer', OwnFreelancerViewSet,
                 base_name='freelancer_own')
 
