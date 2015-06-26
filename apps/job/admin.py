@@ -10,7 +10,7 @@ class JobRequestAdmin(FSMTransitionMixin, admin.ModelAdmin):
     search_fields = ('id',)
     date_hierarchy = 'date'
     fsm_field = ['status']
-    exclude = ['status']
+    exclude = ('status', 'phone_requirement_old')
     readonly_fields = ['status_display', 'end_datetime']
 
     def status_display(self, instance):

@@ -39,6 +39,6 @@ class DriverJobRequestAdmin(JobRequestAdmin):
                     'duration', 'end_datetime',
                     'client_pay_per_hour', 'number_of_freelancers',
                     'status')
-    exclude = ('driving_experience_old',)
+    exclude = JobRequestAdmin.exclude + ('driving_experience_old',)
 
 admin.site.register(models.DriverJobRequest, DriverJobRequestAdmin)

@@ -209,6 +209,11 @@ class JobRequest(PolymorphicModel):
                 * self.number_of_freelancers
 
     @property
+    def freelancer_total_pay(self):
+        "Returns the total pay to a single freelancer for this job."
+        return self.freelancer_pay_per_hour * self.duration
+
+    @property
     def reference_number(self):
         "Returns a reference number for this request."
         return 'JR%s' % str(self.pk).zfill(5)

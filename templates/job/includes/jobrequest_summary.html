@@ -44,6 +44,12 @@
                             &pound;{{ object.freelancer_pay_per_hour.amount }}
                         </td>
                     </tr>
+                    <tr style='font-size: 1.2em;'>
+                        <th>TOTAL PAY</th>
+                        <td>
+                            <strong>&pound;{{ object.freelancer_total_pay.amount }}</strong>
+                        </td>
+                    </tr>
                 {% else %}
                     {% if request.user.is_admin %}
                         <tr>
