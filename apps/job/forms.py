@@ -61,6 +61,13 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
         self.fields['city'].widget.attrs = {'disabled': 'disabled'}
 
         self.fields['comments'].widget.attrs = {'rows': 3}
+
+        # Allow subclassing forms to insert service-specific text
+        # in the comments field
+        if getattr(self, 'comment_placeholder'):
+            self.fields['comments'].widget.attrs['placeholder'] = \
+                                                    self.comment_placeholder
+
         self.helper.layout = layout.Layout(
             layout.Fieldset('Date and time',
                 'date', 'start_time', 'duration',

@@ -8,6 +8,11 @@ from .utils import BarJobMatcher
 
 class BarJobRequestForm(JobRequestForm):
     "General form for bar staff job requests."
+
+    comment_placeholder = 'Does the freelancer need to bring a specific ' \
+            'uniform? Does the freelancer need to have obtained a ' \
+            'particular certification?'
+
     def __init__(self, *args, **kwargs):
         super(BarJobRequestForm, self).__init__(*args, **kwargs)
         self.helper.layout[2].insert(1, 'role')

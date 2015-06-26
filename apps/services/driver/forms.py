@@ -16,6 +16,8 @@ from .utils import DriverJobMatcher
 class DriverJobRequestForm(JobRequestForm):
     """Form for creating/editing driver job requests.
     """
+    comment_placeholder = 'Anything else to tell the driver? Is there a ' \
+                        'specific type of equipment the driver should bring?'
 
     def __init__(self, *args, **kwargs):
         super(DriverJobRequestForm, self).__init__(*args, **kwargs)

@@ -7,6 +7,9 @@ from .models import CleanerJobRequest, Cleaner
 class CleanerJobRequestForm(JobRequestForm):
     "General form for cleaner job requests."
 
+    comment_placeholder = 'Anything else to tell the cleaner? Should ' \
+                        'the cleaner bring their own equipment?'
+
     class Meta(JobRequestForm.Meta):
          model = CleanerJobRequest
 
