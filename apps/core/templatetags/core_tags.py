@@ -118,8 +118,8 @@ def model_opts(instance):
     return instance._meta
 
 
-@register.simple_tag
-def summary(instance):
+@register.simple_tag(takes_context=True)
+def summary(context, instance):
     """Outputs a summary of the supplied model instance.
     Usage:
     
@@ -128,7 +128,8 @@ def summary(instance):
     template_names = template_names_from_polymorphic_model(
                                 instance.__class__, '_summary',
                                 'includes')
-    return render_to_string(template_names, {'object': instance})
+    return render_to_string(template_names, {'object': instance,
+                                             'request': context['request']})
 
 
 @register.simple_tag

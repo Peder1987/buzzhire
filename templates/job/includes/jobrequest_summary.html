@@ -1,80 +1,85 @@
 {% load icons humanize %}
-<div class='well'>
-    <p class='text-center'>
-        {% if for_freelancer %}
-            <span class='monospace'>{{ object.reference_number }}</span><br>
-        {% else %}
+{% with is_freelancer=request.user.is_freelancer %}
+    <div class='well'>
+        <p class='text-center'>
             <a class='monospace' href='{{ object.get_absolute_url }}'>{{ object.reference_number }}</a><br>
-        {% endif %}
-        {{ 'date'|icon }} {{ object.date }}, {{ object.start_time }} 
-        
-    </p>
-    <table class='table text-left'>
-        <tbody>
-            <tr>
-                <th>Service</th>
-                <td>
-                    <span class='label label-default'>{{ object.service|capfirst }}</span>
-                </td>
-            </tr>
-            <tr>
-                <th>Duration</th>
-                <td>
-                    {{ object.duration }} hour{{ object.duration|pluralize }}
-                </td>
-            </tr>
-            {% if not for_freelancer %}
+            {{ 'date'|icon }} {{ object.date }}, {{ object.start_time }} 
+            
+        </p>
+        <table class='table text-left'>
+            <tbody>
                 <tr>
-                    <th>Number of freelancers</th>
+                    <th>Service</th>
                     <td>
-                        {{ object.number_of_freelancers }}
+                        <span class='label label-default'>{{ object.service|capfirst }}</span>
                     </td>
                 </tr>
-            {% endif %}
-            <tr>
-                <th>Location</th>
-                <td>
-                    <address>
-                       {% include 'job/includes/location.html' %}
-                    </address>
-                </td>
-            </tr>
-            {% block extra_fields %}{% endblock %}
-            {% if not for_freelancer %}
-                {% if request.user.is_admin %}
+                <tr>
+                    <th>Duration</th>
+                    <td>
+                        {{ object.duration }} hour{{ object.duration|pluralize }}
+                    </td>
+                </tr>
+                {% if not is_freelancer %}
                     <tr>
-                        <th>Client</th>
+                        <th>Number of freelancers</th>
                         <td>
-                            {{ object.client }}
+                            {{ object.number_of_freelancers }}
                         </td>
                     </tr>
+                {% endif %}
+                <tr>
+                    <th>Location</th>
+                    <td>
+                        <address>
+                           {% include 'job/includes/location.html' %}
+                        </address>
+                    </td>
+                </tr>
+                {% block extra_fields %}{% endblock %}
+                {% if is_freelancer %}
                     <tr>
-                        <th>Client pay per hour</th>
-                        <td>
-                            &pound;{{ object.client_pay_per_hour.amount }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Freelancer pay per hour</th>
+                        <th>Pay per hour</th>
                         <td>
                             &pound;{{ object.freelancer_pay_per_hour.amount }}
                         </td>
                     </tr>
                 {% else %}
-                    <tr>
-                        <th>Pay per hour</th>
+                    {% if request.user.is_admin %}
+                        <tr>
+                            <th>Client</th>
+                            <td>
+                                {{ object.client }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Client pay per hour</th>
+                            <td>
+                                &pound;{{ object.client_pay_per_hour.amount }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Freelancer pay per hour</th>
+                            <td>
+                                &pound;{{ object.freelancer_pay_per_hour.amount }}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <th>Pay per hour</th>
+                            <td>
+                                &pound;{{ object.client_pay_per_hour.amount }}
+                            </td>
+                        </tr>
+                    {% endif %}
+                    <tr style='font-size: 1.2em;'>
+                        <th>TOTAL COST</th>
                         <td>
-                            &pound;{{ object.client_pay_per_hour.amount }}
+                            <strong>&pound;{{ object.client_total_cost.amount }}</strong>
                         </td>
                     </tr>
                 {% endif %}
-                <tr style='font-size: 1.2em;'>
-                    <th>TOTAL COST</th>
-                    <td>
-                        <strong>&pound;{{ object.client_total_cost.amount }}</strong>
-                    </td>
-                </tr>
-            {% endif %}
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
+    </div>
+{% endwith %}

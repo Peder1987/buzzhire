@@ -7,7 +7,7 @@ class JobRequestAdmin(FSMTransitionMixin, admin.ModelAdmin):
     list_display = ('reference_number', 'client', 'date', 'start_time',
                     'duration', 'end_datetime', 'postcode')
     list_filter = ('status', 'date',)
-    search_fields = ('reference_number',)
+    search_fields = ('id',)
     date_hierarchy = 'date'
     fsm_field = ['status']
     exclude = ['status']
