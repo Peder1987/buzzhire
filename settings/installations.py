@@ -49,7 +49,7 @@ class Dev(BraintreeSandboxMixin, HueyMixin,
     DOMAIN = 'dev.buzzhire.co'
     WEBFACTION_USER = 'buzzhire'
     EMAIL_HOST_USER = 'buzzhire_dev'
-
+    DEBUG = False
     ACCOUNT_PASSWORD_MIN_LENGTH = 1
 
     HUEY_NAME = 'dev'
