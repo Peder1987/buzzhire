@@ -4,7 +4,7 @@ from apps.services.driver.models import (VehicleType, FlexibleVehicleType,
                 Driver, DriverJobRequest, DriverVehicleType)
 from ...freelancer.serializers import (PrivateFreelancerSerializer,
                                              FreelancerForClientSerializer)
-from ...job.serializers import JobRequestSerializer
+from ...job.serializers import JobRequestForFreelancerSerializer
 
 
 class VehicleTypeSerializer(serializers.ModelSerializer):
@@ -54,14 +54,14 @@ class PrivateDriverSerializer(PrivateFreelancerSerializer):
 
 
 
-class DriverJobRequestSerializer(JobRequestSerializer):
+class DriverJobRequestForFreelancerSerializer(JobRequestForFreelancerSerializer):
 
     flexible_vehicle_type = serializers.HyperlinkedRelatedField(read_only=True,
                                     view_name='flexible_vehicle_types-detail',
                                     source='vehicle_type')
     class Meta:
         model = DriverJobRequest
-        fields = JobRequestSerializer.Meta.fields + \
+        fields = JobRequestForFreelancerSerializer.Meta.fields + \
                   ('flexible_vehicle_type', 'minimum_delivery_box',
                    'delivery_box_applicable', 'own_vehicle',
                    'phone_requirement')

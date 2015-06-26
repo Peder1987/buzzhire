@@ -48,6 +48,27 @@ router.register(r'client/waiting/freelancers',
                 waiting_views.WaitingFreelancerForClientViewSet,
                 base_name='waiting_freelancers_for_client')
 
+# Client's job requests (all types)
+router.register(r'client/job-requests',
+                job_views.JobRequestForClientViewSet,
+                base_name='job_requests_for_client')
+# router.register(r'client/driver/job-requests',
+#                 driver_views.DriverJobRequestForClientViewSet,
+#                 base_name='driver_job_requests_for_client')
+# router.register(r'client/cleaner/job-requests',
+#                 cleaner_views.CleanerJobRequestForClientViewSet,
+#                 base_name='cleaner_job_requests_for_client')
+# router.register(r'client/kitchen/job-requests',
+#                 kitchen_views.KitchenJobRequestForClientViewSet,
+#                 base_name='kitchen_job_requests_for_client')
+# router.register(r'client/bar/job-requests',
+#                 bar_views.BarJobRequestForClientViewSet,
+#                 base_name='bar_job_requests_for_client')
+# router.register(r'client/waiting/job-requests',
+#                 waiting_views.WaitingJobRequestForClientViewSet,
+#                 base_name='waiting_job_requests_for_client')
+
+
 
 # For freelancers
 

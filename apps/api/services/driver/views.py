@@ -7,7 +7,7 @@ from ...freelancer.views import (FreelancerForClientViewSet,
                                        OwnFreelancerViewSet)
 from .serializers import (DriverForClientSerializer,
                           PrivateDriverSerializer, VehicleTypeSerializer,
-                    FlexibleVehicleTypeSerializer, DriverJobRequestSerializer,
+                    FlexibleVehicleTypeSerializer, DriverJobRequestForFreelancerSerializer,
                     DriverVehicleTypeSerializer)
 from apps.services.driver.models import (VehicleType, FlexibleVehicleType, Driver,
                       DriverJobRequest, DriverVehicleType)
@@ -78,7 +78,7 @@ class DriverJobRequestForFreelancerViewSet(JobRequestForFreelancerViewSet):
         - `"IP"` - iPhone.
         - `"WI"` - Windows.
     """
-    serializer_class = DriverJobRequestSerializer
+    serializer_class = DriverJobRequestForFreelancerSerializer
 
     def get_queryset(self):
         return DriverJobRequest.objects.all()

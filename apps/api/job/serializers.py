@@ -16,20 +16,12 @@ class SpecificJobRequestIdentityField(serializers.HyperlinkedIdentityField):
                                                     view_name, request, format)
 
 
-class JobRequestSerializer(serializers.ModelSerializer):
-    """Serializer for job requests for freelancer."""
+class BaseJobRequestSerializer(serializers.ModelSerializer):
+    """Base serializer for job requests ."""
     service_key = serializers.SerializerMethodField()
     def get_service_key(self, obj):
         "Returns the service key."
         return service_from_class(obj.__class__).key
-
-
-    specific_object = SpecificJobRequestIdentityField(
-                            view_name='job_requests_for_freelancer-detail')
-
-    # TODO - this should only be for job requests viewed by freelancers
-    client = serializers.HyperlinkedRelatedField(read_only=True,
-                                    view_name='clients_for_freelancer-detail')
 
     address = serializers.SerializerMethodField('_address')
     def _address(self, obj):
@@ -39,9 +31,6 @@ class JobRequestSerializer(serializers.ModelSerializer):
             'city': obj.get_city_display(),
             'postcode': str(obj.postcode),
         }
-
-    client_pay_per_hour = MoneyField()
-    freelancer_pay_per_hour = MoneyField()
 
     class Meta:
         model = JobRequest
@@ -54,4 +43,27 @@ class JobRequestSerializer(serializers.ModelSerializer):
                   'freelancer_pay_per_hour', 'years_experience', 'comments'
                   )
 
+class JobRequestForFreelancerSerializer(BaseJobRequestSerializer):
+    """Serializer for job requests for freelancer."""
+    client = serializers.HyperlinkedRelatedField(read_only=True,
+                                    view_name='clients_for_freelancer-detail')
 
+    freelancer_pay_per_hour = MoneyField()
+
+    specific_object = SpecificJobRequestIdentityField(
+                            view_name='job_requests_for_freelancer-detail')
+
+    class Meta(BaseJobRequestSerializer.Meta):
+        fields = BaseJobRequestSerializer.Meta.fields + ('client',
+                                                    'freelancer_pay_per_hour')
+
+class JobRequestForClientSerializer(BaseJobRequestSerializer):
+    """Serializer for job requests for client."""
+
+    client_pay_per_hour = MoneyField()
+
+    specific_object = SpecificJobRequestIdentityField(
+                            view_name='job_requests_for_client-detail')
+
+    class Meta(BaseJobRequestSerializer.Meta):
+        fields = BaseJobRequestSerializer.Meta.fields + ('client_pay_per_hour',)

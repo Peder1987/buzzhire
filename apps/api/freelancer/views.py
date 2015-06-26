@@ -11,6 +11,8 @@ from apps.freelancer.models import Freelancer
 class FreelancerForClientViewSet(viewsets.ReadOnlyModelViewSet):
     """The freelancers that the currently logged in client has permission to see.
     
+    TODO - currently this just shows all published freelancers.
+    
     ## Fields
     
     - `id` Unique id for the freelancer.  Can be used as a unique id for 

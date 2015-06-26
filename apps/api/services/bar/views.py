@@ -4,7 +4,7 @@ from ...job.views import JobRequestForFreelancerViewSet
 from apps.services.bar.models import BarFreelancer, BarJobRequest
 from .serializers import (BarFreelancerForClientSerializer,
                           PrivateBarFreelancerSerializer,
-                          BarJobRequestSerializer)
+                          BarJobRequestForFreelancerSerializer)
 
 
 class BarFreelancerForClientViewSet(FreelancerForClientViewSet):
@@ -58,7 +58,7 @@ class BarJobRequestForFreelancerViewSet(JobRequestForFreelancerViewSet):
         - `"BM"` - Barman
         - `"BT"` - Barista
     """
-    serializer_class = BarJobRequestSerializer
+    serializer_class = BarJobRequestForFreelancerSerializer
 
     def get_queryset(self):
         return BarJobRequest.objects.all()

@@ -4,7 +4,7 @@ from ...job.views import JobRequestForFreelancerViewSet
 from apps.services.kitchen.models import KitchenFreelancer, KitchenJobRequest
 from .serializers import (KitchenFreelancerForClientSerializer,
                           PrivateKitchenFreelancerSerializer,
-                          KitchenJobRequestSerializer)
+                          KitchenJobRequestForFreelancerSerializer)
 
 
 class KitchenFreelancerForClientViewSet(FreelancerForClientViewSet):
@@ -58,7 +58,7 @@ class KitchenJobRequestForFreelancerViewSet(JobRequestForFreelancerViewSet):
         - `"KA"` - Kitchen assistant
         - `"PO"` - Porter
     """
-    serializer_class = KitchenJobRequestSerializer
+    serializer_class = KitchenJobRequestForFreelancerSerializer
 
     def get_queryset(self):
         return KitchenJobRequest.objects.all()

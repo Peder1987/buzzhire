@@ -5,7 +5,10 @@ from apps.client.models import Client
 
 
 class ClientForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
-    "Clients viewable by the currently logged in freelancer."
+    """Clients viewable by the currently logged in freelancer.
+    
+    TODO - limit for the freelancer.  Currently this shows all clients.
+    """
     serializer_class = ClientForFreelancerSerializer
     permission_classes = (FreelancerOnlyPermission,)
 

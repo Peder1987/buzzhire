@@ -52,7 +52,6 @@ def client_to_freelancer_rate(client_rate):
 FREELANCER_MIN_WAGE = client_to_freelancer_rate(Money(settings.CLIENT_MIN_WAGE,
                                                   'GBP')).amount
 
-
 class PublishedFreelancerManager(GeoPolymorphicManager):
     """Manager for published freelancers.
     Note that models inheriting Freelancer should redeclare it:

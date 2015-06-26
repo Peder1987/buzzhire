@@ -3,7 +3,7 @@ from rest_framework import serializers
 from apps.services.bar.models import BarFreelancer, BarJobRequest
 from ...freelancer.serializers import (PrivateFreelancerSerializer,
                                              FreelancerForClientSerializer)
-from ...job.serializers import JobRequestSerializer
+from ...job.serializers import JobRequestForFreelancerSerializer
 
 
 
@@ -24,9 +24,9 @@ class PrivateBarFreelancerSerializer(PrivateFreelancerSerializer):
 
 
 
-class BarJobRequestSerializer(JobRequestSerializer):
+class BarJobRequestForFreelancerSerializer(JobRequestForFreelancerSerializer):
 
     class Meta:
         model = BarJobRequest
-        fields = JobRequestSerializer.Meta.fields + \
+        fields = JobRequestForFreelancerSerializer.Meta.fields + \
                   ('role',)

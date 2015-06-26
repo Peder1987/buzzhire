@@ -3,7 +3,7 @@ from rest_framework import serializers
 from apps.services.kitchen.models import KitchenFreelancer, KitchenJobRequest
 from ...freelancer.serializers import (PrivateFreelancerSerializer,
                                              FreelancerForClientSerializer)
-from ...job.serializers import JobRequestSerializer
+from ...job.serializers import JobRequestForFreelancerSerializer
 
 
 
@@ -24,9 +24,9 @@ class PrivateKitchenFreelancerSerializer(PrivateFreelancerSerializer):
 
 
 
-class KitchenJobRequestSerializer(JobRequestSerializer):
+class KitchenJobRequestForFreelancerSerializer(JobRequestForFreelancerSerializer):
 
     class Meta:
         model = KitchenJobRequest
-        fields = JobRequestSerializer.Meta.fields + \
+        fields = JobRequestForFreelancerSerializer.Meta.fields + \
                   ('role',)
