@@ -1,22 +1,22 @@
 from rest_framework import viewsets
 from rest_framework import mixins
 from rest_framework.permissions import IsAuthenticated
-from apps.job.api.views import JobRequestViewSet
-from apps.freelancer.api.permissions import FreelancerOnlyPermission
-from apps.freelancer.api.views import (PublicFreelancerViewSet,
+from ...job.views import JobRequestForFreelancerViewSet
+from ...freelancer.permissions import FreelancerOnlyPermission
+from ...freelancer.views import (FreelancerForClientViewSet,
                                        OwnFreelancerViewSet)
-from .serializers import (PublicDriverSerializer,
+from .serializers import (DriverForClientSerializer,
                           PrivateDriverSerializer, VehicleTypeSerializer,
                     FlexibleVehicleTypeSerializer, DriverJobRequestSerializer,
                     DriverVehicleTypeSerializer)
-from ..models import (VehicleType, FlexibleVehicleType, Driver,
+from apps.services.driver.models import (VehicleType, FlexibleVehicleType, Driver,
                       DriverJobRequest, DriverVehicleType)
 from .permissions import DriverOnlyPermission
-from apps.api.views import RetrieveAndUpdateViewset
+from ...views import RetrieveAndUpdateViewset
 
 
-class PublicDriverViewSet(PublicFreelancerViewSet):
-    """All published drivers - publicly available information.
+class DriverForClientViewSet(FreelancerForClientViewSet):
+    """All drivers that the currently logged in client can see.
     
     The generic fields are documented on the freelancer endpoint.
     
@@ -31,7 +31,7 @@ class PublicDriverViewSet(PublicFreelancerViewSet):
         - `"OT"` - Other smartphone
         - `"NS"` - Non smartphone       
     """
-    serializer_class = PublicDriverSerializer
+    serializer_class = DriverForClientSerializer
 
     def get_queryset(self):
         return Driver.published_objects.all()
@@ -55,7 +55,7 @@ class OwnDriverViewSet(OwnFreelancerViewSet):
     pass
 
 
-class DriverJobRequestViewSet(JobRequestViewSet):
+class DriverJobRequestForFreelancerViewSet(JobRequestForFreelancerViewSet):
     """All driver job requests.  Publicly viewable information.
     
     The generic fields are documented on the job request endpoint.
@@ -85,7 +85,14 @@ class DriverJobRequestViewSet(JobRequestViewSet):
 
 
 class VehicleTypeViewSet(viewsets.ReadOnlyModelViewSet):
-    """All vehicle types.
+    """All the vehicle types for the site.  Read only.
+        
+    ## Fields
+    
+    - `id` Unique id for the vehicle type.  Integer.
+    - `name` Human-readable name of the vehicle type.
+    - `delivery_box_applicable`: Whether it is applicable to this vehicle
+      type to ask about a delivery box.
     """
     serializer_class = VehicleTypeSerializer
 
@@ -94,12 +101,15 @@ class VehicleTypeViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class FlexibleVehicleTypeViewSet(viewsets.ReadOnlyModelViewSet):
-    """All flexible vehicle types.
+    """All flexible vehicle types for the site.  Read only.
     
     These are vehicle types that can include more than one vehicle type,
     e.g. Motorcycle / Scooter.  They are used on job requests, where the
     vehicle requirements are less strict.
+
+    ## Fields
     
+    See the vehicle types endpoint for documentation.
     """
     serializer_class = FlexibleVehicleTypeSerializer
 
@@ -107,7 +117,7 @@ class FlexibleVehicleTypeViewSet(viewsets.ReadOnlyModelViewSet):
         return FlexibleVehicleType.objects.all()
 
 
-class DriverVehicleViewSet(viewsets.ModelViewSet):
+class DriverVehicleForDriverViewSet(viewsets.ModelViewSet):
     """All the vehicles belonging to the currently logged in driver
     (aka 'driver vehicles').
     

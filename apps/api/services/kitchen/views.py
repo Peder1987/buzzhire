@@ -1,13 +1,13 @@
-from apps.freelancer.api.views import (PublicFreelancerViewSet,
+from ...freelancer.views import (FreelancerForClientViewSet,
                                        OwnFreelancerViewSet)
-from apps.job.api.views import JobRequestViewSet
-from ..models import KitchenFreelancer, KitchenJobRequest
-from .serializers import (PublicKitchenFreelancerSerializer,
+from ...job.views import JobRequestForFreelancerViewSet
+from apps.services.kitchen.models import KitchenFreelancer, KitchenJobRequest
+from .serializers import (KitchenFreelancerForClientSerializer,
                           PrivateKitchenFreelancerSerializer,
                           KitchenJobRequestSerializer)
 
 
-class PublicKitchenFreelancerViewSet(PublicFreelancerViewSet):
+class KitchenFreelancerForClientViewSet(FreelancerForClientViewSet):
     """All published kitchen staff - publicly available information.
     
     ## Fields
@@ -21,7 +21,7 @@ class PublicKitchenFreelancerViewSet(PublicFreelancerViewSet):
         - `"KA"` - Kitchen assistant
         - `"PO"` - Porter
     """
-    serializer_class = PublicKitchenFreelancerSerializer
+    serializer_class = KitchenFreelancerForClientSerializer
 
     def get_queryset(self):
         return KitchenFreelancer.published_objects.all()
@@ -44,7 +44,7 @@ class OwnKitchenFreelancerViewSet(OwnFreelancerViewSet):
     serializer_class = PrivateKitchenFreelancerSerializer
 
 
-class KitchenJobRequestViewSet(JobRequestViewSet):
+class KitchenJobRequestForFreelancerViewSet(JobRequestForFreelancerViewSet):
     """All kitchen staff job requests.  Publicly viewable information.
     
     ## Fields

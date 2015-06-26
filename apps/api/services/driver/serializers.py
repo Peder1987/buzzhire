@@ -1,10 +1,10 @@
 from django.forms import widgets
 from rest_framework import serializers
-from ..models import (VehicleType, FlexibleVehicleType, Driver,
-                      DriverJobRequest, DriverVehicleType)
-from apps.freelancer.api.serializers import (PrivateFreelancerSerializer,
-                                             PublicFreelancerSerializer)
-from apps.job.api.serializers import JobRequestSerializer
+from apps.services.driver.models import (VehicleType, FlexibleVehicleType,
+                Driver, DriverJobRequest, DriverVehicleType)
+from ...freelancer.serializers import (PrivateFreelancerSerializer,
+                                             FreelancerForClientSerializer)
+from ...job.serializers import JobRequestSerializer
 
 
 class VehicleTypeSerializer(serializers.ModelSerializer):
@@ -23,7 +23,7 @@ class FlexibleVehicleTypeSerializer(VehicleTypeSerializer):
         fields = VehicleTypeSerializer.Meta.fields
 
 
-class PublicDriverSerializer(PublicFreelancerSerializer):
+class DriverForClientSerializer(FreelancerForClientSerializer):
     """Serializer for public views of driver."""
     vehicles = serializers.SerializerMethodField()
     def get_vehicles(self, obj):
@@ -36,9 +36,9 @@ class PublicDriverSerializer(PublicFreelancerSerializer):
         )
         return vehicles_list
 
-    class Meta(PublicFreelancerSerializer.Meta):
+    class Meta(FreelancerForClientSerializer.Meta):
         model = Driver
-        fields = PublicFreelancerSerializer.Meta.fields + ('vehicles',
+        fields = FreelancerForClientSerializer.Meta.fields + ('vehicles',
                                                            'phone_type')
 
 

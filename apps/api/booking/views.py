@@ -1,11 +1,11 @@
 from django.db.models import Q
 from rest_framework import viewsets
-from apps.freelancer.api.permissions import FreelancerOnlyPermission
+from ..freelancer.permissions import FreelancerOnlyPermission
 from .serializers import BookingSerializer, InvitationSerializer
-from ..models import Booking, Invitation
+from apps.booking.models import Booking, Invitation
 
 
-class FreelancerBookingViewSet(viewsets.ReadOnlyModelViewSet):
+class BookingForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
     """All bookings for the currently logged in freelancer.
     
     Note: you must be logged in as a freelancer.
@@ -25,7 +25,7 @@ class FreelancerBookingViewSet(viewsets.ReadOnlyModelViewSet):
         return Booking.objects.for_freelancer(self.request.user.freelancer)
 
 
-class FreelancerInvitationViewSet(viewsets.ReadOnlyModelViewSet):
+class InvitationForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
     """All open invitations for the currently logged in freelancer.
     
     Note: you must be logged in as a freelancer.

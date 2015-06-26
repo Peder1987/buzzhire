@@ -1,10 +1,10 @@
-from apps.freelancer.api.views import (PublicFreelancerViewSet,
+from ...freelancer.views import (FreelancerForClientViewSet,
                                        OwnFreelancerViewSet)
-from apps.job.api.views import JobRequestViewSet
-from ..models import WaitingFreelancer, WaitingJobRequest
+from ...job.views import JobRequestForFreelancerViewSet
+from apps.services.waiting.models import WaitingFreelancer, WaitingJobRequest
 
 
-class PublicWaitingFreelancerViewSet(PublicFreelancerViewSet):
+class WaitingFreelancerForClientViewSet(FreelancerForClientViewSet):
     """All published waiting staff - publicly available information.
     
     The generic fields are documented on the freelancer endpoint.
@@ -29,7 +29,7 @@ class OwnWaitingFreelancerViewSet(OwnFreelancerViewSet):
     pass
 
 
-class WaitingJobRequestViewSet(JobRequestViewSet):
+class WaitingJobRequestForFreelancerViewSet(JobRequestForFreelancerViewSet):
     """All waiting staff job requests.  Publicly viewable information.
     
     The generic fields are documented on the job request endpoint.

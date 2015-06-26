@@ -2,11 +2,11 @@ from django.forms import widgets
 from rest_framework import serializers
 from sorl.thumbnail import get_thumbnail
 from django.conf import settings
-from apps.api.serializers import MoneyField
+from ..serializers import MoneyField
 from apps.freelancer.templatetags.freelancer import PHOTO_DIMENSIONS
-from apps.location.api.serializers import PostcodeField
-from ..utils import service_for_freelancer
-from ..models import Freelancer
+from ..location.serializers import PostcodeField
+from apps.freelancer.utils import service_for_freelancer
+from apps.freelancer.models import Freelancer
 
 
 class SpecificFreelancerIdentityField(serializers.HyperlinkedIdentityField):
@@ -20,9 +20,9 @@ class SpecificFreelancerIdentityField(serializers.HyperlinkedIdentityField):
                                                     view_name, request, format)
 
 
-class PublicFreelancerSerializer(serializers.ModelSerializer):
+class FreelancerForClientSerializer(serializers.ModelSerializer):
     """Serializer that exposes information on the freelancer
-    appropriate for public use.
+    appropriate for client use.
     """
 
     service_key = serializers.SerializerMethodField()
@@ -32,7 +32,7 @@ class PublicFreelancerSerializer(serializers.ModelSerializer):
 
     full_name = serializers.SerializerMethodField()
     specific_object = SpecificFreelancerIdentityField(
-                                                view_name='freelancers-detail')
+                                    view_name='freelancers_for_client-detail')
 
     def get_full_name(self, obj):
         return obj.get_full_name()
@@ -43,7 +43,7 @@ class PublicFreelancerSerializer(serializers.ModelSerializer):
                   'service_key', 'full_name', 'first_name', 'last_name')
 
 
-class PrivateFreelancerSerializer(PublicFreelancerSerializer):
+class PrivateFreelancerSerializer(FreelancerForClientSerializer):
     """Serializer that exposes information on the freelancer
     profile for their own use.
     """
@@ -66,8 +66,8 @@ class PrivateFreelancerSerializer(PublicFreelancerSerializer):
 
     postcode = PostcodeField()
 
-    class Meta(PublicFreelancerSerializer.Meta):
-        fields = PublicFreelancerSerializer.Meta.fields + ('email', 'mobile',
+    class Meta(FreelancerForClientSerializer.Meta):
+        fields = FreelancerForClientSerializer.Meta.fields + ('email', 'mobile',
                   'photo', 'english_fluency', 'eligible_to_work',
                   'minimum_pay_per_hour',
                   'postcode',

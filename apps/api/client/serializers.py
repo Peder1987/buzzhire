@@ -1,11 +1,11 @@
 from django.forms import widgets
 from rest_framework import serializers
-from ..models import Client
+from apps.client.models import Client
 
 
-class PublicClientSerializer(serializers.ModelSerializer):
+class ClientForFreelancerSerializer(serializers.ModelSerializer):
     """Serializer that exposes information on the client
-    appropriate for public use.
+    appropriate for freelancer use.
     """
     class Meta:
         model = Client

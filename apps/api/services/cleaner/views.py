@@ -1,10 +1,10 @@
-from apps.freelancer.api.views import (PublicFreelancerViewSet,
+from ...freelancer.views import (FreelancerForClientViewSet,
                                        OwnFreelancerViewSet)
-from apps.job.api.views import JobRequestViewSet
-from ..models import Cleaner, CleanerJobRequest
+from ...job.views import JobRequestForFreelancerViewSet
+from apps.services.cleaner.models import Cleaner, CleanerJobRequest
 
 
-class PublicCleanerViewSet(PublicFreelancerViewSet):
+class CleanerForClientViewSet(FreelancerForClientViewSet):
     """All published cleaners - publicly available information.
     
     The generic fields are documented on the freelancer endpoint.
@@ -29,7 +29,7 @@ class OwnCleanerViewSet(OwnFreelancerViewSet):
     pass
 
 
-class CleanerJobRequestViewSet(JobRequestViewSet):
+class CleanerJobRequestForFreelancerViewSet(JobRequestForFreelancerViewSet):
     """All cleaner job requests.  Publicly viewable information.
     
     The generic fields are documented on the job request endpoint.

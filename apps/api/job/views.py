@@ -1,12 +1,13 @@
 from django.db.models import Q
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
+from ..freelancer.permissions import FreelancerOnlyPermission
 from .serializers import JobRequestSerializer
-from ..models import JobRequest
+from apps.job.models import JobRequest
 
 
-class JobRequestViewSet(viewsets.ReadOnlyModelViewSet):
-    """All job requests.  Publicly viewable information.
+class JobRequestForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
+    """All job requests for the logged in freelancer
+    (ones either invited or booked on).
     
     - `id` Unique id for the job request.  Can be used as a unique id for 
            more specific kinds of job request objects,
@@ -49,8 +50,9 @@ class JobRequestViewSet(viewsets.ReadOnlyModelViewSet):
       Free text.    
     """
     serializer_class = JobRequestSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (FreelancerOnlyPermission,)
 
     def get_queryset(self):
+        # TODO
         return JobRequest.objects.all()
 

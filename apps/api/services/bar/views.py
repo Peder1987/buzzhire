@@ -1,13 +1,13 @@
-from apps.freelancer.api.views import (PublicFreelancerViewSet,
+from ...freelancer.views import (FreelancerForClientViewSet,
                                        OwnFreelancerViewSet)
-from apps.job.api.views import JobRequestViewSet
-from ..models import BarFreelancer, BarJobRequest
-from .serializers import (PublicBarFreelancerSerializer,
+from ...job.views import JobRequestForFreelancerViewSet
+from apps.services.bar.models import BarFreelancer, BarJobRequest
+from .serializers import (BarFreelancerForClientSerializer,
                           PrivateBarFreelancerSerializer,
                           BarJobRequestSerializer)
 
 
-class PublicBarFreelancerViewSet(PublicFreelancerViewSet):
+class BarFreelancerForClientViewSet(FreelancerForClientViewSet):
     """All published bar staff - publicly available information.
     
     ## Fields
@@ -21,7 +21,7 @@ class PublicBarFreelancerViewSet(PublicFreelancerViewSet):
         - `"BM"` - Barman
         - `"BT"` - Barista
     """
-    serializer_class = PublicBarFreelancerSerializer
+    serializer_class = BarFreelancerForClientSerializer
 
     def get_queryset(self):
         return BarFreelancer.published_objects.all()
@@ -44,7 +44,7 @@ class OwnBarFreelancerViewSet(OwnFreelancerViewSet):
     serializer_class = PrivateBarFreelancerSerializer
 
 
-class BarJobRequestViewSet(JobRequestViewSet):
+class BarJobRequestForFreelancerViewSet(JobRequestForFreelancerViewSet):
     """All bar staff job requests.  Publicly viewable information.
     
     ## Fields

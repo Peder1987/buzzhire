@@ -1,14 +1,15 @@
 from django.db.models import Q
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from ..client.permissions import ClientOnlyPermission
 from apps.api.views import RetrieveAndUpdateViewset
-from .serializers import PublicFreelancerSerializer, PrivateFreelancerSerializer
+from .serializers import FreelancerForClientSerializer, PrivateFreelancerSerializer
 from .permissions import FreelancerOnlyPermission
-from ..models import Freelancer
+from apps.freelancer.models import Freelancer
 
 
-class PublicFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
-    """All published freelancers - publicly available information.
+class FreelancerForClientViewSet(viewsets.ReadOnlyModelViewSet):
+    """The freelancers that the currently logged in client has permission to see.
     
     ## Fields
     
@@ -23,11 +24,12 @@ class PublicFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
     - `first_name` Their first name.
     - `last_name` Their last name.
     """
-    serializer_class = PublicFreelancerSerializer
+    serializer_class = FreelancerForClientSerializer
 
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (ClientOnlyPermission,)
 
     def get_queryset(self):
+        # TODO - correct this
         return Freelancer.published_objects.all()
 
 

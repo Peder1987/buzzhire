@@ -1,18 +1,18 @@
 from django.forms import widgets
 from rest_framework import serializers
-from ..models import BarFreelancer, BarJobRequest
-from apps.freelancer.api.serializers import (PrivateFreelancerSerializer,
-                                             PublicFreelancerSerializer)
-from apps.job.api.serializers import JobRequestSerializer
+from apps.services.bar.models import BarFreelancer, BarJobRequest
+from ...freelancer.serializers import (PrivateFreelancerSerializer,
+                                             FreelancerForClientSerializer)
+from ...job.serializers import JobRequestSerializer
 
 
 
-class PublicBarFreelancerSerializer(PublicFreelancerSerializer):
+class BarFreelancerForClientSerializer(FreelancerForClientSerializer):
     """Serializer for public views of bar."""
 
-    class Meta(PublicFreelancerSerializer.Meta):
+    class Meta(FreelancerForClientSerializer.Meta):
         model = BarFreelancer
-        fields = PublicFreelancerSerializer.Meta.fields + ('role',)
+        fields = FreelancerForClientSerializer.Meta.fields + ('role',)
 
 
 class PrivateBarFreelancerSerializer(PrivateFreelancerSerializer):

@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from ..models import Postcode
-from ..utils import GeoLocationMatchException
+from apps.location.models import Postcode
+from apps.location.utils import GeoLocationMatchException
 
 
 class PostcodeField(serializers.Field):

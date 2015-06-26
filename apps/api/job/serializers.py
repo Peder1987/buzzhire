@@ -1,8 +1,8 @@
 from django.forms import widgets
 from rest_framework import serializers
 from apps.api.serializers import MoneyField
-from .. import service_from_class
-from ..models import JobRequest
+from apps.job import service_from_class
+from apps.job.models import JobRequest
 
 
 class SpecificJobRequestIdentityField(serializers.HyperlinkedIdentityField):
@@ -17,6 +17,7 @@ class SpecificJobRequestIdentityField(serializers.HyperlinkedIdentityField):
 
 
 class JobRequestSerializer(serializers.ModelSerializer):
+    """Serializer for job requests for freelancer."""
     service_key = serializers.SerializerMethodField()
     def get_service_key(self, obj):
         "Returns the service key."
@@ -24,10 +25,11 @@ class JobRequestSerializer(serializers.ModelSerializer):
 
 
     specific_object = SpecificJobRequestIdentityField(
-                                            view_name='job_requests-detail')
+                            view_name='job_requests_for_freelancer-detail')
 
+    # TODO - this should only be for job requests viewed by freelancers
     client = serializers.HyperlinkedRelatedField(read_only=True,
-                                            view_name='clients-detail')
+                                    view_name='clients_for_freelancer-detail')
 
     address = serializers.SerializerMethodField('_address')
     def _address(self, obj):
