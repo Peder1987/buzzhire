@@ -189,8 +189,7 @@ class JobRequest(PolymorphicModel):
                 'this job (for example, if you need them to run an app).')
 
     comments = models.TextField(
-                    blank=True,
-                    help_text='Anything else to tell the freelancer.')
+                    blank=True)
 
     objects = JobRequestQuerySet.as_manager()
 
