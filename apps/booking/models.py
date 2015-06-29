@@ -70,6 +70,15 @@ class InvitationQuerySet(BookingOrInvitationQuerySet):
 
         return queryset
 
+class JobFullyBooked(Exception):
+    "Exception raised when a job is fully booked."
+    pass
+
+
+class JobAlreadyBookedByFreelancer(Exception):
+    "Exception raised when the freelancer has already been booked on the job."
+    pass
+
 
 class Invitation(models.Model):
     """An invitation to a particular freelancer to book
@@ -95,6 +104,20 @@ class Invitation(models.Model):
     class Meta:
         # A single freelancer can't be invited twice for the same job
         unique_together = (("freelancer", "jobrequest"),)
+
+    def validate_can_be_accepted(self):
+        """Validates whether the invitation can be accepted.
+        
+        Raises JobFullyBooked or JobAlreadyBookedByFreelancer on failure.
+        """
+        # Check that they're not already booked
+        if self.jobrequest.bookings.for_freelancer(self.freelancer).exists():
+            raise JobAlreadyBookedByFreelancer()
+
+        # Check that the job request isn't fully booked
+        if self.jobrequest.is_full:
+            raise JobFullyBooked()
+
 
     objects = InvitationQuerySet.as_manager()
 

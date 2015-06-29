@@ -8,7 +8,6 @@ from .serializers import (JobRequestForFreelancerSerializer,
 from apps.job.models import JobRequest
 
 
-
 class JobRequestForClientViewSet(viewsets.ReadOnlyModelViewSet):
     """All job requests created by the logged in client.
     
@@ -141,4 +140,3 @@ class JobRequestForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         # TODO
         return JobRequest.objects.all()
-

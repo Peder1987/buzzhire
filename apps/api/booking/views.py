@@ -1,8 +1,12 @@
 from django.db.models import Q
 from rest_framework import viewsets
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.decorators import detail_route
 from ..freelancer.permissions import FreelancerOnlyPermission
 from .serializers import BookingSerializer, InvitationSerializer
-from apps.booking.models import Booking, Invitation
+from apps.booking.models import (Booking, Invitation,
+                            JobAlreadyBookedByFreelancer, JobFullyBooked)
 
 
 class BookingForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
@@ -45,4 +49,30 @@ class InvitationForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
         return Invitation.objects.open_for_freelancer(
                                                 self.request.user.freelancer)
 
+    @detail_route(methods=['post'])
+    def accept(self, request, pk=None):
 
+        invitation = self.get_object()
+
+        # Validation - at present the validation already happens in
+        # get_queryset(), but we may want to give more specific feedback (as
+        # it will just say 'Not found' if it can't find the invitation.
+#         try:
+#             invitation.validate_can_be_accepted()
+#         except JobFullyBooked:
+#             return Response('This job request is now fully booked.',
+#                             status=status.HTTP_400_BAD_REQUEST)
+#         except JobAlreadyBookedByFreelancer:
+#             # This shouldn't happen, but just in case
+#             return Response('This job request has already been accepted' \
+#                             'by the freelancer.',
+#                             status=status.HTTP_400_BAD_REQUEST)
+
+        # TODO - consider potential race condition here?
+
+        booking = Booking.objects.create(jobrequest=invitation.jobrequest,
+                                         freelancer=invitation.freelancer)
+
+        serializer = BookingSerializer(booking,
+                                       context={'request': self.request})
+        return Response(serializer.data)

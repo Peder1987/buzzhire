@@ -8,7 +8,8 @@ from apps.core.views import ContextMixin, TabsMixin, ContextTemplateView, \
 from apps.freelancer.views import FreelancerOnlyMixin
 from apps.freelancer.models import Freelancer
 from apps.job.models import JobRequest
-from .models import Booking, Availability, Invitation
+from .models import (Booking, Availability, Invitation,
+                     JobAlreadyBookedByFreelancer, JobFullyBooked)
 from .forms import AvailabilityForm, JobMatchingForm, \
                     BookingOrInvitationConfirmForm, InvitationAcceptForm
 from django.contrib.messages.views import SuccessMessageMixin
@@ -233,13 +234,6 @@ class InvitationConfirm(BaseInvitationOrBookingConfirm):
         invitation_created.send(sender=self, invitation=self.instance)
         return response
 
-class JobFullyBooked(Exception):
-    "Exception raised when a job is fully booked."
-    pass
-
-class JobAlreadyBookedByFreelancer(Exception):
-    "Exception raised when the freelancer has already been booked on the job."
-    pass
 
 class InvitationAccept(FreelancerOnlyMixin,
                        ConfirmationMixin,
@@ -277,13 +271,7 @@ class InvitationAccept(FreelancerOnlyMixin,
         else:
             self.job_request = self.invitation.jobrequest
 
-        # Check that they're not already booked
-        if self.job_request.bookings.for_freelancer(self.freelancer).exists():
-            raise JobAlreadyBookedByFreelancer()
-
-        # Check that the job request isn't fully booked
-        if self.job_request.is_full:
-            raise JobFullyBooked()
+        self.invitation.validate_can_be_accepted()
 
         form_kwargs = super(InvitationAccept,
                             self).get_form_kwargs(*args, **kwargs)

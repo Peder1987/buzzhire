@@ -15,7 +15,7 @@ class DriverJobMatcher(JobMatcher):
         results = self.filter_by_phone_requirements(results)
         return results
 
-    def filter_by_phone_requirement(self, results):
+    def filter_by_phone_requirements(self, results):
         "Filters by the phone requirement."
         PHONE_REQUIREMENT_MAP = {
             DriverJobRequest.PHONE_REQUIREMENT_NOT_REQUIRED: lambda r: r,
