@@ -58,26 +58,30 @@ class OwnDriverSerializer(OwnFreelancerSerializer):
 
 class DriverJobRequestForFreelancerSerializer(
                                             JobRequestForFreelancerSerializer):
-    flexible_vehicle_type = serializers.HyperlinkedRelatedField(read_only=True,
+    vehicle_type_url = serializers.HyperlinkedRelatedField(read_only=True,
                                    view_name='flexible_vehicle_types-detail',
                                    source='vehicle_type')
     class Meta(JobRequestForFreelancerSerializer.Meta):
         model = DriverJobRequest
         fields = JobRequestForFreelancerSerializer.Meta.fields + \
-                  ('flexible_vehicle_type', 'minimum_delivery_box',
+                  ('vehicle_type', 'vehicle_type_url',
+                   'minimum_delivery_box',
                    'delivery_box_applicable', 'own_vehicle',
                    'phone_requirement')
 
 
 
 class DriverJobRequestForClientSerializer(JobRequestForClientSerializer):
-    flexible_vehicle_type = serializers.HyperlinkedRelatedField(read_only=True,
+    vehicle_type_url = serializers.HyperlinkedRelatedField(
+                                   read_only=True,
                                    view_name='flexible_vehicle_types-detail',
                                    source='vehicle_type')
+
     class Meta(JobRequestForClientSerializer.Meta):
         model = DriverJobRequest
         fields = JobRequestForClientSerializer.Meta.fields + \
-                  ('flexible_vehicle_type', 'minimum_delivery_box',
+                  ('vehicle_type', 'vehicle_type_url',
+                   'minimum_delivery_box',
                    'delivery_box_applicable', 'own_vehicle',
                    'phone_requirement')
 

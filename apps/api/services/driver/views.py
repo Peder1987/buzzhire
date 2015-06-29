@@ -63,11 +63,12 @@ class DriverJobRequestForFreelancerViewSet(JobRequestForFreelancerViewSet):
     
     The generic fields are documented on the job request endpoint.
     
-    - `flexible_vehicle_type`: The flexible vehicle type that would
+    - `vehicle_type`: The id of the flexible vehicle type that would
       be appropriate for the job, or null if any vehicle would be appropriate.
+    - `vehicle_type_url`: API endpoint for the vehicle type url.
     - `own_vehicle`: Whether the driver needs to supply their own vehicle.
     - `delivery_box_applicable`: Whether the minimum delivery box requirement
-      is relevant. 
+      is relevant.
     - `minimum_delivery_box`: The minimum size of delivery box required (only
       relevant if `delivery_box_applicable` is `true`).  Integer.  Choices are:
         - `0` - None
@@ -98,11 +99,12 @@ class DriverJobRequestForClientViewSet(
     
     These are the fields specific to driver job requests:
     
-    - `flexible_vehicle_type`: The flexible vehicle type that would
+    - `vehicle_type`: The id of the flexible vehicle type that would
       be appropriate for the job, or null if any vehicle would be appropriate.
+    - `vehicle_type_url`: API endpoint for the vehicle type url.
     - `own_vehicle`: Whether the driver needs to supply their own vehicle.
     - `delivery_box_applicable`: Whether the minimum delivery box requirement
-      is relevant. 
+      is relevant (determined from the vehicle type). Read only.
     - `minimum_delivery_box`: The minimum size of delivery box required (only
       relevant if `delivery_box_applicable` is `true`).  Integer.  Choices are:
         - `0` - None
