@@ -1,4 +1,5 @@
 from django.forms import widgets
+from django.core import validators
 from rest_framework import serializers
 from sorl.thumbnail import get_thumbnail
 from django.conf import settings
@@ -6,7 +7,8 @@ from ..serializers import MoneyField
 from apps.freelancer.templatetags.freelancer import PHOTO_DIMENSIONS
 from ..location.serializers import PostcodeField
 from apps.freelancer.utils import service_for_freelancer
-from apps.freelancer.models import Freelancer
+from apps.freelancer.models import Freelancer, FREELANCER_MIN_WAGE
+from apps.core.validators import mobile_validator
 
 
 class SpecificFreelancerIdentityField(serializers.HyperlinkedIdentityField):
@@ -58,6 +60,7 @@ class PrivateFreelancerSerializer(FreelancerForClientSerializer):
     """Serializer that exposes information on the freelancer
     profile for their own use.
     """
+
     specific_object = serializers.SerializerMethodField()
     def get_specific_object(self, obj):
         return
@@ -73,7 +76,8 @@ class PrivateFreelancerSerializer(FreelancerForClientSerializer):
                     get_thumbnail(obj.photo, PHOTO_DIMENSIONS['medium']).url)
         return None
 
-    minimum_pay_per_hour = MoneyField()
+    minimum_pay_per_hour = MoneyField(
+            validators=[validators.MinValueValidator(FREELANCER_MIN_WAGE)])
 
     postcode = PostcodeField()
 

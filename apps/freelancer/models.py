@@ -14,6 +14,7 @@ from django.contrib.humanize.templatetags.humanize import apnumber
 from django.template.defaultfilters import pluralize
 from apps.core.views import POUND_SIGN
 from apps.location.models import Postcode
+from apps.core.validators import mobile_validator
 import calendar
 
 
@@ -80,10 +81,8 @@ class Freelancer(PolymorphicModel):
 
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    mobile = models.CharField(max_length=13, validators=[
-            validators.RegexValidator(r'^07[0-9 ]*$',
-                           'Please enter a valid UK mobile phone number in '
-                           'the form 07xxx xxx xxx')])
+    mobile = models.CharField(max_length=13,
+                              validators=[mobile_validator])
 
     photo = models.ImageField(upload_to='freelancer/photos/%Y/%m/%d',
                               blank=True)

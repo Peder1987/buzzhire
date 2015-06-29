@@ -54,8 +54,9 @@ class MoneyField(serializers.Field):
         return value.amount
 
     def to_internal_value(self, data):
+        import decimal
         try:
-            return Money(data)
+            return decimal.Decimal(data)
         except:
             self.fail('incorrect_format')
 

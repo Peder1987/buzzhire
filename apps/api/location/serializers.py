@@ -31,6 +31,7 @@ class PostcodeField(serializers.Field):
                 except GeoLocationMatchException:
                     self.fail('invalid')
 
-        return postcode
+            return postcode
+        return None
 
 
