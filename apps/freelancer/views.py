@@ -52,12 +52,26 @@ class FreelancerDetailView(PolymorphicTemplateMixin, DetailView):
     template_suffix = '_detail'
 
     def get_object(self):
-        "Prevent non-admins from seeing unpublished freelancers."
         object = super(FreelancerDetailView, self).get_object()
-        if not object.published:
-            if not (self.request.user.is_authenticated() and
-                    self.request.user.is_admin):
+
+        # Forbid anonymous users
+        if not self.request.user.is_authenticated():
+            raise PermissiondDenied
+
+        # Forbid other freelancers
+        if self.request.user.is_driver and self.request.user.driver != object:
+            raise PermissionDenied
+
+        # Forbid clients who don't have the freelancers as booked on their job
+        if self.request.user.is_client:
+            if not object.bookings.for_client(
+                                    self.request.user.client).exists():
+                 raise PermissionDenied
+
+        # Prevent non-admins from seeing unpublished freelancers.
+        if not object.published and not self.request.user.is_admin:
                 raise PermissionDenied
+
         return object
 
     def get_context_data(self, *args, **kwargs):
