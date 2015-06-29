@@ -16,10 +16,12 @@ class BookingOrInvitationSerializer(serializers.ModelSerializer):
                                                         source='jobrequest',
                                                         read_only=True)
 
+    accept_endpoint = serializers.HyperlinkedIdentityField(
+                                view_name='invitations_for_freelancer-accept')
     class Meta:
         fields = ('id', 'reference_number',
                   'job_request', 'date_created',
-                  'job_request_full')
+                  'job_request_full', 'accept_endpoint')
 
 class BookingSerializer(BookingOrInvitationSerializer):
     class Meta(BookingOrInvitationSerializer.Meta):

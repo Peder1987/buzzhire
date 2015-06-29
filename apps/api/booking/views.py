@@ -40,6 +40,20 @@ class InvitationForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
     - `reference_number` Public reference number for the invitation.  Read only.
     - `job_request` API URL for the job request the invitation is for.  
     - `date_created` Date and time of when the invitation was created.
+    - `accept_endpoint` The API endpoint to POST to in order to
+      accept the invitation.
+      
+    ## Accepting invitations
+    
+    To accept an invitation, POST to the `accept_endpoint` provided.  No data
+    is required.
+    
+    If the invitation can be accepted, it will return the booking that was
+    created.
+    
+    Invitations are not guaranteed to stay valid - for example, if a job is
+    becomes fully booked.  If the invitation is no longer valid, the response
+    will be a 404.
     """
     serializer_class = InvitationSerializer
 
