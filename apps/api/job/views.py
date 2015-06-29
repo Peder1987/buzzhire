@@ -59,8 +59,14 @@ class JobRequestForClientViewSet(viewsets.ReadOnlyModelViewSet):
         - `5` - 5 years
     - `comments` Any extra information the client wants to tell the freelancer.
       Free text.    
-    - `client_pay_per_hour`: The amount, in GBP, that the client will
+    - `client_pay_per_hour` The amount, in GBP, that the client will
       pay per hour.  Decimal.
+    - `bookings` A list of any bookings of freelancers onto this job request.
+       Read only. Fields for each bookings are:
+        - `id` The unique booking id.
+        - `reference_number` Public reference number for the booking.
+        - `freelancer` URL of freelancer endpoint.
+        - `date_created` The date and time the booking was created.
     """
     serializer_class = BookingsJobRequestForClientSerializer
     permission_classes = (ClientOnlyPermission,)
