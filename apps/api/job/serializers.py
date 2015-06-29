@@ -68,6 +68,17 @@ class JobRequestForFreelancerSerializer(BaseJobRequestSerializer):
         fields = BaseJobRequestSerializer.Meta.fields + ('client',
                                                     'freelancer_pay_per_hour')
 
+
+class PolymorphicJobRequestForFreelancerSerializer(
+                                            JobRequestForFreelancerSerializer):
+    """Polymorphic version of JobRequestForFreelancerSerializer.  Should only
+    be used in a read-only context."""
+    def to_native(self, obj):
+        import pdb; pdb.set_trace()
+        return None
+
+
+
 class JobRequestForClientSerializer(BaseJobRequestSerializer):
     """Serializer for job requests for client."""
 
