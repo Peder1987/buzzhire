@@ -11,6 +11,20 @@ from apps.freelancer.models import Freelancer, FREELANCER_MIN_WAGE
 from apps.core.validators import mobile_validator
 
 
+class ThumbnailField(serializers.SerializerMethodField):
+    "Serializer field for returning photo thumbnails."
+
+    def __init__(self, *args, **kwargs):
+        self.size = kwargs.pop('size')
+        super(ThumbnailField, self).__init__(*args, **kwargs)
+
+    def to_representation(self, value):
+        if value.photo:
+             return "%s%s" % (settings.BASE_URL,
+                get_thumbnail(value.photo, PHOTO_DIMENSIONS[self.size]).url)
+        return None
+
+
 class SpecificFreelancerIdentityField(serializers.HyperlinkedIdentityField):
     """A read-only field that represents the identity URL for the specific,
     non-generic version of the freelancer.
@@ -54,17 +68,15 @@ class FreelancerForClientSerializer(serializers.ModelSerializer):
     def get_full_name(self, obj):
         return obj.get_full_name()
 
-    photo_thumbnail_medium = serializers.SerializerMethodField()
-    def get_photo_thumbnail_medium(self, obj):
-        if obj.photo:
-             return "%s%s" % (settings.BASE_URL,
-                    get_thumbnail(obj.photo, PHOTO_DIMENSIONS['medium']).url)
-        return None
+    photo_thumbnail_medium = ThumbnailField(size='medium')
+    photo_thumbnail_large = ThumbnailField(size='large')
+
 
     class Meta:
         model = Freelancer
         fields = ('id', 'reference_number', 'specific_object',
-                  'service_key', 'photo_thumbnail_medium', 'english_fluency',
+                  'service_key', 'photo_thumbnail_medium',
+                  'photo_thumbnail_large', 'english_fluency',
                   'full_name', 'first_name', 'last_name',
                   'years_experience', 'minimum_pay_per_hour')
 
@@ -82,12 +94,8 @@ class OwnFreelancerSerializer(FreelancerForClientSerializer):
     def get_email(self, obj):
         return obj.user.email
 
-    photo_thumbnail_medium = serializers.SerializerMethodField()
-    def get_photo_thumbnail_medium(self, obj):
-        if obj.photo:
-             return "%s%s" % (settings.BASE_URL,
-                    get_thumbnail(obj.photo, PHOTO_DIMENSIONS['medium']).url)
-        return None
+    photo_thumbnail_medium = ThumbnailField(size='medium')
+    photo_thumbnail_large = ThumbnailField(size='large')
 
     minimum_pay_per_hour = MoneyField(
             validators=[validators.MinValueValidator(FREELANCER_MIN_WAGE)])

@@ -24,6 +24,8 @@ class FreelancerForClientViewSet(viewsets.ReadOnlyModelViewSet):
     - `service_key` The name of the service the freelancer offers.
     - `photo_thumbnail_medium` A thumbnail image, 75px x 97px,
        or `null` if they have not provided a photo.
+    - `photo_thumbnail_large` A thumbnail image, 233px x 300px,
+       or `null` if they have not provided a photo.
     - `english_fluency` Their English fluency level.  Choices are:
         - `"BA"` - Basic
         - `"CO"` - Conversational
@@ -67,6 +69,8 @@ class OwnFreelancerViewSet(RetrieveAndUpdateViewset):
     - `mobile` Their mobile telephone number (must be UK based).
     - `photo_thumbnail_medium` A thumbnail image, 75px x 97px, or `null` if they
       have not provided a photo.  Read only.
+    - `photo_thumbnail_large` A thumbnail image, 233px x 300px,
+       or `null` if they have not provided a photo.
     - `english_fluency` Their English fluency level.  Choices are:
         - `"BA"` - Basic
         - `"CO"` - Conversational

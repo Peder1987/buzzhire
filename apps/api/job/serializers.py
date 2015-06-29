@@ -50,7 +50,7 @@ class BaseJobRequestSerializer(serializers.ModelSerializer):
                   'tips_included', 'date', 'start_time', 'duration',
                   'number_of_freelancers', 'address1', 'address2', 'city',
                   'postcode',
-                  'years_experience', 'comments'
+                  'years_experience', 'comments',
                   )
         read_only_fields = ('status',)
 
