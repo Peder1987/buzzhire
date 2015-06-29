@@ -2,7 +2,7 @@ from django.forms import widgets
 from rest_framework import serializers
 from apps.services.driver.models import (VehicleType, FlexibleVehicleType,
                 Driver, DriverJobRequest, DriverVehicleType)
-from ...freelancer.serializers import (PrivateFreelancerSerializer,
+from ...freelancer.serializers import (OwnFreelancerSerializer,
                                              FreelancerForClientSerializer)
 from ...job.serializers import (JobRequestForFreelancerSerializer,
                                 JobRequestForClientSerializer)
@@ -43,7 +43,7 @@ class DriverForClientSerializer(FreelancerForClientSerializer):
                                                            'phone_type')
 
 
-class PrivateDriverSerializer(PrivateFreelancerSerializer):
+class PrivateDriverSerializer(OwnFreelancerSerializer):
     """Serializer for the driver's own profile."""
 
 #     vehicle_types = serializers.HyperlinkedRelatedField(read_only=True,
@@ -51,7 +51,7 @@ class PrivateDriverSerializer(PrivateFreelancerSerializer):
 
     class Meta:
         model = Driver
-        fields = PrivateFreelancerSerializer.Meta.fields + ('phone_type',)
+        fields = OwnFreelancerSerializer.Meta.fields + ('phone_type',)
 
 
 

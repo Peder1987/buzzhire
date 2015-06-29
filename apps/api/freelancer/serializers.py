@@ -14,12 +14,25 @@ from apps.core.validators import mobile_validator
 class SpecificFreelancerIdentityField(serializers.HyperlinkedIdentityField):
     """A read-only field that represents the identity URL for the specific,
     non-generic version of the freelancer.
+    Optionally, specify pass_reverse_kwargs=False when instantiating.  This
+    allows it to work with views that get a single object without needing
+    any kwargs passed to the url, such as a RetrieveAndUpdateViewset in
+    combination with a SingleObjectFriendlyRouter.
     """
+    def __init__(self, pass_reverse_kwargs=True, *args, **kwargs):
+        self.pass_reverse_kwargs = pass_reverse_kwargs
+        super(SpecificFreelancerIdentityField, self).__init__(*args, **kwargs)
+
     def get_url(self, obj, view_name, request, format):
         service = service_for_freelancer(obj)
         view_name = service.key + '_' + view_name
-        return super(SpecificFreelancerIdentityField, self).get_url(obj,
+        if self.pass_reverse_kwargs:
+            return super(SpecificFreelancerIdentityField, self).get_url(obj,
                                                     view_name, request, format)
+        else:
+            # In this case, we don't want to pass any kwargs through to
+            # the reverse function
+            return self.reverse(view_name, request=request, format=format)
 
 
 class FreelancerForClientSerializer(serializers.ModelSerializer):
@@ -56,14 +69,14 @@ class FreelancerForClientSerializer(serializers.ModelSerializer):
                   'years_experience', 'minimum_pay_per_hour')
 
 
-class PrivateFreelancerSerializer(FreelancerForClientSerializer):
+class OwnFreelancerSerializer(FreelancerForClientSerializer):
     """Serializer that exposes information on the freelancer
     profile for their own use.
     """
 
-    specific_object = serializers.SerializerMethodField()
-    def get_specific_object(self, obj):
-        return
+    specific_object = SpecificFreelancerIdentityField(
+                            view_name='freelancer_own-detail',
+                            pass_reverse_kwargs=False)
 
     email = serializers.SerializerMethodField()
     def get_email(self, obj):

@@ -3,7 +3,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from ..client.permissions import ClientOnlyPermission
 from apps.api.views import RetrieveAndUpdateViewset
-from .serializers import FreelancerForClientSerializer, PrivateFreelancerSerializer
+from .serializers import FreelancerForClientSerializer, OwnFreelancerSerializer
 from .permissions import FreelancerOnlyPermission
 from apps.freelancer.models import Freelancer
 
@@ -92,7 +92,7 @@ class OwnFreelancerViewSet(RetrieveAndUpdateViewset):
         - `5` - More than 5 years
     """
     model = Freelancer
-    serializer_class = PrivateFreelancerSerializer
+    serializer_class = OwnFreelancerSerializer
 
     permission_classes = (FreelancerOnlyPermission,)
 
