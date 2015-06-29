@@ -1,7 +1,7 @@
 from ...freelancer.views import (FreelancerForClientViewSet,
                                        OwnFreelancerViewSet)
 from ...job.views import (JobRequestForFreelancerViewSet,
-                          JobRequestForClientViewSet)
+                          ServiceSpecificJobRequestForClientViewSet)
 from apps.services.bar.models import BarFreelancer, BarJobRequest
 from .serializers import (BarFreelancerForClientSerializer,
                           PrivateBarFreelancerSerializer,
@@ -46,7 +46,7 @@ class OwnBarFreelancerViewSet(OwnFreelancerViewSet):
     serializer_class = PrivateBarFreelancerSerializer
 
 
-class BarJobRequestForClientViewSet(JobRequestForClientViewSet):
+class BarJobRequestForClientViewSet(ServiceSpecificJobRequestForClientViewSet):
     """Bar staff job requests for the currently logged in client.
     
     ## Fields

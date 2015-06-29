@@ -1,8 +1,11 @@
 from django.forms import widgets
 from rest_framework import serializers
+from rest_framework.utils.field_mapping import get_field_kwargs
 from apps.api.serializers import MoneyField
 from apps.job import service_from_class
 from apps.job.models import JobRequest
+from ..location.serializers import PostcodeField
+from apps.job.validators import validate_start_date_and_time
 
 
 class SpecificJobRequestIdentityField(serializers.HyperlinkedIdentityField):
@@ -23,23 +26,33 @@ class BaseJobRequestSerializer(serializers.ModelSerializer):
         "Returns the service key."
         return service_from_class(obj.__class__).key
 
-    address = serializers.SerializerMethodField('_address')
-    def _address(self, obj):
-        return {
-            'address1': obj.address1,
-            'address2': obj.address2,
-            'city': obj.get_city_display(),
-            'postcode': str(obj.postcode),
-        }
+
+
+#     address = serializers.SerializerMethodField('_address')
+#     def _address(self, obj):
+#         return {
+#             'address1': obj.address1,
+#             'address2': obj.address2,
+#             'city': obj.get_city_display(),
+#             'postcode': str(obj.postcode),
+#         }
+
+    postcode = PostcodeField(required=True)
+
+    city = serializers.SerializerMethodField()
+    def get_city(self, obj):
+        return obj.get_city_display()
 
     class Meta:
         model = JobRequest
         fields = ('id', 'reference_number', 'service_key',
                   'specific_object', 'status',
                   'tips_included', 'date', 'start_time', 'duration',
-                  'number_of_freelancers', 'address',
+                  'number_of_freelancers', 'address1', 'address2', 'city',
+                  'postcode',
                   'years_experience', 'comments'
                   )
+        read_only_fields = ('status',)
 
 class JobRequestForFreelancerSerializer(BaseJobRequestSerializer):
     """Serializer for job requests for freelancer."""
@@ -58,10 +71,21 @@ class JobRequestForFreelancerSerializer(BaseJobRequestSerializer):
 class JobRequestForClientSerializer(BaseJobRequestSerializer):
     """Serializer for job requests for client."""
 
-    client_pay_per_hour = MoneyField()
+    # Make sure we use the same validators
+    client_pay_per_hour = MoneyField(
+                    validators=JobRequest._meta.get_field(
+                                            'client_pay_per_hour').validators)
 
     specific_object = SpecificJobRequestIdentityField(
                             view_name='job_requests_for_client-detail')
+
+
+    def validate(self, attrs):
+        # Populates the object with the client (useful for creation)
+        attrs['client'] = self.context['request'].user.client
+        attrs = super(JobRequestForClientSerializer, self).validate(attrs)
+        validate_start_date_and_time(attrs['date'], attrs['start_time'])
+        return attrs
 
     class Meta(BaseJobRequestSerializer.Meta):
         fields = BaseJobRequestSerializer.Meta.fields + ('client_pay_per_hour',)

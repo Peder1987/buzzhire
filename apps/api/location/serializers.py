@@ -7,6 +7,7 @@ class PostcodeField(serializers.Field):
     """Serializer for postcodes.
     """
     default_error_messages = {
+        'required': 'This field is required.',
         'invalid': 'Not a valid UK postcode.',
     }
 
@@ -17,7 +18,7 @@ class PostcodeField(serializers.Field):
         compressed_postcode = data.replace(' ', '')
         if compressed_postcode:
             instance = self.parent.instance
-            if instance.postcode_id and compressed_postcode == \
+            if instance and instance.postcode_id and compressed_postcode == \
                                         instance.postcode.compressed_postcode:
                 # Postcode is the same, don't attempt to recreate it
                 postcode = instance.postcode
@@ -32,6 +33,7 @@ class PostcodeField(serializers.Field):
                     self.fail('invalid')
 
             return postcode
+        elif self.required:
+            self.fail('required')
         return None
-
 

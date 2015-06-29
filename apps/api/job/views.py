@@ -1,13 +1,17 @@
 from django.db.models import Q
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
 from ..freelancer.permissions import FreelancerOnlyPermission
 from ..client.permissions import ClientOnlyPermission
 from .serializers import (JobRequestForFreelancerSerializer,
                           JobRequestForClientSerializer)
 from apps.job.models import JobRequest
 
+
 class JobRequestForClientViewSet(viewsets.ReadOnlyModelViewSet):
     """All job requests created by the logged in client.
+    
+    This endpoint can be used to list job requests.  To create job
+    requests, you must use the service-specific endpoints.
     
     - `id` Unique id for the job request.  Can be used as a unique id for 
            more specific kinds of job request objects,
@@ -52,6 +56,14 @@ class JobRequestForClientViewSet(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         return self.model_class.objects.for_client(self.request.user.client)
 
+
+class ServiceSpecificJobRequestForClientViewSet(mixins.CreateModelMixin,
+                                                JobRequestForClientViewSet):
+    """Viewset for service specific job request viewsets to inherit.
+    Allows creation of job requests (not allowed on the generic job request
+    endpoint).
+    """
+    pass
 
 class JobRequestForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
     """All job requests for the logged in freelancer

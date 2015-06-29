@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from rest_framework import mixins
 from rest_framework.permissions import IsAuthenticated
 from ...job.views import (JobRequestForFreelancerViewSet,
-                          JobRequestForClientViewSet)
+                          ServiceSpecificJobRequestForClientViewSet)
 from ...freelancer.permissions import FreelancerOnlyPermission
 from ...freelancer.views import (FreelancerForClientViewSet,
                                        OwnFreelancerViewSet)
@@ -87,7 +87,8 @@ class DriverJobRequestForFreelancerViewSet(JobRequestForFreelancerViewSet):
         return DriverJobRequest.objects.all()
 
 
-class DriverJobRequestForClientViewSet(JobRequestForClientViewSet):
+class DriverJobRequestForClientViewSet(
+                                ServiceSpecificJobRequestForClientViewSet):
     """Driver job requests for the currently logged in client.
     
     ## Fields

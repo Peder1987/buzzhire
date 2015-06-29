@@ -1,7 +1,7 @@
 from ...freelancer.views import (FreelancerForClientViewSet,
                                        OwnFreelancerViewSet)
 from ...job.views import (JobRequestForFreelancerViewSet,
-                          JobRequestForClientViewSet)
+                          ServiceSpecificJobRequestForClientViewSet)
 from apps.services.kitchen.models import KitchenFreelancer, KitchenJobRequest
 from .serializers import (KitchenFreelancerForClientSerializer,
                           PrivateKitchenFreelancerSerializer,
@@ -46,7 +46,7 @@ class OwnKitchenFreelancerViewSet(OwnFreelancerViewSet):
     serializer_class = PrivateKitchenFreelancerSerializer
 
 
-class KitchenJobRequestForClientViewSet(JobRequestForClientViewSet):
+class KitchenJobRequestForClientViewSet(ServiceSpecificJobRequestForClientViewSet):
     """Kitchen staff job requests for the currently logged in client.
     
     ## Fields

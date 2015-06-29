@@ -1,7 +1,7 @@
 from ...freelancer.views import (FreelancerForClientViewSet,
                                        OwnFreelancerViewSet)
 from ...job.views import (JobRequestForFreelancerViewSet,
-                          JobRequestForClientViewSet)
+                          ServiceSpecificJobRequestForClientViewSet)
 from apps.services.cleaner.models import Cleaner, CleanerJobRequest
 
 
@@ -30,7 +30,7 @@ class OwnCleanerViewSet(OwnFreelancerViewSet):
     pass
 
 
-class CleanerJobRequestForClientViewSet(JobRequestForClientViewSet):
+class CleanerJobRequestForClientViewSet(ServiceSpecificJobRequestForClientViewSet):
     """Cleaner staff job requests for the currently logged in client.
     
     ## Fields

@@ -1,7 +1,7 @@
 from ...freelancer.views import (FreelancerForClientViewSet,
                                        OwnFreelancerViewSet)
 from ...job.views import (JobRequestForFreelancerViewSet,
-                          JobRequestForClientViewSet)
+                          ServiceSpecificJobRequestForClientViewSet)
 from apps.services.waiting.models import WaitingFreelancer, WaitingJobRequest
 
 
@@ -29,7 +29,7 @@ class WaitingFreelancerForClientViewSet(FreelancerForClientViewSet):
 
 
 
-class WaitingJobRequestForClientViewSet(JobRequestForClientViewSet):
+class WaitingJobRequestForClientViewSet(ServiceSpecificJobRequestForClientViewSet):
     """Waiting staff job requests for the currently logged in client.
     
     ## Fields

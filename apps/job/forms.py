@@ -17,6 +17,7 @@ from apps.location.forms import PostcodeFormMixin
 from apps.payment.utils import PaymentAPI, PaymentException
 from .models import JobRequest
 from . import service_from_class
+from .validators import validate_start_date_and_time
 import logging
 
 
@@ -98,19 +99,9 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
         cleaned_data = super(JobRequestForm, self).clean()
 
         # Validate the date and time
-        start_date = cleaned_data.get('date')
-        start_time = cleaned_data.get('start_time')
-        if start_date < date.today():
-            self.add_error('date', 'Your job must be in the future.')
-        elif start_date == date.today():
-            # If it's today, make sure are giving enough notice
-            allowed_time = (datetime.now() + \
-                    timedelta(hours=settings.JOB_REQUEST_MINIMUM_HOURS_NOTICE)
-                    ).time()
-            if start_time < allowed_time:
-                 self.add_error('start_time',
-                    'Your job must be at least %s hours from now.' \
-                    % settings.JOB_REQUEST_MINIMUM_HOURS_NOTICE)
+        validate_start_date_and_time(cleaned_data.get('date'),
+                                     cleaned_data.get('start_time'))
+
 
 
     def save(self, client, commit=True):

@@ -11,3 +11,14 @@ class RetrieveAndUpdateViewset(mixins.RetrieveModelMixin,
     
     """
     detail_root = True
+
+
+class CreateUpdateNotDestroyViewset(mixins.CreateModelMixin,
+                                    mixins.RetrieveModelMixin,
+                                    mixins.UpdateModelMixin,
+                                    mixins.ListModelMixin,
+                                    viewsets.GenericViewSet):
+    """Viewset which just leaves out the deletion capability from
+    a standard ModelViewSet.
+    """
+    pass
