@@ -13,6 +13,17 @@ class JobRequestForClientViewSet(viewsets.ReadOnlyModelViewSet):
     This endpoint can be used to list job requests.  To create job
     requests, you must use the service-specific endpoints.
     
+    ## Query parameters
+    
+    - `dateslice` Optional. Limit results by date.  Choices are:
+        - `past` All past job requests for the client.
+        - `future` All future job requests for the client.
+      
+      For example, to get all future job requests, the endpoint would be
+      `/client/job-requests/?dateslice=future`. 
+     
+    ## Fields
+    
     - `id` Unique id for the job request.  Can be used as a unique id for 
            more specific kinds of job request objects,
            such as driver job requests. Integer. Read only.
@@ -54,7 +65,14 @@ class JobRequestForClientViewSet(viewsets.ReadOnlyModelViewSet):
     model_class = JobRequest
 
     def get_queryset(self):
-        return self.model_class.objects.for_client(self.request.user.client)
+        queryset = self.model_class.objects.for_client(
+                                                self.request.user.client)
+        if self.request.GET.get('dateslice') == 'future':
+            queryset = queryset.future()
+        elif self.request.GET.get('dateslice') == 'past':
+            queryset = queryset.past()
+
+        return queryset
 
 
 class ServiceSpecificJobRequestForClientViewSet(mixins.CreateModelMixin,
