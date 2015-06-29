@@ -42,4 +42,7 @@ class InvitationForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (FreelancerOnlyPermission,)
 
     def get_queryset(self):
-        return Invitation.objects.open_for_freelancer(self.request.user.freelancer)
+        return Invitation.objects.open_for_freelancer(
+                                                self.request.user.freelancer)
+
+

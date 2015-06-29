@@ -2,9 +2,11 @@ from django.db.models import Q
 from rest_framework import viewsets, mixins
 from ..freelancer.permissions import FreelancerOnlyPermission
 from ..client.permissions import ClientOnlyPermission
+from ..booking.serializers import BookingsJobRequestForClientSerializer
 from .serializers import (JobRequestForFreelancerSerializer,
                           JobRequestForClientSerializer)
 from apps.job.models import JobRequest
+
 
 
 class JobRequestForClientViewSet(viewsets.ReadOnlyModelViewSet):
@@ -60,7 +62,7 @@ class JobRequestForClientViewSet(viewsets.ReadOnlyModelViewSet):
     - `client_pay_per_hour`: The amount, in GBP, that the client will
       pay per hour.  Decimal.
     """
-    serializer_class = JobRequestForClientSerializer
+    serializer_class = BookingsJobRequestForClientSerializer
     permission_classes = (ClientOnlyPermission,)
     model_class = JobRequest
 

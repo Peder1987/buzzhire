@@ -90,7 +90,6 @@ class JobRequestForClientSerializer(BaseJobRequestSerializer):
     specific_object = SpecificJobRequestIdentityField(
                             view_name='job_requests_for_client-detail')
 
-
     def validate(self, attrs):
         # Populates the object with the client (useful for creation)
         attrs['client'] = self.context['request'].user.client
@@ -99,4 +98,5 @@ class JobRequestForClientSerializer(BaseJobRequestSerializer):
         return attrs
 
     class Meta(BaseJobRequestSerializer.Meta):
-        fields = BaseJobRequestSerializer.Meta.fields + ('client_pay_per_hour',)
+        fields = BaseJobRequestSerializer.Meta.fields + (
+                        'client_pay_per_hour',)
