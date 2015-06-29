@@ -43,7 +43,7 @@ class DriverForClientSerializer(FreelancerForClientSerializer):
                                                            'phone_type')
 
 
-class PrivateDriverSerializer(OwnFreelancerSerializer):
+class OwnDriverSerializer(OwnFreelancerSerializer):
     """Serializer for the driver's own profile."""
 
 #     vehicle_types = serializers.HyperlinkedRelatedField(read_only=True,
@@ -52,8 +52,6 @@ class PrivateDriverSerializer(OwnFreelancerSerializer):
     class Meta:
         model = Driver
         fields = OwnFreelancerSerializer.Meta.fields + ('phone_type',)
-
-
 
 
 

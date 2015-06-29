@@ -7,7 +7,7 @@ from ...freelancer.permissions import FreelancerOnlyPermission
 from ...freelancer.views import (FreelancerForClientViewSet,
                                        OwnFreelancerViewSet)
 from .serializers import (DriverForClientSerializer,
-                    PrivateDriverSerializer, VehicleTypeSerializer,
+                    OwnDriverSerializer, VehicleTypeSerializer,
                     FlexibleVehicleTypeSerializer,
                     DriverJobRequestForFreelancerSerializer,
                     DriverJobRequestForClientSerializer,
@@ -55,7 +55,7 @@ class OwnDriverViewSet(OwnFreelancerViewSet):
         - `"OT"` - Other smartphone
         - `"NS"` - Non smartphone      
     """
-    pass
+    serializer_class = OwnDriverSerializer
 
 
 class DriverJobRequestForFreelancerViewSet(JobRequestForFreelancerViewSet):
