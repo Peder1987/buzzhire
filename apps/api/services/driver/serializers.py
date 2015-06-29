@@ -1,4 +1,5 @@
 from django.forms import widgets
+from django.core.validators import ValidationError
 from rest_framework import serializers
 from apps.services.driver.models import (VehicleType, FlexibleVehicleType,
                 Driver, DriverJobRequest, DriverVehicleType)
@@ -84,15 +85,26 @@ class DriverJobRequestForClientSerializer(JobRequestForClientSerializer):
 class DriverVehicleTypeSerializer(serializers.ModelSerializer):
     """Serializer for driver vehicle types for the logged in driver.
     """
-    vehicle_type = serializers.HyperlinkedRelatedField(read_only=True,
-                                    view_name='vehicle_types-detail')
+    vehicle_type_url = serializers.HyperlinkedRelatedField(read_only=True,
+                                    view_name='vehicle_types-detail',
+                                    source='vehicle_type')
 
     vehicle_type_name = serializers.SerializerMethodField()
     def get_vehicle_type_name(self, obj):
         return str(obj.vehicle_type)
 
+    def validate(self, attrs):
+        attrs['driver'] = self.context['request'].user.driver
+        attrs = super(DriverVehicleTypeSerializer, self).validate(attrs)
+        if attrs['driver'].drivervehicletype_set.filter(
+                                vehicle_type=attrs['vehicle_type']).exists():
+            raise ValidationError('The driver already has a %s.'
+                                  % str(attrs['vehicle_type']).lower())
+        return attrs
+
     class Meta:
         model = DriverVehicleType
         fields = ('id', 'vehicle_type', 'vehicle_type_name',
+                  'vehicle_type_url',
                   'own_vehicle', 'delivery_box')
 

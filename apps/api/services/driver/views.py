@@ -160,8 +160,9 @@ class DriverVehicleForDriverViewSet(viewsets.ModelViewSet):
     ## Fields
     
     - `id` Unique id for the driver vehicle.  Read only.
-    - `vehicle_type` The type of vehicle.  Read only.
+    - `vehicle_type` The id for type of vehicle.
     - `vehicle_type_name` The human readable name of the vehicle type.  Read only.
+    - `vehicle_type_url` Url of API endpoint for the vehicle type. Read only.
     - `own_vehicle` Whether the driver can provide the vehicle on a job.
     - `delivery_box` If applicable, the size of delivery box.  Integer. Choices:
         - `0` - None.
@@ -174,3 +175,4 @@ class DriverVehicleForDriverViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return self.request.user.driver.drivervehicletype_set.all()
+
