@@ -28,6 +28,11 @@ router.register(r'driver/flexible-vehicle-types',
 
 # For clients
 
+# Own profile
+router.register(r'client',
+                client_views.OwnClientViewSet,
+                base_name='client_own')
+
 # Freelancer profile (all types)
 router.register(r'client/freelancers',
                 freelancer_views.FreelancerForClientViewSet,
