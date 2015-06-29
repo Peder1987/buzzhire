@@ -17,14 +17,29 @@ class FreelancerForClientViewSet(viewsets.ReadOnlyModelViewSet):
     
     - `id` Unique id for the freelancer.  Can be used as a unique id for 
            more specific kinds of freelancer objects, such as drivers.
-           Integer. Read only.
-    - `reference_number` Public reference number for the freelancer.  Read only.
+           Integer.
+    - `reference_number` Public reference number for the freelancer.
     - `specific_object` API URL for the service-specific version
        of the freelancer, which may contain additional service-specific fields.  
     - `service_key` The name of the service the freelancer offers.
-    - `full_name` Their full name.  Read only.
+    - `photo_thumbnail_medium` A thumbnail image, 75px x 97px,
+       or `null` if they have not provided a photo.
+    - `english_fluency` Their English fluency level.  Choices are:
+        - `"BA"` - Basic
+        - `"CO"` - Conversational
+        - `"FL"` - Fluent
+        - `"NA"` - Native
+    - `full_name` Their full name.
     - `first_name` Their first name.
     - `last_name` Their last name.
+    - `years_experience` The number of years of working experience.
+        Integer.  Choices are:
+        - `0` - Less than 1 year
+        - `1` - 1 - 3 years
+        - `3` - 3 - 5 years
+        - `5` - More than 5 years
+    - `minimum_pay_per_hour` The minimum hourly rate, in GBP, the freelancer is
+      willing to work for.  Decimal.
     """
     serializer_class = FreelancerForClientSerializer
 
@@ -50,7 +65,8 @@ class OwnFreelancerViewSet(RetrieveAndUpdateViewset):
     - `first_name` Their first name.
     - `last_name` Their last name.
     - `mobile` Their mobile telephone number (must be UK based).
-    - `photo` A thumbnail image, 75px x 97px.  Read only.
+    - `photo_thumbnail_medium` A thumbnail image, 75px x 97px, or `null` if they
+      have not provided a photo.  Read only.
     - `english_fluency` Their English fluency level.  Choices are:
         - `"BA"` - Basic
         - `"CO"` - Conversational

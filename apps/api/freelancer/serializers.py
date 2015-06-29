@@ -34,13 +34,24 @@ class FreelancerForClientSerializer(serializers.ModelSerializer):
     specific_object = SpecificFreelancerIdentityField(
                                     view_name='freelancers_for_client-detail')
 
+    minimum_pay_per_hour = MoneyField()
+
     def get_full_name(self, obj):
         return obj.get_full_name()
+
+    photo_thumbnail_medium = serializers.SerializerMethodField()
+    def get_photo_thumbnail_medium(self, obj):
+        if obj.photo:
+             return "%s%s" % (settings.BASE_URL,
+                    get_thumbnail(obj.photo, PHOTO_DIMENSIONS['medium']).url)
+        return None
 
     class Meta:
         model = Freelancer
         fields = ('id', 'reference_number', 'specific_object',
-                  'service_key', 'full_name', 'first_name', 'last_name')
+                  'service_key', 'photo_thumbnail_medium', 'english_fluency',
+                  'full_name', 'first_name', 'last_name',
+                  'years_experience', 'minimum_pay_per_hour')
 
 
 class PrivateFreelancerSerializer(FreelancerForClientSerializer):
@@ -55,8 +66,8 @@ class PrivateFreelancerSerializer(FreelancerForClientSerializer):
     def get_email(self, obj):
         return obj.user.email
 
-    photo = serializers.SerializerMethodField()
-    def get_photo(self, obj):
+    photo_thumbnail_medium = serializers.SerializerMethodField()
+    def get_photo_thumbnail_medium(self, obj):
         if obj.photo:
              return "%s%s" % (settings.BASE_URL,
                     get_thumbnail(obj.photo, PHOTO_DIMENSIONS['medium']).url)
@@ -68,7 +79,7 @@ class PrivateFreelancerSerializer(FreelancerForClientSerializer):
 
     class Meta(FreelancerForClientSerializer.Meta):
         fields = FreelancerForClientSerializer.Meta.fields + ('email', 'mobile',
-                  'photo', 'english_fluency', 'eligible_to_work',
-                  'minimum_pay_per_hour',
+                  'photo_thumbnail_medium', 'english_fluency',
+                  'eligible_to_work', 'minimum_pay_per_hour',
                   'postcode',
                   'travel_distance', 'years_experience')
