@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from apps.feedback.models import BookingFeedback
+from rest_framework.validators import ValidationError
 from ..booking.serializers import BookingForClientSerializer
 
 
@@ -32,6 +33,25 @@ class FeedbackByClientSerializer(serializers.ModelSerializer):
     job_request = JobRequestHyperlinkedField(
                         view_name='job_requests_for_client-detail',
                         read_only=True)
+
+    def validate(self, attrs):
+        # Check that they are the client for this booking
+        if attrs['booking'].jobrequest.client != \
+                                self.context['request'].user.client:
+            raise ValidationError(
+                {'booking': 'That booking is not owned by the client.'})
+
+        # Check that the booking does not already have feedback
+        if BookingFeedback.objects.filter(
+                        author_type=BookingFeedback.AUTHOR_TYPE_CLIENT,
+                        booking=attrs['booking']).exists():
+            raise ValidationError(
+                {'booking': 'Feedback for that booking already exists.'})
+        # During creation, set the type of feedback to be the client.
+        attrs['author_type'] = BookingFeedback.AUTHOR_TYPE_CLIENT
+        attrs = super(FeedbackByClientSerializer, self).validate(attrs)
+        return attrs
+
     class Meta:
         model = BookingFeedback
         fields = ('id', 'booking', 'freelancer', 'job_request',

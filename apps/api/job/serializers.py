@@ -74,7 +74,8 @@ class PolymorphicJobRequestForFreelancerSerializer(
     """Polymorphic version of JobRequestForFreelancerSerializer.  Should only
     be used in a read-only context."""
     def to_native(self, obj):
-        import pdb; pdb.set_trace()
+        # import pdb; pdb.set_trace()
+        # TODO - I think this isn't necessary -remove
         return None
 
 
@@ -91,6 +92,7 @@ class JobRequestForClientSerializer(BaseJobRequestSerializer):
                             view_name='job_requests_for_client-detail')
 
     def validate(self, attrs):
+
         # Populates the object with the client (useful for creation)
         attrs['client'] = self.context['request'].user.client
         attrs = super(JobRequestForClientSerializer, self).validate(attrs)
