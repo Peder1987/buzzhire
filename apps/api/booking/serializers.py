@@ -40,8 +40,6 @@ class BookingForClientSerializer(serializers.ModelSerializer):
     freelancer = serializers.HyperlinkedRelatedField(
                                     view_name='freelancers_for_client-detail',
                                     read_only=True)
-
-
     class Meta:
         model = Booking
         fields = ('id', 'reference_number', 'freelancer', 'date_created')

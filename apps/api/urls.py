@@ -10,6 +10,8 @@ from .services.cleaner import views as cleaner_views
 from .services.kitchen import views as kitchen_views
 from .services.bar import views as bar_views
 from .services.waiting import views as waiting_views
+from .feedback import views as feedback_views
+
 
 # This app is where we define the endpoints for the API,
 # used by native mobile apps.
@@ -33,7 +35,7 @@ router.register(r'client',
                 client_views.OwnClientViewSet,
                 base_name='client_own')
 
-# Freelancer profile (all types)
+# Freelancer profile for client (all types)
 router.register(r'client/freelancers',
                 freelancer_views.FreelancerForClientViewSet,
                 base_name='freelancers_for_client')
@@ -73,6 +75,16 @@ router.register(r'client/waiting/job-requests',
                 waiting_views.WaitingJobRequestForClientViewSet,
                 base_name='waiting_job_requests_for_client')
 
+# Client's feedback
+# router.register(r'client/feedback',
+#                 feedback_views.ClientFeedbackBacklogViewSet,
+#                 base_name='client_feedback')
+router.register(r'client/feedback/backlog',
+                feedback_views.ClientFeedbackBacklogViewSet,
+                base_name='client_feedback_backlog')
+# router.register(r'client/feedback/received',
+#                 feedback_views.ClientFeedbackReceivedViewSet,
+#                 base_name='client_feedback_received')
 
 
 # For freelancers
@@ -96,8 +108,6 @@ router.register(r'freelancer/kitchen',
 router.register(r'freelancer/cleaner',
                 cleaner_views.OwnCleanerViewSet,
                 base_name='cleaner_freelancer_own')
-
-
 
 
 # Freelancer's clients
