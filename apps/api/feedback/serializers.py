@@ -47,6 +47,7 @@ class FeedbackByClientSerializer(serializers.ModelSerializer):
                         booking=attrs['booking']).exists():
             raise ValidationError(
                 {'booking': 'Feedback for that booking already exists.'})
+
         # During creation, set the type of feedback to be the client.
         attrs['author_type'] = BookingFeedback.AUTHOR_TYPE_CLIENT
         attrs = super(FeedbackByClientSerializer, self).validate(attrs)
