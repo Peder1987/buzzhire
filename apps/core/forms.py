@@ -42,14 +42,16 @@ class ConfirmForm(forms.Form):
 
     def get_inner_html(self):
         return render_to_string(self.inner_template_name,
-                            {'form': self,
-                             'question': self.question,
-                             'action_text': self.action_text,
-                             'cancel_text': self.cancel_text,
-                             'cancel_url': self.cancel_url,
-                             'action_icon': self.action_icon,
-                             'cancel_icon': self.cancel_icon})
+                            self.get_inner_html_context())
 
+    def get_inner_html_context(self):
+        return {'form': self,
+                 'question': self.question,
+                 'action_text': self.action_text,
+                 'cancel_text': self.cancel_text,
+                 'cancel_url': self.cancel_url,
+                 'action_icon': self.action_icon,
+                 'cancel_icon': self.cancel_icon}
 
 class UsabilityFormMixin(object):
     """Helps with usability on mobile devices.

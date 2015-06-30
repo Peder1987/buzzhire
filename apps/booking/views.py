@@ -190,6 +190,7 @@ class BaseInvitationOrBookingConfirm(AdminOnlyMixin, ConfirmationMixin,
         form_kwargs.update({
             'job_request': self.job_request,
             'freelancer': self.freelancer,
+            'request': self.request,
             'action_text': self.action_text,
             'action_icon': self.action_icon,
         })

@@ -140,14 +140,24 @@ class JobMatchingForm(CrispyFormMixin, PostcodeFormMixin, forms.Form):
 
 
 class BookingOrInvitationConfirmForm(ConfirmForm):
-    "Form for creating/editing a booking or invitation."
+    """Form for creating/editing a booking or invitation.
+    Should be instantiated with a job_request, freelancer and the request.
+    """
     inner_template_name = \
             'booking/includes/booking_or_invitation_confirm_form_inner.html'
     def __init__(self, *args, **kwargs):
         self.job_request = kwargs.pop('job_request')
         self.freelancer = kwargs.pop('freelancer')
+        self.request = kwargs.pop('request')
         super(BookingOrInvitationConfirmForm, self).__init__(*args, **kwargs)
 
+    def get_inner_html_context(self):
+        # Because we need the request in the context, we have to override
+        # this method
+        context = super(BookingOrInvitationConfirmForm,
+                                            self).get_inner_html_context()
+        context['request'] = self.request
+        return context
 
 class InvitationAcceptForm(ConfirmForm):
     def __init__(self, *args, **kwargs):
