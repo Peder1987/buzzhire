@@ -39,11 +39,12 @@ class JobRequestForClientViewSet(viewsets.ReadOnlyModelViewSet):
         - `"CP"` - Complete.  The work has been completed.
         - `"CA"` - Cancelled.  The job request has been cancelled.
     - `tips_included` Whether tips are included in the fee.  Boolean.
-    - `date` The start date of the job.  Format `"YYYY-MM-DD"`.
+    - `date` The start date of the job.  Format `"YYYY-MM-DD"`.  When creating
+       a new job request, the date and start_time (below) must be in the future.
     - `start_time` The start time of the job.  Format `"00:00:00"`.
     - `duration` The duration of the job, in hours.  Integer.
     - `number_of_freelancers` The number of freelancers required to
-      undertake the job.  Integer.
+      undertake the job.  Integer, 1 - 9.
     - `address` The address that the job is taking place at.  Format: a JSON
       object with the following named values:
         - `address1` - First line of address.
