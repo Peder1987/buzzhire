@@ -1,7 +1,30 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
 from ..client.permissions import ClientOnlyPermission
-from apps.feedback.models import get_bookings_awaiting_feedback_for_client
-from .serializers import BookingAwaitingFeedbackFromClientSerializer
+from apps.feedback.models import (get_bookings_awaiting_feedback_for_client,
+                                  BookingFeedback)
+from .serializers import (BookingAwaitingFeedbackFromClientSerializer,
+                          FeedbackByClientSerializer)
+
+class FeedbackByClientViewSet(mixins.CreateModelMixin,
+                              viewsets.ReadOnlyModelViewSet):
+    """List of items of feedback authored by the currently logged in client.
+    
+    ## Fields
+    
+    - `id` Unique id.
+    - `booking` Unique id of the booking the feedback is about.
+    - `freelancer` Endpoint for the freelancer the feedback is about.
+    - `job_request` Endpoint for the job request the feedback is about.
+    - `score` The score, between 1 and 5.  Integer.
+    - `comment` Comment about the freelancer.  Free text, optional. 
+    """
+    serializer_class = FeedbackByClientSerializer
+
+    permission_classes = (ClientOnlyPermission,)
+
+    def get_queryset(self):
+        return BookingFeedback.objects.feedback_by_client(
+                                                    self.request.user.client)
 
 
 class ClientFeedbackBacklogViewSet(viewsets.ReadOnlyModelViewSet):

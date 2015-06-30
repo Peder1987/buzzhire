@@ -76,12 +76,13 @@ router.register(r'client/waiting/job-requests',
                 base_name='waiting_job_requests_for_client')
 
 # Client's feedback
-# router.register(r'client/feedback',
-#                 feedback_views.ClientFeedbackBacklogViewSet,
-#                 base_name='client_feedback')
 router.register(r'client/feedback/backlog',
                 feedback_views.ClientFeedbackBacklogViewSet,
                 base_name='client_feedback_backlog')
+
+router.register(r'client/feedback',
+                 feedback_views.FeedbackByClientViewSet,
+                 base_name='client_feedback')
 # router.register(r'client/feedback/received',
 #                 feedback_views.ClientFeedbackReceivedViewSet,
 #                 base_name='client_feedback_received')
