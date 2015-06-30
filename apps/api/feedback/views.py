@@ -11,12 +11,27 @@ class FeedbackByClientViewSet(mixins.CreateModelMixin,
     
     ## Fields
     
-    - `id` Unique id.
+    - `id` Unique id.  Read only.
     - `booking` Unique id of the booking the feedback is about.
     - `freelancer` Endpoint for the freelancer the feedback is about.
+      Read only.
     - `job_request` Endpoint for the job request the feedback is about.
+       Read only.
     - `score` The score, between 1 and 5.  Integer.
     - `comment` Comment about the freelancer.  Free text, optional. 
+    
+    ## Creating feedback
+    
+    To create feedback, POST `booking`, `score` and (optionally) `comment`
+    to this endpoint.
+    
+    Clients may only leave feedback on bookings for job requests they own,
+    and that they have not already left feedback for.
+    
+    To see which bookings are awaiting feedback, use the
+    `client/bookings/awaiting-feedback` endpoint. 
+    
+    
     """
     serializer_class = FeedbackByClientSerializer
 
@@ -29,6 +44,8 @@ class FeedbackByClientViewSet(mixins.CreateModelMixin,
 
 class ClientFeedbackBacklogViewSet(viewsets.ReadOnlyModelViewSet):
     """List of bookings awaiting feedback for the current client.
+
+    To create feedback, see the `client/feedback` endpoint.
     
     ## Fields
     
