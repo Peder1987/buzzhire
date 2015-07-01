@@ -17,7 +17,6 @@ from apps.client.views import ClientOnlyMixin, OwnedByClientMixin
 from apps.client.forms import ClientInnerForm
 from apps.client.models import Client
 from apps.account.views import SignupView as BaseSignupView
-from . import signals
 from .models import JobRequest
 from .forms import JobRequestInnerFormMixin, JobRequestUpdateMixin, \
                     JobRequestSignupInnerForm, JobRequestCheckoutForm
