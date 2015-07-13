@@ -105,7 +105,7 @@ class BookingFeedbackManager(models.Manager):
     def feedback_for_freelancer(self, freelancer):
         """Returns all the feedback for a particular freelancer.
         """
-        return self.filter(author_type=BookingFeedback.AUTHOR_TYPE_FREELANCER,
+        return self.filter(author_type=BookingFeedback.AUTHOR_TYPE_CLIENT,
                            booking__freelancer=freelancer)
 
     def feedback_by_freelancer(self, freelancer):
