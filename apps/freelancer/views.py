@@ -46,7 +46,7 @@ class OwnedByFreelancerMixin(FreelancerOnlyMixin, OwnerOnlyMixin):
 
 
 class FreelancerDetailView(PolymorphicTemplateMixin, DetailView):
-    """Detail view for anyone to look at a Freelancer.
+    """Detail view for clients to look at a Freelancer.
     """
     model = Freelancer
     template_suffix = '_detail'

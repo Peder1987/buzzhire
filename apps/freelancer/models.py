@@ -80,7 +80,9 @@ class Freelancer(PolymorphicModel):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     mobile = models.CharField(max_length=13,
-                              validators=[mobile_validator])
+          validators=[mobile_validator],
+          help_text='Your mobile phone number will be visible to clients on '
+            'whose jobs you are booked.')
 
     photo = models.ImageField(upload_to='freelancer/photos/%Y/%m/%d',
                               blank=True)
