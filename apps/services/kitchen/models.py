@@ -4,6 +4,7 @@ from multiselectfield import MultiSelectField
 from apps.freelancer.models import Freelancer, PublishedFreelancerManager
 from django.core.urlresolvers import reverse
 from apps.job.models import JobRequest, JobRequestQuerySet
+from apps.core.models import GeoPolymorphicManager
 
 
 ROLE_CHEF = 'CH'
@@ -39,5 +40,5 @@ class KitchenFreelancer(Freelancer):
                                      default=ROLE_CHEF,
                                      choices=ROLE_CHOICES)
 
-    objects = models.GeoManager()
+    objects = GeoPolymorphicManager()
     published_objects = PublishedFreelancerManager()

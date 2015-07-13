@@ -62,7 +62,6 @@ class PublishedFreelancerManager(GeoPolymorphicManager):
             published_objects = PublishedFreelancerManager()
     """
     def get_queryset(self):
-        return self.model.objects.filter(published=True)
         queryset = super(PublishedFreelancerManager, self).get_queryset()
         return queryset.filter(published=True)
 
@@ -73,8 +72,7 @@ class Freelancer(PolymorphicModel):
     service = None  # Needed for API
 
     published = models.BooleanField(default=True,
-        help_text='Whether or not the freelancer shows up in search '
-        'results.')
+        help_text='Whether or not the freelancer is matched with jobs.')
 
     # A link to a user account.
     user = models.ForeignKey(settings.AUTH_USER_MODEL, unique=True)

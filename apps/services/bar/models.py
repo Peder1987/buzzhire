@@ -1,5 +1,6 @@
 from django.contrib.gis.db import models
 from apps.freelancer.models import Freelancer, PublishedFreelancerManager
+from apps.core.models import GeoPolymorphicManager
 from apps.job.models import JobRequest
 
 BAR_SERVICE_TITLE = 'bar staff'
@@ -32,5 +33,5 @@ class BarFreelancer(Freelancer):
                                      default=ROLE_BARMAN,
                                      choices=ROLE_CHOICES)
 
-    objects = models.GeoManager()
+    objects = GeoPolymorphicManager()
     published_objects = PublishedFreelancerManager()

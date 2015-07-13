@@ -1,6 +1,7 @@
 from django.contrib.gis.db import models
 from apps.freelancer.models import Freelancer, PublishedFreelancerManager
 from apps.job.models import JobRequest
+from apps.core.models import GeoPolymorphicManager
 
 WAITING_SERVICE_TITLE = 'waiting staff'
 
@@ -16,5 +17,5 @@ class WaitingFreelancer(Freelancer):
 
     service = WAITING_SERVICE_TITLE
 
-    objects = models.GeoManager()
+    objects = GeoPolymorphicManager()
     published_objects = PublishedFreelancerManager()

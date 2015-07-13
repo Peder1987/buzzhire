@@ -1,6 +1,7 @@
 from django.contrib.gis.db import models
 from django.contrib.auth.models import User
 from multiselectfield import MultiSelectField
+from apps.core.models import GeoPolymorphicManager
 from apps.freelancer.models import Freelancer, PublishedFreelancerManager
 from django.core.urlresolvers import reverse
 from apps.job.models import JobRequest, JobRequestQuerySet
@@ -166,7 +167,7 @@ class Driver(Freelancer):
     phone_type = models.CharField(max_length=2, choices=PHONE_TYPE_CHOICES,
                                   blank=True)
 
-    objects = models.GeoManager()
+    objects = GeoPolymorphicManager()
     published_objects = PublishedFreelancerManager()
 
     def get_absolute_url(self):
