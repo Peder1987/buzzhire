@@ -10,16 +10,14 @@ Local development
 2. Create virtualenv and run `pip install -r requirements.pip`.
 3. Create a database (preferably Postgres).
 4. Install redis, if it isn't already.
-5. The site uses django-configurations to handle settings.  You will need
-   to create a class for your installation in `settings/installations.py`.
-   This should be based on `settings.installations.Local`.  This needs the
-   standard Django things set up such as database, media folder etc.
-6. If you're not using the `Local` configuration class, you need to make
-   sure the `DJANGO_CONFIGURATION` environment variable is set to the
-   name of your class.
+5. The site uses django-configurations to handle settings.  The simplest thing
+   way to get the site running is to configure your local machine to use the
+   same settings as the `Local` settings class in `settings/installations.py`.
+   However, if you want to adjust these then you should add an extra settings
+   class to `installations.py`, and make sure the `DJANGO_CONFIGURATION`
+   environment variable is set to the name of your class.
 6. Sensitive settings should be put in `settings/secret.py`, which will not
    be under version control.  These are the minimum settings:  
-
         DEFAULT_DATABASE_PASSWORD = '' # Password to local database
         SECRET_KEY = '' # Any random string
 7. Ensure the site can send emails - this can be done by configuring the
