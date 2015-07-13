@@ -42,7 +42,7 @@ class JobRequestForClientViewSet(viewsets.ReadOnlyModelViewSet):
     - `date` The start date of the job.  Format `"YYYY-MM-DD"`.  When creating
        a new job request, the date and start_time (below) must be in the future.
     - `start_time` The start time of the job.  Format `"00:00:00"`.
-    - `duration` The duration of the job, in hours.  Integer.
+    - `duration` The duration of the job, in hours.  Integer.  Minimum 2.
     - `number_of_freelancers` The number of freelancers required to
       undertake the job.  Integer, 1 - 9.
     - `address` The address that the job is taking place at.  Format: a JSON

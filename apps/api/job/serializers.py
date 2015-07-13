@@ -1,4 +1,6 @@
 from django.forms import widgets
+from django.conf import settings
+from django.core import validators
 from rest_framework import serializers
 from rest_framework.utils.field_mapping import get_field_kwargs
 from apps.api.serializers import MoneyField
@@ -42,6 +44,9 @@ class BaseJobRequestSerializer(serializers.ModelSerializer):
     city = serializers.SerializerMethodField()
     def get_city(self, obj):
         return obj.get_city_display()
+
+    duration = serializers.IntegerField(
+        validators=[validators.MinValueValidator(settings.MIN_JOB_DURATION)])
 
     class Meta:
         model = JobRequest

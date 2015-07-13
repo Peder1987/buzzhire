@@ -132,8 +132,10 @@ class JobRequest(PolymorphicModel):
 
     date = models.DateField(default=date.today)
     start_time = models.TimeField(default='9:00 AM')
-    duration = models.PositiveSmallIntegerField(default=1,
-                    help_text='Length of the job, in hours.')
+    duration = models.PositiveSmallIntegerField(
+        default=settings.MIN_JOB_DURATION,
+        validators=[validators.MinValueValidator(settings.MIN_JOB_DURATION)],
+        help_text='Length of the job, in hours.')
     end_datetime = models.DateTimeField(
             help_text='Automatically generated, the time when this '
                     'job request finishes.')

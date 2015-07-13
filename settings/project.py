@@ -141,3 +141,6 @@ class ProjectConfiguration(StandardConfiguration):
 
     # The minimum number of hours notice allowed to create a job request
     JOB_REQUEST_MINIMUM_HOURS_NOTICE = 4
+
+    # Minimum number of hours a job can last
+    MIN_JOB_DURATION = 2
