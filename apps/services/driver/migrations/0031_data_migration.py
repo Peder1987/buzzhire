@@ -5,10 +5,13 @@ from django.db import models, migrations
 
 def data_migration(apps, schema_editor):
     # Move the driving experience over to the field on the job request model
-    DriverJobRequest = apps.get_model('driver', 'DriverJobRequest')
-    for job_request in DriverJobRequest.objects.all():
-        job_request.years_experience = job_request.driving_experience_old
-        job_request.save()
+    try:
+        DriverJobRequest = apps.get_model('driver', 'DriverJobRequest')
+        for job_request in DriverJobRequest.objects.all():
+            job_request.years_experience = job_request.driving_experience_old
+            job_request.save()
+    except:
+        print('Skipping driver job request data migration.')
 
 class Migration(migrations.Migration):
 

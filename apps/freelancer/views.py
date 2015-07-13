@@ -56,7 +56,7 @@ class FreelancerDetailView(PolymorphicTemplateMixin, DetailView):
 
         # Forbid anonymous users
         if not self.request.user.is_authenticated():
-            raise PermissiondDenied
+            raise PermissionDenied
 
         # Forbid other freelancers
         if self.request.user.is_driver and self.request.user.driver != object:

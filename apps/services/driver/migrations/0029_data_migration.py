@@ -5,10 +5,14 @@ from django.db import models, migrations
 
 def data_migration(apps, schema_editor):
     # Move the driving experience over to the field on the freelancer model
-    Driver = apps.get_model('driver', 'Driver')
-    for driver in Driver.objects.all():
-        driver.years_experience = driver.driving_experience_old_2
-        driver.save()
+    try:
+        Driver = apps.get_model('driver', 'Driver')
+        for driver in Driver.objects.all():
+            driver.years_experience = driver.driving_experience_old_2
+            driver.save()
+    except:
+        print('Skipping driving experience data migration.')
+    
 
 class Migration(migrations.Migration):
 
