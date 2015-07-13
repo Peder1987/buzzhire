@@ -18,8 +18,10 @@ Local development
    environment variable is set to the name of your class.
 6. Sensitive settings should be put in `settings/secret.py`, which will not
    be under version control.  These are the minimum settings:  
+
         DEFAULT_DATABASE_PASSWORD = '' # Password to local database
         SECRET_KEY = '' # Any random string
+
 7. Ensure the site can send emails - this can be done by configuring the
    configuration you're using to send via an SMTP server, or by switching
    the `EMAIL_BACKEND` to `'django.core.mail.backends.console.EmailBackend'`.
