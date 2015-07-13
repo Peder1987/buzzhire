@@ -54,6 +54,7 @@ class BaseJobRequestSerializer(serializers.ModelSerializer):
                   )
         read_only_fields = ('status',)
 
+
 class JobRequestForFreelancerSerializer(BaseJobRequestSerializer):
     """Serializer for job requests for freelancer."""
     client = serializers.HyperlinkedRelatedField(read_only=True,
@@ -67,17 +68,6 @@ class JobRequestForFreelancerSerializer(BaseJobRequestSerializer):
     class Meta(BaseJobRequestSerializer.Meta):
         fields = BaseJobRequestSerializer.Meta.fields + ('client',
                                                     'freelancer_pay_per_hour')
-
-
-class PolymorphicJobRequestForFreelancerSerializer(
-                                            JobRequestForFreelancerSerializer):
-    """Polymorphic version of JobRequestForFreelancerSerializer.  Should only
-    be used in a read-only context."""
-    def to_native(self, obj):
-        # import pdb; pdb.set_trace()
-        # TODO - I think this isn't necessary -remove
-        return None
-
 
 
 class JobRequestForClientSerializer(BaseJobRequestSerializer):

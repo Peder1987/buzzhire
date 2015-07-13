@@ -9,7 +9,8 @@ class ClientForFreelancerSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Client
-        fields = ('id', 'reference_number', 'first_name', 'last_name')
+        fields = ('id', 'reference_number', 'first_name', 'last_name',
+                  'company_name')
 
 
 class OwnClientSerializer(ClientForFreelancerSerializer):

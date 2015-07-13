@@ -9,6 +9,14 @@ class ClientForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
     """Clients viewable by the currently logged in freelancer.
     
     TODO - limit for the freelancer.  Currently this shows all clients.
+    
+    ## Fields
+    
+    - `id` Unique id for the client. Integer.
+    - `reference_number` Public reference number for the client.
+    - `first_name` Their first name.
+    - `last_name` Their last name.
+    - `company_name` The name of their company, if applicable.
     """
     serializer_class = ClientForFreelancerSerializer
     permission_classes = (FreelancerOnlyPermission,)

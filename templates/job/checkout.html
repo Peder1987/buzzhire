@@ -37,16 +37,3 @@
         });
     </script>
 {% endblock %}
-
-// disable submit button
-$('#submit-button').prop("disabled", true);
-braintree.setup('your-client-token', 'dropin', {
-container: 'dropin',
-paymentMethodNonceReceived: function (event, nonce) {
-// do something
-}, 
-onReady: function () {
-// enable your submit button
-$('#submit-button').prop("disabled", false);
-}
-});

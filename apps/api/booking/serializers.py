@@ -12,7 +12,7 @@ class BookingOrInvitationSerializer(serializers.ModelSerializer):
                             source='jobrequest')
 
     job_request_full = \
-            job_serializers.PolymorphicJobRequestForFreelancerSerializer(
+            job_serializers.JobRequestForFreelancerSerializer(
                                                         source='jobrequest',
                                                         read_only=True)
 
