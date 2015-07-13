@@ -78,6 +78,8 @@ class JobRequestForClientSerializer(BaseJobRequestSerializer):
                     validators=JobRequest._meta.get_field(
                                             'client_pay_per_hour').validators)
 
+    client_total_cost = MoneyField(read_only=True)
+
     specific_object = SpecificJobRequestIdentityField(
                             view_name='job_requests_for_client-detail')
 
@@ -91,4 +93,4 @@ class JobRequestForClientSerializer(BaseJobRequestSerializer):
 
     class Meta(BaseJobRequestSerializer.Meta):
         fields = BaseJobRequestSerializer.Meta.fields + (
-                        'client_pay_per_hour',)
+                        'client_pay_per_hour', 'client_total_cost')

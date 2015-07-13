@@ -61,6 +61,7 @@ class JobRequestForClientViewSet(viewsets.ReadOnlyModelViewSet):
       Free text.    
     - `client_pay_per_hour` The amount, in GBP, that the client will
       pay per hour.  Decimal, must be 8.0 or greater.
+    - `client_total_cost` The total cost of the job to the client, in GBP.
     - `bookings` A list of any bookings of freelancers onto this job request.
        Read only. Fields for each bookings are:
         - `id` The unique booking id.
