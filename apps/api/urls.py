@@ -11,6 +11,7 @@ from .services.kitchen import views as kitchen_views
 from .services.bar import views as bar_views
 from .services.waiting import views as waiting_views
 from .feedback import views as feedback_views
+from .payment import views as payment_views
 
 
 # This app is where we define the endpoints for the API,
@@ -34,6 +35,9 @@ router.register(r'driver/flexible-vehicle-types',
 router.register(r'client',
                 client_views.OwnClientViewSet,
                 base_name='client_own')
+router.register(r'client/payment-token',
+                payment_views.PaymentTokenViewSet,
+                base_name='payment_token')
 
 # Freelancer profile for client (all types)
 router.register(r'client/freelancers',
