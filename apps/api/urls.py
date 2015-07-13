@@ -35,9 +35,6 @@ router.register(r'driver/flexible-vehicle-types',
 router.register(r'client',
                 client_views.OwnClientViewSet,
                 base_name='client_own')
-router.register(r'client/payment-token',
-                payment_views.PaymentTokenViewSet,
-                base_name='payment_token')
 
 # Freelancer profile for client (all types)
 router.register(r'client/freelancers',
@@ -79,11 +76,18 @@ router.register(r'client/waiting/job-requests',
                 waiting_views.WaitingJobRequestForClientViewSet,
                 base_name='waiting_job_requests_for_client')
 
+# Client payment
+router.register(r'client/payment/token',
+                payment_views.PaymentTokenViewSet,
+                base_name='client_payment_token')
+router.register(r'client/payment/create',
+                payment_views.JobRequestPaymentViewSet,
+                base_name='client_job_request_pay')
+
 # Client's feedback
 router.register(r'client/booking/awaiting-feedback',
                 feedback_views.ClientFeedbackBacklogViewSet,
                 base_name='client_feedback_backlog')
-
 router.register(r'client/feedback',
                  feedback_views.FeedbackByClientViewSet,
                  base_name='client_feedback')
