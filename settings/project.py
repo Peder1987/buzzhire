@@ -64,6 +64,7 @@ class ProjectConfiguration(StandardConfiguration):
 
     MIDDLEWARE_CLASSES = StandardConfiguration.MIDDLEWARE_CLASSES + (
        'apps.feedback.middleware.FeedbackMiddleware',
+       'apps.core.middleware.StrictAuthenticationMiddleware',
     )
 
     CRISPY_TEMPLATE_PACK = 'bootstrap3'

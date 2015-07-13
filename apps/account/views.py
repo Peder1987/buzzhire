@@ -30,6 +30,12 @@ class LogoutView(ContextMixin, ConfirmationMixin, views.LogoutView):
     cancel_url = reverse_lazy('index')
 
 
+class AccountInactiveView(ContextTemplateView):
+    extra_context = {'title': 'Account disabled'}
+    form_class = forms.SignupForm
+    template_name = 'account/account_inactive.html'
+
+
 class PasswordResetView(ContextMixin, views.PasswordResetView):
     extra_context = {'title': 'Reset password'}
     form_class = forms.ResetPasswordForm
