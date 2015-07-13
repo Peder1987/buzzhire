@@ -34,6 +34,7 @@ class FreelancerForClientViewSet(viewsets.ReadOnlyModelViewSet):
     - `full_name` Their full name.
     - `first_name` Their first name.
     - `last_name` Their last name.
+    - `mobile` Their mobile phone number.
     - `years_experience` The number of years of working experience.
         Integer.  Choices are:
         - `0` - Less than 1 year

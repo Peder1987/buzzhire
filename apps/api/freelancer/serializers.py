@@ -77,7 +77,7 @@ class FreelancerForClientSerializer(serializers.ModelSerializer):
         fields = ('id', 'reference_number', 'specific_object',
                   'service_key', 'photo_thumbnail_medium',
                   'photo_thumbnail_large', 'english_fluency',
-                  'full_name', 'first_name', 'last_name',
+                  'full_name', 'first_name', 'last_name', 'mobile',
                   'years_experience', 'minimum_pay_per_hour')
 
 
