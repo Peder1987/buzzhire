@@ -7,9 +7,16 @@ Local development
 ### Installation
 
 1. Check out code and `git checkout develop`.
-2. Create virtualenv and run `pip install -r requirements.pip`.
-3. Create a database (preferably Postgres).
-4. Install redis, if it isn't already.
+2. Ensure Postgres and Postgis are installed, and create a database:
+   
+       $ SITENAME=buzzhire
+       $ sudo su postgres -c "createuser -d -R -P $SITENAME"
+       $ sudo su postgres -c "createdb -O $SITENAME $SITENAME"
+       $ sudo su postgres -c "psql $SITENAME -c 'CREATE EXTENSION postgis; CREATE EXTENSION postgis_topology;'"
+CREATE EXTENSION
+
+3. Install redis, if it isn't already.
+4. Create virtualenv and run `pip install -r requirements.pip`.
 5. The site uses django-configurations to handle settings.  The simplest thing
    way to get the site running is to configure your local machine to use the
    same settings as the `Local` settings class in `settings/installations.py`.
