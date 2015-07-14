@@ -41,6 +41,14 @@ class BaseJobRequestSerializer(serializers.ModelSerializer):
 
     postcode = PostcodeField(required=True)
 
+    latitude = serializers.SerializerMethodField()
+    def get_latitude(self, obj):
+        return obj.postcode.latitude
+
+    longitude = serializers.SerializerMethodField()
+    def get_longitude(self, obj):
+        return obj.postcode.longitude
+
     city = serializers.SerializerMethodField()
     def get_city(self, obj):
         return obj.get_city_display()
@@ -54,7 +62,7 @@ class BaseJobRequestSerializer(serializers.ModelSerializer):
                   'specific_object', 'status',
                   'tips_included', 'date', 'start_time', 'duration',
                   'number_of_freelancers', 'address1', 'address2', 'city',
-                  'postcode',
+                  'postcode', 'longitude', 'latitude',
                   'years_experience', 'comments',
                   )
         read_only_fields = ('status',)

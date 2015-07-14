@@ -102,9 +102,17 @@ class OwnFreelancerSerializer(FreelancerForClientSerializer):
 
     postcode = PostcodeField()
 
+    latitude = serializers.SerializerMethodField()
+    def get_latitude(self, obj):
+        return obj.postcode.latitude
+
+    longitude = serializers.SerializerMethodField()
+    def get_longitude(self, obj):
+        return obj.postcode.longitude
+
     class Meta(FreelancerForClientSerializer.Meta):
         fields = FreelancerForClientSerializer.Meta.fields + ('email', 'mobile',
                   'photo_thumbnail_medium', 'english_fluency',
                   'eligible_to_work', 'minimum_pay_per_hour',
-                  'postcode',
+                  'postcode', 'latitude', 'longitude',
                   'travel_distance', 'years_experience')

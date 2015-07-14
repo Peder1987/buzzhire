@@ -45,12 +45,12 @@ class JobRequestForClientViewSet(viewsets.ReadOnlyModelViewSet):
     - `duration` The duration of the job, in hours.  Integer.  Minimum 2.
     - `number_of_freelancers` The number of freelancers required to
       undertake the job.  Integer, 1 - 9.
-    - `address` The address that the job is taking place at.  Format: a JSON
-      object with the following named values:
-        - `address1` - First line of address.
-        - `address2` - Second line of address.
-        - `city` - City.  Must be `"London"`.
-        - `postcode` - A valid London postcode.
+    - `address1` - First line of the address the job is taking place at.
+    - `address2` - Second line of address.
+    - `city` - City.  Must be `"London"`.
+    - `postcode` - A valid London postcode.
+    - `longitude` The longitude value of the postcode.  Read only.
+    - `latitude` The latitude value of the postcode.  Read only.
     - `years_experience` The minimum number of years of working experience
        required. Integer.  Choices are:
         - `0` - No preference
@@ -117,12 +117,12 @@ class JobRequestForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
     - `duration` The duration of the job, in hours.  Integer.
     - `number_of_freelancers` The number of freelancers required to
       undertake the job.  Integer.
-    - `address` The address that the job is taking place at.  Format: a JSON
-      object with the following named values:
-        - `address1` - First line of address.
-        - `address2` - Second line of address.
-        - `city` - City.  Must be `"London"`.
-        - `postcode` - A valid London postcode.
+    - `address1` - First line of the address the job is taking place at.
+    - `address2` - Second line of address.
+    - `city` - City.  Must be `"London"`.
+    - `postcode` - A valid London postcode.
+    - `longitude` The longitude value of the postcode.  Read only.
+    - `latitude` The latitude value of the postcode.  Read only.
     - `years_experience` The minimum number of years of working experience
        required. Integer.  Choices are:
         - `0` - No preference

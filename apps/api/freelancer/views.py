@@ -81,6 +81,8 @@ class OwnFreelancerViewSet(RetrieveAndUpdateViewset):
     - `minimum_pay_per_hour` The minimum pay they will accept per hour, in GBP.
        Decimal.
     - `postcode` The freelancer's home postcode.
+    - `longitude` The longitude value of the postcode.  Read only.
+    - `latitude` The latitude value of the postcode.  Read only.
     - `travel_distance` How far the freelancer is willing to travel for work.
        Integer. Choices are:
         - `1` - One mile

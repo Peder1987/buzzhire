@@ -36,4 +36,3 @@ class PostcodeField(serializers.Field):
         elif self.required:
             self.fail('required')
         return None
-
