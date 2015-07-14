@@ -14,10 +14,11 @@ class NotificationsForUserViewSet(viewsets.ReadOnlyModelViewSet):
        kind of notification this is.
     - `message` The text of the message.  
     - `datetime_created` Date and time of the notification.
-    - `object_id` and `content_type` Notifications can optionally be
+    - `object_id` Notifications can optionally be
        associated with a model in the system, known as the 'related object'.
        Together, the object id and content type form a unique reference to
-       the related object.  Integers.  
+       the related object. Integer.
+    - `content_type` The type of the related object.  String.  
     
     """
     serializer_class = NotificationSerializer
