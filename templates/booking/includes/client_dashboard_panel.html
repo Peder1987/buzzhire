@@ -19,6 +19,8 @@
           {% url 'client_backlog' as link_url %}
           {% client_backlog_count as feedback_action_number %}
           {% include 'includes/panel_link.html' with icon_name='feedback' link_text='Jobs awaiting feedback' action_number=feedback_action_number %}
+          {% url 'notification_list' as link_url %}
+          {% include 'includes/panel_link.html' with icon_name='notification' link_text='Notifications' %}
       </div>
     </div>
 {% endif %}

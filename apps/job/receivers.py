@@ -5,6 +5,7 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from .models import JobRequest
 from django_fsm.signals import post_transition
+from apps.notification.models import Notification
 
 
 @receiver(post_transition)
@@ -35,7 +36,7 @@ def notifications_on_job_request_opened(sender, instance, name,
 
 
 @receiver(post_transition)
-def notify_client_on_jobrequest_confirmed(sender, instance, name,
+def notify_client_on_job_request_confirmed(sender, instance, name,
                                           source, target, **kwargs):
     """Sends a notification email to the client when a job request
     is confirmed."""
@@ -52,6 +53,14 @@ def notify_client_on_jobrequest_confirmed(sender, instance, name,
                    'content': content,
                    'bookings_email': settings.BOOKINGS_EMAIL},
                   from_email=settings.BOOKINGS_FROM_EMAIL)
+
+            # Create notification
+            Notification.objects.create(
+                    message='Your job request is now confirmed.',
+                    category='client_job_request_confirmed',
+                    related_object=instance,
+                    user=instance.client.user)
+
 
 
 @receiver(post_transition)
@@ -74,3 +83,9 @@ def notify_client_on_jobrequest_cancelled(sender, instance, name,
                    'bookings_email': settings.BOOKINGS_EMAIL},
                   from_email=settings.BOOKINGS_FROM_EMAIL)
 
+            # Create notification
+            Notification.objects.create(
+                    message='Your job request has been cancelled.',
+                    category='client_job_request_cancelled',
+                    related_object=instance,
+                    user=instance.client.user)

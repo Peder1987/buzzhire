@@ -3,8 +3,6 @@
     <div class="panel panel-default">
       <div class="panel-heading">{{ 'driver'|icon }} Booking</div>
       <div class="list-group">
-          {% url 'availability_update' as link_url %}
-          {% include 'includes/panel_link.html' with icon_name='availability' link_text='Availability' %}
           {% url 'freelancer_bookings_list' as link_url %}
           {% include 'includes/panel_link.html' with icon_name='freelancer_bookings' link_text='Bookings' %}
           {% url 'freelancer_backlog' as link_url %}
@@ -13,6 +11,10 @@
           {% url 'freelancer_invitations_list' as link_url %}
           {% freelancer_open_invitations_count as invitations_action_number %}
           {% include 'includes/panel_link.html' with icon_name='invitation' link_text='Open invitations' action_number=invitations_action_number %}
+          {% url 'notification_list' as link_url %}
+          {% include 'includes/panel_link.html' with icon_name='notification' link_text='Notifications' %}
+          {% url 'availability_update' as link_url %}
+          {% include 'includes/panel_link.html' with icon_name='availability' link_text='Availability' %}
       </div>
     </div>
 {% endif %}

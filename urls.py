@@ -7,6 +7,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^account/', include('apps.account.urls')),
+    url(r'^notifications/', include('apps.notification.urls')),
     url(r'^freelancer/', include('apps.freelancer.urls')),
     url(r'^driver/', include('apps.services.driver.urls')),
     url(r'^client/', include('apps.client.urls')),

@@ -55,6 +55,7 @@ ICON_MAP = {
     'bar': 'beer',
     'cleaner': 'tint',
     'waiting': 'glass',
+    'notification': 'bell',
 }
 
 @register.filter

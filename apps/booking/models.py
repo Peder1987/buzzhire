@@ -96,6 +96,11 @@ class Invitation(models.Model):
     def __unicode__(self):
         return self.reference_number
 
+    def get_absolute_url(self):
+        # We define this for notifications that use these as the related object
+        # Just link through to the job request
+        return self.jobrequest.get_absolute_url()
+
     @property
     def reference_number(self):
         "Returns a reference number for this invitation."

@@ -30,6 +30,7 @@ class ProjectConfiguration(StandardConfiguration):
         'rest_framework',
         'rest_framework.authtoken',
         'apps.core',
+        'apps.notification',
         'apps.location',
         'apps.account',
         'apps.service',
