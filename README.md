@@ -9,11 +9,10 @@ Local development
 1. Check out code and `git checkout develop`.
 2. Ensure Postgres and Postgis are installed, and create a database:
    
-       $ SITENAME=buzzhire
-       $ sudo su postgres -c "createuser -d -R -P $SITENAME"
-       $ sudo su postgres -c "createdb -O $SITENAME $SITENAME"
-       $ sudo su postgres -c "psql $SITENAME -c 'CREATE EXTENSION postgis; CREATE EXTENSION postgis_topology;'"
-CREATE EXTENSION
+        $ SITENAME=buzzhire
+        $ sudo su postgres -c "createuser -d -R -P $SITENAME"
+        $ sudo su postgres -c "createdb -O $SITENAME $SITENAME"
+        $ sudo su postgres -c "psql $SITENAME -c 'CREATE EXTENSION postgis; CREATE EXTENSION postgis_topology;'"
 
 3. Install redis, if it isn't already.
 4. Create virtualenv and run `pip install -r requirements.pip`.
