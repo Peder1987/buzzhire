@@ -40,7 +40,10 @@ else:
                                 template_name='main/contact.html',
                                 extra_context={'title': 'Contact us'}),
                                 name='contact'),
-
+        url(r'^faq/$', ContextTemplateView.as_view(
+                                template_name='main/faq.html',
+                        extra_context={'title': 'Frequently asked questions'}),
+                        name='faq'),
         url(r'^credits/$', ContextTemplateView.as_view(
                                 template_name='main/credits.html',
                                 extra_context={'title': 'Site credits'}),

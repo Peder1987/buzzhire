@@ -56,6 +56,7 @@ ICON_MAP = {
     'cleaner': 'tint',
     'waiting': 'glass',
     'notification': 'bell',
+    'faq': 'question-circle',
 }
 
 @register.filter
