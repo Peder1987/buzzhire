@@ -12,6 +12,7 @@ from .services.bar import views as bar_views
 from .services.waiting import views as waiting_views
 from .feedback import views as feedback_views
 from .payment import views as payment_views
+from .notification import views as notification_views
 
 
 # This app is where we define the endpoints for the API,
@@ -28,6 +29,11 @@ router.register(r'driver/vehicle-types',
 router.register(r'driver/flexible-vehicle-types',
                 driver_views.FlexibleVehicleTypeViewSet,
                 base_name='flexible_vehicle_types')
+
+# All users
+router.register(r'notifications',
+                notification_views.NotificationsForUserViewSet,
+                base_name='notifications')
 
 # For clients
 
