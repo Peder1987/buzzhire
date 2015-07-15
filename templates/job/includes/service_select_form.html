@@ -1,0 +1,8 @@
+{% load icons crispy_forms_tags %}
+<form method='post' class='text-center' action='{% url 'service_select' %}'>
+    {% csrf_token %}
+    <div class='inline-form-field'>I need a {{ form.service }}</div>
+    <div class='text-center'>
+      <button class='btn btn-primary btn-lg'>{{ 'book'|icon }} Book a freelancer</button>
+    </div>
+</form>    

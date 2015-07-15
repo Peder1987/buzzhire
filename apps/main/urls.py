@@ -33,9 +33,7 @@ if settings.COMING_SOON:
     ]
 else:
     urlpatterns = [
-        url(r'^$', ContextTemplateView.as_view(
-                                template_name='main/home.html'),
-                                name='index'),
+        url(r'^$', views.HomeView.as_view(), name='index'),
         url(r'^contact/$', ContextTemplateView.as_view(
                                 template_name='main/contact.html',
                                 extra_context={'title': 'Contact us'}),
