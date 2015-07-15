@@ -1,47 +1,43 @@
 {% load thumbnail icons static staticthumbnail main_tags freelancer %}
-<div class="navbar navbar-default navbar-fixed-top menu-top" role="navigation">
+
+<div class="navbar navbar-default navbar-fixed-top menu-top">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <div style='height: 50px; width: 168px;'>
-                <a href="/"><img src='{% static 'img/logo/logo.svg' %}' style='max-height: 100%; max-width: 100%;' alt='Buzzhire'/></a>
+
+            <div style="height: 50px; width: 168px;">
+                <a href="/"><img alt="Buzzhire" src="{% static 'img/logo/logo.svg' %}" style="max-height: 100%; max-width: 100%;"></a>
             </div>
-            {% comment %}
-            {% staticthumbnail 'img/logo/logo.png' 'x50' format="PNG" as im %}
-                <a href="/"><img src='{{ im.url }}' width='{{ im.width }}' height='{{ im.height }}' alt='Buzzhire'/></a>
-            {% endthumbnail %}
-            {% endcomment %}
         </div>
+
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                {% if not coming_soon %}
-                    {% if request.user.is_anonymous or request.user.is_client %}
-                        {% url 'service_select' as link_url %}
-                        {% include 'includes/menu_link.html' with icon_name='book' link_text='Book a freelancer' %}
-                    {% endif %}
-                {% endif %}
-            {% if request.user.is_anonymous %}
-                {% url 'freelancer_signup_select' as link_url %}
-                {% include 'includes/menu_link.html' with icon_name='register' link_text='Become a freelancer' %}
-                {% url 'account_login' as link_url %}
-                {% include 'includes/menu_link.html' with icon_name='login' link_text='Log in' %}
-            {% else %}
-                {% url 'account_dashboard' as link_url %}
-                {% include 'includes/menu_link.html' with icon_name='dashboard' link_text='Dashboard' %}
-                <p class="navbar-text">
-                    {% if request.user.is_driver %}
-                        {% profile_photo request.user.freelancer 'tiny' %}
-                    {% endif %}
-                    Logged in as {{ request.user }}
-                </p>
-                <p class="navbar-text"><a href="{% url 'account_logout' %}">{{ 'logout'|icon }} Log out</a></p>
-             {% endif %}
+                {% if request.user.is_anonymous %}
+                    {% url 'service_select' as link_url %}
+                    {% include 'includes/menu_link.html' with link_text='Book a freelancer' %}
+                    {% url 'freelancer_signup_select' as link_url %}
+                    {% include 'includes/menu_link.html' with link_text='Become a freelancer' %}
+                    {% url 'account_login' as link_url %}
+                    {% include 'includes/menu_link.html' with link_text='Log in' %}
+                {% else %}
+                    {% comment %}
+                        {% url 'account_dashboard' as link_url %}
+                        {% include 'includes/menu_link.html' with icon_name='dashboard' link_text='Dashboard' %}
+                    {% endcomment %}
+                    <p class="navbar-text">
+                        {% if request.user.is_freelancer %}
+                            {% profile_photo request.user.freelancer 'tiny' %}
+                        {% endif %}
+                        Logged in as {{ request.user }}
+                    </p>
+                    <p class="navbar-text"><a href="{% url 'account_logout' %}">{{ 'logout'|icon }} Log out</a></p>
+                 {% endif %}
             </ul>
-        </div> 
+        </div>
     </div>
-</div> 
+</div>
