@@ -18,13 +18,16 @@
                             
                         </div>
                     </div>
+                    {% comment %}
                     <div class='row buttons-row'>
                         <a class="btn btn-lg btn-default" href="#how-it-works"><i class="fa fa-angle-double-down"></i> How it works</a>
                     </div>
+                    {% endcomment %}
                 </div>
         </div>
 
 
+        {% comment %}
         <div id='how-it-works' class="features-container">
             <div class="container">
                 <div class="row page-title">
@@ -57,6 +60,7 @@
                 </div>
             </div>
         </div> 
+       {% endcomment %}
        
        <div style="padding-top: 6em; padding-bottom: 4em;" class="product-container product-bg2">
             <div class="container">
@@ -102,29 +106,10 @@
             </div>
         </div>
 
-        <div class="container" style='margin-top: 8em; margin-bottom: 2em;'>
-            <div class="row text-center">
-                <div class="col-sm-3 bottom-space">
-                    <p><img src='{% static 'img/press/guardian.png' %}' alt='The Guardian'/></p>
-                </div>
-                <div class="col-sm-3">
-                    <p><img src='{% static 'img/press/eveningstandard.png' %}' alt='London Evening Standard'/></p>
-                </div>
-                <div class="col-sm-3">
-                    <p><img src='{% static 'img/press/telegraph.png' %}' alt='The Telegraph'/></p>
-                </div>
-                <div class="col-sm-3">
-                    <p><img src='{% static 'img/press/metro.png' %}' alt='London Metro'/></p>
-                </div>
-
-            </div>
-        </div>
-
-       
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 testimonials">
-                    <h3>What our clients say</h3>
+                    <h3>What our customers say</h3>
                     <div class="col-sm-4 reviews">
                         <div class="review reviews-panel box-arrow-down">
                             <p>
@@ -149,6 +134,27 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="container" style='margin-top: 8em; margin-bottom: 2em;'>
+            <div class="row text-center">
+                <div class="col-sm-3 bottom-space">
+                    <p><img src='{% static 'img/press/guardian.png' %}' alt='The Guardian'/></p>
+                </div>
+                <div class="col-sm-3">
+                    <p><img src='{% static 'img/press/eveningstandard.png' %}' alt='London Evening Standard'/></p>
+                </div>
+                <div class="col-sm-3">
+                    <p><img src='{% static 'img/press/telegraph.png' %}' alt='The Telegraph'/></p>
+                </div>
+                <div class="col-sm-3">
+                    <p><img src='{% static 'img/press/metro.png' %}' alt='London Metro'/></p>
+                </div>
+
+            </div>
+        </div>
+
+       
 
 
         <div style="padding-top: 6em; padding-bottom: 4em;" class="product-container product-bg1">
