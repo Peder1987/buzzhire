@@ -461,6 +461,30 @@ textarea::-webkit-input-placeholder {
 	border-radius: 8px;
 	padding: 9px 16px;
 }
+ul.nav.nav-tabs{
+	text-align: center;
+	border-bottom: none;
+	border: none;
+}
+
+.nav.nav-tabs li{
+	float:none;
+	display: inline-block;
+}
+
+.nav.nav-tabs li a{
+	border: 1px solid #2779bc;
+	border-radius: 8px;
+	padding: 10px 50px;
+	border: 1px solid #2779bc;
+	box-shadow: none;
+	font-family: 'Helvetica';
+	margin: 0 16px 0 15px;
+	background-color: white; 
+	color: #2779bc
+}
+
+.product-container .buttons-row li.active a{background-color: #2779bc; color: white}
 
 .top-content input, .top-content select{
 	  background-color: rgba(54,123,174,0.7);
