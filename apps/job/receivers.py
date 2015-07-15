@@ -55,8 +55,10 @@ def notify_client_on_job_request_confirmed(sender, instance, name,
                   from_email=settings.BOOKINGS_FROM_EMAIL)
 
             # Create notification
+            message = 'Your job request for a %s is now confirmed.' \
+                                                    % instance.service
             Notification.objects.create(
-                    message='Your job request is now confirmed.',
+                    message=message,
                     category='client_job_request_confirmed',
                     related_object=instance,
                     user=instance.client.user)
@@ -84,8 +86,10 @@ def notify_client_on_jobrequest_cancelled(sender, instance, name,
                   from_email=settings.BOOKINGS_FROM_EMAIL)
 
             # Create notification
+            message = 'Your job request for a %s has been cancelled.' \
+                                                    % instance.service
             Notification.objects.create(
-                    message='Your job request has been cancelled.',
+                    message=message,
                     category='client_job_request_cancelled',
                     related_object=instance,
                     user=instance.client.user)
