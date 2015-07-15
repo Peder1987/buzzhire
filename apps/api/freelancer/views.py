@@ -43,6 +43,9 @@ class FreelancerForClientViewSet(viewsets.ReadOnlyModelViewSet):
         - `5` - More than 5 years
     - `minimum_pay_per_hour` The minimum hourly rate, in GBP, the freelancer is
       willing to work for.  Decimal.
+    - `average_score` The average rating score, out of 5,
+                    that the freelancer has received, or null if there is no feedback.
+                    Decimal.  Read only.
     """
     serializer_class = FreelancerForClientSerializer
 

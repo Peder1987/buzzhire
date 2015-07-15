@@ -78,7 +78,8 @@ class FreelancerForClientSerializer(serializers.ModelSerializer):
                   'service_key', 'photo_thumbnail_medium',
                   'photo_thumbnail_large', 'english_fluency',
                   'full_name', 'first_name', 'last_name', 'mobile',
-                  'years_experience', 'minimum_pay_per_hour')
+                  'years_experience', 'minimum_pay_per_hour',
+                  'average_score')
 
 
 class OwnFreelancerSerializer(FreelancerForClientSerializer):
