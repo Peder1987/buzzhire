@@ -145,3 +145,6 @@ class ProjectConfiguration(StandardConfiguration):
 
     # Minimum number of hours a job can last
     MIN_JOB_DURATION = 2
+
+    PARSE_APPLICATION_ID = '87WebYikYitgl6GOnavbGesoGvA6lka2oLVnH5i3'
+    PARSE_REST_API_KEY = 'fI0mhqGrii6fB3euOY2jeNLi44J6ijAXNAt43BWX'

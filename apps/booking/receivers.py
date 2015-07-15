@@ -78,7 +78,7 @@ def notify_freelancer_on_invitation(sender, invitation, **kwargs):
     Notification.objects.create(
             message='A new job was just posted.',
             category='freelancer_invitation',
-            related_object=invitation,
+            related_object=invitation.jobrequest,
             user=invitation.freelancer.user)
 
 # @receiver(booking_created)

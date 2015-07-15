@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
-
+from .utils import ParseConnection
 
 # class UserNotificationSettings(models.Model):
 #     """Settings for each user related to notifications.
@@ -20,7 +20,10 @@ class NotificationQuerySet(models.QuerySet):
 
 class Notification(models.Model):
     """A notification is a message sent by the system to a particular user.
-    Optionally, it is linked by a generic relation 
+    Optionally, it is linked by a generic relation.
+    NB at present the notifications are always linked to job requests.  While
+    the website doesn't mind what kind of object it's linked to, the mobile app
+    may need to be adjusted if we link to other kinds of model instance.
     """
     message = models.TextField()
     category = models.CharField(max_length=30,
@@ -44,8 +47,12 @@ class Notification(models.Model):
 
     def send_as_push(self):
         """Sends the notification as an push notification."""
-        # TODO
-        pass
+        connection = ParseConnection()
+        connection.push_message(self.message,
+                                self.user,
+                                self.category,
+                                self.content_type.model,
+                                self.object_id)
 
     def __unicode__(self):
         return "%s..." % self.message[:15]
