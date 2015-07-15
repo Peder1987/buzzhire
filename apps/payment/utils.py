@@ -83,6 +83,7 @@ class PaymentAPI(object):
                 "order_id": order_id,
         })
         if not result.is_success:
-            logger.error('Payment error: %s' % result.errors())
+            logger.error('Payment error: %s' % \
+                            [e for e in result.errors.deep_errors])
             raise PaymentException('Could not take payment.')
         return result
