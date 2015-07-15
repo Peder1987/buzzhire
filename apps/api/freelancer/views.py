@@ -83,6 +83,9 @@ class OwnFreelancerViewSet(RetrieveAndUpdateViewset):
     - `eligible_to_work` Whether they are eligible to work in the UK. Boolean.
     - `minimum_pay_per_hour` The minimum pay they will accept per hour, in GBP.
        Decimal.
+   - `average_score` The average rating score, out of 5,
+            that the freelancer has received, or null if there is no feedback.
+            Decimal.  Read only.
     - `postcode` The freelancer's home postcode.
     - `longitude` The longitude value of the postcode.  Read only.
     - `latitude` The latitude value of the postcode.  Read only.
