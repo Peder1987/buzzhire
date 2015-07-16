@@ -7,7 +7,7 @@ class ProjectConfiguration(StandardConfiguration):
 #     STATICFILES_DIRS = (
 #         os.path.join(BASE_DIR, "static"),
 #     )
-    SITE_TITLE = 'Buzzhire'
+    SITE_TITLE = 'BuzzHire'
     PROJECT_NAME = 'buzzhire'
     INSTALLED_APPS = StandardConfiguration.INSTALLED_APPS + (
         # Apps lower down the list should import from apps higher up the list,
@@ -131,13 +131,13 @@ class ProjectConfiguration(StandardConfiguration):
     }
 
     def CONTACT_FROM_EMAIL(self):
-        return 'Buzzhire <%s>' % self.CONTACT_EMAIL
+        return 'BuzzHire <%s>' % self.CONTACT_EMAIL
 
     def BOOKINGS_EMAIL(self):
         return self.CONTACT_EMAIL
 
     def BOOKINGS_FROM_EMAIL(self):
-        return 'Buzzhire <%s>' % self.BOOKINGS_EMAIL
+        return 'BuzzHire <%s>' % self.BOOKINGS_EMAIL
 
 
     # The minimum number of hours notice allowed to create a job request

@@ -10,7 +10,7 @@ from .models import Client
 def welcome_client_on_sign_up(sender, instance, created, **kwargs):
     "Sends a welcome email when a client signs up."
     if created and isinstance(instance, Client):
-        subject = 'Welcome to Buzzhire!'
+        subject = 'Welcome to BuzzHire!'
         content = render_to_string(
             'client/email/includes/client_welcome.html',
             {'object': instance}

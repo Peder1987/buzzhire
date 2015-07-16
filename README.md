@@ -1,4 +1,4 @@
-Buzzhire
+BuzzHire
 ========
 
 Local development
@@ -60,7 +60,7 @@ In general, code should be committed to the `develop` branch.
 ### Deployment using Fabric
 
 Before deploying, ensure Fabric is installed on your system.  You will also
-need to ask for your public keys to be added to the Buzzhire server.
+need to ask for your public keys to be added to the BuzzHire server.
 
 Your deployment process is then simply:
 

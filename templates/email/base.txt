@@ -8,7 +8,7 @@
 {% block action_panel %}{{ action_panel|html2text }}{% endblock %}
 
 {% block signature %}
-Buzzhire
+BuzzHire
 {{ contact_email }}
 {% base_url %}
 {% endblock %}
