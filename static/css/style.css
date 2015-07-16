@@ -203,7 +203,7 @@
 	
 	font-size: 20px;
 	color: #277dbc;
-	background-color: none;
+	background-color: white;
 	border: none;
 }
 
@@ -212,9 +212,10 @@
 	text-decoration: none;
 }
 
-after-breadcrumb.sidebar .panel-default .list-group a{
+.after-breadcrumb.sidebar .panel>.list-group a.list-group-item{
 	font-size: 15px;
-}
+	border: none;
+} 
 
 .after-breadcrumb.sidebar .panel .list-group-item.active, 
 .after-breadcrumb.sidebar .panel .list-group-item.active:focus, 
