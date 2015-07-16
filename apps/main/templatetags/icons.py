@@ -79,4 +79,7 @@ def icon(name):
     
         {{ 'foo'|icon }}
     """
-    return mark_safe("<i class='%s'></i>" % ICON_MAP[name])
+    if name.startswith( 'icon-' )
+        return mark_safe("<span class='%s'></span>" % ICON_MAP[name])
+    else
+        return mark_safe("<i class='%s'></i>" % ICON_MAP[name])

@@ -268,36 +268,56 @@
 
 
 
-  i.sidebar-icon-1, i.sidebar-icon-2, i.sidebar-icon-4, i.sidebar-icon-5,
-  i.sidebar-icon-6, i.sidebar-icon-7, i.sidebar-icon-8, i.sidebar-icon-9,
-  i.sidebar-icon-10, i.sidebar-icon-11
+  span.sidebar-icon-1, span.sidebar-icon-2, span.sidebar-icon-4, span.sidebar-icon-5,
+  span.sidebar-icon-6, span.sidebar-icon-7, span.sidebar-icon-8, span.sidebar-icon-9,
+  span.sidebar-icon-10, span.sidebar-icon-11
   {
 
-  	width: 70px;
-  	height: 70px;
+  	width: 25px;
+  	height: 25px;
   }
 
-  i.sidebar-icon-1{
-  	background:url(../img/sidebar-icon-1.png);
-  }
+  span.sidebar-icon-1{ background:url(../img/sidebar-icon-1.png); }
 
-  i.sidebar-icon-2{ background:url(../img/sidebar-icon-2.png); }
+  span.sidebar-icon-2{ background:url(../img/sidebar-icon-2.png); }
 
-  i.sidebar-icon-4{ background:url(../img/sidebar-icon-4.png); }
+  span.sidebar-icon-4{ background:url(../img/sidebar-icon-4.png); }
 
-  i.sidebar-icon-5{ background:url(../img/sidebar-icon-5.png); }
+  span.sidebar-icon-5{ background:url(../img/sidebar-icon-5.png); }
 
-  i.sidebar-icon-6{ background:url(../img/sidebar-icon-6.png); }
+  span.sidebar-icon-6{ background:url(../img/sidebar-icon-6.png); }
 
-  i.sidebar-icon-7{ background:url(../img/sidebar-icon-7.png); }
+  span.sidebar-icon-7{ background:url(../img/sidebar-icon-7.png); }
 
-  i.sidebar-icon-8{ background:url(../img/sidebar-icon-8.png); }
+  span.sidebar-icon-8{ background:url(../img/sidebar-icon-8.png); }
 
-  i.sidebar-icon-9{ background:url(../img/sidebar-icon-9.png); }
+  span.sidebar-icon-9{ background:url(../img/sidebar-icon-9.png); }
 
-  i.sidebar-icon-10{ background:url(../img/sidebar-icon-10.png); }
+  span.sidebar-icon-10{ background:url(../img/sidebar-icon-10.png); }
 
-  i.sidebar-icon-11{ background:url(../img/sidebar-icon-11.png); }
+  span.sidebar-icon-11{ background:url(../img/sidebar-icon-11.png); }
+
+  span.sidebar-icon-1:hover{ background:url(../img/sidebar-icon-1-hover.png); }
+
+  span.sidebar-icon-2:hover{ background:url(../img/sidebar-icon-2-hover.png); }
+
+  span.sidebar-icon-3:hover{ background:url(../img/sidebar-icon-3-hover.png); }
+
+  span.sidebar-icon-4:hover{ background:url(../img/sidebar-icon-4-hover.png); }
+
+  span.sidebar-icon-5:hover{ background:url(../img/sidebar-icon-5-hover.png); }
+
+  span.sidebar-icon-6:hover{ background:url(../img/sidebar-icon-6-hover.png); }
+
+  span.sidebar-icon-7:hover{ background:url(../img/sidebar-icon-7-hover.png); }
+
+  span.sidebar-icon-8:hover{ background:url(../img/sidebar-icon-8-hover.png); }
+
+  span.sidebar-icon-9:hover{ background:url(../img/sidebar-icon-9-hover.png); }
+
+  span.sidebar-icon-10:hover{ background:url(../img/sidebar-icon-10-hover.png); }
+
+  span.sidebar-icon-11:hover{ background:url(../img/sidebar-icon-11-hover.png); }
 
 
 /*!
