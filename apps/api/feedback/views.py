@@ -5,8 +5,9 @@ from apps.feedback.models import (get_bookings_awaiting_feedback_for_client,
 from .serializers import (BookingAwaitingFeedbackFromClientSerializer,
                           FeedbackByClientSerializer)
 from apps.job.models import JobRequest
-from django.core.validators import ValidationError
+from rest_framework import status, response
 from django.http import Http404
+
 
 class FeedbackByClientViewSet(mixins.CreateModelMixin,
                               viewsets.ReadOnlyModelViewSet):

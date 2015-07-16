@@ -6,12 +6,11 @@ from apps.api.views import RetrieveAndUpdateViewset
 from .serializers import FreelancerForClientSerializer, OwnFreelancerSerializer
 from .permissions import FreelancerOnlyPermission
 from apps.freelancer.models import Freelancer
+from apps.booking.models import Booking
 
 
 class FreelancerForClientViewSet(viewsets.ReadOnlyModelViewSet):
     """The freelancers that the currently logged in client has permission to see.
-    
-    TODO - currently this just shows all published freelancers.
     
     ## Fields
     
@@ -52,8 +51,10 @@ class FreelancerForClientViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (ClientOnlyPermission,)
 
     def get_queryset(self):
-        # TODO - correct this
-        return Freelancer.published_objects.all()
+        # Show only published freelancers who are booked in to the client's jobs
+        client_bookings = Booking.objects.for_client(self.request.user.client)
+        return Freelancer.published_objects.filter(
+                                                bookings__in=client_bookings)
 
 
 class OwnFreelancerViewSet(RetrieveAndUpdateViewset):
