@@ -65,7 +65,7 @@ ICON_MAP = {
     'icon-waiting': 'sidebar-icon-6',
     'icon-driver': 'sidebar-icon-7',
     'icon-kitchen': 'sidebar-icon-8',
-    'icon-edit': 'sidebar-icon-9',
+    'icon-client_profile_change': 'sidebar-icon-9',
     'icon-password': 'sidebar-icon-10',
     'icon-logout': 'sidebar-icon-11'
 

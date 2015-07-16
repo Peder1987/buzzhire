@@ -261,9 +261,12 @@
   {
 
   	min-width: 25px;
-  	background-size: 100%;
+  	background-size: cover !important;
   	min-height: 25px;
   	display: inline-block;
+  	padding: 5;
+  	margin-bottom: -8px;
+  	margin-right: 8px;
   }
 
   span.sidebar-icon-1{ background:url(../img/sidebar-icon-1.png); }
@@ -287,8 +290,6 @@
   span.sidebar-icon-11{ background:url(../img/sidebar-icon-11.png); }
 
   span.sidebar-icon-1:hover{ background:url(../img/sidebar-icon-1-hover.png); }
-
-  span.sidebar-icon-2:hover{ background:url(../img/sidebar-icon-2-hover.png); }
 
   span.sidebar-icon-3:hover{ background:url(../img/sidebar-icon-3-hover.png); }
 

@@ -5,7 +5,7 @@
       {% with client=request.user.client freelancer=request.user.freelancer %}
           {% if client %}
             {% url 'client_change' client.pk as link_url %}
-            {% include 'includes/panel_link.html' with icon_name='client_profile_change' link_text='Edit profile' %}
+            {% include 'includes/panel_link.html' with icon_name='icon-client_profile_change' link_text='Edit profile' %}
           {% endif %}
           {% if freelancer %}
             {% for link_url, link_text, icon_name in freelancer|freelancer_profile_menu_items %}
@@ -14,8 +14,8 @@
           {% endif %}
       {% endwith %}
       {% url 'account_change_password' as link_url %}
-      {% include 'includes/panel_link.html' with icon_name='password' link_text='Edit password' %}
+      {% include 'includes/panel_link.html' with icon_name='icon-password' link_text='Edit password' %}
       {% url 'account_logout' as link_url %}
-      {% include 'includes/panel_link.html' with icon_name='logout' link_text='Log out' %}
+      {% include 'includes/panel_link.html' with icon_name='icon-logout' link_text='Log out' %}
   </div>
 </div>
