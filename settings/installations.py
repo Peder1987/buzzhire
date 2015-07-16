@@ -44,6 +44,7 @@ class Local(BraintreeSandboxMixin, HueyMixin,
     )
 
 
+
 class Dev(BraintreeSandboxMixin, HueyMixin,
           installations.WebfactionDevMixin, ProjectConfiguration):
     DOMAIN = 'dev.buzzhire.co'
