@@ -309,6 +309,11 @@
 
   a.sidebar-link:hover span.sidebar-icon-11{ background:url(../img/sidebar-icon-11-hover.png); }
 
+ .top-content .description form .btn i{ display: none}
+ .top-content .description form .btn{
+
+ }
+
 
 /*!
 
@@ -1114,6 +1119,30 @@ ul.nav.nav-tabs{
 
 	  font-family: 'HelveticaLight';
 
+	  min-height: 44px;
+
+}
+
+
+ .top-content .description form .btn i{ display: none}
+ .top-content .description form .btn{
+    background-color: rgba(54,123,174,0.7);    
+    border: none;    
+    border-radius: 8px;    
+    color: white;    
+    padding: 10px 15px;    
+    max-width: 215px;    
+    text-align: left;    
+    line-height: 30px;    
+       
+    font-size: 20px;    
+    font-family: 'HelveticaLight';
+    margin-bottom: 0;
+}
+
+.top-content .description .inline-form-field{
+	color: white;
+	font-family: 'HelveticaLight';
 }
 
 
