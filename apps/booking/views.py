@@ -9,7 +9,7 @@ from apps.freelancer.views import FreelancerOnlyMixin
 from apps.freelancer.models import Freelancer
 from apps.job.models import JobRequest
 from .models import (Booking, Availability, Invitation,
-                     JobAlreadyBookedByFreelancer, JobFullyBooked)
+                     JobAlreadyBookedByFreelancer, JobFullyBooked, JobInPast)
 from .forms import AvailabilityForm, JobMatchingForm, \
                     BookingOrInvitationConfirmForm, InvitationAcceptForm
 from django.contrib.messages.views import SuccessMessageMixin
@@ -258,14 +258,17 @@ class InvitationAccept(FreelancerOnlyMixin,
         except JobAlreadyBookedByFreelancer:
             messages.add_message(self.request, messages.WARNING,
                                  'You are already booked for this job.')
-            return redirect(self.job_request.get_absolute_url())
+        except JobInPast:
+            messages.add_message(self.request, messages.WARNING,
+                                 'Sorry, this job is now in the past.')
+        return redirect(self.job_request.get_absolute_url())
 
     def get_form_kwargs(self, *args, **kwargs):
         # Pass the job request and freelancer to the form
         try:
             self.invitation = Invitation.objects.get(
-                                                pk=self.kwargs['invitation_pk'],
-                                                freelancer=self.freelancer)
+                                            pk=self.kwargs['invitation_pk'],
+                                            freelancer=self.freelancer)
         except Invitation.DoesNotExist:
             # The invitation either does not exist, or does not belong
             # to the current freelancer

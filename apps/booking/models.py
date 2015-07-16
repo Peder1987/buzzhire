@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 from django import forms
 from django.db.models import Count, F
 from datetime import date, time
@@ -15,13 +16,12 @@ class BookingOrInvitationQuerySet(models.QuerySet):
         today or later.
         TODO - we may need to improve this so it takes into account duration.
         """
-        return self.filter(jobrequest__date__gte=date.today())
+        return self.filter(jobrequest__end_datetime__gte=timezone.now())
 
     def past(self):
         """Filter by job requests that are in the past (i.e. started
         yesterday or before."""
-        return self  # TODO
-        return self.exclude(jobrequest__date__gte=date.today())
+        return self.exclude(jobrequest__end_datetime_lt=timezone.now())
 
     def complete(self):
         """Filter by job requests that have been completed.
@@ -52,6 +52,9 @@ class InvitationQuerySet(BookingOrInvitationQuerySet):
         # Filter by freelancer
         queryset = self.filter(freelancer=freelancer)
 
+        # Exclude invitations for past job requests
+        queryset = queryset.future()
+
         # Filter by job requests that are open
         queryset.filter(jobrequest__status=JobRequest.STATUS_OPEN)
 
@@ -69,6 +72,12 @@ class InvitationQuerySet(BookingOrInvitationQuerySet):
         queryset = queryset.filter(jobrequest__in=not_full_job_requests)
 
         return queryset
+
+
+class JobInPast(Exception):
+    "Exception raised when a job is in the past."
+    pass
+
 
 class JobFullyBooked(Exception):
     "Exception raised when a job is fully booked."
@@ -110,11 +119,23 @@ class Invitation(models.Model):
         # A single freelancer can't be invited twice for the same job
         unique_together = (("freelancer", "jobrequest"),)
 
+    def can_be_accepted(self):
+        "Whether or not the invitaton can be accepted."
+        try:
+            self.validate_can_be_accepted()
+        except:
+            return False
+        return True
+
     def validate_can_be_accepted(self):
         """Validates whether the invitation can be accepted.
         
         Raises JobFullyBooked or JobAlreadyBookedByFreelancer on failure.
         """
+        # Check that the job request is not in the past
+        if self.jobrequest.end_datetime < timezone.now():
+            raise JobInPast()
+
         # Check that they're not already booked
         if self.jobrequest.bookings.for_freelancer(self.freelancer).exists():
             raise JobAlreadyBookedByFreelancer()
