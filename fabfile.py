@@ -94,6 +94,16 @@ def deploy(skip_backup=False):
         restart_huey()
 
 @task
+def quickdeploy(skip_backup=False):
+    """
+    A quick deploy for front end changes.
+    """
+    with virtualenv():
+        run("git pull")
+        run('./manage.py collectstatic --noinput')
+        reload_wsgi()
+
+@task
 def dbbackup():
     """Backs up the site database to Amazon S3.
     Doesn't back up uploaded files."""
