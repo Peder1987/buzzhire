@@ -4,11 +4,13 @@ from .serializers import ClientForFreelancerSerializer, OwnClientSerializer
 from apps.client.models import Client
 from apps.api.views import RetrieveAndUpdateViewset
 from .permissions import ClientOnlyPermission
+from apps.booking.models import Booking, Invitation
+from apps.job.models import JobRequest
+from django.db.models import Q
+
 
 class ClientForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
     """Clients viewable by the currently logged in freelancer.
-    
-    TODO - limit for the freelancer.  Currently this shows all clients.
     
     ## Fields
     
@@ -22,8 +24,13 @@ class ClientForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (FreelancerOnlyPermission,)
 
     def get_queryset(self):
-        # TODO
-        return Client.objects.all()
+        # Limit by only clients whose job requests the freelancer is booked on
+        # Job requests for the freelancer
+        freelancer = self.request.user.freelancer
+        job_requests = JobRequest.objects.filter(
+                    Q(bookings__freelancer=freelancer) | \
+                    Q(invitations__freelancer=freelancer))
+        return Client.objects.filter(job_requests__in=job_requests)
 
 
 class OwnClientViewSet(RetrieveAndUpdateViewset):
