@@ -54,5 +54,4 @@ class CleanerJobRequestForFreelancerViewSet(JobRequestForFreelancerViewSet):
     - Currently no fields.
  
     """
-    def get_queryset(self):
-        return CleanerJobRequest.objects.all()
+    model_class = CleanerJobRequest

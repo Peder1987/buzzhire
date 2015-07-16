@@ -77,6 +77,4 @@ class KitchenJobRequestForFreelancerViewSet(JobRequestForFreelancerViewSet):
         - `"PO"` - Porter
     """
     serializer_class = KitchenJobRequestForFreelancerSerializer
-
-    def get_queryset(self):
-        return KitchenJobRequest.objects.all()
+    model_class = KitchenJobRequest

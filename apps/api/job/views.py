@@ -98,8 +98,6 @@ class JobRequestForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
     """All job requests for the logged in freelancer
     (ones either invited or booked on).
     
-    TODO - limit job requests - currently this shows all job requests.
-    
     - `id` Unique id for the job request.  Can be used as a unique id for 
            more specific kinds of job request objects,
            such as driver job requests. Integer. Read only.
@@ -140,7 +138,12 @@ class JobRequestForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
     """
     serializer_class = JobRequestForFreelancerSerializer
     permission_classes = (FreelancerOnlyPermission,)
+    model_class = JobRequest
 
     def get_queryset(self):
-        # TODO
-        return JobRequest.objects.all()
+        # Limit to job requests that the freelancer has been
+        # invited to or booked on
+        freelancer = self.request.user.freelancer
+        return self.model_class.objects.filter(
+                    Q(bookings__freelancer=freelancer) | \
+                    Q(invitations__freelancer=freelancer))

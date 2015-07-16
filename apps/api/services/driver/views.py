@@ -81,9 +81,7 @@ class DriverJobRequestForFreelancerViewSet(JobRequestForFreelancerViewSet):
         - `"WI"` - Windows.
     """
     serializer_class = DriverJobRequestForFreelancerSerializer
-
-    def get_queryset(self):
-        return DriverJobRequest.objects.all()
+    model_class = DriverJobRequest
 
 
 class DriverJobRequestForClientViewSet(

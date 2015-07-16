@@ -55,5 +55,4 @@ class WaitingJobRequestForFreelancerViewSet(JobRequestForFreelancerViewSet):
     - Currently no fields.
  
     """
-    def get_queryset(self):
-        return WaitingJobRequest.objects.all()
+    model_class = WaitingJobRequest

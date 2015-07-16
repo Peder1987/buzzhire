@@ -80,6 +80,4 @@ class BarJobRequestForFreelancerViewSet(JobRequestForFreelancerViewSet):
         - `"BT"` - Barista
     """
     serializer_class = BarJobRequestForFreelancerSerializer
-
-    def get_queryset(self):
-        return BarJobRequest.objects.all()
+    model_class = BarJobRequest
