@@ -254,6 +254,51 @@
   width: 80%;
  }
 
+ 'icon-my-bookings': 'sidebar-icon-1',
+    'icon-feedback': 'sidebar-icon-2',
+    'icon-cleaner': 'sidebar-icon-4',
+    'icon-bar': 'sidebar-icon-5',
+    'icon-waiting': 'sidebar-icon-6',
+    'icon-driver': 'sidebar-icon-7',
+    'icon-kitchen': 'sidebar-icon-8',
+    'icon-edit': 'sidebar-icon-9',
+    'icon-password': 'sidebar-icon-10',
+    'icon-logout': 'sidebar-icon-11'
+
+
+
+
+  i.sidebar-icon-1, i.sidebar-icon-2, i.sidebar-icon-4, i.sidebar-icon-5,
+  i.sidebar-icon-6, i.sidebar-icon-7, i.sidebar-icon-8, i.sidebar-icon-9,
+  i.sidebar-icon-10, i.sidebar-icon-11
+  {
+
+  	width: 70px;
+  	height: 70px;
+  }
+
+  i.sidebar-icon-1{
+  	background:url(../img/sidebar-icon-1.png);
+  }
+
+  i.sidebar-icon-2{ background:url(../img/sidebar-icon-2.png); }
+
+  i.sidebar-icon-4{ background:url(../img/sidebar-icon-4.png); }
+
+  i.sidebar-icon-5{ background:url(../img/sidebar-icon-5.png); }
+
+  i.sidebar-icon-6{ background:url(../img/sidebar-icon-6.png); }
+
+  i.sidebar-icon-7{ background:url(../img/sidebar-icon-7.png); }
+
+  i.sidebar-icon-8{ background:url(../img/sidebar-icon-8.png); }
+
+  i.sidebar-icon-9{ background:url(../img/sidebar-icon-9.png); }
+
+  i.sidebar-icon-10{ background:url(../img/sidebar-icon-10.png); }
+
+  i.sidebar-icon-11{ background:url(../img/sidebar-icon-11.png); }
+
 
 /*!
 
