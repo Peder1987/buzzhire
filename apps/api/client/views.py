@@ -30,7 +30,7 @@ class ClientForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
         job_requests = JobRequest.objects.filter(
                     Q(bookings__freelancer=freelancer) | \
                     Q(invitations__freelancer=freelancer))
-        return Client.objects.filter(job_requests__in=job_requests)
+        return Client.objects.filter(job_requests__in=job_requests).distinct()
 
 
 class OwnClientViewSet(RetrieveAndUpdateViewset):
