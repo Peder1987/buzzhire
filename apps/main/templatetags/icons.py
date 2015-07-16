@@ -58,6 +58,17 @@ ICON_MAP = {
     'notification': 'fa fa-bell',
     'faq': 'fa fa-question-circle',
     'user-alt': 'user-icon',
+    'icon-my-bookings': 'sidebar-icon-1',
+    'icon-feedback': 'sidebar-icon-2',
+    'icon-cleaner': 'sidebar-icon-4',
+    'icon-bar': 'sidebar-icon-5',
+    'icon-waiting': 'sidebar-icon-6',
+    'icon-driver': 'sidebar-icon-7',
+    'icon-kitchen': 'sidebar-icon-8',
+    'icon-edit': 'sidebar-icon-9',
+    'icon-password': 'sidebar-icon-10',
+    'icon-logout': 'sidebar-icon-11'
+
 }
 
 @register.filter
