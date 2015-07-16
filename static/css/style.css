@@ -228,7 +228,8 @@
   border: none;
 }
 
-.after-breadcrumb.sidebar .panel>.list-group a.list-group-item:hover{
+.after-breadcrumb.sidebar .panel>.list-group a.list-group-item:hover,
+.after-breadcrumb.sidebar .panel>.list-group a.list-group-item.active{
 	color: #2779bc;
 }
 
@@ -1043,7 +1044,7 @@ textarea::-webkit-input-placeholder {
 
 }
 
-ul.nav.nav-tabs{
+.product-container.product-bg2 ul.nav.nav-tabs{
 
 	text-align: center;
 
@@ -1052,6 +1053,9 @@ ul.nav.nav-tabs{
 	border: none;
 
 }
+
+  margin-top: -40px;
+  background-color: #2f81c2;
 
 
 
@@ -1065,7 +1069,7 @@ ul.nav.nav-tabs{
 
 
 
-.nav.nav-tabs li a{
+.product-container.product-bg2 .nav.nav-tabs li a{
 
 	border: 1px solid #2779bc;
 
