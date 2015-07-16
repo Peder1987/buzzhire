@@ -289,25 +289,25 @@
 
   span.sidebar-icon-11{ background:url(../img/sidebar-icon-11.png); }
 
-  span.sidebar-icon-1:hover{ background:url(../img/sidebar-icon-1-hover.png); }
+  a.sidebar-link:hover span.sidebar-icon-1{ background:url(../img/sidebar-icon-1-hover.png); }
 
-  span.sidebar-icon-3:hover{ background:url(../img/sidebar-icon-3-hover.png); }
+  a.sidebar-link:hover span.sidebar-icon-3{ background:url(../img/sidebar-icon-3-hover.png); }
 
-  span.sidebar-icon-4:hover{ background:url(../img/sidebar-icon-4-hover.png); }
+  a.sidebar-link:hover span.sidebar-icon-4{ background:url(../img/sidebar-icon-4-hover.png); }
 
-  span.sidebar-icon-5:hover{ background:url(../img/sidebar-icon-5-hover.png); }
+  a.sidebar-link:hover span.sidebar-icon-5{ background:url(../img/sidebar-icon-5-hover.png); }
 
-  span.sidebar-icon-6:hover{ background:url(../img/sidebar-icon-6-hover.png); }
+  a.sidebar-link:hover span.sidebar-icon-6{ background:url(../img/sidebar-icon-6-hover.png); }
 
-  span.sidebar-icon-7:hover{ background:url(../img/sidebar-icon-7-hover.png); }
+  a.sidebar-link:hover span.sidebar-icon-7{ background:url(../img/sidebar-icon-7-hover.png); }
 
-  span.sidebar-icon-8:hover{ background:url(../img/sidebar-icon-8-hover.png); }
+  a.sidebar-link:hover span.sidebar-icon-8{ background:url(../img/sidebar-icon-8-hover.png); }
 
-  span.sidebar-icon-9:hover{ background:url(../img/sidebar-icon-9-hover.png); }
+  a.sidebar-link:hover span.sidebar-icon-9{ background:url(../img/sidebar-icon-9-hover.png); }
 
-  span.sidebar-icon-10:hover{ background:url(../img/sidebar-icon-10-hover.png); }
+  a.sidebar-link:hover span.sidebar-icon-10{ background:url(../img/sidebar-icon-10-hover.png); }
 
-  span.sidebar-icon-11:hover{ background:url(../img/sidebar-icon-11-hover.png); }
+  a.sidebar-link:hover span.sidebar-icon-11{ background:url(../img/sidebar-icon-11-hover.png); }
 
 
 /*!

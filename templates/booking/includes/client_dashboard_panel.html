@@ -7,7 +7,7 @@
           {% url 'requested_jobs' as link_url %}
           {% include 'includes/panel_link.html' with icon_name='icon-my-bookings' link_text='My bookings' %}
           {% url 'notification_list' as link_url %}
-          {% include 'includes/panel_link.html' with icon_name='icon-notification' link_text='Notifications' %}
+          {% include 'includes/panel_link.html' with icon_name='notification' link_text='Notifications' %}
           {% url 'client_backlog' as link_url %}
           {% client_backlog_count as feedback_action_number %}
           {% include 'includes/panel_link.html' with icon_name='icon-feedback' link_text='Awaiting feedback' action_number=feedback_action_number %}
