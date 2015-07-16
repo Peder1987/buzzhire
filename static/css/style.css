@@ -292,27 +292,27 @@
 
   span.sidebar-icon-11{ background:url(../img/sidebar-icon-11.png); }
 
-  a.sidebar-link:hover span.sidebar-icon-1{ background:url(../img/sidebar-icon-1-hover.png); }
+  a.sidebar-link:hover span.sidebar-icon-1{  background:url(../img/sidebar-icon-1-hover.png); background-repeat: no-repeat; background-position: right;}
 
-  a.sidebar-link:hover span.sidebar-icon-2{ background:url(../img/sidebar-icon-2-hover.png); }
+  a.sidebar-link:hover span.sidebar-icon-2{ background:url(../img/sidebar-icon-2-hover.png); background-repeat: no-repeat; background-position: right;}
 
-  a.sidebar-link:hover span.sidebar-icon-3{ background:url(../img/sidebar-icon-3-hover.png); }
+  a.sidebar-link:hover span.sidebar-icon-3{ background:url(../img/sidebar-icon-3-hover.png); background-repeat: no-repeat; background-position: right;}
 
-  a.sidebar-link:hover span.sidebar-icon-4{ background:url(../img/sidebar-icon-4-hover.png); }
+  a.sidebar-link:hover span.sidebar-icon-4{ background:url(../img/sidebar-icon-4-hover.png); background-repeat: no-repeat; background-position: right;}
 
-  a.sidebar-link:hover span.sidebar-icon-5{ background:url(../img/sidebar-icon-5-hover.png); }
+  a.sidebar-link:hover span.sidebar-icon-5{ background:url(../img/sidebar-icon-5-hover.png); background-repeat: no-repeat; background-position: right;}
 
-  a.sidebar-link:hover span.sidebar-icon-6{ background:url(../img/sidebar-icon-6-hover.png); }
+  a.sidebar-link:hover span.sidebar-icon-6{ background:url(../img/sidebar-icon-6-hover.png); background-repeat: no-repeat; background-position: right;}
 
-  a.sidebar-link:hover span.sidebar-icon-7{ background:url(../img/sidebar-icon-7-hover.png); }
+  a.sidebar-link:hover span.sidebar-icon-7{ background:url(../img/sidebar-icon-7-hover.png); background-repeat: no-repeat; background-position: right;}
 
-  a.sidebar-link:hover span.sidebar-icon-8{ background:url(../img/sidebar-icon-8-hover.png); }
+  a.sidebar-link:hover span.sidebar-icon-8{ background:url(../img/sidebar-icon-8-hover.png); background-repeat: no-repeat; background-position: right;}
 
-  a.sidebar-link:hover span.sidebar-icon-9{ background:url(../img/sidebar-icon-9-hover.png); }
+  a.sidebar-link:hover span.sidebar-icon-9{ background:url(../img/sidebar-icon-9-hover.png); background-repeat: no-repeat; background-position: right;}
 
-  a.sidebar-link:hover span.sidebar-icon-10{ background:url(../img/sidebar-icon-10-hover.png); }
+  a.sidebar-link:hover span.sidebar-icon-10{ background:url(../img/sidebar-icon-10-hover.png); background-repeat: no-repeat; background-position: right;}
 
-  a.sidebar-link:hover span.sidebar-icon-11{ background:url(../img/sidebar-icon-11-hover.png); }
+  a.sidebar-link:hover span.sidebar-icon-11{ background:url(../img/sidebar-icon-11-hover.png); background-repeat: no-repeat; background-position: right;}
 
  .top-content .description form .btn i{ display: none}
  .top-content .description form .btn{
