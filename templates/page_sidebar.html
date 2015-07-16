@@ -5,6 +5,9 @@
 {# Move messages to content column #}
 {% block messages %}{% endblock %}
 
+{# Move breadcrumbs #}
+{% block breadcrumbs_wrapper %}{% endblock %}
+
 {% block content_row_wrapper %}
     <div class='container sidebar-page'>
         <div class='row after-breadcrumb sidebar'>
@@ -17,9 +20,27 @@
                       {% include 'includes/messages.html' with top_space=False %}
                     {% endif %}
                 {% endblock %}
+                
                 {% block page_title_sidebar %}
-				<h4>{% block page_title_inner %}{{ title }}{% endblock %}</h4>
-				{% endblock %}
+                    {% block breadcrumbs %}
+                      {% if title %}
+                         {% block home_breadcrumb %}{% breadcrumb 'Home' '/' %}{% endblock %}
+                         {% block inner_breadcrumb %}
+                             {# Extend this block to put the page path inside #}
+                         {% endblock %}
+                         {% breadcrumb title request.path %}
+                      {% endif %}
+                    {% endblock %}
+
+                    {% block breadcrumb_display %}
+                      <div 'sidebar-breadcrumbs' style='margin-bottom: 2em;'>
+                         {% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap3.html" %}
+                      </div>
+                    {% endblock %}
+
+                    <h4>{% block page_title_inner %}{{ title }}{% endblock %}</h4>
+
+                {% endblock %}
                 {% block content %}{% endblock %}
             </div>
         </div>

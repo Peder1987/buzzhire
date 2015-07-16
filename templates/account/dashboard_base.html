@@ -1,6 +1,8 @@
 {% extends 'page_sidebar.html' %}
 {% load django_bootstrap_breadcrumbs crispy_forms_tags icons %}
 
+{% block home_breadcrumb %}{% endblock %}
+
 {% block inner_breadcrumb %}
   {% url 'account_dashboard' as dashboard_url %} 
   {% if request.path == dashboard_url %}
