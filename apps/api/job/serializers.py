@@ -106,4 +106,5 @@ class JobRequestForClientSerializer(BaseJobRequestSerializer):
 
     class Meta(BaseJobRequestSerializer.Meta):
         fields = BaseJobRequestSerializer.Meta.fields + (
-                        'client_pay_per_hour', 'client_total_cost')
+                        'client_pay_per_hour', 'client_total_cost',
+                        'needs_feedback_from_client')

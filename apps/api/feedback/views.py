@@ -4,6 +4,9 @@ from apps.feedback.models import (get_bookings_awaiting_feedback_for_client,
                                   BookingFeedback)
 from .serializers import (BookingAwaitingFeedbackFromClientSerializer,
                           FeedbackByClientSerializer)
+from apps.job.models import JobRequest
+from django.core.validators import ValidationError
+from django.http import Http404
 
 class FeedbackByClientViewSet(mixins.CreateModelMixin,
                               viewsets.ReadOnlyModelViewSet):
@@ -53,12 +56,31 @@ class ClientFeedbackBacklogViewSet(viewsets.ReadOnlyModelViewSet):
     - `reference_number` Public reference number for the booking.
     - `freelancer` Freelancer endpoint.  
     - `date_created` Date and time of when the booking was created.
-    - `job_request` Endpoint of job request the booking is for.     
+    - `job_request` Endpoint of job request the booking is for.
+    
+    ## Query parameters
+    
+    - `job_request`  Optionally, filter the fields by passing the job request
+      id as a query parameter.
     """
     serializer_class = BookingAwaitingFeedbackFromClientSerializer
 
     permission_classes = (ClientOnlyPermission,)
 
     def get_queryset(self):
-        return get_bookings_awaiting_feedback_for_client(
-                                                    self.request.user.client)
+        client = self.request.user.client
+
+        queryset = get_bookings_awaiting_feedback_for_client(client)
+
+        # Optionally, filter by job request
+        if self.request.GET.get('job_request'):
+            try:
+                job_request = JobRequest.objects.get(
+                                id=self.request.GET.get('job_request'))
+                assert job_request.client == client
+            except (ValueError, JobRequest.DoesNotExist, AssertionError):
+                raise Http404
+            else:
+                queryset = queryset.filter(jobrequest=job_request)
+
+        return queryset

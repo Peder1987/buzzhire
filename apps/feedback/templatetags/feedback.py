@@ -22,8 +22,9 @@ def client_feedback_allowed(job_request):
         {% endif %}
     """
     # Allow feedback on complete job requests that haven't already had feedback
-    return job_request.status == JobRequest.STATUS_COMPLETE and not \
-            BookingFeedback.objects.client_feedback_exists(job_request)
+    # TODO - this template tag is probably redundant now,
+    # can just call the method
+    return job_request.needs_feedback_from_client()
 
 
 @register.filter

@@ -176,6 +176,17 @@ class BookingFeedback(models.Model):
                                     self.get_author())
 
 
+def _needs_feedback_from_client(self):
+    """Returns whether or not the JobRequest needs feedback from client.
+    NB This currently only checks if the client has left at least one piece
+    of feedback on the job.  Strictly speaking it is possible that the
+    job request could still need feedback for other freelancers, but the
+    website and apps should prevent this from happening.
+    """
+    return self.status == JobRequest.STATUS_COMPLETE and not \
+            BookingFeedback.objects.client_feedback_exists(self)
+JobRequest.needs_feedback_from_client = _needs_feedback_from_client
+
 def get_bookings_awaiting_feedback_for_freelancer(freelancer):
     """Returns all the Bookings that are awaiting feedback from the freelancer.
     
