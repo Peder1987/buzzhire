@@ -58,10 +58,6 @@ class Dev(BraintreeSandboxMixin, HueyMixin,
 
     API_ACTIVE = True
 
-    # Temporarily put into real payments mode, for testing
-    BRAINTREE_MERCHANT_ID = 'q6xbcpbpcm4vtvcw'
-    BRAINTREE_PUBLIC_KEY = 'skmbrjfnnc4kfxq5'
-    BRAINTREE_SANDBOX = False
 
 class Live(HueyMixin,
            installations.WebfactionLiveMixin, ProjectConfiguration):
