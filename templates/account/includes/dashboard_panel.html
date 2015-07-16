@@ -1,6 +1,6 @@
 {% load icons freelancer %}
 <div class="panel panel-default">
-  <div class="panel-heading">{{ 'account'|icon }} Account</div>
+  <div class="panel-heading">Account</div>
   <div class="list-group">
       {% with client=request.user.client freelancer=request.user.freelancer %}
           {% if client %}
@@ -8,22 +8,13 @@
             {% include 'includes/panel_link.html' with icon_name='client_profile_change' link_text='Edit profile' %}
           {% endif %}
           {% if freelancer %}
-            
             {% for link_url, link_text, icon_name in freelancer|freelancer_profile_menu_items %}
                 {% include 'includes/panel_link.html' %}
             {% endfor %} 
-            {% comment %}
-                {% url 'freelancer_change' as link_url %}
-            {% include 'includes/panel_link.html' with icon_name='freelancer_profile_change' link_text='Edit profile' %}
-            {% url 'freelancer_photo' as link_url %}
-            {% include 'includes/panel_link.html' with icon_name='photo' link_text='Photo' %}
-                {% url 'drivervehicletype_list' as link_url %}
-                {% include 'includes/panel_link.html' with icon_name='vehicletypes' link_text='Vehicles' %}
-            {% endcomment %}
           {% endif %}
       {% endwith %}
       {% url 'account_change_password' as link_url %}
-      {% include 'includes/panel_link.html' with icon_name='password' link_text='Change password' %}
+      {% include 'includes/panel_link.html' with icon_name='password' link_text='Edit password' %}
       {% url 'account_logout' as link_url %}
       {% include 'includes/panel_link.html' with icon_name='logout' link_text='Log out' %}
   </div>

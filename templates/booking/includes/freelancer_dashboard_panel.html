@@ -1,10 +1,10 @@
 {% load icons feedback booking %}
 {% if request.user.is_freelancer %}
     <div class="panel panel-default">
-      <div class="panel-heading">{{ 'driver'|icon }} Booking</div>
+      <div class="panel-heading">Bookings</div>
       <div class="list-group">
           {% url 'freelancer_bookings_list' as link_url %}
-          {% include 'includes/panel_link.html' with icon_name='freelancer_bookings' link_text='Bookings' %}
+          {% include 'includes/panel_link.html' with icon_name='freelancer_bookings' link_text='My bookings' %}
           {% url 'freelancer_backlog' as link_url %}
           {% freelancer_backlog_count as feedback_action_number %}
           {% include 'includes/panel_link.html' with icon_name='feedback' link_text='Jobs awaiting feedback' action_number=feedback_action_number %}
@@ -14,7 +14,7 @@
           {% url 'notification_list' as link_url %}
           {% include 'includes/panel_link.html' with icon_name='notification' link_text='Notifications' %}
           {% url 'availability_update' as link_url %}
-          {% include 'includes/panel_link.html' with icon_name='availability' link_text='Availability' %}
+          {% include 'includes/panel_link.html' with icon_name='availability' link_text='My availability' %}
       </div>
     </div>
 {% endif %}

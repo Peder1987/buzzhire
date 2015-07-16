@@ -1,26 +1,28 @@
-{% load icons feedback job service %}
+{% load icons feedback job service humanize %}
 {% if request.user.is_client %}
+
     <div class="panel panel-default">
-      <div class="panel-heading">{{ 'create'|icon }} Create booking</div>
+      <div class="panel-heading">Bookings</div>
       <div class="list-group">
-          {% get_services as services %}
-          {% for service in services %}
-              {% url 'job_request_create' service.key as link_url %}
-              {% include 'includes/panel_link.html' with icon_name=service.key link_text='Book a '|add:service.title %}
-          {% endfor %}
+          {% url 'requested_jobs' as link_url %}
+          {% include 'includes/panel_link.html' with icon_name='requested_jobs' link_text='My bookings' %}
+          {% url 'notification_list' as link_url %}
+          {% include 'includes/panel_link.html' with icon_name='notification' link_text='Notifications' %}
+          {% url 'client_backlog' as link_url %}
+          {% client_backlog_count as feedback_action_number %}
+          {% include 'includes/panel_link.html' with icon_name='feedback' link_text='Awaiting feedback' action_number=feedback_action_number %}
           
       </div>
     </div>
     <div class="panel panel-default">
-      <div class="panel-heading">{{ 'book'|icon }} Bookings</div>
+      <div class="panel-heading">Create booking</div>
       <div class="list-group">
-          {% url 'requested_jobs' as link_url %}
-          {% include 'includes/panel_link.html' with icon_name='requested_jobs' link_text='Requested jobs' %}
-          {% url 'client_backlog' as link_url %}
-          {% client_backlog_count as feedback_action_number %}
-          {% include 'includes/panel_link.html' with icon_name='feedback' link_text='Jobs awaiting feedback' action_number=feedback_action_number %}
-          {% url 'notification_list' as link_url %}
-          {% include 'includes/panel_link.html' with icon_name='notification' link_text='Notifications' %}
+          {% get_services as services %}
+          {% for service in services %}
+              {% url 'job_request_create' service.key as link_url %}
+              {% include 'includes/panel_link.html' with icon_name=service.key link_text=service.title|capfirst %}
+          {% endfor %}
+          
       </div>
     </div>
 {% endif %}
