@@ -1095,31 +1095,19 @@ ul.nav.nav-tabs{
 
 .top-content input, .top-content select{
 
-	  background-color: rgba(54,123,174,0.7);
-
-	  border: none;
-
-	  border-radius: 8px;
-
-	  color: white;
-
-	  padding: 10px 15px;
-
-	  vertical-align: middle;
-
-	  max-width: 215px;
-
-	  text-align: left;
-
-	  line-height: 30px;
-
-	  margin: 0 10px 0 10px;
-
-	  font-size: 26px;
-
-	  font-family: 'HelveticaLight';
-
-	  min-height: 44px;
+	    background-color: rgba(54,123,174,0.7);
+		  border: none;
+		  border-radius: 8px;
+		  color: white;
+		  padding: 0px 15px;
+		  vertical-align: middle;
+		  max-width: 215px;
+		  text-align: left;
+		  line-height: 30px;
+		  margin: 0 8px 0 10px;
+		  font-size: 24px;
+		  font-family: 'HelveticaLight';
+		  min-height: 45px;
 
 }
 
@@ -1143,7 +1131,7 @@ ul.nav.nav-tabs{
 .top-content .description .inline-form-field{
 	color: white;
 	font-family: 'HelveticaLight';
-}
+} 
 
 
 
@@ -2909,11 +2897,11 @@ address {
 
 @media (min-width: 768px) {
 
-  .top-content .buttons-row {
+  /*.top-content .buttons-row {
 
     margin-top: 8em;
 
-  }
+  } */
 
 }
 
