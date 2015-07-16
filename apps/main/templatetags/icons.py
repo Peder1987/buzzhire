@@ -59,6 +59,7 @@ ICON_MAP = {
     'faq': 'fa fa-question-circle',
     'user-alt': 'user-icon',
     'icon-my-bookings': 'sidebar-icon-1',
+    'icon-otification': 'fa fa-bell'
     'icon-feedback': 'sidebar-icon-3',
     'icon-cleaner': 'sidebar-icon-4',
     'icon-bar': 'sidebar-icon-5',
