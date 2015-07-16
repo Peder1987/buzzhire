@@ -201,7 +201,7 @@
 
 .after-breadcrumb.sidebar .panel-default>.panel-heading {
 	
-	font-size: 20px;
+	font-size: 22px;
 	color: #277dbc;
 	background-color: white;
 	border: none;
@@ -215,6 +215,9 @@
 .after-breadcrumb.sidebar .panel>.list-group a.list-group-item{
 	font-size: 15px;
 	border: none;
+	box-shadow: none;
+	color: #909090;
+	padding: 12px 15px;
 } 
 
 .after-breadcrumb.sidebar .panel .list-group-item.active, 
@@ -225,6 +228,30 @@
   border: none;
 }
 
+.after-breadcrumb.sidebar .panel>.list-group a.list-group-item:hover{
+	color: #2779bc;
+}
+
+.sidebar-breadcrumbs .breadcrumb {
+  margin-top: 0;
+  background-color: transparent;
+}
+
+.sidebar-breadcrumbs .breadcrumb>.active {
+  color: #9f9b9a;
+}
+
+.sidebar-content-header{
+	padding: 40px 0;
+  	background-color: #2f81c2;
+  	margin-bottom: 40px;
+}
+
+.sidebar-content-header h4{
+  margin: 0 0 0 0 !important;
+  text-align: center;
+  color: white;
+ }
 
 
 /*!
