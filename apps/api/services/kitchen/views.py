@@ -24,9 +24,7 @@ class KitchenFreelancerForClientViewSet(FreelancerForClientViewSet):
         - `"PO"` - Porter
     """
     serializer_class = KitchenFreelancerForClientSerializer
-
-    def get_queryset(self):
-        return KitchenFreelancer.published_objects.all()
+    model_class = KitchenFreelancer
 
 
 class OwnKitchenFreelancerViewSet(OwnFreelancerViewSet):

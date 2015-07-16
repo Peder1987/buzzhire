@@ -25,8 +25,7 @@ class BarFreelancerForClientViewSet(FreelancerForClientViewSet):
     """
     serializer_class = BarFreelancerForClientSerializer
 
-    def get_queryset(self):
-        return BarFreelancer.published_objects.all()
+    model_class = BarFreelancer
 
 
 class OwnBarFreelancerViewSet(OwnFreelancerViewSet):

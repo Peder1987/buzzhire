@@ -35,9 +35,7 @@ class DriverForClientViewSet(FreelancerForClientViewSet):
         - `"NS"` - Non smartphone       
     """
     serializer_class = DriverForClientSerializer
-
-    def get_queryset(self):
-        return Driver.published_objects.all()
+    model_class = Driver
 
 
 class OwnDriverViewSet(OwnFreelancerViewSet):

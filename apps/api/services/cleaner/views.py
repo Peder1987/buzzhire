@@ -10,9 +10,7 @@ class CleanerForClientViewSet(FreelancerForClientViewSet):
     
     The generic fields are documented on the freelancer endpoint.
     """
-
-    def get_queryset(self):
-        return Cleaner.published_objects.all()
+    model_class = Cleaner
 
 
 class OwnCleanerViewSet(OwnFreelancerViewSet):

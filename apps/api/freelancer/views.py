@@ -49,11 +49,12 @@ class FreelancerForClientViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = FreelancerForClientSerializer
 
     permission_classes = (ClientOnlyPermission,)
+    model_class = Freelancer
 
     def get_queryset(self):
         # Show only published freelancers who are booked in to the client's jobs
         client_bookings = Booking.objects.for_client(self.request.user.client)
-        return Freelancer.published_objects.filter(
+        return self.model_class.published_objects.filter(
                                                 bookings__in=client_bookings)
 
 
