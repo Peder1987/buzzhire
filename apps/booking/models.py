@@ -245,3 +245,14 @@ def _is_full(self):
     "Returns whether or not the job request is full."
     return self.bookings.count() >= self.number_of_freelancers
 JobRequest.is_full = property(_is_full)
+
+
+def get_job_requests_pending_confirmation():
+    """Returns all the job requests that are pending confirmation from staff.
+    """
+    # TODO - this should be optimised!
+    pending_job_request_ids = []
+    for job_request in JobRequest.objects.filter(status=JobRequest.STATUS_OPEN):
+        if job_request.is_full:
+            pending_job_request_ids.append(job_request.id)
+    return JobRequest.objects.filter(id__in=pending_job_request_ids)

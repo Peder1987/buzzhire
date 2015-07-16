@@ -22,6 +22,7 @@ from apps.service.forms import ServiceSelectForm
 from apps.service.views import ServiceViewMixin
 from apps.job import service_from_class
 from apps.core.views import PolymorphicTemplateMixin
+from .models import get_job_requests_pending_confirmation
 
 
 class FreelancerHasBookingMixin(FreelancerOnlyMixin, OwnerOnlyMixin):
@@ -315,3 +316,13 @@ def _is_booked_or_invited_freelancer(self):
 JobRequestDetail.is_booked_or_invited_freelancer = \
                                             _is_booked_or_invited_freelancer
 JobRequestDetail.grant_methods.append('is_booked_or_invited_freelancer')
+
+
+class JobRequestsPendingConfirmation(AdminOnlyMixin, ContextMixin, ListView):
+    """List of job requests pending confirmation, for admin users.
+    """
+    paginate_by = 15
+    extra_context = {'title': 'Jobs pending confirmation'}
+
+    def get_queryset(self, *args, **kwargs):
+        return get_job_requests_pending_confirmation()
