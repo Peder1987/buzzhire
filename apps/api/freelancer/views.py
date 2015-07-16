@@ -55,7 +55,7 @@ class FreelancerForClientViewSet(viewsets.ReadOnlyModelViewSet):
         # Show only published freelancers who are booked in to the client's jobs
         client_bookings = Booking.objects.for_client(self.request.user.client)
         return self.model_class.published_objects.filter(
-                                                bookings__in=client_bookings)
+                                    bookings__in=client_bookings).distinct()
 
 
 class OwnFreelancerViewSet(RetrieveAndUpdateViewset):
