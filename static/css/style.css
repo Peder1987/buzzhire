@@ -340,9 +340,12 @@
   a.sidebar-link:hover span.sidebar-icon-11{ background:url(../img/sidebar-icon-11-hover.png); background-repeat: no-repeat; background-position: right;}
 
  .top-content .description form .btn i{ display: none}
- .top-content .description form .btn{
-
+ a.sidebar-link i{
+	margin-left: 3px;
+	margin-right: 12px;
  }
+
+  
 
 
 /*!
