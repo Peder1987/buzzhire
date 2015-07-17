@@ -556,11 +556,21 @@ img {
 
 .btn-primary {
 
-  background: #011a26;
+  /* background: #011a26; */
 
   border: none;
 
   color: #fff;
+
+  background-color: #2779bc;
+
+  border-radius: 8px;
+
+  box-shadow: none;
+
+  font-family: 'Helvetica';
+
+  font-size: 18px !important;
 
 }
 
@@ -1193,7 +1203,7 @@ textarea::-webkit-input-placeholder {
 
 h3 {
 
-  color: #555;
+    color: #2779bc;
 
 }
 
