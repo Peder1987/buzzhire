@@ -9,6 +9,7 @@
           {% endif %}
           {% if freelancer %}
             {% for link_url, link_text, 'icon-'|add:icon_name in freelancer|freelancer_profile_menu_items %}
+              {% with 'icon-'|add:icon_name as icon_name %}  
                 {% include 'includes/panel_link.html' %}
             {% endfor %} 
           {% endif %}
