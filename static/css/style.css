@@ -276,7 +276,7 @@
 
   span.sidebar-icon-1, span.sidebar-icon-2, span.sidebar-icon-3, span.sidebar-icon-4, span.sidebar-icon-5,
   span.sidebar-icon-6, span.sidebar-icon-7, span.sidebar-icon-8, span.sidebar-icon-9,
-  span.sidebar-icon-10, span.sidebar-icon-11
+  span.sidebar-icon-10, span.sidebar-icon-11, span.sidebar-icon-12, span.sidebar-icon-13, span.sidebar-icon-14
   {
 
   	min-width: 25px;
@@ -309,6 +309,12 @@
   span.sidebar-icon-10{ background:url(../img/sidebar-icon-10.png); }
 
   span.sidebar-icon-11{ background:url(../img/sidebar-icon-11.png); }
+
+  span.sidebar-icon-12{ background:url(../img/sidebar-icon-12.png); }
+
+  span.sidebar-icon-13{ background:url(../img/sidebar-icon-13.png); }
+
+  span.sidebar-icon-14{ background:url(../img/sidebar-icon-14.png); }
 
 
   a.sidebar-link:hover span.sidebar-icon-1{  background:url(../img/sidebar-icon-1-hover.png); background-repeat: no-repeat; background-position: right;}
