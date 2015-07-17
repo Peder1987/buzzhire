@@ -1,22 +1,13 @@
-{% extends 'job/jobrequest_detail.html' %}
+{% extends 'job/job_create_base.html' %}
 {% load icons django_bootstrap_breadcrumbs crispy_forms_tags payment core_tags %}
 
 {% block page_actions %}{% endblock %}
 
-{% block inner_breadcrumb %}
-  {{ block.super }}
-  {% breadcrumb object object.get_absolute_url %}
-{% endblock %}
-
 {% block content %}
-    <div class='row'>
-        <div class='col-md-5'>
-            {% summary object %}    
-        </div>
-        <div class='col-md-7'>
-            {% crispy form %}    
-        </div>
+    <div class='col-md-6'>
+        {% crispy form %}
     </div>
+        
 {% endblock %}
 
 {% block extrascripts %}

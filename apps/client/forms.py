@@ -29,7 +29,8 @@ class ClientInnerForm(ClientForm):
     a single html <form>.
     """
     form_tag = False
-    submit_name = None
+    submit_text = 'Sign up'
+    submit_context = {'icon_name': 'register'}
     wrap_fieldset_title = 'About you'
 
     def save(self, user):

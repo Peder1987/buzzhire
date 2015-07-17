@@ -13,6 +13,7 @@ from braces.views._access import AnonymousRequiredMixin
 from apps.core.views import ContextMixin, TabsMixin, ConfirmationMixin, \
                                 GrantCheckingMixin, PolymorphicTemplateMixin
 from apps.account.views import AdminOnlyMixin
+from apps.account.forms import LoginForm
 from apps.client.views import ClientOnlyMixin, OwnedByClientMixin
 from apps.client.forms import ClientInnerForm
 from apps.client.models import Client
@@ -80,10 +81,96 @@ class JobRequestCreate(ClientOnlyMixin, ServiceViewMixin, ContextMixin,
         return HttpResponseRedirect(self.get_success_url())
 
 
+class ClientSignUpView(ServiceViewMixin, BaseSignupView):
+    template_name = 'job/client_signup.html'
+    form_class = JobRequestSignupInnerForm
+    # The form prefix for the account form
+    prefix = 'account'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ClientSignUpView,
+                        self).get_context_data(*args, **kwargs)
+        context['extra_forms'] = []
+        for prefix, form_class in self.extra_forms.items():
+            context['extra_forms'].append(self.get_form(form_class, prefix))
+        return context
+
+    def get_form(self, form_class, prefix=None):
+        # Now is a good time to set the extra_forms too
+        self.extra_forms = self.get_extra_forms()
+        # Pass the prefix through to get_form_kwargs
+        return form_class(**self.get_form_kwargs(prefix))
+
+    def get_extra_forms(self):
+        # Dynamically generate a JobRequestInnerForm that is specific to
+        # the service.  All this is doing is creating a class on the fly
+        # that mixes in the JobRequestInnerFormMixin to the service specific
+        # JobRequestForm that is defined on the service.
+        return {
+            'client': ClientInnerForm,
+        }
+
+    def get_form_kwargs(self, prefix=None):
+        """Standard get_form_kwargs() method adapted to return
+        the extra forms too."""
+
+        if prefix is None:
+            # This is for the main form (signup form)
+            prefix = self.get_prefix()
+
+        kwargs = {
+            'initial': self.get_initial(),
+            'prefix': prefix,
+        }
+
+        if self.request.method in ('POST', 'PUT'):
+            kwargs.update({
+                'data': self.request.POST,
+                'files': self.request.FILES,
+            })
+        return kwargs
+
+    def post(self, request, *args, **kwargs):
+        "Standard post method adapted to validate both forms."
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        self.bound_forms = {self.get_prefix(): form}
+        for prefix, form_class in self.extra_forms.items():
+            self.bound_forms[prefix] = self.get_form(form_class, prefix)
+
+        if all([f.is_valid() for f in self.bound_forms.values()]):
+            # If all the forms validate
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        """Adapted from BaseSignupView to save the client and log them in.
+        """
+        user = form.save(self.request)
+
+        # Save extra forms too
+        client = self.bound_forms['client'].save(user=user)
+
+        # Complete sign up and log them in
+        return complete_signup(self.request, user,
+                               app_settings.EMAIL_VERIFICATION,
+                               self.get_success_url())
+
+    def get_authenticated_redirect_url(self):
+        # If they are already authenticated, redirect here
+        return self.get_success_url()
+
+    def get_success_url(self):
+        return reverse('job_request_create', args=(self.service.key,))
+
+
 class JobRequestCreateAnonymous(ServiceViewMixin,
                                 PolymorphicTemplateMixin,
                                 BaseSignupView):
     """Page for anonymous users who want to create a job request.
+    
+    N.B. in the process of decommissioning this view. 
     """
     form_class = JobRequestSignupInnerForm
     # The form prefix for the account form
@@ -110,17 +197,12 @@ class JobRequestCreateAnonymous(ServiceViewMixin,
             'job_request': job_request_form_class,
         }
 
-
-    def get_context_data(self, *args, **kwargs):
-        # Tailor the page title to the service
-        context = super(JobRequestCreateAnonymous, self).get_context_data(
-                                                            *args, **kwargs)
-        context['title'] = 'Book a %s' % self.service.title
-        return context
-
     def get_context_data(self, *args, **kwargs):
         context = super(JobRequestCreateAnonymous,
                         self).get_context_data(*args, **kwargs)
+        # Tailor the page title to the service
+        context['title'] = 'Book a %s' % self.service.title
+
         context['extra_forms'] = []
         for prefix, form_class in self.extra_forms.items():
             context['extra_forms'].append(self.get_form(form_class, prefix))
@@ -187,7 +269,6 @@ class JobRequestCreateAnonymous(ServiceViewMixin,
 
     def get_success_url(self):
         return reverse('job_request_checkout', args=(self.job_request.pk,))
-
 
 
 class RequestedJobList(ClientOnlyMixin, ContextMixin, TabsMixin, ListView):
@@ -285,6 +366,7 @@ class JobRequestCheckout(OwnedByClientMixin, SingleObjectMixin,
         context = super(JobRequestCheckout, self).get_context_data(*args,
                                                                     **kwargs)
         context['title'] = 'Confirm and pay'
+        context['service'] = service_from_class(self.object.__class__)
         return context
 
     def get_form_kwargs(self, *args, **kwargs):

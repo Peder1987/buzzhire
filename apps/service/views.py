@@ -9,3 +9,9 @@ class ServiceViewMixin(object):
     def dispatch(self, request, *args, **kwargs):
         self.service = services[kwargs['service_key']]
         return super(ServiceViewMixin, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ServiceViewMixin, self).get_context_data(*args,
+                                                                 **kwargs)
+        context['service'] = self.service
+        return context

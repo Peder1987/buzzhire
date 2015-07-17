@@ -132,16 +132,7 @@ class JobRequestInnerFormMixin(object):
 
 
 class JobRequestSignupInnerForm(SignupInnerForm):
-    submit_name = 'book'
-    submit_text = 'Book a freelancer'
-    submit_context = {'icon_name': 'book'}
-
-    def __init__(self, *args, **kwargs):
-        super(JobRequestSignupInnerForm, self).__init__(*args, **kwargs)
-
-        self.helper.layout[0].insert(0, layout.HTML(
-            """<p>Please give us an email address and password that you
-            can use to sign in to the site."""))
+    submit_name = None
 
 
 class JobRequestUpdateMixin(object):

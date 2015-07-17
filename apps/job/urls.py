@@ -22,9 +22,14 @@ urlpatterns = [
                        views.JobRequestCreate.as_view(),
                        name='job_request_create'),
 
-    url(r'^create/(?P<service_key>[\w]+)/new-client/$',
-         views.JobRequestCreateAnonymous.as_view(),
+#     url(r'^create/(?P<service_key>[\w]+)/new-client/$',
+#          views.JobRequestCreateAnonymous.as_view(),
+#          name='job_request_create_anon'),
+
+    url(r'^create/(?P<service_key>[\w]+)/sign-up/$',
+         views.ClientSignUpView.as_view(),
          name='job_request_create_anon'),
+
 
     url(r'^requests/(?P<pk>[\d]+)/checkout/$',
         views.JobRequestCheckout.as_view(),
