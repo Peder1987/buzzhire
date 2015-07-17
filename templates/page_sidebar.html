@@ -42,7 +42,9 @@
                     <h4>{% block page_title_inner %}{{ title }}{% endblock %}</h4>
 
                 {% endblock %}
-                {% block content %}{% endblock %}
+                <div class="sidebar-content"> 
+                  {% block content %}{% endblock %}
+                </div>
               
             </div>
         </div>
