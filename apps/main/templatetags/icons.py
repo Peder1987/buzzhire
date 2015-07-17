@@ -71,7 +71,7 @@ ICON_MAP = {
     'icon-logout': 'sidebar-icon-11',
     'icon-edit': 'sidebar-icon-9',
     'icon-freelancer_profile_change': 'sidebar-icon-9',
-    'icon-photo': 'fa fa-camera-retro',
+    'icon-photo': 'sidebar-icon-7',
     'icon-confirm': 'sidebar-icon-3',
     'icon-availability': 'sidebar-icon-13',
     'icon-invitations': 'sidebar-icon-12'
