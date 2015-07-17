@@ -162,7 +162,7 @@
 
 .sidebar-breadcrumbs .breadcrumb li a{ 
 	color: rgba(255,255,255,0.6); 
-	font-family: 'Helvetica';
+	font-family: 'Helvetica', 'HelveticaLight';
   	font size: 13px;
 }
 .sidebar-breadcrumbs .breadcrumb li a:hover{ color: rgba(255,255,255,0.9); }
@@ -180,7 +180,7 @@
   color: #2779bc !important;
   font-weight: normal;
   font-size: 16px;
-  font-family: 'Helvetica';
+  font-family: 'Helvetica', 'HelveticaLight';
 }
 
 
@@ -196,7 +196,7 @@
 
 .after-breadcrumb.sidebar .panel-default
 {
-	font-family: 'Helvetica';
+	font-family: 'Helvetica', 'HelveticaLight';
 	border: none;
 	box-shadow: none !important;
 }
@@ -379,7 +379,7 @@ body {
 
   background: #fff;
 
-  font-family: 'Helvetica';
+  font-family: 'Helvetica', 'HelveticaLight';
 
   font-weight: 300;
 
@@ -543,7 +543,7 @@ img {
 
   font-weight: 300;
 
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Helvetica', 'HelveticaLight';
 
 }
 
@@ -609,7 +609,7 @@ img {
 
   box-shadow: none;
 
-  font-family: 'Helvetica';
+  font-family: 'Helvetica', 'HelveticaLight';
 
   font-size: 18px !important;
 
@@ -725,7 +725,7 @@ textarea::-webkit-input-placeholder {
 
   border: 0;
 
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Helvetica', 'HelveticaLight';
 
   font-size: 22px;
 
@@ -813,7 +813,7 @@ textarea::-webkit-input-placeholder {
 
 .navbar-default {
 
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Helvetica', 'HelveticaLight';
 
   border: none;
 
@@ -1106,7 +1106,7 @@ textarea::-webkit-input-placeholder {
 
 	box-shadow: none;
 
-	font-family: 'Helvetica';
+	font-family: 'Helvetica', 'HelveticaLight';
 
 	margin: 0 16px 0 15px;
 
@@ -1269,13 +1269,6 @@ h3 { color: #2779bc; }
   cursor: pointer;
 
 }
-/*
-.features-box:hover h4{
-
-	color: #555;
-	font-family: 'HelveticaLight';
-
-} */
 
 .features-box h4 {
 
@@ -1862,7 +1855,7 @@ h3 { color: #2779bc; }
 
 .team h3 {
 
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Helvetica', 'HelveticaLight';
 
   font-size: 50px;
 
@@ -1910,7 +1903,7 @@ h3 { color: #2779bc; }
 
   left: 20px;
 
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Helvetica', 'HelveticaLight';
 
   font-size: 24px;
 
@@ -2104,7 +2097,7 @@ h3 { color: #2779bc; }
 
 .faq .faq-box h4 {
 
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Helvetica', 'HelveticaLight';
 
   font-size: 18px;
 
@@ -2154,7 +2147,7 @@ h3 { color: #2779bc; }
 
 .contact h3 {
 
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'HelveticaLight';
 
   font-size: 50px;
 
@@ -2232,7 +2225,7 @@ h3 { color: #2779bc; }
 
   border-bottom: 1px solid #ccc;
 
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Helvetica', 'HelveticaLight';
 
   font-size: 22px;
 
@@ -2428,7 +2421,7 @@ footer a:hover {
 
   border: 0;
 
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Helvetica', 'HelveticaLight';
 
   font-size: 22px;
 
@@ -2686,7 +2679,7 @@ label.checkbox {
 
 .breadcrumb { margin-top: 20px; margin-bottom: -20px; }
 
-.after-breadcrumb { font-family: 'Helvetica'; }
+.after-breadcrumb { font-family: 'Helvetica', 'HelveticaLight';}
 
 .navbar-text {
 
@@ -2696,7 +2689,7 @@ label.checkbox {
 
   margin-top: 17px;
 
-  font-family: 'Helvetica';
+  font-family: 'Helvetica', 'HelveticaLight';
 
   color: #2779bc;
 
