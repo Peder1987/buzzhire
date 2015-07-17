@@ -14,7 +14,7 @@
             <div class='col-md-3 pad0'>
                 {% block sidebar %}{% endblock %}
             </div>
-            <div class='col-md-9 sidebar-main'>
+            <div class='col-md-9 sidebar-main pad0'>
                 {% block messages_sidebar %}
                     {% if messages %}
                       {% include 'includes/messages.html' with top_space=False %}
