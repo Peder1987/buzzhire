@@ -142,50 +142,31 @@
 
 
 .sidebar-breadcrumbs .breadcrumb li a{ color: rgba(255,255,255,0.6); }
+.sidebar-breadcrumbs .breadcrumb li a:hover{ color: rgba(255,255,255,0.9); }
 
 .sidebar-breadcrumbs .breadcrumb li.active{ color: white;}
 
 .x-icon{ color: white; font-size: 30px; position: absolute; right: 10%; cursor: pointer; z-index: 9999}
 
-
-
 .footer-list li{ padding: 20px; }
 
-
-
-.ready-sec{
-
-	background: #f7f7f7;
-
-	padding-top: 5em; padding-bottom: 4em;
-
-}
+.ready-sec{ background: #f7f7f7; padding-top: 5em; padding-bottom: 4em; }
 
 
 .navbar-default.menu-top li a {
-
   color: #2779bc !important;
-
   font-weight: normal;
-
   font-size: 16px;
-
 }
 
 
 
 .navbar-default.menu-top li a.btn{
-
 	background: #2779bc;
-
 	border-radius: 3px;
-
 	padding: 8px 15px;
-
 	color: white !important;
-
 	margin-top:	6px;
-
 }
 
 
