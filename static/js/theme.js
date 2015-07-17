@@ -5,15 +5,15 @@ jQuery(document).ready(function() {
 
 		$('a[href*=#]').bind("click", function(e){
 			var anchor = $(this);
-			$('html, body').stop().animate({
-				scrollTop: $(anchor.attr('href')).offset().top - 50
-			}, 1500);
-			e.preventDefault();
-		});
+      var anchorClass = anchor.attr('class');
 
-    $('.product-container.product-bg2 ul.nav.nav-tabs li a').bind("click", function(e){
-      return false;
-    });
+      if (anchorClass !='homepage-navtab')
+        
+  			$('html, body').stop().animate({
+  				scrollTop: $(anchor.attr('href')).offset().top - 50
+  			}, 1500);
+  			e.preventDefault();
+		});
 
     $(window).scroll(function() {
       if ($(this).scrollTop() > 100) {
