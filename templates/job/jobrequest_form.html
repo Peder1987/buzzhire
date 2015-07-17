@@ -1,12 +1,5 @@
-{% extends 'job/jobrequest_detail.html' %}
+{% extends 'job/job_create_base.html' %}
 {% load crispy_forms_tags django_bootstrap_breadcrumbs %}
-
-{% block inner_breadcrumb %}
-  {{ block.super }}
-  {% if object %}
-    {% breadcrumb object object.get_absolute_url %}
-  {% endif %}
-{% endblock %}
 
 {% block content %}
     {% include 'includes/forms/invalid_form_message.html' %}
