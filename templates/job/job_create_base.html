@@ -3,7 +3,9 @@
 
 {% block sidebar %}
     <h4>Booking summary</h4>
-    <p>Booking for a <strong>{{ service.title }}</strong>.</p>
+    {% if service %}
+        <p>Booking for a <strong>{{ service.title }}</strong>.</p>
+    {% endif %}
     {% if object %}
         <p>{{ object.date }}</p>
         <p>{{ object.start_time }} - {{ object.duration }} hours</p>
