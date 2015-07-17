@@ -13,11 +13,11 @@ from django.template.loader import render_to_string
 register = template.Library()
 
 @register.filter
-def client_feedback_allowed(job_request):
+def client_feedback_needed(job_request):
     """Returns whether or not the client can give feedback on the job request.
     Note this doesn't check whether the client owns the job request.
     Usage:
-        {% if object|client_feedback_allowed %}
+        {% if object|client_feedback_needed %}
             ...
         {% endif %}
     """
@@ -28,12 +28,12 @@ def client_feedback_allowed(job_request):
 
 
 @register.filter
-def freelancer_feedback_allowed(booking):
+def freelancer_feedback_needed(booking):
     """Returns whether or not the freelancer can give feedback on
     the supplied booking.
     Note this doesn't check whether the freelancer owns the job request.
     Usage:
-        {% if object|client_feedback_allowed %}
+        {% if object|freelancer_feedback_needed %}
             ...
         {% endif %}
     """

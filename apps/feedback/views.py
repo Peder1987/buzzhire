@@ -32,7 +32,7 @@ class FeedbackAllowedMixin(object):
         if self.object.status != JobRequest.STATUS_COMPLETE:
             message = "You cannot leave feedback for a job that " \
                         "hasn't finished yet."
-        elif self.has_already_left_feedback():
+        elif self.has_given_all_feedback():
             message = 'You have already left feedback for this job.'
         if message:
             messages.error(self.request, message)
@@ -41,12 +41,12 @@ class FeedbackAllowedMixin(object):
         return super(FeedbackAllowedMixin, self).dispatch(request,
                                                            *args, **kwargs)
 
-    def has_already_left_feedback(self):
-        """Returns whether or not the user (client or freelancer) has already
-        left feedback on this job request.
+    def has_given_all_feedback(self):
+        """Returns whether or not the user (client or freelancer) has given
+        all the feedback needed for this job request.
         """
         if self.author_type == BookingFeedback.AUTHOR_TYPE_CLIENT:
-            return BookingFeedback.objects.client_feedback_exists(self.object)
+            return not self.object.needs_feedback_from_client
         else:
             return BookingFeedback.objects.freelancer_feedback_exists(
                                                 self.object, self.freelancer)
@@ -112,6 +112,7 @@ class ClientFeedbackCreate(OwnedByClientMixin,
 
     def get_success_url(self):
         return self.object.get_absolute_url()
+
 
 class FreelancerFeedbackCreate(FreelancerHasBookingMixin,
                                BaseFeedbackCreateView):
