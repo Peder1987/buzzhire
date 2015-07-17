@@ -2951,8 +2951,15 @@ address {
   .features-box h4 {
 
 	font-size: 20px;
+	line-height: 24px;
 
   }
+
+  .features-container a.btn {
+  	width: 50%;
+  }
+
+  .features-box { padding-bottom: 30px; }
 
   .features-box .icon .icon-num, .features-box .icon {
 
@@ -2984,11 +2991,7 @@ address {
 
   }
 
-  .top-content .text {
-
-    text-align: center;
-
-  }
+  .top-content .text { text-align: center; }
 
   .top-content h2,
 
@@ -3036,11 +3039,15 @@ address {
 
   }
 
-  .top-content .buttons-row {
-
-    margin: 1em;
+  .features-box p {
+  	font-size: 15px;
+	line-height: 22px;
+	margin-bottom: 20px;
 
   }
+  
+
+  .top-content .buttons-row { margin: 1em; }
 
   .top-content .buttons-row .btn {
 
@@ -3050,11 +3057,7 @@ address {
 
   }
 
-  .top-content .container {
-
-    padding-top: 2em;
-
-  }
+  .top-content .container { padding-top: 2em; }
 
   .features-box p,
 
