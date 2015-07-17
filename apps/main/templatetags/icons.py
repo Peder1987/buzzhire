@@ -70,6 +70,8 @@ ICON_MAP = {
     'icon-password': 'sidebar-icon-10',
     'icon-logout': 'sidebar-icon-11',
     'icon-edit': 'sidebar-icon-9',
+    'icon-freelancer_profile_change': 'sidebar-icon-9',
+    'icon-photo': 'fa fa-camera-retro test',
 
 }
 
