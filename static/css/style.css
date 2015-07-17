@@ -1059,12 +1059,8 @@ textarea::-webkit-input-placeholder {
 
 }
 
-  margin-top: -40px;
-  background-color: #2f81c2;
 
-
-
-.product-container.product-bg2 .nav.nav-tabs li{
+.product-container.product-bg2 .nav-tabs>li{
 
 	float:none;
 
