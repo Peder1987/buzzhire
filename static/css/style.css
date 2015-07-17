@@ -413,7 +413,7 @@ h3 {
 
   margin-top: 10px;
 
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'HelveticaLight';
 
   font-size: 50px;
 
@@ -434,6 +434,8 @@ h4 {
   color: #888;
 
   line-height: 34px;
+
+  font-family: 'HelveticaLight';
 
 }
 
