@@ -30,13 +30,14 @@
    <div style='clear: both;'></div>
 {% endblock %}
 
-
+<div class="sidebar-content">
 {% block content %}
     {% if form %}
         {% include 'includes/forms/invalid_form_message.html' %}
         {% crispy form %}
     {% endif %}
 {% endblock %}
+</div>
 
 {% block extrastyles %}
   {{ block.super }}
