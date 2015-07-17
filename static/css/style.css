@@ -16,7 +16,7 @@
 
 	src: url('../fonts/Helvetica.ttf');
 
-	font-weight: bold;
+	font-weight: normal;
 
 }
 
@@ -28,7 +28,7 @@
 
 	src: url('../fonts/HelveticaLight.ttf');
 
-	font-weight: bold;
+	font-weight: normal;
 
 }
 
@@ -40,7 +40,17 @@
 
 	src: url('../fonts/HelveticaOblique.ttf');
 
-	font-weight: bold;
+	font-weight: normal;
+
+}
+
+@font-face {
+
+	font-family: 'HelveticaBold';
+
+	src: url('../fonts/HelveticaBold.ttf');
+
+	font-weight: normal;
 
 }
 
@@ -2554,6 +2564,10 @@ form {
 
   margin-bottom: 1em;
 
+}
+
+label{
+	font-family: 'HelveticaBold';
 }
 
 .checkbox input[type="checkbox"] {
