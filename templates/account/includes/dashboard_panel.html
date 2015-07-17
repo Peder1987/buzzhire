@@ -8,7 +8,7 @@
             {% include 'includes/panel_link.html' with icon_name='icon-client_profile_change' link_text='Edit profile' %}
           {% endif %}
           {% if freelancer %}
-            {% for link_url, link_text, 'icon-'|add:icon_name in freelancer|freelancer_profile_menu_items %}
+            {% for link_url, link_text, icon_name in freelancer|freelancer_profile_menu_items %}
               {% with 'icon-'|add:icon_name as icon_name %}  
                 {% include 'includes/panel_link.html' %}
             {% endfor %} 
