@@ -256,9 +256,10 @@
   margin: 0 0 0 0 !important;
   text-align: center;
   color: white;
-  width: 40%;
+  min-width: 40%;
   display: inline-block;
-  float: right;
+  max-width: 55%;
+  width: 55%;
  }
 
  .sidebar-content-header .sidebar-breadcrumbs{
