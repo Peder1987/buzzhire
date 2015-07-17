@@ -5,9 +5,6 @@ jQuery(document).ready(function() {
 
 		$('a[href*=#]').bind("click", function(e){
 			var anchor = $(this);
-      var anchorClass = anchor.attr('class');
-
-      //if (anchorClass !='homepage-navtab')
         
   			$('html, body').stop().animate({
   				scrollTop: $(anchor.attr('href')).offset().top - 50
