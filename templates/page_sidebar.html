@@ -38,8 +38,9 @@
                          {% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap3.html" %}
                       </div>
                     {% endblock %}
-
-                    <h4 class="sidebar-page-title">{% block page_title_inner %}{{ title }}{% endblock %}</h4>
+                    <div class="sidebar-page-title">
+                      <h4>{% block page_title_inner %}{{ title }}{% endblock %}</h4>
+                    </div>
                     <div class="clearfix"></div>
 
                 {% endblock %}
