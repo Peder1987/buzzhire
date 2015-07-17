@@ -245,7 +245,11 @@
 
 .sidebar-content-header{
 	padding: 40px 0;
-  	background-color: #2f81c2;
+  	background: linear-gradient(to right, rgb(44,124,187) , rgb(60,153,227));
+  	background: -moz-linear-gradient(to right, rgb(44,124,187) , rgb(60,153,227));
+  	background: -o-linear-gradient(to right, rgb(44,124,187) , rgb(60,153,227));
+  	background: -webkit-linear-gradient(to right, rgb(44,124,187) , rgb(60,153,227));
+  	
 }
 
 .sidebar-content-header h4{
