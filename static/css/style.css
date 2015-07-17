@@ -252,14 +252,18 @@
   	
 }
 
-.sidebar-content-header h4{
+.sidebar-content-header .sidebar-content-title h4{
   margin: 0 0 0 0 !important;
   text-align: center;
   color: white;
-  min-width: 40%;
-  display: inline-block;
-  max-width: 55%;
-  width: 55%;
+  
+ }
+
+ .sidebar-content-title{
+ 	min-width: 40%;
+  	display: inline-block;
+  	max-width: 55%;
+  	width: 55%;
  }
 
  .sidebar-content-header .sidebar-breadcrumbs{
