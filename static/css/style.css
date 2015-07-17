@@ -152,8 +152,7 @@
 
 .sidebar-page .after-breadcrumb.sidebar .sidebar-content{
 	background-color: #f7f7f7;
-	padding-left: 20px;
-	padding-right: 20px;
+	padding: 40px 20px;
 }
 
 .after-breadcrumb .panel.panel-default .badge{
@@ -247,7 +246,6 @@
 .sidebar-content-header{
 	padding: 40px 0;
   	background-color: #2f81c2;
-  	margin-bottom: 40px;
 }
 
 .sidebar-content-header h4{
@@ -2573,7 +2571,7 @@ form {
 }
 
 label{
-	font-family: 'Helvetica';
+	font-family: 'HelveticaBold';
 }
 
 .checkbox input[type="checkbox"] {
