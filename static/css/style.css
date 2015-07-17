@@ -345,7 +345,7 @@ body {
 
   background: #fff;
 
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Helvetica';
 
   font-weight: 300;
 
@@ -2658,9 +2658,13 @@ label.checkbox {
 
   line-height: 1em;
 
-  font-size: 15px;
+  font-size: 16px;
 
   margin-top: 17px;
+
+  font-family: 'Helvetica';
+
+  color: #2779bc;
 
 }
 
