@@ -1064,7 +1064,7 @@ textarea::-webkit-input-placeholder {
 
 
 
-.nav.nav-tabs li{
+.product-container.product-bg2 .nav.nav-tabs li{
 
 	float:none;
 
@@ -1095,7 +1095,6 @@ textarea::-webkit-input-placeholder {
 	color: #2779bc
 
 }
-
 
 
 .product-container .buttons-row li.active a{background-color: #2779bc; color: white}
