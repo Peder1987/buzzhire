@@ -150,6 +150,13 @@
 
 /* Custom */
 
+.sidebar-page .after-breadcrumb.sidebar .sidebar-main{
+	background-color: #f7f7f7;
+}
+
+.after-breadcrumb .panel.panel-default .badge{
+	background-color: #2779bc;
+}
 
 .sidebar-breadcrumbs .breadcrumb li a{ 
 	color: rgba(255,255,255,0.6); 
