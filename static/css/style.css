@@ -153,7 +153,7 @@
 .ready-sec{ background: #f7f7f7; padding-top: 5em; padding-bottom: 4em; }
 
 
-.navbar-default.menu-top.menu-shrink li a {
+.navbar-default.menu-top.menu-shrink li a, .navbar-default.menu-top li a {
   color: #2779bc !important;
   font-weight: normal;
   font-size: 16px;
@@ -162,7 +162,7 @@
 
 
 
-.navbar-default.menu-top.menu-shrink li a.btn{
+.navbar-default.menu-top.menu-shrink li a.btn, .navbar-default.menu-top li a.btn{
 	background: #2779bc;
 	border-radius: 3px;
 	padding: 8px 15px;
