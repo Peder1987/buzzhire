@@ -189,6 +189,7 @@
 {
 	font-family: 'Helvetica';
 	border: none;
+	box-shadow: none !important;
 }
 
 .after-breadcrumb.sidebar .panel-default>.panel-heading {
@@ -888,8 +889,6 @@ textarea::-webkit-input-placeholder {
   padding: 10px 0;
 
   background-color: #fff;
-
-  border-bottom: 2px solid #eee;
 
   width: 100%;
 
@@ -2567,7 +2566,7 @@ form {
 }
 
 label{
-	font-family: 'HelveticaBold';
+	font-family: 'Helvetica';
 }
 
 .checkbox input[type="checkbox"] {
@@ -2666,7 +2665,7 @@ label.checkbox {
 
 .breadcrumb { margin-top: 20px; margin-bottom: -20px; }
 
-.after-breadcrumb { margin-top: 40px; font-family: 'Helvetica'; }
+.after-breadcrumb { font-family: 'Helvetica'; }
 
 .navbar-text {
 
