@@ -21,7 +21,7 @@ class BookingOrInvitationQuerySet(models.QuerySet):
     def past(self):
         """Filter by job requests that are in the past (i.e. started
         yesterday or before."""
-        return self.exclude(jobrequest__end_datetime__lt=timezone.now())
+        return self.exclude(jobrequest__end_datetime__gte=timezone.now())
 
     def complete(self):
         """Filter by job requests that have been completed.
