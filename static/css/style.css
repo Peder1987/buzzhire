@@ -1093,7 +1093,7 @@ textarea::-webkit-input-placeholder {
 }
 
 
-.product-container .buttons-row li.active a{background-color: #2779bc; color: white}
+.product-container.product-bg2 .nav.nav-tabs li.active a{background-color: #2779bc; color: white}
 
 
 
