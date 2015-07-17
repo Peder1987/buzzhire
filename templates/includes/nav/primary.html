@@ -23,7 +23,7 @@
                     {% url 'freelancer_signup_select' as link_url %}
                     {% include 'includes/menu_link.html' with link_text='Become a freelancer' %}
                    
-                    <a href="{% url 'account_login' %}" class="btn blue-bck white">Log in</a>
+                    <li><a href="{% url 'account_login' %}" class="btn blue-bck white">Log in</a></li>
                 {% else %}
                     {% comment %}
                         {% url 'account_dashboard' as link_url %}
