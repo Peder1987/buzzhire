@@ -1239,9 +1239,9 @@ h3 {
 
 .features-box:hover {
 
-  background: #eee;
+ /* background: #eee;
 
-  color: #555;
+  color: #555; */
 
   transition: all 0.7s;
 
@@ -1254,13 +1254,13 @@ h3 {
   cursor: pointer;
 
 }
-
+/*
 .features-box:hover h4{
 
 	color: #555;
 	font-family: 'HelveticaLight';
 
-}
+} */
 
 .features-box h4 {
 
@@ -1359,12 +1359,12 @@ h3 {
 }
 
 
-
+/*
 .features-box:hover .icon .icon-num{
 
   color: #444;
 
-  }
+  } */
 
 .features-box:hover .icon i {
 
