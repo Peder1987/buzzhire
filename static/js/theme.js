@@ -12,10 +12,6 @@ jQuery(document).ready(function() {
   			e.preventDefault();
 		});
 
-    $('.product-container.product-bg2 ul.nav.nav-tabs li a').bind("click", function(e){
-      return false;
-    });
-
     $(window).scroll(function() {
       if ($(this).scrollTop() > 100) {
         $('.menu-top').addClass('menu-shrink');
