@@ -141,7 +141,11 @@
 /* Custom */
 
 
-.sidebar-breadcrumbs .breadcrumb li a{ color: rgba(255,255,255,0.6); }
+.sidebar-breadcrumbs .breadcrumb li a{ 
+	color: rgba(255,255,255,0.6); 
+	font-family: 'Helvetica';
+  	font size: 13px;
+}
 .sidebar-breadcrumbs .breadcrumb li a:hover{ color: rgba(255,255,255,0.9); }
 
 .sidebar-breadcrumbs .breadcrumb li.active{ color: white;}
@@ -153,7 +157,7 @@
 .ready-sec{ background: #f7f7f7; padding-top: 5em; padding-bottom: 4em; }
 
 
-.navbar-default.menu-top.menu-shrink li a, .navbar-default.menu-top li a {
+.navbar-default.menu-top.menu-shrink li a, .navbar-default.menu-top .navbar-nav > li > a {
   color: #2779bc !important;
   font-weight: normal;
   font-size: 16px;
@@ -413,7 +417,7 @@ h3 {
 
   margin-top: 10px;
 
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'HelveticaLight';
 
   font-size: 50px;
 
@@ -434,6 +438,8 @@ h4 {
   color: #888;
 
   line-height: 34px;
+
+  font-family: 'HelveticaLight';
 
 }
 
@@ -1548,7 +1554,7 @@ h3 { color: #2779bc; }
 
 .testimonials h3 {
 
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'HelveticaLight';
 
   font-size: 50px;
 
@@ -2644,19 +2650,9 @@ label.checkbox {
 
 }
 
-.breadcrumb {
+.breadcrumb { margin-top: 20px; margin-bottom: -20px; }
 
-  margin-top: 20px;
-
-  margin-bottom: -20px;
-
-}
-
-.after-breadcrumb {
-
-  margin-top: 40px;
-
-}
+.after-breadcrumb { margin-top: 40px; font-family: 'Helvetica'; }
 
 .navbar-text {
 
@@ -2668,13 +2664,7 @@ label.checkbox {
 
 }
 
-.sidebar-main h4 {
-
-  margin-top: 0;
-
-  margin-bottom: 1em;
-
-}
+.sidebar-main h4 { margin-top: 0; margin-bottom: 1em; }
 
 .panel .list-group-item.active,
 
