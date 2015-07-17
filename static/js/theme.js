@@ -7,7 +7,7 @@ jQuery(document).ready(function() {
 			var anchor = $(this);
       var anchorClass = anchor.attr('class');
 
-      if (anchorClass !='homepage-navtab')
+      //if (anchorClass !='homepage-navtab')
         
   			$('html, body').stop().animate({
   				scrollTop: $(anchor.attr('href')).offset().top - 50
