@@ -158,6 +158,8 @@
 .after-breadcrumb .panel.panel-default .badge{
 	background-color: #2779bc;
 	color: white !important;
+	margin-right: 10px;
+  	margin-top: 4px;
 }
 
 .sidebar-breadcrumbs .breadcrumb li a{ 
