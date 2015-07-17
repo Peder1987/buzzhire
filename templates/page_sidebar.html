@@ -34,12 +34,12 @@
                     {% endblock %}
 
                     {% block breadcrumb_display %}
-                      <div class='sidebar-breadcrumbs' style='float:left'>
+                      <div class='sidebar-breadcrumbs'>
                          {% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap3.html" %}
                       </div>
                     {% endblock %}
 
-                    <h4>{% block page_title_inner %}{{ title }}{% endblock %}</h4>
+                    <h4 class="sidebar-page-title">{% block page_title_inner %}{{ title }}{% endblock %}</h4>
 
                 {% endblock %}
                 <div class="sidebar-content"> 
