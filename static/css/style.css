@@ -141,7 +141,11 @@
 /* Custom */
 
 
-.sidebar-breadcrumbs .breadcrumb li a{ color: rgba(255,255,255,0.6); }
+.sidebar-breadcrumbs .breadcrumb li a{ 
+	color: rgba(255,255,255,0.6); 
+	font-family: 'Helvetica';
+  	font size: 13px;
+}
 .sidebar-breadcrumbs .breadcrumb li a:hover{ color: rgba(255,255,255,0.9); }
 
 .sidebar-breadcrumbs .breadcrumb li.active{ color: white;}
@@ -2646,19 +2650,9 @@ label.checkbox {
 
 }
 
-.breadcrumb {
+.breadcrumb { margin-top: 20px; margin-bottom: -20px; }
 
-  margin-top: 20px;
-
-  margin-bottom: -20px;
-
-}
-
-.after-breadcrumb {
-
-  margin-top: 40px;
-
-}
+.after-breadcrumb { margin-top: 40px; font-family: 'Helvetica'; }
 
 .navbar-text {
 
@@ -2670,13 +2664,7 @@ label.checkbox {
 
 }
 
-.sidebar-main h4 {
-
-  margin-top: 0;
-
-  margin-bottom: 1em;
-
-}
+.sidebar-main h4 { margin-top: 0; margin-bottom: 1em; }
 
 .panel .list-group-item.active,
 
