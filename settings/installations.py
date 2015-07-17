@@ -90,3 +90,11 @@ class Live(HueyMixin,
     BRAINTREE_MERCHANT_ID = 'q6xbcpbpcm4vtvcw'
     BRAINTREE_PUBLIC_KEY = 'skmbrjfnnc4kfxq5'
     BRAINTREE_SANDBOX = False
+
+
+class Stage(Live):
+    "The staging site - duplicates the live site, for deployment rehearsals."
+    WEBFACTION_APPNAME = 'stage'
+    HUEY_NAME = 'stage'
+    HUEY_PORT = 17610
+    COMING_SOON = False
