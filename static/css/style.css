@@ -151,6 +151,10 @@
 /* Custom */
 
 .sidebar-page .after-breadcrumb.sidebar .sidebar-main{
+	padding-left: 20px;
+	padding-right: 20px;
+}
+.sidebar-page .after-breadcrumb.sidebar .sidebar-content{
 	background-color: #f7f7f7;
 }
 
