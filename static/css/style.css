@@ -260,10 +260,8 @@
  }
 
  .sidebar-page-title{
- 	min-width: 40%;
+ 	min-width: 45%;
   	display: inline-block;
-  	max-width: 55%;
-  	width: 55%;
  }
 
  .sidebar-content-header .sidebar-breadcrumbs{
