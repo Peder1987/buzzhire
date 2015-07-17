@@ -264,7 +264,7 @@
 
  .sidebar-content-header .sidebar-breadcrumbs{
  	float:left; 
- 	width:55%; 
+ 	max-width:55%; 
  	display:inline-block;
  }
 
