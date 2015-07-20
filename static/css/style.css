@@ -263,8 +263,16 @@
  }
 
  .sidebar-page .sidebar-page-title{
- 	min-width: 45%;
+ 	  min-width: 45%;
   	display: inline-block;
+ }
+
+ .sidebar-right-page .sidebar-right-page-title{
+    color: white; 
+    font-size: 25px;
+    margin-bottom: 0;
+    padding: 25px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
  }
 
  .sidebar-content-header .sidebar-breadcrumbs{
