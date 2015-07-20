@@ -3,6 +3,7 @@ from ...freelancer.views import (FreelancerForClientViewSet,
 from ...job.views import (JobRequestForFreelancerViewSet,
                           ServiceSpecificJobRequestForClientViewSet)
 from apps.services.cleaner.models import Cleaner, CleanerJobRequest
+from .serializers import CleanerJobRequestForClientSerializer
 
 
 class CleanerForClientViewSet(FreelancerForClientViewSet):
@@ -41,6 +42,7 @@ class CleanerJobRequestForClientViewSet(ServiceSpecificJobRequestForClientViewSe
     - Currently no fields.
  
     """
+    serializer_class = CleanerJobRequestForClientSerializer
     model_class = CleanerJobRequest
 
 
