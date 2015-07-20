@@ -262,7 +262,7 @@
   
  }
 
- .sidebar-page-title{
+ .sidebar-page .sidebar-page-title{
  	min-width: 45%;
   	display: inline-block;
  }
