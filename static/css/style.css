@@ -345,10 +345,11 @@
 
  .sidebar-right-page .row{ overflow: hidden !important; }
 
- .sidebar-right-page h5{
+ .sidebar-right-page .client-signup-form h5, .sidebar-right-page .client-login-form h5{
     border-bottom: none !important;
     color: #2779bc;
     font-family: 'HelveticaLight';
+    font-size: 26px;
  }
 
  .sidebar-right-page .sidebar-content .client-signup-form .form-group {
