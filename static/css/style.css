@@ -331,33 +331,33 @@
   	margin-right: 8px;
   }
 
-  span.sidebar-icon-1{ background:url(../img/sidebar-icon-1.png); }
+  span.sidebar-icon-1{ background:url(../img/sidebar-icon-1.png); background-repeat: no-repeat; }
 
-  span.sidebar-icon-2{ background:url(../img/sidebar-icon-2.png); }
+  span.sidebar-icon-2{ background:url(../img/sidebar-icon-2.png); background-repeat: no-repeat; }
 
-  span.sidebar-icon-3{ background:url(../img/sidebar-icon-3.png); }
+  span.sidebar-icon-3{ background:url(../img/sidebar-icon-3.png); background-repeat: no-repeat; }
 
-  span.sidebar-icon-4{ background:url(../img/sidebar-icon-4.png); }
+  span.sidebar-icon-4{ background:url(../img/sidebar-icon-4.png); background-repeat: no-repeat; }
 
-  span.sidebar-icon-5{ background:url(../img/sidebar-icon-5.png); }
+  span.sidebar-icon-5{ background:url(../img/sidebar-icon-5.png); background-repeat: no-repeat; }
 
-  span.sidebar-icon-6{ background:url(../img/sidebar-icon-6.png); }
+  span.sidebar-icon-6{ background:url(../img/sidebar-icon-6.png); background-repeat: no-repeat; }
 
-  span.sidebar-icon-7{ background:url(../img/sidebar-icon-7.png); }
+  span.sidebar-icon-7{ background:url(../img/sidebar-icon-7.png); background-repeat: no-repeat; }
 
-  span.sidebar-icon-8{ background:url(../img/sidebar-icon-8.png); }
+  span.sidebar-icon-8{ background:url(../img/sidebar-icon-8.png); background-repeat: no-repeat; }
 
-  span.sidebar-icon-9{ background:url(../img/sidebar-icon-9.png); }
+  span.sidebar-icon-9{ background:url(../img/sidebar-icon-9.png); background-repeat: no-repeat; }
 
-  span.sidebar-icon-10{ background:url(../img/sidebar-icon-10.png); }
+  span.sidebar-icon-10{ background:url(../img/sidebar-icon-10.png); background-repeat: no-repeat; }
 
-  span.sidebar-icon-11{ background:url(../img/sidebar-icon-11.png); }
+  span.sidebar-icon-11{ background:url(../img/sidebar-icon-11.png); background-repeat: no-repeat; }
 
-  span.sidebar-icon-12{ background:url(../img/sidebar-icon-12.png); }
+  span.sidebar-icon-12{ background:url(../img/sidebar-icon-12.png); background-repeat: no-repeat; }
 
-  span.sidebar-icon-13{ background:url(../img/sidebar-icon-13.png); }
+  span.sidebar-icon-13{ background:url(../img/sidebar-icon-13.png); background-repeat: no-repeat; }
 
-  span.sidebar-icon-14{ background:url(../img/sidebar-icon-14.png); }
+  span.sidebar-icon-14{ background:url(../img/sidebar-icon-14.png); background-repeat: no-repeat; }
 
 
   a.sidebar-link:hover span.sidebar-icon-1{  background:url(../img/sidebar-icon-1-hover.png); background-repeat: no-repeat; background-position: right;}
