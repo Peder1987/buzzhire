@@ -530,7 +530,7 @@ h5 {
 
 p {
 
-  font-size: 24px;
+  font-size: 22px;
 
   line-height: 1.2;
 
@@ -636,6 +636,10 @@ img {
 
 }
 
+.btn{
+  font-size: 22px !important;
+}
+
 .btn-primary {
 
   /* background: #011a26; */
@@ -652,7 +656,7 @@ img {
 
   font-family: 'Helvetica', 'HelveticaLight';
 
-  font-size: 18px !important;
+  font-size: 22px !important;
 
 }
 
@@ -1654,7 +1658,7 @@ h3 { color: #2779bc; }
 
   line-height: 22px;
 
-  font-size: 16px;
+  font-size: 22px;
 
   padding: 20px 10px;
 
