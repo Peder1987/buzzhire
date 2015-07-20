@@ -512,9 +512,17 @@
             });
 
             $( "#id_service" ).selectmenu()
-  .selectmenu( "menuWidget" )
-    .addClass( "overflow" );
-        });
+          .selectmenu( "menuWidget" )
+            .addClass( "overflow" );
+                });
+
+            var el = $('.ui-selectmenu-menu.ui-front');
+
+            el.remove();
+
+            el.insertAfter('.ui-selectmenu.button.ui-widget');
+
+
     </script>
    
 
