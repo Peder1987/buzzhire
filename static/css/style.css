@@ -1173,7 +1173,7 @@ textarea::-webkit-input-placeholder {
 		  border: none;
 		  border-radius: 8px;
 		  color: white;
-		  padding: 0px 15px;
+		  padding: 0px 8px;
 		  vertical-align: middle;
 		  max-width: 215px;
 		  text-align: left;
@@ -2918,8 +2918,6 @@ address {
   width: auto;
 
   display: inline;
-
-  margin-left: 5px;
 
 }
 
