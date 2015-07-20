@@ -153,7 +153,10 @@
 .sidebar-right-page .sidebar-content button.btn[name="client_submit"], .sidebar-right-page .sidebar-content button.btn[name="submit"]{
   background-color: rgb(166,239,100);
   font-family: 'Helvetica';
+  min-width: 250px;
 }
+
+.sidebar-right-page .sidebar-content button.btn[name="client_submit"]{ width: 100%;}
 
 .sidebar-right-page .sidebar-content button.btn[name="client_submit"] i, 
 .sidebar-right-page .sidebar-content button.btn[name="submit"] i{
