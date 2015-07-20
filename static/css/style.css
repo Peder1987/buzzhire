@@ -287,6 +287,19 @@
     border-bottom: 1px solid rgba(255,255,255,0.2);
  }
 
+ .sidebar-right-page .sidebar-page-title{
+    color: black;
+    padding: 20px 0;
+ }
+
+  .sidebar-right-page .sidebar-content{
+    padding: 20px;
+  }
+
+  .sidebar-right-page .sidebar-right-alert{
+    padding: 0 20px;
+  }
+
  .sidebar-right-page .row{
   overflow: hidden !important;
  }
@@ -330,6 +343,7 @@
   	display: inline-block;
   	margin-bottom: -8px;
   	margin-right: 8px;
+    margin-left: 0 !important;
   }
 
   span.sidebar-icon-1{ background:url(../img/sidebar-icon-1.png); background-repeat: no-repeat; }

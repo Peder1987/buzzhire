@@ -19,11 +19,13 @@
                     <div class="clearfix"></div>
                 {% endblock %}
 
+                <div class="sidebar-right-alert">
                 {% block messages_sidebar %}
                     {% if messages %}
                       {% include 'includes/messages.html' with top_space=False %}
                     {% endif %}
                 {% endblock %}
+                </div>
 
                 <div class="sidebar-content"> 
                   {% block content %}{% endblock %}
