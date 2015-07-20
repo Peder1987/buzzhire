@@ -356,7 +356,7 @@
   width: 100%;
 }
 
- .sidebar-right-page .sidebar-content legend{
+ .sidebar-right-page .sidebar-content legend, .select-form-title{
     border-bottom: none !important;
     color: #2779bc;
     font-family: 'HelveticaLight';
