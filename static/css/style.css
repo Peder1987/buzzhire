@@ -150,6 +150,16 @@
 
 /* Custom */
 
+.sidebar-right-page .sidebar-content button.btn[name="client_submit"], .sidebar-right-page .sidebar-content button.btn[name="submit"]{
+  background-color: rgb(166,239,100);
+  font-family: 'Helvetica';
+}
+
+.sidebar-right-page .sidebar-content button.btn[name="client_submit"] i, 
+.sidebar-right-page .sidebar-content button.btn[name="submit"] i{
+  display: none;
+  }
+
  .features-container .page-title .col-md-7{
   padding: 0;
   text-align: right;
