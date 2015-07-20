@@ -1201,7 +1201,7 @@ textarea::-webkit-input-placeholder {
   border: none;
   border-radius: 8px;
   color: white;
-  padding: 5px 41px 9px 4px;
+  padding: 5px 28px 9px 8px;
   max-width: 215px;
   text-align: left;
   line-height: 37px;
@@ -1214,8 +1214,16 @@ textarea::-webkit-input-placeholder {
   position: relative;
 }
 
+.ui-selectmenu-menu{
+  display: none;
+}
+
+.ui-selectmenu-menu.ui-selectmenu-open{
+   display: block;
+}
+
 .ui-icon.ui-icon-triangle-1-s{
-  right: 0.5em;
+  right: 8px;
   width: 16px;
   height: 16px;
   left: auto;
