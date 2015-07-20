@@ -156,7 +156,10 @@
   min-width: 250px;
 }
 
-.sidebar-right-page .sidebar-content button.btn[name="client_submit"]{ width: 100%;}
+.sidebar-right-page .sidebar-content button.btn[name="client_submit"]{ 
+  width: 100%;
+  margin: 0;
+}
 
 .sidebar-right-page .sidebar-content button.btn[name="client_submit"] i, 
 .sidebar-right-page .sidebar-content button.btn[name="submit"] i{
