@@ -36,7 +36,7 @@ ICON_MAP = {
     'save': 'fa fa-check-circle',
     'job_matching': 'fa fa-search',
     'create': 'fa fa-plus-circle',
-    'vehicletypes': 'fa fa-car',
+    'vehicletypes': 'sidebar-icon-14',
     'yes': 'fa fa-check',
     'no': 'fa fa-times',
     'location': 'fa fa-map-marker',
