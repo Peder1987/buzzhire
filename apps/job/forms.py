@@ -29,7 +29,7 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
     """Form for submitting a job request.
     Should be instantiated with a Client object.
     """
-    submit_text = 'Book'
+    submit_text = 'Continue'
     postcode_required = True
 
     @property
