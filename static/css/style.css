@@ -1233,6 +1233,11 @@ textarea::-webkit-input-placeholder {
   cursor: pointer;
   width: 185px;
   background-color: rgba(54, 123, 174, 0.701961);
+  text-align: left;
+}
+
+.ui-menu.ui-widget.ui-widget-content li{
+  line-height: 1.2;
 }
 
 .ui-icon.ui-icon-triangle-1-s{
