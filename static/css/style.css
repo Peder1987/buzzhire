@@ -150,6 +150,17 @@
 
 /* Custom */
 
+.how-it-works .page-title .col-md-7{
+  padding: 0;
+  text-align: right;
+}
+
+.how-it-works .page-title .col-md-4{
+  padding: 15px 25px;
+  text-align: left;
+}
+
+
 .sidebar-page .after-breadcrumb.sidebar .sidebar-content{
 	background-color: #f7f7f7;
 	padding: 40px 20px;
@@ -2983,6 +2994,10 @@ address {
 }
 
 @media (max-width: 767px) {
+
+  .how-it-works .page-title .col-md-7, .how-it-works .page-title .col-md-4{
+    text-align: center;
+  }
 
   body {
 
