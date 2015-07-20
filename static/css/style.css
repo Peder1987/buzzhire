@@ -150,12 +150,12 @@
 
 /* Custom */
 
-.how-it-works .page-title .col-md-7{
+ .features-container .page-title .col-md-7{
   padding: 0;
   text-align: right;
 }
 
-.how-it-works .page-title .col-md-4{
+ .features-container .page-title .col-md-4{
   padding: 15px 25px;
   text-align: left;
 }
@@ -2995,7 +2995,7 @@ address {
 
 @media (max-width: 767px) {
 
-  .how-it-works .page-title .col-md-7, .how-it-works .page-title .col-md-4{
+   .features-container .page-title .col-md-7,  .features-container .page-title .col-md-4{
     text-align: center;
   }
 
