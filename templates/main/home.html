@@ -511,13 +511,12 @@
                 $('#how-it-works').toggle("slow");
             });
 
-            $( "#id_service" ).selectmenu().selectmenu( "menuWidget" ).addClass( "overflow" );
+            $( "#id_service" ).selectmenu();
 
-            var el = $('.ui-selectmenu-menu.ui-front');
+            $( "#id_service" ).on( "selectmenuopen", function( event, ui ) {
+                $('.inline-form-field .text-center').css('margin-top','180px');
+            } );
 
-           // el.remove();
-
-            el.insertAfter('.ui-selectmenu.button.ui-widget');
         });
 
 
