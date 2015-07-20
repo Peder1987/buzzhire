@@ -3,6 +3,7 @@ from ...freelancer.views import (FreelancerForClientViewSet,
 from ...job.views import (JobRequestForFreelancerViewSet,
                           ServiceSpecificJobRequestForClientViewSet)
 from apps.services.waiting.models import WaitingFreelancer, WaitingJobRequest
+from .serializers import WaitingJobRequestForClientSerializer
 
 
 class OwnWaitingFreelancerViewSet(OwnFreelancerViewSet):
@@ -42,6 +43,7 @@ class WaitingJobRequestForClientViewSet(ServiceSpecificJobRequestForClientViewSe
     - Currently no fields.
  
     """
+    serializer_class = WaitingJobRequestForClientSerializer
     model_class = WaitingJobRequest
 
 
