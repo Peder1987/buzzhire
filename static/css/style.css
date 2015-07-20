@@ -1211,6 +1211,7 @@ textarea::-webkit-input-placeholder {
   min-height: 45px;
   margin-left: 0 !important;
   vertical-align: top;
+  position: relative;
 }
 
 .ui-icon.ui-icon-triangle-1-s{
