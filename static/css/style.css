@@ -1196,6 +1196,35 @@ textarea::-webkit-input-placeholder {
 
 }
 
+.ui-selectmenu-button.ui-widget {
+  background-color: rgba(54,123,174,0.7);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 5px 41px 9px 4px;
+  max-width: 215px;
+  text-align: left;
+  line-height: 37px;
+  margin: 0px 8px 0 10px;
+  font-size: 28px;
+  font-family: 'HelveticaLight';
+  min-height: 45px;
+  margin-left: 0 !important;
+  vertical-align: top;
+}
+
+.ui-icon.ui-icon-triangle-1-s{
+  right: 0.5em;
+  width: 16px;
+  height: 16px;
+  left: auto;
+  margin-top: -8px;
+  position: absolute;
+  top: 50%;
+  background-image: url(https://code.jquery.com/ui/1.11.4/themes/smoothness/images/ui-icons_888888_256x240.png);
+  background-position: -64px -16px;
+}
+
 
  .top-content .description form .btn i{ display: none}
  .top-content .description form .btn{
