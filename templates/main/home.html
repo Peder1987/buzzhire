@@ -1,45 +1,8 @@
 {% extends 'page_fullwidth.html' %}
 {% load staticthumbnail static icons %}
 {% block content %}
-        <div id="home" class="top-content" data-background-images='["{% static 'img/hero/watch.jpg' %}",
-                                                                    "{% static 'img/hero/bicycle-water.jpg' %}",
-                                                                    "{% static 'img/hero/night-scene.jpg' %}",
-                                                                    "{% static 'img/hero/app.jpg' %}"
-                                                                    ]' style="position: relative; z-index: 0; background: none;">
 
-                <div class="dimmer-overlay"></div>
-
-                <div class="container">
-
-                    <div class="row">
-
-                        <div class="col-sm-12 col-md-12 col-lg-12">
-
-                            <h2 class="HelveticaLight f50 lett-space-2">Recruitment, on demand.</h2>
-
-                            <div class="description">
-                                {% include 'job/includes/service_select_form.html' %}
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="row buttons-row">
-
-                        <a class="btn how-control"> How it works</a>
-
-                       
-
-                    </div>
-
-                </div>
-
-        <div class="backstretch" style="left: 0px; top: 0px; overflow: hidden; margin: 0px; padding: 0px; height: 600px; width: 1349px; z-index: -999998; position: absolute;">
-            <img src="{% static 'img/homepage.png' %}" style="position: absolute; margin: 0px; padding: 0px; border: none; width: 1349px; height: 899.333333333333px; max-height: none; max-width: none; z-index: -999999; left: 0px; top: -149.666666666667px;">
-        </div>
-
-        <div id="how-it-works" class="features-container" style="display: none">
+ <div id="how-it-works" class="features-container" style="display: none">
 
             <div class="container">
 
@@ -47,10 +10,14 @@
 
                 <div class="row page-title">
 
-                    <div class="col-md-12">
+                    <div class="col-md-7">
 
                         <h3>How it works</h3>
 
+                    </div>
+
+                    <div class="col-md-4">
+                        <a class="btn btn-lg btn-block btn-default" href="{% url 'service_select' %}"> Book a freelancer</a>
                     </div>
 
                </div>
@@ -119,7 +86,7 @@
 
                         <div class="col-md-4 col-md-offset-4 text-center">
 
-                            <a class="btn btn-lg btn-block btn-default" href="{% url 'service_select' %}"> Book a freelancer</a>
+                            
 
                         </div>
 
@@ -132,6 +99,41 @@
             </div>
 
         </div>
+        <div id="home" class="top-content" style="position: relative; z-index: 0; background-image: url(/static/img/homepage_light.jpg); background-size: cover; background-repeat: no-repeat">
+
+                <div class="dimmer-overlay"></div>
+
+                <div class="container">
+
+                    <div class="row">
+
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+
+                            <h2 class="HelveticaLight f50 lett-space-2">Recruitment, on demand.</h2>
+
+                            <div class="description">
+                                {% include 'job/includes/service_select_form.html' %}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row buttons-row">
+
+                        <a class="btn how-control"> How it works</a>
+
+                       
+
+                    </div>
+
+                </div>
+
+        <!--<div class="backstretch" style="left: 0px; top: 0px; overflow: hidden; margin: 0px; padding: 0px; height: 600px; width: 1349px; z-index: -999998; position: absolute;">
+            <img src="{% static 'img/homepage.jpg' %}" style="position: absolute; margin: 0px; padding: 0px; border: none; width: 1349px; height: 899.333333333333px; max-height: none; max-width: none; z-index: -999999; left: 0px; top: -149.666666666667px;">
+        </div>-->
+
+       
 
     </div>
 
@@ -193,7 +195,7 @@
 
                             <h4>Professional</h4>
 
-                            <p>
+                            <p class="Helvetica gray">
 
                                 BuzzHire professionals are experienced, friendly, background-checked, and insured.
 
@@ -211,7 +213,7 @@
 
                             <h4>Available</h4>
 
-                            <p>
+                            <p class="Helvetica gray">
 
                                 Book online in 60 seconds and schedule your driver for as early as a few hours later.
 
@@ -229,7 +231,7 @@
 
                             <h4 class="blue">Guaranteed</h4>
 
-                            <p>
+                            <p class="Helvetica gray">
 
                                 If you're not satisfied with our work, we'll refund your money. It's as simple as that.
 
@@ -251,7 +253,7 @@
 
                             <h4>Great pay</h4>
 
-                            <p>
+                            <p class="Helvetica gray">
 
                                 Our top freelancers  make more than &pound;900 a week. Get well-rated and earn more. Pay varies depending on your role.
 
@@ -269,7 +271,7 @@
 
                             <h4>Flexible schedule</h4>
 
-                            <p>
+                            <p class="Helvetica gray">
 
                                 You choose when you want to work and how much. Build a full schedule or simply claim a few jobs on the side. 
 
@@ -287,7 +289,7 @@
 
                             <h4 class="blue">Easy payments</h4>
 
-                            <p>
+                            <p class="Helvetica gray">
 
                                 No more waiting weeks to be paid. BuzzHire will direct deposit your earnings into your bank account within 48 hours of completing your job.
 
@@ -323,7 +325,7 @@
                                     So easy to use, and really professional drivers.
                                 </p>
 
-                                {#<span class="blue HelveticaOblique"> - Customer name </span>#}
+                                <span class="blue HelveticaOblique"> - Customer name </span>
 
                             </div>
 
@@ -339,7 +341,7 @@
 
                                 </p>
 
-                                {#<span class="blue HelveticaOblique"> - Customer name </span>#}
+                                <span class="blue HelveticaOblique"> - Customer name </span>
 
                             </div>
 
@@ -355,7 +357,7 @@
 
                                 </p>
 
-                                {#<span class="blue HelveticaOblique"> - Customer name </span>#}
+                                <span class="blue HelveticaOblique"> - Customer name </span>
 
                             </div>
 
@@ -501,16 +503,21 @@
 {% endblock %}
 
 {% block extrascripts %}
+ <script src="/static/js/jquery-ui.js"></script>
     <script type='text/javascript'>
         $(function() {
             // Carousel
-            var background_images = $('.top-content').data('background-images');
-            $('.top-content').backstretch(background_images, {duration: 3000, fade: 800});
+           // var background_images = $('.top-content').data('background-images');
+          //  $('.top-content').backstretch(background_images, {duration: 3000, fade: 800});
             $('.how-control').click(function(){
                 $('#how-it-works').toggle("slow");
             });
+
+            $( "#id_service" ).selectmenu();
         });
     </script>
+   
+
 {% endblock %}
 
            

@@ -5,9 +5,9 @@
       <div class="list-group">
           
           {% url 'job_request_admin_list' as link_url %}
-          {% include 'includes/panel_link.html' with icon_name='requested_jobs' link_text='Job requests' %}
+          {% include 'includes/panel_link.html' with icon_name='icon-my-bookings' link_text='Job requests' %}
           {% url 'job_requests_pending_confirmation' as link_url %}
-          {% include 'includes/panel_link.html' with icon_name='confirm' link_text='Jobs pending confirmation' %}
+          {% include 'includes/panel_link.html' with icon_name='icon-confirm' link_text='Jobs pending confirmation' %}
           
       </div>
     </div>

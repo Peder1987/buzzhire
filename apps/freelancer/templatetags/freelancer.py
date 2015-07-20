@@ -41,8 +41,8 @@ def freelancer_profile_menu_items(freelancer):
     """
     menu_items = [
         (reverse('freelancer_change'), 'Edit profile',
-            'freelancer_profile_change'),
-        (reverse('freelancer_photo'), 'Photo', 'photo'),
+            'icon-freelancer_profile_change'),
+        (reverse('freelancer_photo'), 'Photo', 'icon-photo'),
     ]
     # Give service a change to add extra menu items
     service = service_for_freelancer(freelancer)

@@ -68,7 +68,13 @@ ICON_MAP = {
     'icon-kitchen': 'sidebar-icon-8',
     'icon-client_profile_change': 'sidebar-icon-9',
     'icon-password': 'sidebar-icon-10',
-    'icon-logout': 'sidebar-icon-11'
+    'icon-logout': 'sidebar-icon-11',
+    'icon-edit': 'sidebar-icon-9',
+    'icon-freelancer_profile_change': 'sidebar-icon-9',
+    'icon-photo': 'sidebar-icon-7',
+    'icon-confirm': 'sidebar-icon-3',
+    'icon-availability': 'sidebar-icon-13',
+    'icon-invitations': 'sidebar-icon-12'
 
 }
 
