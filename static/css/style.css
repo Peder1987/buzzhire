@@ -287,6 +287,13 @@
     border-bottom: 1px solid rgba(255,255,255,0.2);
  }
 
+ .sidebar-right-page .sidebar-content .form-group {
+  margin-bottom: 15px;
+  width: 45%;
+  float: left;
+  margin-left: 10px;
+}
+
   .sidebar-right-page .sidebar-page-title h4{ color: black; padding: 20px; }
 
   .sidebar-right-page .sidebar-content{ padding: 20px; }
