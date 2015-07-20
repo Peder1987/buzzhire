@@ -1730,6 +1730,8 @@ h3 { color: #2779bc; }
 
   padding: 20px 10px;
 
+  text-align: justify;
+
 }
 
 .reviews .review-author {
@@ -1793,12 +1795,10 @@ h3 { color: #2779bc; }
 
 
 .reviews-panel span {
-
-  padding: 0 0 20px 0;
-
+  padding: 0 15px 20px 0;
   display: block;
-
   font-size: 16px;
+  text-align: right;
 
 }
 
