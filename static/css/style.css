@@ -281,7 +281,9 @@
 
  .sidebar-right-page .sidebar-main{
     padding-bottom: 10000px !important;
-  margin-bottom: -10000px;
+    margin-bottom: -10000px;
+    padding-left: 2em;
+    padding-right: 2em;
  }
  .sidebar-content-header .sidebar-breadcrumbs{
  	float:left; 
