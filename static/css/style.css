@@ -1172,9 +1172,9 @@ textarea::-webkit-input-placeholder {
 		  vertical-align: middle;
 		  max-width: 215px;
 		  text-align: left;
-		  line-height: 30px;
+		  line-height: 38px;
 		  margin: 0 8px 0 10px;
-		  font-size: 24px;
+		  font-size: 28px;
 		  font-family: 'HelveticaLight';
 		  min-height: 45px;
 
