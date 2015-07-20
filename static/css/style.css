@@ -350,7 +350,7 @@
 }
 
 .sidebar-right-page-right-content p{
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   font-family: 'Helvetica';
   font-size: 18px;
 }
@@ -358,6 +358,7 @@
 .sidebar-right-page-right-content h6{
   font-family: 'HelveticaLight';
   font-size: 26px;
+  margin-top: 20px;
 
 }
 
