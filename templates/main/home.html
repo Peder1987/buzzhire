@@ -515,6 +515,10 @@
 
             $( "#id_service" ).on( "selectmenuopen", function( event, ui ) {
                 $('.description form div.text-center').css('margin-top','180px');
+            } );
+
+            $( "#id_service" ).on( "selectmenuclose", function( event, ui ) {
+                $('.description form div.text-center').css('margin-top','0px');
                 console.log('ovde');
             } );
 
