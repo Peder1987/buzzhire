@@ -289,6 +289,10 @@
   color: white;
   
  }
+  .sidebar-page{
+     min-height: 452px;
+  }
+  
 
  .sidebar-page .sidebar-page-title{
  	  min-width: 45%;
