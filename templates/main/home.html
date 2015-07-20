@@ -511,7 +511,9 @@
                 $('#how-it-works').toggle("slow");
             });
 
-            $( "#id_service" ).selectmenu("menuWidget").addClass( "overflow" );
+            $( "#id_service" ).selectmenu()
+  .selectmenu( "menuWidget" )
+    .addClass( "overflow" );
         });
     </script>
    
