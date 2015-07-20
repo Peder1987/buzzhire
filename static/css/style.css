@@ -287,21 +287,18 @@
     border-bottom: 1px solid rgba(255,255,255,0.2);
  }
 
- .sidebar-right-page .sidebar-page-title h4{
-    color: black;
-    padding: 20px 0;
- }
+  .sidebar-right-page .sidebar-page-title h4{ color: black; padding: 20px; }
 
-  .sidebar-right-page .sidebar-content{
-    padding: 20px;
-  }
+  .sidebar-right-page .sidebar-content{ padding: 20px; }
 
-  .sidebar-right-page .sidebar-right-alert{
-    padding: 0 20px;
-  }
+  .sidebar-right-page .sidebar-right-alert{ padding: 0 20px; }
 
- .sidebar-right-page .row{
-  overflow: hidden !important;
+ .sidebar-right-page .row{ overflow: hidden !important; }
+
+ .sidebar-right-page .sidebar-content legend{
+    border-bottom: none !important;
+    color: #2779bc;
+    font-family: 'HelveticaLight';
  }
 
  .sidebar-right-page .sidebar-main{
