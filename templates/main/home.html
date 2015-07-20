@@ -503,6 +503,7 @@
 {% endblock %}
 
 {% block extrascripts %}
+ <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script type='text/javascript'>
         $(function() {
             // Carousel
@@ -511,8 +512,12 @@
             $('.how-control').click(function(){
                 $('#how-it-works').toggle("slow");
             });
+
+            $( "#id_service" ).selectmenu();
         });
     </script>
+   
+
 {% endblock %}
 
            
