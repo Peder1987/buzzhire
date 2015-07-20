@@ -318,7 +318,8 @@
 
   span.sidebar-icon-1, span.sidebar-icon-2, span.sidebar-icon-3, span.sidebar-icon-4, span.sidebar-icon-5,
   span.sidebar-icon-6, span.sidebar-icon-7, span.sidebar-icon-8, span.sidebar-icon-9,
-  span.sidebar-icon-10, span.sidebar-icon-11, span.sidebar-icon-12, span.sidebar-icon-13, span.sidebar-icon-14
+  span.sidebar-icon-10, span.sidebar-icon-11, span.sidebar-icon-12, span.sidebar-icon-13, span.sidebar-icon-14, 
+  i.sidebar-icon-14
   {
 
   	min-width: 16px;
@@ -359,6 +360,8 @@
 
   span.sidebar-icon-14{ background:url(../img/sidebar-icon-14.png); background-repeat: no-repeat; }
 
+  i.sidebar-icon-14{ background:url(../img/sidebar-icon-14.png); background-repeat: no-repeat; }
+
 
   a.sidebar-link:hover span.sidebar-icon-1{  background:url(../img/sidebar-icon-1-hover.png); background-repeat: no-repeat; background-position: right;}
 
@@ -387,6 +390,8 @@
   a.sidebar-link:hover span.sidebar-icon-13{ background:url(../img/sidebar-icon-13-hover.png); background-repeat: no-repeat; background-position: right;}
 
   a.sidebar-link:hover span.sidebar-icon-14{ background:url(../img/sidebar-icon-14-hover.png); background-repeat: no-repeat; background-position: right;}
+
+  a.sidebar-link:hover i.sidebar-icon-14{ background:url(../img/sidebar-icon-14-hover.png); background-repeat: no-repeat; background-position: right;}
 
  .top-content .description form .btn i{ display: none}
  a.sidebar-link i{
