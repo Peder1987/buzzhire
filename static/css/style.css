@@ -300,6 +300,18 @@
   padding-bottom: 20px;
  }
 
+.sidebar-right-page .sidebar-content span.booking-form-num{
+   border: 1px solid #2779bc;
+  border-radius: 100px;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  text-align: center;
+  margin-right: 15px;
+  font-weight: bold;
+  line-height: 26px;
+}
+
   .sidebar-right-page .sidebar-page-title h4{ color: black; padding: 20px; }
 
   .sidebar-right-page .sidebar-content{ padding: 20px; }
