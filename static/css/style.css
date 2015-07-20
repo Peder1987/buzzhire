@@ -1223,7 +1223,7 @@ textarea::-webkit-input-placeholder {
 .features-container {
 
   
-  position: absolute;
+  /*position: absolute;*/
   width: 100%;
   height: 100%;
 
@@ -1235,9 +1235,7 @@ textarea::-webkit-input-placeholder {
 
   text-align: center;
 
-  position: absolute;
-
-  top: 0;
+  /*top: 0;*/
 
   background-color: rgba(0,0,0,1);
 
