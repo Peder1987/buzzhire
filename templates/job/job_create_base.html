@@ -3,6 +3,7 @@
 
 {% block sidebar %}
     <h4 class="sidebar-right-page-title">Booking summary</h4>
+    <div class="sidebar-right-page-right-content">
     {% if service %}
         <p>Booking for a <strong>{{ service.title }}</strong>.</p>
     {% endif %}
@@ -11,5 +12,6 @@
         <p>{{ object.start_time }} - {{ object.duration }} hours</p>
         <p>&pound;{{ object.client_pay_per_hour.amount }} per hour</p>
         <h6>Total <span class='pull-right'>&pound;{{ object.client_total_cost.amount }}</span></h6>
+    </div>
     {% endif %}
 {% endblock %}
