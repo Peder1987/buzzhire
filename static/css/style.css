@@ -1222,6 +1222,19 @@ textarea::-webkit-input-placeholder {
    display: block;
 } 
 
+.ui-menu.ui-widget.ui-widget-content{
+  list-style: none;
+  color: white;
+  border-radius: 8px;
+  font-size: 28px;
+  font-family: HelveticaLight;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+  width: 185px;
+  background-color: rgba(54, 123, 174, 0.701961);
+}
+
 .ui-icon.ui-icon-triangle-1-s{
   right: 8px;
   width: 16px;
