@@ -312,14 +312,13 @@
   line-height: 26px;
 }
 
-.sidebar-right-page .sidebar-content #div_id_client_pay_per_hour.form-group{
-  width: 60%;
-}
+.sidebar-right-page .sidebar-content #div_id_client_pay_per_hour.form-group{ width: 60%; }
 
 .sidebar-right-page .sidebar-content input, .sidebar-right-page .sidebar-content select, .sidebar-right-page .sidebar-content textarea{
   padding: 10px 15px;
   height: auto;
 }
+
 
 
   .sidebar-right-page .sidebar-page-title h4{ color: black; padding: 20px; }
@@ -352,6 +351,14 @@
 
 .sidebar-right-page-right-content p{
   margin-bottom: 15px;
+  font-family: 'Helvetica';
+  font-size: 18px;
+}
+
+.sidebar-right-page-right-content h6{
+  font-family: 'HelveticaLight';
+  font-size: 26px;
+
 }
 
  .sidebar-content-header .sidebar-breadcrumbs{
