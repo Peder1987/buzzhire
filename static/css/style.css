@@ -275,6 +275,14 @@
     border-bottom: 1px solid rgba(255,255,255,0.2);
  }
 
+ .sidebar-right-page .row{
+  overflow: hidden !important;
+ }
+
+ .sidebar-right-page .sidebar-main{
+    padding-bottom: 10000px !important;
+  margin-bottom: -10000px;
+ }
  .sidebar-content-header .sidebar-breadcrumbs{
  	float:left; 
  	max-width:55%; 
