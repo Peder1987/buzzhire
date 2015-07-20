@@ -294,6 +294,12 @@
   margin-left: 10px;
 }
 
+ .sidebar-right-page .sidebar-content  fieldset{
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+ }
+
   .sidebar-right-page .sidebar-page-title h4{ color: black; padding: 20px; }
 
   .sidebar-right-page .sidebar-content{ padding: 20px; }

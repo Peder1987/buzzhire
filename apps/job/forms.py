@@ -70,23 +70,23 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
                                                     self.comment_placeholder
 
         self.helper.layout = layout.Layout(
-            layout.Fieldset('Date and time',
+            layout.Fieldset('<span class="booking-form-num">1</span>Date and time',
                 'date', 'start_time', 'duration',
             ),
-            layout.Fieldset('Job location',
+            layout.Fieldset('<span class="booking-form-num">2</span>Job location',
                 'address1', 'address2',
                 'city',
                 'raw_postcode',
             ),
-            layout.Fieldset('Freelancer details',
+            layout.Fieldset('<span class="booking-form-num">3</span>Freelancer details',
                 'number_of_freelancers',
                 'years_experience',
             ),
-            layout.Fieldset('Budget',
+            layout.Fieldset('<span class="booking-form-num">4</span>Budget',
                 'client_pay_per_hour',
                 'tips_included',
             ),
-            layout.Fieldset('Further info',
+            layout.Fieldset('<span class="booking-form-num">5</span>Further info',
                 'comments'
             ),
         )
