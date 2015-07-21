@@ -75,7 +75,7 @@ ICON_MAP = {
     'icon-confirm': 'sidebar-icon-3',
     'icon-availability': 'sidebar-icon-13',
     'icon-invitations': 'sidebar-icon-12',
-    'icon-notification': 'notification-icon',
+    'icon-notification-panel': 'notification-icon-panel',
 
 }
 
