@@ -31,12 +31,14 @@
 {% endblock %}
 
 <div class="sidebar-content"> 
-{% block content %}
-    {% if form %}
-        {% include 'includes/forms/invalid_form_message.html' %}
-        {% crispy form %}
-    {% endif %}
-{% endblock %}
+  <div class="dashboard-form">
+    {% block content %}
+        {% if form %}
+            {% include 'includes/forms/invalid_form_message.html' %}
+            {% crispy form %}
+        {% endif %}
+    {% endblock %}
+  </div>
 </div>
 
 {% block extrastyles %}
