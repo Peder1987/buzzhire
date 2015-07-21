@@ -1747,6 +1747,9 @@ textarea::-webkit-input-placeholder {
     margin: 0 auto;
 }
 
+.page .container.sidebar-page{
+  width: 100%;
+}
 
 
 .navbar-default.menu-shrink {
