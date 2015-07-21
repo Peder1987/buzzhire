@@ -184,7 +184,7 @@
     z-index: 9999
 }
 .footer-list li {
-    padding: 20px;
+    padding: 20px 10px;
 }
 .ready-sec {
     background: #f7f7f7;
@@ -2525,9 +2525,9 @@ footer a:hover {
 .social-icon {
     text-align: right;
     font-size: 24px;
-    line-height: 44px;
+    line-height: 36px;
     color: #fff;
-    padding: 10px;
+    padding: 5px;
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
