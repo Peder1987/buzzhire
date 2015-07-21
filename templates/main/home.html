@@ -503,6 +503,9 @@
 {% block extrascripts %}
  <script src="/static/js/jquery-ui.js"></script>
     <script type='text/javascript'>
+
+        var selectedValue = null;
+
         $(function() {
             // Carousel
            // var background_images = $('.top-content').data('background-images');
@@ -544,6 +547,21 @@
 
             /* Change select menu option on menu item hover */
 
+            $( "#id_service" ).on( "selectmenufocus", function( event, ui ) {
+                    
+                    
+                    
+                    console.log(ui.item.value);
+                    
+                    if(selectedValue != ui.item.value){
+                        selectedValue = ui.item.value;
+                        $( "#id_service" ).val(ui.item.value);
+                        $( "#id_service" ).selectmenu("refresh");
+                    }
+                    
+                    
+
+           } ); 
            
 
 
