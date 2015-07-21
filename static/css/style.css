@@ -387,11 +387,10 @@ span.sidebar-icon-14,
 i.sidebar-icon-14 {
     min-width: 25px;
     background-repeat: no-repeat;
-    background-position: right;
     min-height: 25px;
     display: inline-block;
-    margin-bottom: 2px;
-    margin-right: 4px;
+    margin-bottom: 4px;
+    margin-right: 4px !important;
     margin-left: 0 !important;
     background-size: 100% !important;
     vertical-align: middle;
@@ -456,77 +455,77 @@ i.sidebar-icon-14 {
     background: url(../img/icons/sidebar-icon-14.png);
     background-repeat: no-repeat;
 }
-a.sidebar-link:hover span.sidebar-icon-1 {
+a.sidebar-link:hover span.sidebar-icon-1, a.sidebar-link.active span.sidebar-icon-1 {
     background: url(../img/icons/sidebar-icon-1-hover.png);
     background-repeat: no-repeat;
     background-position: left;
 }
-a.sidebar-link:hover span.sidebar-icon-2 {
+a.sidebar-link:hover span.sidebar-icon-2a.sidebar-link.active span.sidebar-icon-2 {
     background: url(../img/icons/sidebar-icon-2-hover.png);
     background-repeat: no-repeat;
     background-position: left;
 }
-a.sidebar-link:hover span.sidebar-icon-3 {
+a.sidebar-link:hover span.sidebar-icon-3, a.sidebar-link.active span.sidebar-icon-3 {
     background: url(../img/icons/sidebar-icon-3-hover.png);
     background-repeat: no-repeat;
     background-position: left;
 }
-a.sidebar-link:hover span.sidebar-icon-4 {
+a.sidebar-link:hover span.sidebar-icon-4, a.sidebar-link.active span.sidebar-icon-4 {
     background: url(../img/icons/sidebar-icon-4-hover.png);
     background-repeat: no-repeat;
     background-position: left;
 }
-a.sidebar-link:hover span.sidebar-icon-5 {
+a.sidebar-link:hover span.sidebar-icon-5, a.sidebar-link.active span.sidebar-icon-5 {
     background: url(../img/icons/sidebar-icon-5-hover.png);
     background-repeat: no-repeat;
     background-position: left;
 }
-a.sidebar-link:hover span.sidebar-icon-6 {
+a.sidebar-link:hover span.sidebar-icon-6, a.sidebar-link.active span.sidebar-icon-6 {
     background: url(../img/icons/sidebar-icon-6-hover.png);
     background-repeat: no-repeat;
     background-position: left;
 }
-a.sidebar-link:hover span.sidebar-icon-7 {
+a.sidebar-link:hover span.sidebar-icon-7, a.sidebar-link.active span.sidebar-icon-7 {
     background: url(../img/icons/sidebar-icon-7-hover.png);
     background-repeat: no-repeat;
     background-position: left;
 }
-a.sidebar-link:hover span.sidebar-icon-8 {
+a.sidebar-link:hover span.sidebar-icon-8, a.sidebar-link.active span.sidebar-icon-8 {
     background: url(../img/icons/sidebar-icon-8-hover.png);
     background-repeat: no-repeat;
     background-position: left;
 }
-a.sidebar-link:hover span.sidebar-icon-9 {
+a.sidebar-link:hover span.sidebar-icon-9, a.sidebar-link.active span.sidebar-icon-9 {
     background: url(../img/icons/sidebar-icon-9-hover.png);
     background-repeat: no-repeat;
     background-position: left;
 }
-a.sidebar-link:hover span.sidebar-icon-10 {
+a.sidebar-link:hover span.sidebar-icon-10, a.sidebar-link.active span.sidebar-icon-10 {
     background: url(../img/icons/sidebar-icon-10-hover.png);
     background-repeat: no-repeat;
     background-position: left;
 }
-a.sidebar-link:hover span.sidebar-icon-11 {
+a.sidebar-link:hover span.sidebar-icon-11, a.sidebar-link.active span.sidebar-icon-11 {
     background: url(../img/icons/sidebar-icon-11-hover.png);
     background-repeat: no-repeat;
     background-position: left;
 }
-a.sidebar-link:hover span.sidebar-icon-12 {
+a.sidebar-link:hover span.sidebar-icon-12, a.sidebar-link.active span.sidebar-icon-12 {
     background: url(../img/icons/sidebar-icon-12-hover.png);
     background-repeat: no-repeat;
     background-position: left;
 }
-a.sidebar-link:hover span.sidebar-icon-13 {
+a.sidebar-link:hover span.sidebar-icon-13, a.sidebar-link.active span.sidebar-icon-13 {
     background: url(../img/icons/sidebar-icon-13-hover.png);
     background-repeat: no-repeat;
     background-position: left;
 }
-a.sidebar-link:hover span.sidebar-icon-14 {
+a.sidebar-link:hover span.sidebar-icon-14, a.sidebar-link.active span.sidebar-icon-14 {
     background: url(../img/icons/sidebar-icon-14-hover.png);
     background-repeat: no-repeat;
     background-position: left;
 }
-a.sidebar-link:hover i.sidebar-icon-14 {
+a.sidebar-link:hover i.sidebar-icon-14, a.sidebar-link.active i.sidebar-icon-14 {
     background: url(../img/icons/sidebar-icon-14-hover.png);
     background-repeat: no-repeat;
     background-position: left;
