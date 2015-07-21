@@ -132,6 +132,17 @@
 }
 /* Custom */
 
+.booking-box {
+  background: white;
+  text-align: center;
+}
+
+.booking-box span.reference{
+  color: #999999;
+  display: block;
+  text-align: center;
+}
+
 .notification-table td{
   vertical-align: middle !important;
 }
