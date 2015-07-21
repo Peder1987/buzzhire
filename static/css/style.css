@@ -1727,7 +1727,7 @@ textarea::-webkit-input-placeholder {
     color: #0778ae !important;
 }
 
-.navbar-default.menu-top .container{
+.navbar-default.menu-top .container, footer .container{
     width: 91.6667%;
     margin: 0;
     padding-left: 8.3333%;
@@ -1741,9 +1741,10 @@ textarea::-webkit-input-placeholder {
 
 }
 
-#home .navbar-default.menu-top .container{
-    max-width: 1070px;
-    padding-left: 0;
+#home .navbar-default.menu-top .container, #home footer .container{
+    max-width: 1170px;
+    padding-left: 15px;
+    margin: 0 auto;
 }
 
 
@@ -1753,6 +1754,7 @@ textarea::-webkit-input-placeholder {
     background-color: #fff;
     width: 100%;
 }
+
 .navbar-default.menu-top li a {
     color: #011a26 !important;
 }
