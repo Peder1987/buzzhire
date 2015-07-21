@@ -201,8 +201,14 @@
 .after-breadcrumb .panel.panel-default .badge {
     background-color: #2779bc;
     color: white !important;
-    margin-right: 10px;
+    margin-right: 6px;
     margin-top: 4px;
+    background-color: #2779bc;
+    color: white !important;
+    margin-right: 6px;
+    margin-top: 4px;
+    border-radius: 15px;
+    font-size: 10px;
 }
 .sidebar-breadcrumbs .breadcrumb li a {
     color: rgba(255, 255, 255, 0.6);
@@ -267,7 +273,7 @@
     border: none;
     box-shadow: none;
     color: #909090;
-    padding: 12px 15px;
+    padding: 12px 0px;
 }
 .after-breadcrumb.sidebar .panel .list-group-item.active,
 .after-breadcrumb.sidebar .panel .list-group-item.active:focus,
@@ -434,7 +440,7 @@ i.sidebar-icon-14 {
     min-height: 25px;
     display: inline-block;
     margin-bottom: 4px;
-    margin-right: 4px !important;
+    margin-right: 2px !important;
     margin-left: 0 !important;
     background-size: 100% !important;
     vertical-align: middle;
