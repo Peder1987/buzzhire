@@ -527,9 +527,10 @@
             } );
 
             $( "#id_service" ).on( "selectmenufocus", function( event, ui ) {
-                    var value = ui.item.value;
-                    $( "#id_service" ).selectmenu("value", value);
-                    $("#id_service").selectmenu("change");
+                    
+                    $('#select1 option[value=' + ui.item.value + ']').prop('selected', true);
+                    $(this).selectmenu('refresh');
+
            } );
 
             /* Change top content background image based on selected staff type */
