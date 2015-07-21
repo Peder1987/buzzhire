@@ -522,9 +522,18 @@
             } );
 
             $( "#id_service" ).on( "selectmenuchange", function( event, ui ) {
-                console.log(ui.item.value);
-                $('#home').css('background-image', 'url(/static/img/hero/' + ui.item.value + '.jpg)');
-            } );
+
+                $('#home').fadeOut('slow', function () {
+
+                    $('#home').css({ 'background-image': 'url(/static/img/hero/' + ui.item.value + '.jpg)' });
+
+                    $('#home').fadeIn('slow');
+                                
+               /* console.log(ui.item.value);
+                $('#home').css('background-image', 'url(/static/img/hero/' + ui.item.value + '.jpg)'); */
+                });
+
+            });
 
         });
 
