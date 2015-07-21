@@ -1794,7 +1794,7 @@ textarea::-webkit-input-placeholder {
     margin: 0 auto;
 }
 
-.page .container.sidebar-page{
+.page .container.sidebar-page, .page .container.sidebar-right-page{
   width: 100%;
   padding: 0 !important;
 }
