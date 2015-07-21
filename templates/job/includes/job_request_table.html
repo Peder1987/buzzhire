@@ -3,7 +3,8 @@
 {% for object in object_list %}
     <div class="col-md-4">
         <div class="booking-box">
-            <span class="reference"><a href='{{ object.get_absolute_url }}'>{{ object.reference_number }}</a></span>
+            <div class="reference"><a href='{{ object.get_absolute_url }}'>{{ object.reference_number }}</a></div>
+            <div class="profile-picture">{{ 'icon-notification'|icon }}</div>
         </div>
     </div>
 

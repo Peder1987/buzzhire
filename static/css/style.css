@@ -135,12 +135,16 @@
 .booking-box {
   background: white;
   text-align: center;
+  padding: 20px;
+  margin-bottom: 15px;
 }
 
-.booking-box span.reference{
+.booking-box div.reference,.booking-box div.reference a{
   color: #999999;
   display: block;
   text-align: center;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .notification-table td{
