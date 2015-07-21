@@ -5,8 +5,8 @@
      {% include 'includes/html_head.html' %}
      {% block extrastyles %}{% endblock %}
   </head>
-  <body{% if current_page.is_home %} id='home'{% endif %} data-spy="scroll" data-offset="80">
-  {{current_page.is_home}}
+  <body{% if request.path == "/" %} id='home'{% endif %} data-spy="scroll" data-offset="80">
+  
         {% include 'includes/nav/primary.html' %}
 
         <div style="margin-top: 90px;  min-height: 460px;">
