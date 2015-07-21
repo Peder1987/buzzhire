@@ -523,11 +523,11 @@
 
             $( "#id_service" ).on( "selectmenuchange", function( event, ui ) {
 
-                $('#home').fadeTo('fast', 0.5, function () {
+                $('#home').fadeTo('slow', 0.5, function () {
 
                     $('#home').css({ 'background-image': 'url(/static/img/hero/' + ui.item.value + '.jpg)' });
 
-                    $('#home').fadeTo('fast', 1);
+                    $('#home').fadeTo('slow', 1);
                                 
                /* console.log(ui.item.value);
                 $('#home').css('background-image', 'url(/static/img/hero/' + ui.item.value + '.jpg)'); */
