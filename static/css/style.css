@@ -133,7 +133,17 @@
 /* Custom */
 
 .notification-table td{
-  vertical-align: middle;
+  vertical-align: middle !important;
+}
+
+.notification-table td a{
+  color: #999999;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.notification-table .notification-date{
+  color: #277dbc;
 }
 
 .sidebar-right-page .sidebar-content button.btn[name="client_submit"],
