@@ -1730,7 +1730,13 @@ textarea::-webkit-input-placeholder {
     background-color: #fff;
     box-shadow: none;
     width: 100%;
+
 }
+
+
+/*    width: 95.6667%;
+  margin: 0;
+  padding-left: 8.3333%; */
 .navbar-default.menu-shrink {
     padding: 10px 0;
     background-color: #fff;
