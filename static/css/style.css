@@ -1856,12 +1856,13 @@ textarea::-webkit-input-placeholder {
     vertical-align: top;
     position: relative;
 }
+/*
 .ui-selectmenu-menu {
     display: none;
 }
 .ui-selectmenu-menu.ui-selectmenu-open {
     display: block;
-}
+} */
 .ui-menu.ui-widget.ui-widget-content {
     list-style: none;
     color: white;
