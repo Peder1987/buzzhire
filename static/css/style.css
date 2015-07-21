@@ -146,6 +146,16 @@
   color: #277dbc;
 }
 
+.notification-table tr td{
+  border-top: none !important;
+  border-bottom: 1px solid #ddd !important;
+}
+
+.notification-table tr, .notification-table td {
+  background-color: transparent !important;
+}
+
+
 .sidebar-right-page .sidebar-content button.btn[name="client_submit"],
 .sidebar-right-page .sidebar-content button.btn[name="submit"] {
     background-color: rgb(166, 239, 100);
