@@ -390,10 +390,11 @@ i.sidebar-icon-14 {
     background-position: right;
     min-height: 25px;
     display: inline-block;
-    margin-bottom: -10px;
+    margin-bottom: 2px;
     margin-right: 4px;
     margin-left: 0 !important;
     background-size: 100% !important;
+    vertical-align: middle;
 }
 span.sidebar-icon-1 {
     background: url(../img/icons/sidebar-icon-1.png);
