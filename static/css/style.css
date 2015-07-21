@@ -1726,21 +1726,27 @@ textarea::-webkit-input-placeholder {
 .navbar-default .navbar-nav > li > a:hover {
     color: #0778ae !important;
 }
-#home .navbar-default.menu-top {
+
+.navbar-default.menu-top .container{
+    width: 91.6667%;
+    margin: 0;
+    padding-left: 8.3333%;
+
+}
+
+#home .navbar-default.menu-top{
     background-color: #fff;
     box-shadow: none;
     width: 100%;
 
 }
 
-.navbar-default.menu-top {
-    background-color: #fff;
-    box-shadow: none;
-    width: 91.6667%;
-    margin: 0;
-    padding-left: 8.3333%;
-
+#home .navbar-default.menu-top .container{
+    max-width: 1070px;
+    padding-left: 0;
 }
+
+
 
 .navbar-default.menu-shrink {
     padding: 10px 0;
