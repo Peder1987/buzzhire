@@ -519,7 +519,10 @@
 
             $( "#id_service" ).on( "selectmenuclose", function( event, ui ) {
                 $('.description form div.text-center').css('margin-top','0px');
-                console.log('ovde');
+            } );
+
+            $( "#id_service" ).on( "selectmenuchange", function( event, ui ) {
+                console.log(ui.item.value);
             } );
 
         });
