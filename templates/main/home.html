@@ -511,6 +511,9 @@
            // var background_images = $('.top-content').data('background-images');
           //  $('.top-content').backstretch(background_images, {duration: 3000, fade: 800});
 
+            var selectedValue = $( "#id_service option:selected" ).text();
+            var focusedValue = null;
+
             /* How it works section toggle */
 
             $('.how-control').click(function(){
@@ -527,6 +530,7 @@
 
             $( "#id_service" ).on( "selectmenuclose", function( event, ui ) {
                 $('.description form div.text-center').css('margin-top','0px');
+                $('.ui-selectmenu-text').html(selectedValue);
             } );
 
          
@@ -542,26 +546,26 @@
                     $('#home').fadeTo('slow', 1);
                 });
 
+                selectedValue = ui.item.label;
+
             });
 
 
             /* Change select menu option on menu item hover */
 
+                
             $( "#id_service" ).on( "selectmenufocus", function( event, ui ) {
+       
+                console.log("focus " + ui.item.value);
                     
-                    
-                    
-                    console.log(ui.item.value);
-                    
-                    if(selectedValue != ui.item.value){
-                        selectedValue = ui.item.value;
-                        $( "#id_service" ).val(ui.item.value);
-                        $( "#id_service" ).selectmenu("refresh");
-                    }
+                if(focusedValue != ui.item.value){
+                        focusedValue = ui.item.value;
+                        $('.ui-selectmenu-text').html(ui.item.label);
+                    } 
                     
                     
 
-           } ); 
+           }); 
            
 
 
