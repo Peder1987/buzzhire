@@ -282,6 +282,10 @@
     width: 45%;
     float: left;
 }
+
+.sidebar-right-page .sidebar-content .client-signup-form .form-group{
+  margin-left: 10px;
+}
 .sidebar-right-page .sidebar-content fieldset {
     border-bottom: 1px solid #ccc;
     margin-bottom: 30px;
