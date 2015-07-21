@@ -528,7 +528,7 @@
 
             $( "#id_service" ).on( "selectmenufocus", function( event, ui ) {
                     
-                    $('#select1 option[value=' + ui.item.value + ']').prop('selected', true);
+                    $('#id_service option[value=' + ui.item.value + ']').prop('selected', true);
                     $(this).selectmenu('refresh');
 
            } );
