@@ -263,6 +263,7 @@
     color: #277dbc;
     background-color: white;
     border: none;
+    padding-left: 0;
 }
 .after-breadcrumb.sidebar .panel-default .list-group a:hover {
     background: none;
