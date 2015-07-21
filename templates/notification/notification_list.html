@@ -7,7 +7,7 @@
             <tbody>
                 {% for object in object_list %}
                     <tr>
-                        <td>{{ 'notification'|icon }}</td>
+                        <td>{{ 'icon-notification'|icon }}</td>
                         <td><a href='{{ object.related_object.get_absolute_url }}'>{{ object.message }}</a></td>
                         <td class='text-right'>{{ object.datetime_created|naturalday }} at {{ object.datetime_created.time }}</td>
                     </tr>
