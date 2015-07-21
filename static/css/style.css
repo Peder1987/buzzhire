@@ -358,6 +358,14 @@
     max-width: 55%;
     display: inline-block;
 }
+
+span.notification-icon{
+  width: 70px;
+  height: 74px;
+  display: block;
+  background: url(../img/icons/notification-icon.png);
+}
+
 span.sidebar-icon-1,
 span.sidebar-icon-2,
 span.sidebar-icon-3,
