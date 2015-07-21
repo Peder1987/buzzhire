@@ -527,8 +527,9 @@
             } );
 
             $( "#id_service" ).on( "selectmenufocus", function( event, ui ) {
-                    console.log(ui);
-                    console.log(event);
+                    var value = ui.item.value;
+                    $( "#id_service" ).val(value);
+                    $( "#id_service" ).selectmenu("refresh");
            } );
 
             /* Change top content background image based on selected staff type */
