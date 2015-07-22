@@ -69,11 +69,15 @@
                         </td>
                     </tr>
                 </table>
+                {% if object|client_feedback_needed %}
+                    <a href='{% url 'client_feedback_create' object.pk %}' class='btn btn-primary'> Leave feedback</a>
+                {% endif %}
             </div>
-            {% if object|client_feedback_needed %}
-                            <a href='{% url 'client_feedback_create' object.pk %}' class='btn btn-primary'>{{ 'feedback'|icon }} Leave feedback</a>
-                        {% endif %}
+            {% if object.get_status_display == 'Complete' %}
+            <div class="total-box blue-bck">
+            {% else %}
             <div class="total-box">
+            {% endif %}
                 <table class="table total-table white f14 mar0">
                     <tr>
                         <td> Total </td>

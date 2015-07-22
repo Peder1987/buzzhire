@@ -134,8 +134,12 @@ span.notification-icon-panel{
 .booking-box .total-box{
   margin-left: -20px;
   margin-right: -20px;
-  background-color: rgb(166,239,100);
+  background: rgb(166,239,100);
   padding: 20px;
+}
+
+.booking-box .total-box.blue-bck{
+  background: linear-gradient(to right, rgb(44, 124, 187), rgb(60, 153, 227));
 }
 
 .sidebar-content .nav.nav-tabs{
