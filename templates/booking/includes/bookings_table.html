@@ -81,7 +81,7 @@
                             {{ object.jobrequest.get_status_display }}
                         </td>
                     </tr>
-                    {% if not object|freelancer_feedback_needed %}
+                    {% if not object|freelancer_feedback_needed and feedback_for_client object %}
                     <tr>
                         <td>Your feedback</td>
                         <td class="comment-cell">
