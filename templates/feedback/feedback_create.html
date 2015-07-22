@@ -28,7 +28,10 @@
                               {% profile_photo feedback_target 'medium'  %}
                               
                               <h5>{{ feedback_target.get_full_name }} {{feedback_target.reference_number}} </h5>
-                              <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{feedback_target.reference_number}}" aria-expanded="false" aria-controls="collapse1" class="expand-btn collapsed"><i class="fa fa-lg fa-align-center fa-angle-down"></i></a>
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{feedback_target.reference_number}}" aria-expanded="false" aria-controls="collapse1" class="expand-btn collapsed">
+                                <i class="fa fa-lg fa-align-center fa-angle-down"></i>
+                                <i class="fa fa-lg fa-align-center fa-angle-up"></i>
+                              </a>
                             </div>
                         {% else %}
                             <a href="{{ feedback_target.get_absolute_url }}" class="feedback-target-info">
@@ -39,7 +42,11 @@
                              
                                 </div>
                             </a>
-                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{feedback_target.reference_number}}" aria-expanded="false" aria-controls="collapse1" class="expand-btn collapsed"><i class="fa fa-lg fa-align-center fa-angle-down"></i></a>
+                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{feedback_target.reference_number}}" aria-expanded="false" aria-controls="collapse1" class="expand-btn collapsed">
+                              <i class="fa fa-lg fa-align-center fa-angle-down"></i>
+                              <i class="fa fa-lg fa-align-center fa-angle-up"></i>
+
+                             </a>
                         {% endif %}
                     
                 

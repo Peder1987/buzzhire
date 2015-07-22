@@ -162,6 +162,22 @@ span.notification-icon-panel{
   display: inline-block;
 }
 
+.feedback-form-wrap a.expand-button i.fa-angle-up{
+  display: block;
+}
+
+.feedback-form-wrap a.expand-button i.fa-angle-down{
+  display: none;
+}
+
+.feedback-form-wrap a.expand-button.collapsed i.fa-angle-up{
+  display: none;
+}
+
+.feedback-form-wrap a.expand-button.collapsed i.fa-angle-down{
+  display: block;
+}
+
 .submit-feedback-btn{
   width: 100%;
   margin: 20px 0;
