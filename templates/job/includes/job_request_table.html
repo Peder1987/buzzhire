@@ -69,6 +69,7 @@
                         </td>
                     </tr>
                 </table>
+                {{ object.get_status_display }}
                 {% if object|client_feedback_needed %}
                     <a href='{% url 'client_feedback_create' object.pk %}' class='btn btn-primary'> Leave feedback</a>
                 {% endif %}
