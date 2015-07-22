@@ -426,6 +426,13 @@ span.notification-icon-panel{
     margin-left: 10px;
 }
 
+.sidebar-right-page .sidebar-content .become-freelancer-form .form-group {
+  margin-bottom: 15px;
+  width: 80%;
+  float: left;
+  margin-left: 10px;
+}
+
 .sidebar-right-page .sidebar-content .client-signup-form .form-group{
   margin-left: 0 !important;
 }
