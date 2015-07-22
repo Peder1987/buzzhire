@@ -68,6 +68,8 @@
 
 /* Custom */
 
+
+
 .vehicles-table tr{
   background-color: white;
 }
@@ -2939,9 +2941,16 @@ label.checkbox {
     margin-right: 0.2em;
 }
 .profile-photo {
-    border: 1px solid #e3e3e3;
-    border-radius: 4px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+      border-radius: 25px;
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+      width: 45px;
+      height: 45px;
+      border: 2px solid #277dbc;
+      padding: 2px;
+
+}
+.navbar-default .navbar-text.photo-navbar-item {
+  margin: 5px 17px !important;
 }
 .profile-photo-placeholder {
     display: inline-block;
