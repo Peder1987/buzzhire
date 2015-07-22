@@ -69,12 +69,14 @@
                             {{ object.get_status_display }}
                         </td>
                     </tr>
+                    {% if object.comments %}
                     <tr>
                         <td>Comments</td>
                         <td class="comment-cell">
                             {{ object.comments|linebreaks }}
                         </td>
                     </tr>
+                     {% endif %}
                 </table>
                 
                 {% if object|client_feedback_needed %}
