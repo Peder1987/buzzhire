@@ -23,6 +23,17 @@
     src: url('../fonts/HelveticaBold.ttf');
     font-weight: normal;
 }
+
+html{
+  height: 100%;
+  min-height: 100%;
+}
+
+body{
+  min-height: calc(100% - 90px);
+  height: calc(100% - 90px);
+}
+
 /* Predefined */
 
 .white { color: white; }
@@ -263,7 +274,8 @@ span.notification-icon-panel{
 
 .row.after-breadcrumb.sidebar{
   margin: 0;
-    min-height: 460px;
+  height: 100%;
+  min-height: 100%;
 }
   
 
@@ -1911,6 +1923,9 @@ textarea::-webkit-input-placeholder {
 .page .container.sidebar-page, .page .container.sidebar-right-page{
   width: 100%;
   padding: 0 !important;
+  height: 100%;
+  min-height: 100%;
+
 }
 
 
