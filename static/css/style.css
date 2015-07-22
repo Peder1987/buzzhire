@@ -143,6 +143,16 @@ span.notification-icon-panel{
   background: linear-gradient(to right, rgb(44, 124, 187), rgb(60, 153, 227));
 }
 
+.feedback-target-wrap img, .feedback-target-wrap h5{
+  display: inline-block;
+  max-width: 50%;
+  text-align: left;
+}
+
+.feedback-target-wrap h5{
+  padding: 20px;
+}
+
 .submit-feedback-btn{
   width: 100%;
   margin: 20px 0;
