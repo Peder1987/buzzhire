@@ -19,14 +19,14 @@
           <form method='post'>
            {% for form in formset %}
               {{ formset.management_form }}
-              
+                 {% with form.feedback_target as feedback_target %}
                 <div>
-                    {% with form.feedback_target as feedback_target %}
+                   
                         {% if for_freelancer %}
                             {# Clients don't have detail pages #}
                             <div class="feedback-target-wrap">
                               {% profile_photo feedback_target 'medium'  %}
-                              </div>
+                              
                               <h5>{{ feedback_target.get_full_name }} {{feedback_target.reference_number}} </h5>
                               <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{feedback_target.reference_number}}" aria-expanded="false" aria-controls="collapse1" class="expand-btn collapsed"><i class="fa fa-lg fa-align-center fa-angle-down"></i></a>
                             </div>
@@ -36,17 +36,19 @@
                                   {% profile_photo feedback_target 'medium'  %}
 
                                   <h5>{{ feedback_target.get_full_name }} {{feedback_target.reference_number}} </h5>
-                              <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{feedback_target.reference_number}}" aria-expanded="false" aria-controls="collapse1" class="expand-btn collapsed"><i class="fa fa-lg fa-align-center fa-angle-down"></i></a>
+                             
                                 </div>
                             </a>
+                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{feedback_target.reference_number}}" aria-expanded="false" aria-controls="collapse1" class="expand-btn collapsed"><i class="fa fa-lg fa-align-center fa-angle-down"></i></a>
                         {% endif %}
-                    {% endwith %}
+                    
                 
                 </div>
                 <hr>
                 <div id="collapse{{feedback_target.reference_number}}">
                     {% crispy form %}  
                 </div>
+                {% endwith %}
               
             <!--  {% if not forloop.last %}<hr>{% endif %} -->
            {% endfor %}
