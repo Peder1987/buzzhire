@@ -443,8 +443,8 @@ span.notification-icon-panel{
     font-weight: bold;
     line-height: 26px;
 }
-.sidebar-right-page .sidebar-content #div_id_client_pay_per_hour.form-group {
-    width: 60%;
+.sidebar-right-page .sidebar-content #div_id_comments.form-group {
+    width: 90%;
 }
 .sidebar-right-page .sidebar-content input,
 .sidebar-right-page .sidebar-content select,
