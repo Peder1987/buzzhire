@@ -433,6 +433,14 @@ span.notification-icon-panel{
   margin-left: 10px;
 }
 
+.become-freelancer-form button.btn.btn-primary{
+    width: 100%;
+}
+
+.become-freelancer-form button.btn.btn-primary i{
+  display: none;
+}
+
 .sidebar-right-page .sidebar-content .client-signup-form .form-group{
   margin-left: 0 !important;
 }
