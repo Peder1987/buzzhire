@@ -120,6 +120,10 @@ span.notification-icon-panel{
   min-height: 430px;
 }
 
+.booking-box .job-request-table-wrap.booking-request-table-wrap{
+  min-height: 410px;
+}
+
 .booking-box .job-request-table td, .booking-box .total-box .total-table td,
 .booking-box .job-request-table th{
   padding: 8px 0;
