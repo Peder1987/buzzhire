@@ -111,12 +111,12 @@ span.notification-icon-panel{
   text-align: center;
 }
 
-.booking-box .job-reqest-table td{
+.booking-box .job-request-table td{
   padding: 8px 0;
   border: none !important;
   text-align: left;
 }
-.booking-box .job-reqest-table td span.label.label-default{
+.booking-box .job-request-table td span.label.label-default{
   background-color: #277dbc;
   padding: 10px 15px;
   border-radius: 10px;
