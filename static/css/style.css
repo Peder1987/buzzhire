@@ -28,6 +28,7 @@
 .white { color: white; }
 .blue { color: #2779bc; }
 .gray { color: #555; }
+.gray-light { color: #999; }
 .black{ color: black; }
 .clearfix { clear: both; }
 .f16 { font-size: 16px; }
@@ -54,7 +55,7 @@
 .HelveticaLight { font-family: 'HelveticaLight'; }
 .HelveticaOblique { font-family: 'HelveticaOblique'; }
 .Helvetica { font-family: 'Helvetica'; }
-.def-a { text-decoration: none; }
+.def-a { text-decoration: none; cursor: pointer;}
 .pad0 { padding: 0 !important; }
 .pad20 { padding: 20px; }
 .mar0 { margin: 0 !important; }
@@ -78,6 +79,7 @@
 
 .vehicles-table tr, .vehicles-table td, .vehicles-table th{
   border: none !important;
+  padding: 20px !important;
 }
 
 

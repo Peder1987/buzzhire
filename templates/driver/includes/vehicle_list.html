@@ -12,7 +12,7 @@
                 {% for object in object_list %}
                    <tr>
                        <td class="blue">{{ object }}</td>
-                       <td class="blue">
+                       <td class="gray-light text-center ">
                         {% if object.own_vehicle %}
                         {{ 'vehicle-yes'|icon}}
                         {% else %}
@@ -23,8 +23,8 @@
                        {% if not admin_view %}
                            {# Hide these links as we haven't given permission to admins to edit them yet #}
                            <td class='text-right'>
-                             <a href='{% url 'drivervehicletype_change' object.pk %}'>{{ 'edit'|icon }}</a>
-                             <a href='{% url 'drivervehicletype_delete' object.pk %}'>{{ 'delete'|icon }}</a>
+                             <a href='{% url 'drivervehicletype_change' object.pk %}' class="gray-light def-a pad10">{{ 'edit'|icon }}</a>
+                             <a href='{% url 'drivervehicletype_delete' object.pk %}' class="gray-light def-a pad10">{{ 'delete'|icon }}</a>
                            </td>
                        {% endif %}
                    </tr>
