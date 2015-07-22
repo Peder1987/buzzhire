@@ -216,6 +216,7 @@ span.notification-icon-panel{
   border: none;
   margin-right: -20px;
   background: linear-gradient(to right, rgb(44, 124, 187), rgb(60, 153, 227));
+  margin-bottom: 10px;
 }
 
 .sidebar-content .nav.nav-tabs li.active a, .sidebar-content .nav.nav-tabs li a:hover{
