@@ -27,15 +27,16 @@
                             <div class="feedback-target-wrap">
                               {% profile_photo feedback_target 'medium'  %}
                               </div>
-                              <h5>{{ feedback_target.get_full_name }}</h5>
-                              
+                              <h5>{{ feedback_target.get_full_name }} {{feedback_target.reference_number}} </h5>
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{feedback_target.reference_number}}" aria-expanded="false" aria-controls="collapse1" class="expand-btn collapsed"><i class="fa fa-lg fa-align-center fa-angle-down"></i></a>
                             </div>
                         {% else %}
                             <a href="{{ feedback_target.get_absolute_url }}">
                                 <div class="feedback-target-wrap">
                                   {% profile_photo feedback_target 'medium'  %}
 
-                                  <h5>{{ feedback_target.get_full_name }}</h5>
+                                  <h5>{{ feedback_target.get_full_name }} {{feedback_target.reference_number}} </h5>
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{feedback_target.reference_number}}" aria-expanded="false" aria-controls="collapse1" class="expand-btn collapsed"><i class="fa fa-lg fa-align-center fa-angle-down"></i></a>
                                 </div>
                             </a>
                         {% endif %}
@@ -43,7 +44,7 @@
                 
                 </div>
                 <hr>
-                <div >
+                <div id="collapse{{feedback_target.reference_number}}">
                     {% crispy form %}  
                 </div>
               
