@@ -1,6 +1,6 @@
 {% load icons humanize %}
 {% with is_freelancer=request.user.is_freelancer %}
-    <div class='well'>
+ <!--   <div class='well'>
         <p class='text-center'>
             <a class='monospace' href='{{ object.get_absolute_url }}'>{{ object.reference_number }}</a><br>
             {{ 'date'|icon }} {{ object.date }}, {{ object.start_time }} 
@@ -87,14 +87,14 @@
                 {% endif %}
             </tbody>
         </table>
-    </div> 
+    </div> -->
 
     <div class="booking-box">
         <div class="reference"><a href='{{ object.get_absolute_url }}'>#{{ object.reference_number }}</a></div>
        
         <p class="f20 black">{{ object.date }}, {{ object.start_time }}</p>
 
-        <div class="job-request-table-wrap">
+        <div>
             <table class="table job-request-table black f14">
                 <tr>
                     <td> Service </td>
