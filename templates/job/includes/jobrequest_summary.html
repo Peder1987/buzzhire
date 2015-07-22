@@ -123,57 +123,7 @@
 
                     {% block extra_fields %}{% endblock %}
 
-                    {% if is_freelancer %}
-                    <tr>
-                        <th>Pay per hour</th>
-                        <td class="blue">
-                            &pound;{{ object.freelancer_pay_per_hour.amount }}
-                        </td>
-                    </tr>
-                </table>
-                
-            </div>
-            <div class="total-box">
-          
-                <table class="table total-table white f14 mar0">
-                    <tr>
-                        <td> Total </td>
-                        <td>
-                            &pound;{{ object.freelancer_total_pay.amount }}
-                        </td>
-                    </tr>
-                </table>
-
-            </div>
-                   
-                {% else %}
-                    {% if request.user.is_admin %}
-                        <tr>
-                            <td>Client</td>
-                            <td>
-                                {{ object.client }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Client pay per hour</td>
-                            <td class="blue">
-                                &pound;{{ object.client_pay_per_hour.amount }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Freelancer pay per hour</td>
-                            <td class="blue">
-                                &pound;{{ object.freelancer_pay_per_hour.amount }}
-                            </td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td>Pay per hour</td>
-                            <td class="blue">
-                                &pound;{{ object.client_pay_per_hour.amount }}
-                            </td>
-                        </tr>
-                    {% endif %}
+                    
                     
                     
                 </table>
