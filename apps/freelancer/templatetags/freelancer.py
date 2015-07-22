@@ -33,6 +33,7 @@ def profile_photo(freelancer, size='medium', for_email=False):
         'for_email': for_email,
     }
 
+
 @register.filter
 def freelancer_profile_menu_items(freelancer):
     """Returns list of menu items for the freelancer's profile.

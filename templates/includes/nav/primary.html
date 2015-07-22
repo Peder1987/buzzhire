@@ -34,6 +34,7 @@
                         {% if request.user.is_freelancer %}
                             {% profile_photo request.user.freelancer 'small' %}
                         {% endif %}
+                        {{request.user.freelancer.photo}}
                         </span>
                         Logged in as {{ request.user }}
                     </p>
