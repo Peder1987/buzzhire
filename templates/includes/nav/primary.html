@@ -30,12 +30,13 @@
                         {% include 'includes/menu_link.html' with icon_name='dashboard' link_text='Dashboard' %}
                     {% endcomment %}
                     <p class="navbar-text photo-navbar-item blue">
-                        <span>
                         {% if request.user.is_freelancer %}
+                        <span style="background: url({{request.user.freelancer.photo.url}}); width: 45px; height: 45px">
+                        <!--
                             {% profile_photo request.user.freelancer 'small' %}
-                        {% endif %}
-                        {{request.user.freelancer.photo.url}}
+                        -->
                         </span>
+                        {% endif %}
                         Logged in as {{ request.user }}
                     </p>
                     <p class="navbar-text logout-navbar-item"><a href="{% url 'account_logout' %}">{{ 'logout'|icon }} Log out</a></p>
