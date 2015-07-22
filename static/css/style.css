@@ -117,11 +117,13 @@ span.notification-icon-panel{
 }
 
 .booking-box .job-request-table-wrap{
-  min-height: 430px;
+  min-height: 440px;
+  height: 440px;
 }
 
 .booking-box .job-request-table-wrap.booking-request-table-wrap{
-  min-height: 410px;
+  min-height: 400px;
+  height: 400px;
 }
 
 .booking-box .job-request-table td, .booking-box .total-box .total-table td,

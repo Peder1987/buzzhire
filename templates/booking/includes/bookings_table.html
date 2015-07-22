@@ -93,11 +93,11 @@
                     </tr>
                     {% endif %}
                 </table>
-                
-            </div>
-             {% if object|freelancer_feedback_needed %}
+                {% if object|freelancer_feedback_needed %}
                     <a href='{% url 'freelancer_feedback_create' object.jobrequest.pk %}' class='btn btn-primary' style="margin-bottom: 10px">Leave feedback</a>
                 {% endif %}
+            </div>
+             
             <div class="total-box blue-bck">
           
                 <table class="table total-table white f14 mar0">
