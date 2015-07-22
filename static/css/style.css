@@ -449,8 +449,8 @@ span.notification-icon-panel{
     width: 90%;
 }
 
-.sidebar-right-page .sidebar-content #div_id_tips_included{
-  margin-top: 35px;
+.sidebar-right-page .sidebar-content #div_id_client_pay_per_hour{
+  margin-right: 15%;
 }
 .sidebar-right-page .sidebar-content input,
 .sidebar-right-page .sidebar-content select,
