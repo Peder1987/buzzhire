@@ -15,7 +15,14 @@
             {{ object.get_vehicle_type_display }}
             {{ object.get_role_display }}
             <br> <br>
-            {% block extra_fields %}{% endblock %}
+            {% if object.service != 'cleaner' %}
+                {% if object.service == 'driver' %}
+                    Vehicle type {{ object.get_vehicle_type_display }}
+                {% else %}
+                    role {{ object.get_role_display }}
+                {% endif %}
+
+            {% endif %}
              <tr style='font-size: 1.2em;'>
                         <th>TOTAL COST</th>
                         <td>
