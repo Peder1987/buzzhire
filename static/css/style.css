@@ -277,7 +277,10 @@ span.notification-icon-panel{
   height: 100%;
   min-height: 100%;
 }
-  
+.page .content-wrap{
+  min-height: calc(100% - 75px); 
+  height: calc(100% - 75px);
+}
 
 
 .sidebar-right-page .sidebar-content button.btn[name="client_submit"],
