@@ -2941,9 +2941,9 @@ label.checkbox {
     margin-right: 0.2em;
 }
 .navbar-nav.nav .profile-photo {
-      border-radius: 30px;
+      border-radius: 100px;
       box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
-      width: 45px;
+      width: 40px;
       height: 48px;
       border: 2px solid #277dbc;
       padding: 2px;
