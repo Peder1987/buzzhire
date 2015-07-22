@@ -34,14 +34,15 @@
 
                     {% if object.service != 'cleaner' %}
                         <tr>
-                            {% if object.service == 'driver' %}
+                            {% if object.service == 'driver' and object.get_vehicle_type_display %}
                                 <td> Vehicle type </td>
                                 <td><span class='label label-default'>{{ object.get_vehicle_type_display }} </span></td>
                             {% else %}
+                                {% if object.get_role_display %}
                                 <td> Role </td> 
                                 <td> <span class='label label-default'>{{ object.get_role_display }} </span> </td>
+                                {% endif %}
                             {% endif %}
-                            
                         </tr>
                     {% endif %}
                     <tr>
