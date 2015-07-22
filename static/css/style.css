@@ -158,6 +158,10 @@ span.notification-icon-panel{
   min-width: 80%;
 }
 
+.feedback-form-wrap a.expand-button{
+  display: inline-block;
+}
+
 .submit-feedback-btn{
   width: 100%;
   margin: 20px 0;
