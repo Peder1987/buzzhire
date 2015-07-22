@@ -25,128 +25,44 @@
 }
 /* Predefined */
 
-.white {
-    color: white;
-}
-.blue {
-    color: #2779bc;
-}
-.gray {
-    color: #555;
-}
-.clearfix {
-    clear: both;
-}
-.f16 {
-    font-size: 16px;
-}
-.f18 {
-    font-size: 18px;
-}
-.f20 {
-    font-size: 20px;
-}
-.f22 {
-    font-size: 22px;
-}
-.f24 {
-    font-size: 24px !important;
-}
-.f26 {
-    font-size: 26px;
-}
-.f30 {
-    font-size: 30px;
-}
-.f35 {
-    font-size: 35px;
-}
-.f40 {
-    font-size: 40px;
-}
-.f45 {
-    font-size: 45px;
-}
-.f50 {
-    font-size: 50px;
-}
-.f60 {
-    font-size: 60px;
-}
-.f80 {
-    font-size: 80px;
-}
-.f90 {
-    font-size: 90px;
-}
-.f100 {
-    font-size: 100px;
-}
-.f110 {
-    font-size: 110px;
-}
-.f150 {
-    font-size: 150px;
-}
-.f170 {
-    font-size: 170px;
-}
-.f200 {
-    font-size: 200px;
-}
-.lett-space-2 {
-    letter-spacing: 2px;
-}
-.HelveticaRegular {
-    font-family: 'HelveticaRegular';
-}
-.HelveticaLight {
-    font-family: 'HelveticaLight';
-}
-.HelveticaOblique {
-    font-family: 'HelveticaOblique';
-}
-.Helvetica {
-    font-family: 'Helvetica';
-}
-.def-a {
-    text-decoration: none
-}
-.pad0 {
-    padding: 0 !important
-}
-.pad20 {
-    padding: 20px
-}
-.mar0 {
-    margin: 0 !important
-}
-.mart0 {
-    margin-top: 0 !important
-}
-.mart20 {
-    margin-top: 20px
-}
-.mart40 {
-    margin-top: 40px
-}
+.white { color: white; }
+.blue { color: #2779bc; }
+.gray { color: #555; }
+.black{ color: black; }
+.clearfix { clear: both; }
+.f16 { font-size: 16px; }
+.f18 { font-size: 18px; }
+.f20 { font-size: 20px; }
+.f22 { font-size: 22px; }
+.f24 { font-size: 24px !important; }
+.f26 { font-size: 26px; }
+.f30 { font-size: 30px; }
+.f35 { font-size: 35px; }
+.f40 { font-size: 40px; }
+.f45 { font-size: 45px; }
+.f50 { font-size: 50px; }
+.f60 { font-size: 60px; }
+.f80 { font-size: 80px; }
+.f90 { font-size: 90px; }
+.f100 { font-size: 100px; }
+.f110 { font-size: 110px; }
+.f150 { font-size: 150px; }
+.f170 { font-size: 170px; }
+.f200 { font-size: 200px; }
+.lett-space-2 { letter-spacing: 2px; }
+.HelveticaRegular { font-family: 'HelveticaRegular'; }
+.HelveticaLight { font-family: 'HelveticaLight'; }
+.HelveticaOblique { font-family: 'HelveticaOblique'; }
+.Helvetica { font-family: 'Helvetica'; }
+.def-a { text-decoration: none; }
+.pad0 { padding: 0 !important; }
+.pad20 { padding: 20px; }
+.mar0 { margin: 0 !important; }
+.mart0 { margin-top: 0 !important; }
+.mart20 { margin-top: 20px; }
+.mart40 { margin-top: 40px; }
+
 /* Custom */
-
-.booking-box {
-  background: white;
-  text-align: center;
-  padding: 20px;
-  margin-bottom: 15px;
-  margin-top: 15px;
-}
-
-.booking-box div.reference,.booking-box div.reference a{
-  color: #999999;
-  display: block;
-  text-align: center;
-  text-decoration: none;
-  cursor: pointer;
-}
 
 .notification-table tr td{
   border-top: none !important;
@@ -175,9 +91,37 @@ span.notification-icon-panel{
   background: url(../img/icons/notification-icon.png);
 }
 
+.booking-box {
+  background: white;
+  text-align: center;
+  padding: 20px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+
+.booking-box div.reference,.booking-box div.reference a{
+  color: #999999;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .booking-box .profile-picture{
   text-align: center;
 }
+
+.booking-box .job-reqest-table td{
+  padding: 8px 0;
+  border: none !important;
+  text-align: left;
+}
+.booking-box .job-reqest-table td span.label.label-default{
+  background-color: #277dbc;
+  padding: 10px 15px;
+  border-radius: 10px;
+}
+  
 
 
 .sidebar-right-page .sidebar-content button.btn[name="client_submit"],
