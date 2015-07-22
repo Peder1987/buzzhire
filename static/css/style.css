@@ -143,9 +143,10 @@ span.notification-icon-panel{
   margin-left: -20px;
   border: none;
   margin-right: -20px;
+  background: linear-gradient(to right, rgb(44, 124, 187), rgb(60, 153, 227));
 }
 
-.sidebar-content .nav.nav-tabs li a.active, .sidebar-content .nav.nav-tabs li a:hover{
+.sidebar-content .nav.nav-tabs li.active a, .sidebar-content .nav.nav-tabs li a:hover{
   background-color: transparent;
   border: none;
   color: white;
