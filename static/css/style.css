@@ -446,6 +446,10 @@ span.notification-icon-panel{
 .sidebar-right-page .sidebar-content #div_id_comments.form-group {
     width: 90%;
 }
+
+.sidebar-right-page .sidebar-content #div_id_tips_included{
+  margin-top: 35px;
+}
 .sidebar-right-page .sidebar-content input,
 .sidebar-right-page .sidebar-content select,
 .sidebar-right-page .sidebar-content textarea {
