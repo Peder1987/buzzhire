@@ -110,6 +110,17 @@
                     <td class="blue">{{ object.number_of_freelancers }}</td>
                 </tr>
                 {% endif %}
+                <tr>
+                    <td> Location </td>
+                    <td class="blue"> 
+                        
+                            {% include 'job/includes/location.html' %}
+                        
+                    </td>
+                </tr>
+
+
+                {% block extra_fields %}{% endblock %}
             </table>
         </div>
     </div>
