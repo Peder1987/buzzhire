@@ -23,8 +23,8 @@
                        {% if not admin_view %}
                            {# Hide these links as we haven't given permission to admins to edit them yet #}
                            <td class='text-right'>
-                             <a href='{% url 'drivervehicletype_change' object.pk %}' class="gray-light def-a pad10">{{ 'edit'|icon }}</a>
-                             <a href='{% url 'drivervehicletype_delete' object.pk %}' class="gray-light def-a pad10">{{ 'delete'|icon }}</a>
+                             <a href='{% url 'drivervehicletype_change' object.pk %}' class="gray-light def-a pad10">{{ 'edit-lg'|icon }}</a>
+                             <a href='{% url 'drivervehicletype_delete' object.pk %}' class="gray-light def-a pad10">{{ 'delete-lg'|icon }}</a>
                            </td>
                        {% endif %}
                    </tr>

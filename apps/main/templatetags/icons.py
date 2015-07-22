@@ -78,8 +78,8 @@ ICON_MAP = {
     'icon-notification-panel': 'notification-icon-panel',
     'vehicle-yes': 'fa fa-check-circle fa-lg',
     'vehicle-no': 'fa fa-times-circle fa-lg',
-    'edit lg': 'fa fa-edit fa-lg',
-    'delete lg': 'fa fa-trash fa-lg',
+    'edit-lg': 'fa fa-edit fa-lg',
+    'delete-lg': 'fa fa-trash fa-lg',
 
 }
 
