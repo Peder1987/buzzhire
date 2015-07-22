@@ -76,8 +76,8 @@ ICON_MAP = {
     'icon-availability': 'sidebar-icon-13',
     'icon-invitations': 'sidebar-icon-12',
     'icon-notification-panel': 'notification-icon-panel',
-    'vehicle-yes': 'fa fa-check-circle',
-    'vehicle-no': 'fa fa-times-circle',
+    'vehicle-yes': 'fa fa-check-circle fa-lg',
+    'vehicle-no': 'fa fa-times-circle fa-lg',
 
 }
 

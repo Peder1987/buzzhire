@@ -4,7 +4,7 @@
         <table class='table vehicles-table'>
             <thead>
                 <th>Type</th>
-                <th>{% if admin_view %}Has own vehicle{% else %}Can you provide the vehicle?{% endif %}</th>
+                <th class="text-center">{% if admin_view %}Has own vehicle{% else %}Can you provide the vehicle?{% endif %}</th>
                 <th>Delivery box size</th>
                 {% if not admin_view %}<th></th>{% endif %}
             </thead>
