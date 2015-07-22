@@ -57,6 +57,7 @@
 .Helvetica { font-family: 'Helvetica'; }
 .def-a { text-decoration: none; cursor: pointer;}
 .pad0 { padding: 0 !important; }
+.pad5 { padding: 5px; }
 .pad10 { padding: 10px; }
 .pad20 { padding: 20px; }
 .mar0 { margin: 0 !important; }
