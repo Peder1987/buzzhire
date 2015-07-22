@@ -70,6 +70,9 @@
                     </tr>
                 </table>
             </div>
+            {% if object|client_feedback_needed %}
+                            <a href='{% url 'client_feedback_create' object.pk %}' class='btn btn-primary'>{{ 'feedback'|icon }} Leave feedback</a>
+                        {% endif %}
             <div class="total-box">
                 <table class="table total-table white f14 mar0">
                     <tr>
