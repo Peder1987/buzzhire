@@ -10,19 +10,7 @@
             {% endif %}
             
             <p class="f20 black">{{ object.date }}, {{ object.start_time }}</p>
-            &pound;{{object.client_pay_per_hour.amount}}<br>
-            {% if object.tips_included %} included {% endif %}
-            {{ object.get_vehicle_type_display }}
-            {{ object.get_role_display }}
-            <br> <br>
-            {% if object.service != 'cleaner' %}
-                {% if object.service == 'driver' %}
-                    Vehicle type {{ object.get_vehicle_type_display }}
-                {% else %}
-                    role {{ object.get_role_display }}
-                {% endif %}
-
-            {% endif %}
+            
              <tr style='font-size: 1.2em;'>
                         <th>TOTAL COST</th>
                         <td>
@@ -30,7 +18,6 @@
                         </td>
                     </tr>
 
-                    <div class='compact'>{{ object.comments|linebreaks }}</div>
             <table class="table job-request-table black f14">
                 <tr>
                     <td> Service </td>
@@ -46,6 +33,40 @@
                         
                             {% include 'job/includes/location.html' %}
                         
+                    </td>
+                </tr>
+
+
+                {% if object.service != 'cleaner' %}
+                    <tr>
+                        {% if object.service == 'driver' %}
+                            <td> Vehicle type </td>
+                            <td><span class='label label-default'>{{ object.get_vehicle_type_display }} </span></td>
+                        {% else %}
+                            <td> Role </td> 
+                            <td> <span class='label label-default'>{{ object.get_role_display }} </span> </td>
+                        {% endif %}
+                        
+                    </tr>
+                {% endif %}
+                <tr>
+                    <td>Pay per hour</td>
+                    <td class="blue">&pound;{{object.client_pay_per_hour.amount}}</td>
+                </tr>
+                <tr>
+                    <td>Tip</td>
+                    <td class="blue">
+                        {% if object.tips_included %} 
+                        <i class="fa fa-check"></i> 
+                        {% else %}
+                        <i class="fa fa-times"></i>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Comments</td>
+                    <td>
+                        {{ object.comments|linebreaks }}
                     </td>
                 </tr>
             </table>
