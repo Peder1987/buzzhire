@@ -20,7 +20,7 @@
            {% for form in formset %}
               {{ formset.management_form }}
                  {% with form.feedback_target as feedback_target %}
-                <div>
+                <div class="feedback-form-wrap">
                    
                         {% if for_freelancer %}
                             {# Clients don't have detail pages #}
@@ -31,7 +31,7 @@
                               <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{feedback_target.reference_number}}" aria-expanded="false" aria-controls="collapse1" class="expand-btn collapsed"><i class="fa fa-lg fa-align-center fa-angle-down"></i></a>
                             </div>
                         {% else %}
-                            <a href="{{ feedback_target.get_absolute_url }}">
+                            <a href="{{ feedback_target.get_absolute_url }}" class="feedback-target-info">
                                 <div class="feedback-target-wrap">
                                   {% profile_photo feedback_target 'medium'  %}
 
@@ -45,7 +45,7 @@
                 
                 </div>
                 <hr>
-                <div id="collapse{{feedback_target.reference_number}}">
+                <div id="collapse{{feedback_target.reference_number}}" class="collapse">
                     {% crispy form %}  
                 </div>
                 {% endwith %}

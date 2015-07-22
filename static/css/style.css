@@ -143,7 +143,7 @@ span.notification-icon-panel{
   background: linear-gradient(to right, rgb(44, 124, 187), rgb(60, 153, 227));
 }
 
-.feedback-target-wrap img, .feedback-target-wrap h5{
+.feedback-target-wrap img, .feedback-target-wrap h5, .feedback-target-wrap a{
   display: inline-block;
   max-width: 50%;
   text-align: left;
@@ -151,6 +151,11 @@ span.notification-icon-panel{
 
 .feedback-target-wrap h5{
   padding: 20px;
+}
+
+.feedback-target-info{
+  display: inline-block;
+  min-width: 80%;
 }
 
 .submit-feedback-btn{
