@@ -36,7 +36,7 @@
                         </address>
                     </td>
                 </tr>
-                {% block extra_fields %}{% endblock %}
+                
                 {% if is_freelancer %}
                     <tr>
                         <th>Pay per hour</th>
@@ -118,6 +118,7 @@
                         
                     </td>
                 </tr>
+                {% block extra_fields %}{% endblock %}
 
             </table>
         </div>
