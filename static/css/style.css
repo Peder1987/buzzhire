@@ -64,6 +64,15 @@
 
 /* Custom */
 
+.vehicles-table tr{
+  background-color: white;
+}
+
+.vehicles-table th{
+  color: black;
+}
+
+
 .notification-table tr td{
   border-top: none !important;
   border-bottom: 1px solid #ddd !important;
