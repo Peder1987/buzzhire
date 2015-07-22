@@ -19,8 +19,8 @@
           <form method='post'>
            {% for form in formset %}
               {{ formset.management_form }}
-              <div class='row'>
-                <div class='col-md-3'>
+              
+                <div>
                     {% with form.feedback_target as feedback_target %}
                         {% if for_freelancer %}
                             {# Clients don't have detail pages #}
@@ -33,15 +33,17 @@
                             </a>
                         {% endif %}
                     {% endwith %}
+                
                 </div>
-                <div class='col-md-9'>
+                <hr>
+                <div >
                     {% crispy form %}  
                 </div>
-              </div>
-              {% if not forloop.last %}<hr>{% endif %}
+              
+            <!--  {% if not forloop.last %}<hr>{% endif %} -->
            {% endfor %}
            <div class='text-center'>
-             <button class='btn btn-lg btn-primary' name='submit' value='submit'>{{ 'feedback'|icon }} Leave feedback</button>
+             <button class='btn btn-lg btn-primary' name='submit' value='submit'>Submit feedback</button>
            </div>
        </form>
       </div>
