@@ -29,12 +29,11 @@
                         {% url 'account_dashboard' as link_url %}
                         {% include 'includes/menu_link.html' with icon_name='dashboard' link_text='Dashboard' %}
                     {% endcomment %}
-                    <p class="navbar-text photo-navbar-item blue">
+                    <p class="navbar-text {% if request.user.is_freelancer %}photo-navbar-item {%endif %}blue">
                         {% if request.user.is_freelancer %}
                         
                             {% profile_photo request.user.freelancer 'small' %}
                         
-                        </span>
                         {% endif %}
                         Logged in as {{ request.user }}
                     </p>
