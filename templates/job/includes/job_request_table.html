@@ -1,6 +1,6 @@
 {% load icons humanize feedback %}
 {% if object_list %}
-<!--{% for object in object_list %}
+{% for object in object_list %}
     <div class="col-md-4">
         <div class="booking-box">
             <div class="reference"><a href='{{ object.get_absolute_url }}'>#{{ object.reference_number }}</a></div>
@@ -11,8 +11,8 @@
     </div>
 
  {% endfor %} 
- <div class="clearfix"></div> -->
-    <table class='table'>
+ <div class="clearfix"></div> 
+    <!--<table class='table'>
         <thead>
             <th>Reference</th>
             {% if request.user.is_admin %}
@@ -47,7 +47,7 @@
                 </tr>
             {% endfor %}        
         </tbody>
-    </table> 
+    </table> -->
     {% include 'includes/paginator.html' %}
 {% else %}
     <p class='well top-space'>No jobs.</p>
