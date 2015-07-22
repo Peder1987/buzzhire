@@ -88,4 +88,10 @@
             </tbody>
         </table>
     </div> 
+
+    <div class="booking-box">
+        <div class="reference"><a href='{{ object.get_absolute_url }}'>#{{ object.reference_number }}</a></div>
+       
+        <p class="f20 black">{{ object.date }}, {{ object.start_time }}</p>
+    </div>
 {% endwith %}
