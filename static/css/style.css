@@ -115,7 +115,8 @@ span.notification-icon-panel{
   min-height: 450px;
 }
 
-.booking-box .job-request-table td, .booking-box .total-box .total-table td{
+.booking-box .job-request-table td, .booking-box .total-box .total-table td,
+.booking-box .total-box .total-table th{
   padding: 8px 0;
   border: none !important;
   text-align: left;
