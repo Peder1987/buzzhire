@@ -111,7 +111,11 @@ span.notification-icon-panel{
   text-align: center;
 }
 
-.booking-box .job-request-table td{
+.booking-box .job-request-table-wrap{
+  min-height: 600px;
+  }
+
+.booking-box .job-request-table td, .booking-box .total-box .total-table{
   padding: 8px 0;
   border: none !important;
   text-align: left;
@@ -132,6 +136,9 @@ span.notification-icon-panel{
   margin-right: -20px;
   background-color: rgb(166,239,100);
   padding: 20px;
+}
+
+.booking-box .total-box .total-table{
 }
   
 

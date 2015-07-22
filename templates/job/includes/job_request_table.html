@@ -12,65 +12,66 @@
             <p class="f20 black">{{ object.date }}, {{ object.start_time }}</p>
             
              
-
-            <table class="table job-request-table black f14">
-                <tr>
-                    <td> Service </td>
-                    <td> <span class='label label-default'>{{ object.service|capfirst }}</span></td>
-                </tr>
-                <tr>
-                    <td> Duration </td>
-                    <td class="blue"> {{ object.duration }} hour{{ object.duration|pluralize }}</td>
-                </tr>
-                <tr>
-                    <td> Location </td>
-                    <td class="blue"> 
-                        
-                            {% include 'job/includes/location.html' %}
-                        
-                    </td>
-                </tr>
-
-
-                {% if object.service != 'cleaner' %}
+            <div class="job-request-table-wrap">
+                <table class="table job-request-table black f14">
                     <tr>
-                        {% if object.service == 'driver' %}
-                            <td> Vehicle type </td>
-                            <td><span class='label label-default'>{{ object.get_vehicle_type_display }} </span></td>
-                        {% else %}
-                            <td> Role </td> 
-                            <td> <span class='label label-default'>{{ object.get_role_display }} </span> </td>
-                        {% endif %}
-                        
+                        <td> Service </td>
+                        <td> <span class='label label-default'>{{ object.service|capfirst }}</span></td>
                     </tr>
-                {% endif %}
-                <tr>
-                    <td>Pay per hour</td>
-                    <td class="blue">&pound;{{object.client_pay_per_hour.amount}}</td>
-                </tr>
-                <tr>
-                    <td>Number of freelancers</td>
-                    <td class="blue">{{ object.number_of_freelancers }}</td>
-                </tr>
-                <tr>
-                    <td>Tip</td>
-                    <td class="blue">
-                        {% if object.tips_included %} 
-                        <i class="fa fa-check"></i> 
-                        {% else %}
-                        <i class="fa fa-times"></i>
-                        {% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <td>Comments</td>
-                    <td class="comment-cell">
-                        {{ object.comments|linebreaks }}
-                    </td>
-                </tr>
-            </table>
+                    <tr>
+                        <td> Duration </td>
+                        <td class="blue"> {{ object.duration }} hour{{ object.duration|pluralize }}</td>
+                    </tr>
+                    <tr>
+                        <td> Location </td>
+                        <td class="blue"> 
+                            
+                                {% include 'job/includes/location.html' %}
+                            
+                        </td>
+                    </tr>
+
+
+                    {% if object.service != 'cleaner' %}
+                        <tr>
+                            {% if object.service == 'driver' %}
+                                <td> Vehicle type </td>
+                                <td><span class='label label-default'>{{ object.get_vehicle_type_display }} </span></td>
+                            {% else %}
+                                <td> Role </td> 
+                                <td> <span class='label label-default'>{{ object.get_role_display }} </span> </td>
+                            {% endif %}
+                            
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <td>Pay per hour</td>
+                        <td class="blue">&pound;{{object.client_pay_per_hour.amount}}</td>
+                    </tr>
+                    <tr>
+                        <td>Number of freelancers</td>
+                        <td class="blue">{{ object.number_of_freelancers }}</td>
+                    </tr>
+                    <tr>
+                        <td>Tip</td>
+                        <td class="blue">
+                            {% if object.tips_included %} 
+                            <i class="fa fa-check"></i> 
+                            {% else %}
+                            <i class="fa fa-times"></i>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Comments</td>
+                        <td class="comment-cell">
+                            {{ object.comments|linebreaks }}
+                        </td>
+                    </tr>
+                </table>
+            </div>
             <div class="total-box">
-                <table class="table">
+                <table class="table total-table white f14">
                     <tr>
                         <td> Total </td>
                         <td>
@@ -78,6 +79,7 @@
                         </td>
                     </tr>
                 </table>
+
             </div>
         </div>
     </div>
