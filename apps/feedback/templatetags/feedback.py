@@ -41,6 +41,18 @@ def freelancer_feedback_needed(booking):
     return booking.jobrequest.status == JobRequest.STATUS_COMPLETE and not \
             BookingFeedback.objects.freelancer_feedback_exists(
                                     booking.jobrequest, booking.freelancer)
+@register.filter
+def freelancer_feedback_exists(booking):
+    """Returns whether or not the freelancer gave feedback on
+    the supplied booking.
+    Usage:
+        {% if object|freelancer_feedback_exists %}
+            ...
+        {% endif %}
+    """
+    
+    return BookingFeedback.objects.freelancer_feedback_exists(
+                                    booking.jobrequest, booking.freelancer)
 
 
 @register.inclusion_tag('feedback/includes/feedback.html')
