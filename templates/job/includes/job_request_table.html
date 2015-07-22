@@ -63,13 +63,19 @@
                         </td>
                     </tr>
                     <tr>
+                        <td>Status</td>
+                        <td class="blue">
+                            {{ object.get_status_display }}
+                        </td>
+                    </tr>
+                    <tr>
                         <td>Comments</td>
                         <td class="comment-cell">
                             {{ object.comments|linebreaks }}
                         </td>
                     </tr>
                 </table>
-                {{ object.get_status_display }}
+                
                 {% if object|client_feedback_needed %}
                     <a href='{% url 'client_feedback_create' object.pk %}' class='btn btn-primary'> Leave feedback</a>
                 {% endif %}
