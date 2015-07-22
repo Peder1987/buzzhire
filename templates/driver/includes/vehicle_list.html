@@ -11,14 +11,14 @@
             <tbody>
                 {% for object in object_list %}
                    <tr>
-                       <td>{{ object }}</td>
-                       <td>{{ object.own_vehicle|yesno|icon }}</td>
-                       <td>{{ object.get_delivery_box_display }}</td>
+                       <td class="blue">{{ object }}</td>
+                       <td class="blue">{{ object.own_vehicle|yesno|icon }}</td>
+                       <td class="blue">{{ object.get_delivery_box_display }}</td>
                        {% if not admin_view %}
                            {# Hide these links as we haven't given permission to admins to edit them yet #}
                            <td class='text-right'>
-                             <a href='{% url 'drivervehicletype_change' object.pk %}' class='btn btn-sm btn-default'>{{ 'edit'|icon }}</a>
-                             <a href='{% url 'drivervehicletype_delete' object.pk %}' class='btn btn-sm btn-default'>{{ 'delete'|icon }}</a>
+                             <a href='{% url 'drivervehicletype_change' object.pk %}'>{{ 'edit'|icon }}</a>
+                             <a href='{% url 'drivervehicletype_delete' object.pk %}'>{{ 'delete'|icon }}</a>
                            </td>
                        {% endif %}
                    </tr>

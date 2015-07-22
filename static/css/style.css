@@ -68,8 +68,16 @@
   background-color: white;
 }
 
+.vehicles-table thead tr{
+  background-color: transparent;
+}
+
 .vehicles-table th{
   color: black;
+}
+
+.vehicles-table tr, .vehicles-table td{
+  border: none !important;
 }
 
 
