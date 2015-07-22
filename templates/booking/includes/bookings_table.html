@@ -38,7 +38,7 @@
             <div class="reference"><a href='{{ object.jobrequest.get_absolute_url }}'>#{{ object.jobrequest.reference_number }}</a></div>
             <div class="profile-picture">{{ 'icon-notification-panel'|icon }}</div>
             
-            <p class="f14 black">{{ object.jobrequest.client }}</p>
+            <p class="f16 black">{{ object.jobrequest.client }}</p>
             
             
             <p class="f20 black">{{ object.jobrequest.date }}, {{ object.jobrequest.start_time }}</p>
@@ -93,13 +93,11 @@
                     </tr>
                     {% endif %}
                 </table>
-
-                 {% if object|freelancer_feedback_needed %}
-                    <a href='{% url 'freelancer_feedback_create' object.jobrequest.pk %}' class='btn btn-primary'>Leave feedback</a>
-                {% endif %}
-
                 
             </div>
+             {% if object|freelancer_feedback_needed %}
+                    <a href='{% url 'freelancer_feedback_create' object.jobrequest.pk %}' class='btn btn-primary' style="margin-bottom: 10px">Leave feedback</a>
+                {% endif %}
             <div class="total-box blue-bck">
           
                 <table class="table total-table white f14 mar0">

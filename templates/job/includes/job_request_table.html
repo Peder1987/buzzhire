@@ -77,10 +77,13 @@
                     </tr>
                 </table>
                 
-                {% if object|client_feedback_needed %}
-                    <a href='{% url 'client_feedback_create' object.pk %}' class='btn btn-primary'> Leave feedback</a>
-                {% endif %}
+                
             </div>
+            {% if object|client_feedback_needed %}
+                    <a href='{% url 'client_feedback_create' object.pk %}' class='btn btn-primary' style="margin-bottom:10px"> 
+                        Leave feedback
+                    </a>
+                {% endif %}
             <div class="total-box">
           
                 <table class="table total-table white f14 mar0">
