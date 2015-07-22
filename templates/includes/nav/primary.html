@@ -31,7 +31,7 @@
                     {% endcomment %}
                     <p class="navbar-text">
                         {% if request.user.is_freelancer %}
-                            {% profile_photo request.user.freelancer 'tiny' %}
+                            {% profile_photo request.user.freelancer 'medium' %}
                         {% endif %}
                         Logged in as {{ request.user }}
                     </p>
