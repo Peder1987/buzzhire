@@ -2951,6 +2951,7 @@ label.checkbox {
 }
 .navbar-default .navbar-text.photo-navbar-item {
   margin: 5px 17px !important;
+  color: #277dbc !important;
 }
 .profile-photo-placeholder {
     display: inline-block;
