@@ -94,7 +94,7 @@ span.notification-icon-panel{
 .booking-box {
   background: white;
   text-align: center;
-  padding: 20px;
+  padding: 20px 20px 0 20px ;
   margin-bottom: 15px;
   margin-top: 15px;
 }
@@ -120,6 +120,18 @@ span.notification-icon-panel{
   background-color: #277dbc;
   padding: 10px 15px;
   border-radius: 10px;
+}
+
+.booking-box .job-request-table td.comment-cell p{
+  margin: 0;
+  font-size: 14px;
+}
+
+.booking-box .total-box{
+  margin-left: -20px;
+  margin-right: -20px;
+  background-color: rgb(166,239,100);
+  padding: 20px;
 }
   
 

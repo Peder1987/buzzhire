@@ -11,12 +11,7 @@
             
             <p class="f20 black">{{ object.date }}, {{ object.start_time }}</p>
             
-             <tr style='font-size: 1.2em;'>
-                        <th>TOTAL COST</th>
-                        <td>
-                            <strong>&pound;{{ object.client_total_cost.amount }}</strong>
-                        </td>
-                    </tr>
+             
 
             <table class="table job-request-table black f14">
                 <tr>
@@ -54,6 +49,10 @@
                     <td class="blue">&pound;{{object.client_pay_per_hour.amount}}</td>
                 </tr>
                 <tr>
+                    <td>Number of freelancers</td>
+                    <td class="blue">{{ object.number_of_freelancers }}</td>
+                </tr>
+                <tr>
                     <td>Tip</td>
                     <td class="blue">
                         {% if object.tips_included %} 
@@ -65,11 +64,21 @@
                 </tr>
                 <tr>
                     <td>Comments</td>
-                    <td>
+                    <td class="comment-cell">
                         {{ object.comments|linebreaks }}
                     </td>
                 </tr>
             </table>
+            <div class="total-box">
+                <table class="table">
+                    <tr>
+                        <td> Total </td>
+                        <td>
+                            &pound;{{ object.client_pay_per_hour.amount }}
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 
