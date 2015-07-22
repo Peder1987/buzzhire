@@ -12,6 +12,15 @@
             <p class="f20 black">{{ object.date }}, {{ object.start_time }}</p>
             &pound;{{object.client_pay_per_hour.amount}}<br>
             {% if object.tips_included %} included {% endif %}
+            {{ object.service.vehicle_type }}
+             <tr style='font-size: 1.2em;'>
+                        <th>TOTAL COST</th>
+                        <td>
+                            <strong>&pound;{{ object.client_total_cost.amount }}</strong>
+                        </td>
+                    </tr>
+
+                    <div class='compact'>{{ object.comments|linebreaks }}</div>
             <table class="table job-request-table black f14">
                 <tr>
                     <td> Service </td>
