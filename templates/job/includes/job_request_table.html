@@ -78,7 +78,7 @@
                 </table>
                 
                 {% if object|client_feedback_needed %}
-                    <a href='{% url 'client_feedback_create' object.pk %}' class='btn btn-primary' style="margin-bottom:10px"> 
+                    <a href='{% url 'client_feedback_create' object.pk %}' class='btn btn-primary leave-feedback-btn' style="margin-bottom:10px"> 
                         Leave feedback
                     </a>
                 {% endif %}
