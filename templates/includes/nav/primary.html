@@ -31,10 +31,9 @@
                     {% endcomment %}
                     <p class="navbar-text photo-navbar-item blue">
                         {% if request.user.is_freelancer %}
-                        <span style="background: url({{request.user.freelancer.photo.url}}); width: 45px; height: 45px">
-                        <!--
+                        
                             {% profile_photo request.user.freelancer 'small' %}
-                        -->
+                        
                         </span>
                         {% endif %}
                         Logged in as {{ request.user }}
