@@ -143,6 +143,11 @@ span.notification-icon-panel{
   background: linear-gradient(to right, rgb(44, 124, 187), rgb(60, 153, 227));
 }
 
+.submit-feedback-btn{
+  width: 100%;
+  margin: 20px 0;
+}
+
 .sidebar-content .nav.nav-tabs{
   margin-top: -40px;
   margin-left: -20px;
