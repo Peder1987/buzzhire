@@ -11,41 +11,42 @@
 
 {% block content %}
    <div class='row'>
-     <div class='col-md-3'>
-        <p>Provide feedback for the following job:</p>     
+     <div class='col-md-6'>
+        <p class="blue HelveticaLight">Provide feedback for the following job:</p> 
+        {% summary object %}    
      </div>
-     <div class='col-md-9'>
-          {% summary object %}
-      </div>
-   </div>
-   <form method='post'>
-       {% for form in formset %}
-          {{ formset.management_form }}
-          <div class='row'>
-            <div class='col-md-3'>
-                {% with form.feedback_target as feedback_target %}
-                    {% if for_freelancer %}
-                        {# Clients don't have detail pages #}
-                        {% profile_photo feedback_target 'medium'  %}
-                        <h5>{{ feedback_target.get_full_name }}</h5>
-                    {% else %}
-                        <a href="{{ feedback_target.get_absolute_url }}">
+     <div class='col-md-6'>
+          <form method='post'>
+           {% for form in formset %}
+              {{ formset.management_form }}
+              <div class='row'>
+                <div class='col-md-3'>
+                    {% with form.feedback_target as feedback_target %}
+                        {% if for_freelancer %}
+                            {# Clients don't have detail pages #}
                             {% profile_photo feedback_target 'medium'  %}
                             <h5>{{ feedback_target.get_full_name }}</h5>
-                        </a>
-                    {% endif %}
-                {% endwith %}
-            </div>
-            <div class='col-md-9'>
-                {% crispy form %}  
-            </div>
-          </div>
-          {% if not forloop.last %}<hr>{% endif %}
-       {% endfor %}
-       <div class='text-center'>
-         <button class='btn btn-lg btn-primary' name='submit' value='submit'>{{ 'feedback'|icon }} Leave feedback</button>
-       </div>
-   </form>
+                        {% else %}
+                            <a href="{{ feedback_target.get_absolute_url }}">
+                                {% profile_photo feedback_target 'medium'  %}
+                                <h5>{{ feedback_target.get_full_name }}</h5>
+                            </a>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                <div class='col-md-9'>
+                    {% crispy form %}  
+                </div>
+              </div>
+              {% if not forloop.last %}<hr>{% endif %}
+           {% endfor %}
+           <div class='text-center'>
+             <button class='btn btn-lg btn-primary' name='submit' value='submit'>{{ 'feedback'|icon }} Leave feedback</button>
+           </div>
+       </form>
+      </div>
+   </div>
+   
 {% endblock %}
 
 {% block extrastyles %}
