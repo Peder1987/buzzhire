@@ -2949,6 +2949,11 @@ label.checkbox {
       padding: 2px;
 
 }
+
+.profile-photo-page .profile-photo{
+  border: 15px solid #f7f7f7;
+  border-radius: 350px;
+}
 .navbar-default .navbar-text.photo-navbar-item {
   margin: 3px 17px !important;
   color: #277dbc !important;
