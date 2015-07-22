@@ -5,8 +5,17 @@
         <div class="booking-box">
             <div class="reference"><a href='{{ object.get_absolute_url }}'>#{{ object.reference_number }}</a></div>
             <div class="profile-picture">{{ 'icon-notification-panel'|icon }}</div>
-            <p class="f14 black"></p>
-            <p class="f20 black"></p>
+            {% if request.user.is_admin %}
+                <p class="f14 black">{{ object.client }}</p>
+            {% endif %}
+            
+            <p class="f20 black">{{ object.date }}, {{ object.start_time }}</p>
+            <table class="table job-request-table black f14">
+                <tr>
+                    <td> Service </td>
+                    <td> <span class='label label-default'>{{ object.service|capfirst }}</span></td>
+                </tr>
+            </table>
         </div>
     </div>
 

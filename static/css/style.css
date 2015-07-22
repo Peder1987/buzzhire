@@ -148,8 +148,14 @@
   cursor: pointer;
 }
 
-.notification-table td{
+.notification-table tr td{
+  border-top: none !important;
+  border-bottom: 1px solid #ddd !important;
   vertical-align: middle !important;
+}
+
+.notification-table tr, .notification-table td {
+  background-color: transparent !important;
 }
 
 .notification-table td a{
@@ -162,13 +168,15 @@
   color: #277dbc;
 }
 
-.notification-table tr td{
-  border-top: none !important;
-  border-bottom: 1px solid #ddd !important;
+span.notification-icon-panel{
+  width: 70px;
+  height: 74px;
+  display: inline-block;
+  background: url(../img/icons/notification-icon.png);
 }
 
-.notification-table tr, .notification-table td {
-  background-color: transparent !important;
+.booking-box .profile-picture{
+  text-align: center;
 }
 
 
@@ -414,12 +422,7 @@
     display: inline-block;
 }
 
-span.notification-icon-panel{
-  width: 70px;
-  height: 74px;
-  display: block;
-  background: url(../img/icons/notification-icon.png);
-}
+
 
 span.sidebar-icon-1,
 span.sidebar-icon-2,
