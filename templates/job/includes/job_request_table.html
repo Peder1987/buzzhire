@@ -12,7 +12,7 @@
             <p class="f20 black">{{ object.date }}, {{ object.start_time }}</p>
             &pound;{{object.client_pay_per_hour.amount}}<br>
             {% if object.tips_included %} included {% endif %}
-            {{ object.service.vehicle_type }}
+            {{ object.get_vehicle_type_display }}
              <tr style='font-size: 1.2em;'>
                         <th>TOTAL COST</th>
                         <td>
