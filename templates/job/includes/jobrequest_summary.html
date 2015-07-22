@@ -1,6 +1,6 @@
 {% load icons humanize %}
 {% with is_freelancer=request.user.is_freelancer %}
-    <!--<div class='well'>
+    <div class='well'>
         <p class='text-center'>
             <a class='monospace' href='{{ object.get_absolute_url }}'>{{ object.reference_number }}</a><br>
             {{ 'date'|icon }} {{ object.date }}, {{ object.start_time }} 
@@ -87,59 +87,5 @@
                 {% endif %}
             </tbody>
         </table>
-    </div> -->
-
-    <div class="booking-box">
-            <div class="reference"><a href='{{ object.get_absolute_url }}'>#{{ object.reference_number }}</a></div>
-           
-            <p class="f20 black">{{ object.date }}, {{ object.start_time }}</p>
-            
-             
-            <div class="job-request-table-wrap">
-              <!--  <table class="table job-request-table black f14">
-                    <tr>
-                        <td> Service </td>
-                        <td> <span class='label label-default'>{{ object.service|capfirst }}</span></td>
-                    </tr>
-                    <tr>
-                        <td> Duration </td>
-                        <td class="blue"> {{ object.duration }} hour{{ object.duration|pluralize }}</td>
-                    </tr>
-                    {% if not is_freelancer %}
-                    <tr>
-                        <td>Number of freelancers</td>
-                        <td class="blue">{{ object.number_of_freelancers }}</td>
-                    </tr>
-                    {% endif %}
-                    <tr>
-                        <td> Location </td>
-                        <td class="blue"> 
-                            
-                                {% include 'job/includes/location.html' %}
-                            
-                        </td>
-                    </tr>
-
-
-                    {% block extra_fields %}{% endblock %}
-
-                    
-                    
-                    
-                </table> -->
-                
-            </div>
-            <div class="total-box">
-          
-                <table class="table total-table white f14 mar0">
-                    <tr>
-                        <td> Total </td>
-                        <td>
-                            &pound;{{ object.client_pay_per_hour.amount }}
-                        </td>
-                    </tr>
-                </table>
-
-            </div>
-        </div>
+    </div> 
 {% endwith %}
