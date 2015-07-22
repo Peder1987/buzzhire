@@ -2,6 +2,11 @@
 {% load icons %}
 
 {% block content %}
-    {% block already_have_account %}<p>Already have an account? <a class='btn btn-sm btn-default' href="{% url 'account_login' %}">{{ 'login'|icon }} Log in</a></p>{% endblock %}
+<div class="col-md-5">
+    {% block already_have_account %}
+    <p>Already have an account? <a class='btn btn-sm btn-default' href="{% url 'account_login' %}">Log in</a></p>
+    {% endblock %}
+</div>
     {% block form_content %}{{ block.super }}{% endblock %}
+
 {% endblock %}

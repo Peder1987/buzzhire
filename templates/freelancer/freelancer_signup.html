@@ -2,6 +2,7 @@
 {% load django_bootstrap_breadcrumbs crispy_forms_tags %}
 
 {% block form_content %}
+<div class="col-md-7">
     {% block form_message %} 
         <p>Tell us about yourself.</p>
     {% endblock %}
@@ -10,5 +11,6 @@
         {% crispy form %}
         {% crispy freelancer_form %}
     </form>
+</div>
     
 {% endblock %}
