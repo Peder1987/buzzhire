@@ -104,6 +104,12 @@
                     <td> Duration </td>
                     <td class="blue"> {{ object.duration }} hour{{ object.duration|pluralize }}</td>
                 </tr>
+                {% if not is_freelancer %}
+                <tr>
+                    <td>Number of freelancers</td>
+                    <td class="blue">{{ object.number_of_freelancers }}</td>
+                </tr>
+                {% endif %}
             </table>
         </div>
     </div>
