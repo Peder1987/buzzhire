@@ -76,7 +76,7 @@
   color: black;
 }
 
-.vehicles-table tr, .vehicles-table td{
+.vehicles-table tr, .vehicles-table td, .vehicles-table th{
   border: none !important;
 }
 

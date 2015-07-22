@@ -12,7 +12,7 @@
                 {% for object in object_list %}
                    <tr>
                        <td class="blue">{{ object }}</td>
-                       <td class="blue">{{ object.own_vehicle|yesno|icon }}</td>
+                       <td class="blue">{{ 'vehicle-'|add:object.own_vehicle|yesno|icon }}</td>
                        <td class="blue">{{ object.get_delivery_box_display }}</td>
                        {% if not admin_view %}
                            {# Hide these links as we haven't given permission to admins to edit them yet #}
