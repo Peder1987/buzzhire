@@ -452,6 +452,9 @@ span.notification-icon-panel{
 .sidebar-right-page .sidebar-content #div_id_client_pay_per_hour{
   margin-right: 15%;
 }
+.sidebar-right-page .sidebar-content #div_id_vehicle_type label{
+  display: block;
+}
 .sidebar-right-page .sidebar-content input,
 .sidebar-right-page .sidebar-content select,
 .sidebar-right-page .sidebar-content textarea {
