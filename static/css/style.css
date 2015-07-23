@@ -85,6 +85,13 @@ body{
 
 /* Custom */
 
+select
+{
+appearance:none;
+-moz-appearance:none; /* Firefox */
+-webkit-appearance:none; /* Safari and Chrome */
+}
+
 .leave-feedback-job-summary .booking-box{
   min-height: 470px;
 }
