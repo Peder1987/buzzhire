@@ -16,7 +16,7 @@ from .utils import DriverJobMatcher
 class DriverJobRequestForm(JobRequestForm):
     """Form for creating/editing driver job requests.
     """
-    comment_placeholder = 'Please specify the number of miles the driver will travel during the shift? Is there a ' \
+    comment_placeholder = 'Please specify the number of miles the driver will travel during the shift. Is there a ' \
                         'specific type of equipment the driver should bring?'
 
     def __init__(self, *args, **kwargs):
