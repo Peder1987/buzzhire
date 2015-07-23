@@ -243,6 +243,7 @@ span.notification-icon-panel{
 .submit-feedback-btn{
   width: 100%;
   margin: 20px 0;
+  background: rgb(166,239,100);
 }
 
 .sidebar-content .nav.nav-tabs{
