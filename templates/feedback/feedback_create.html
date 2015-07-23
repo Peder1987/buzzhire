@@ -17,10 +17,10 @@
         {% summary object %}    
      </div>
      <div class='col-md-6'>
-      <div class="booking-box">
           <form method='post'>
            {% for form in formset %}
               {{ formset.management_form }}
+              <div class="booking-box padb20">
                  {% with form.feedback_target as feedback_target %}
                 <div class="feedback-form-wrap">
                    
@@ -60,14 +60,15 @@
                     {% crispy form %}  
                 </div>
                 {% endwith %}
+              </div>
               
             <!--  {% if not forloop.last %}<hr>{% endif %} -->
            {% endfor %}
            <div class='text-center'>
-             <button class='btn btn-lg btn-primary submit-feedback-btn mar0' name='submit' value='submit'>Submit feedback</button>
+             <button class='btn btn-lg submit-feedback-btn mar0' name='submit' value='submit'>Submit feedback</button>
            </div>
        </form>
-      </div>
+      
       </div>
    </div>
    

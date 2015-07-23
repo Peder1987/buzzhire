@@ -71,6 +71,7 @@ body{
 .pad5 { padding: 5px; }
 .pad10 { padding: 10px; }
 .pad20 { padding: 20px; }
+.padb20{ padding-bottom: 20px !important;}
 .mar0 { margin: 0 !important; }
 .mart0 { margin-top: 0 !important; }
 .mart10 { margin-top: 10px; }
@@ -78,8 +79,6 @@ body{
 .mart40 { margin-top: 40px; }
 
 /* Custom */
-
-
 
 .vehicles-table tr{
   background-color: white;
@@ -240,10 +239,10 @@ span.notification-icon-panel{
   display: block;
 }
 
-.submit-feedback-btn{
+.submit-feedback-btn.btn{
   width: 100%;
   margin: 20px 0;
-  background: rgb(166,239,100);
+  background: rgb(166,239,100) !important;
 }
 
 .sidebar-content .nav.nav-tabs{
