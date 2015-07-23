@@ -531,10 +531,10 @@ span.notification-icon-panel{
 }
 .sidebar-right-page .sidebar-page-title h4 {
     color: black;
-    padding: 20px;
+    padding: 20px 20px 20px 0;
 }
 .sidebar-right-page .sidebar-content {
-    padding: 20px;
+    padding: 20px 20px 20px 0;
 }
 .sidebar-right-page .sidebar-right-alert {
     padding: 0 20px;
