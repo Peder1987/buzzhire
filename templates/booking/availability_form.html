@@ -33,11 +33,19 @@
             </div>
         {% endwith %}
         {% include 'includes/forms/buttons.html' with submit_name='save' icon_name='' submit_text='Save' %} 
-        <button name="edit" class="btn btn-lg btn-primary" onclick="editAvailability()" type="button"> Edit </button>
+        <button name="edit" class="btn btn-lg btn-primary" onclick="toggleAvailabilityFields()" type="button"> Edit </button>
     </form>
     <script type="text/javascript">
+
+        $(document).ready(function(){
+            var select_fields=$(".availability-select select");
+            $( select_fields ).each(function(  ) {
+              console.log( $( this ).val() );
+            });
+
+        });
     
-     function editAvailability(){
+     function toggleAvailabilityFields(){
             $(".availability-select").toggle();
             $(".availability-select-icon").toggle();
             console.log("call");
