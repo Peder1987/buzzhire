@@ -24,7 +24,10 @@
                                 <th>{{ row.heading }}</th>
                                 {% for field in row.fields %}
                                     <td class="availability-select" style="display: none">{{ field }}</td>
-                                    <td class="availability-select-icon"><i class="fa fa-check-circle fa-lg"</i>{{ field.value }}</td>
+                                    <td class="availability-select-icon">
+                                        <i class="fa fa-check-circle fa-lg 
+                                        {% if field.value == 'True' } blue {% else %} gray-light {% endif %}"</i>
+                                    </td>
                                 {% endfor %}
                             </tr>
                         {% endfor %}
@@ -42,15 +45,6 @@
 {% block extrascripts %}
     <script type="text/javascript">
 
-        $(function() {
-            var select_fields = $(".availability-select select");
-            select_fields .each(function() {
-              var selected_value = $( this ).val();
-              var icon_el = $(this).parent().next().find("i");
-              el.addClass("gray-light");
-            });
-
-        });
     
      function toggleAvailabilityFields(){
 
