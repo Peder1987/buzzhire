@@ -16,7 +16,7 @@ from .utils import DriverJobMatcher
 class DriverJobRequestForm(JobRequestForm):
     """Form for creating/editing driver job requests.
     """
-    comment_placeholder = 'Anything else to tell the driver? Is there a ' \
+    comment_placeholder = 'Please specify the number of miles the driver will travel during the shift? Is there a ' \
                         'specific type of equipment the driver should bring?'
 
     def __init__(self, *args, **kwargs):
@@ -24,7 +24,7 @@ class DriverJobRequestForm(JobRequestForm):
         self.adjust_vehicle_type_widget()
         self.helper.layout[2].insert(1, 'phone_requirement')
         self.helper.layout.insert(3,
-            layout.Fieldset('Vehicle',
+            layout.Fieldset('',
                 layout.Div('vehicle_type', css_class="radios-wrapper"),
                 'own_vehicle',
                 'minimum_delivery_box',
