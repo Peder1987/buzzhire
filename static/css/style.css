@@ -2048,6 +2048,13 @@ textarea::-webkit-input-placeholder {
 .top-content {
     height: 600px;
 }
+.top-content .freelancer-profile{
+  background-image:url(/static/img/profile-top-content-bck.png); 
+  background-size: 100%;
+  background-repeat: no-repeat;
+  height: 490px;
+}
+
 .top-content .container {
     position: relative;
     padding-top: 7em;
