@@ -33,7 +33,7 @@
             </div>
         {% endwith %}
         {% include 'includes/forms/buttons.html' with submit_name='save' icon_name='' submit_text='Save' %} 
-        <button name="edit" class="btn btn-lg btn-primary" onclick="editAvailability"> Edit </button>
+        <button name="edit" class="btn btn-lg btn-primary" onclick="editAvailability" type="button"> Edit </button>
     </form>
 {% endblock %}
 
@@ -42,5 +42,6 @@
  function editAvailability{
         $(".availability-select").toggle();
         $(".availability-select-icon").toggle();
+        return false;
  }
 </script>
