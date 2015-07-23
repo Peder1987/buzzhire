@@ -33,7 +33,7 @@
             </div>
         {% endwith %}
         {% include 'includes/forms/buttons.html' with submit_name='save' icon_name='' submit_text='Save' %} 
-        <button name="edit" class="btn btn-lg btn-primary" onclick="toggleAvailabilityFields()" type="button"> Edit </button>
+        <button name="edit" class="btn btn-lg btn-primary form-toggle-button" onclick="toggleAvailabilityFields()" type="button" value="hidden"> Edit </button>
     </form>
 
 
@@ -44,16 +44,28 @@
 
         $(function() {
             var select_fields = $(".availability-select select");
-           select_fields .each(function() {
-              console.log( $( this ).val() );
+            select_fields .each(function() {
+              var selected_value = $( this ).val();
+              var icon_el = $(this).parent().next().find("i");
+              el.addClass("gray-light");
             });
 
         });
     
      function toggleAvailabilityFields(){
+
             $(".availability-select").toggle();
             $(".availability-select-icon").toggle();
-            console.log("call");
+            
+            var toggleButton = $(".form-toggle-button")l
+            if(toggleButton.val() == "visible"){
+
+                toggleButton.val('hidden');
+                toggleButton.text('Edit');
+            } else {
+                toggleButton.val('visible');
+                toggleButton.text('Cancel');
+            }
             return false;
      }
     </script>
