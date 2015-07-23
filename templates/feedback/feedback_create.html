@@ -16,7 +16,7 @@
         
         {% summary object %}    
      </div>
-     <div class='col-md-6'>
+     <div class='col-md-6 leave-feedback-form-wrap'>
           <form method='post' class="minh470 mar0 posrel">
            {% for form in formset %}
               {{ formset.management_form }}
@@ -64,7 +64,7 @@
               
             <!--  {% if not forloop.last %}<hr>{% endif %} -->
            {% endfor %}
-           <div class='text-center posabs width100 bottom'>
+           <div class='text-center'>
              <button class='btn btn-lg submit-feedback-btn mar0 btn-primary' name='submit' value='submit'>Submit feedback</button>
            </div>
        </form>
