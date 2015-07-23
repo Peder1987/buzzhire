@@ -24,6 +24,7 @@
                                 <th>{{ row.heading }}</th>
                                 {% for field in row.fields %}
                                     <td class="availability-select" style="display: none">{{ field }}</td>
+                                    <td class="availability-select-icon"><i class="fa fa-check-circle fa-lg"</i></td>
                                 {% endfor %}
                             </tr>
                         {% endfor %}
@@ -31,6 +32,14 @@
                 </table>
             </div>
         {% endwith %}
-        {% include 'includes/forms/buttons.html' with submit_name='save' icon_name='save' submit_text='Save' %} 
+        {% include 'includes/forms/buttons.html' with submit_name='save' icon_name='' submit_text='Save' %} 
+        <button name="save" class="btn btn-lg btn-primary" onclick="editAvailability"> Edit </button>
     </form>
 {% endblock %}
+
+<script type="text/javascript">
+    
+ function editAvailability{
+
+ }
+</script>
