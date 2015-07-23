@@ -77,12 +77,15 @@ body{
 .mart10 { margin-top: 10px; }
 .mart20 { margin-top: 20px; }
 .mart40 { margin-top: 40px; }
-.minh450{ min-height: 450px}
+.minh470{ min-height: 470px}
 
 /* Custom */
 
+.leave-feedback-job-summary .booking-box{{
+  min-height: 470px;
+}
+
 .leave-feedback-content .booking-box{
-  
   position: relative;
 }
 

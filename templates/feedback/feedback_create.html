@@ -12,12 +12,12 @@
 {% block content %}
    <div class='row leave-feedback-content' >
     <p class="blue HelveticaLight">Provide feedback for the following job:</p> 
-     <div class='col-md-6 minh450'>
+     <div class='col-md-6 leave-feedback-job-summary'>
         
         {% summary object %}    
      </div>
      <div class='col-md-6'>
-          <form method='post'>
+          <form method='post' class="minh470">
            {% for form in formset %}
               {{ formset.management_form }}
               <div class="booking-box padb20">
