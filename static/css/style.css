@@ -79,6 +79,7 @@ body{
 .mart20 { margin-top: 20px; }
 .mart30 { margin-top: 30px; }
 .mart40 { margin-top: 40px; }
+.marb15 { margin-bottom: 15px; }
 .minh470{ min-height: 470px}
 .posrel{ position: relative !important;}
 .posabs{ position: absolute;}
@@ -198,7 +199,6 @@ span.notification-icon-panel{
   display: block;
   text-align: center;
   text-decoration: none;
-  cursor: pointer;
 }
 
 .booking-box .profile-picture{
