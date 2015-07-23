@@ -37,9 +37,9 @@
     </form>
     <script type="text/javascript">
 
-        $(document).ready(function(){
-            var select_fields=$(".availability-select select");
-            $( select_fields ).each(function(  ) {
+        $(function() {
+            var select_fields = $(".availability-select select");
+           select_fields .each(function() {
               console.log( $( this ).val() );
             });
 
