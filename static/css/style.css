@@ -90,6 +90,9 @@ select
 appearance:none;
 -moz-appearance:none; /* Firefox */
 -webkit-appearance:none; /* Safari and Chrome */
+  background-image: url(/static/img/select_caret.png);
+  background-repeat: no-repeat;
+  background-position: right;
 }
 
 .leave-feedback-job-summary .booking-box{
