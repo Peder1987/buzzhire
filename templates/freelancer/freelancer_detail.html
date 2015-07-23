@@ -135,7 +135,7 @@
             {% endif %}
         </div>
         <div class='col-md-8 col-md-pull-4'>
-            {% block additional_sections %}{% endblock %}
+           <!-- {% block additional_sections %}{% endblock %} -->
             {% if request.user.is_admin %}
                 <h5>Availability</h5>
                 {% include 'booking/includes/availability_summary.html' with form=object|availability_form_for_freelancer %}
