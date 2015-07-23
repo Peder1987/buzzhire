@@ -279,7 +279,7 @@ span.notification-icon-panel{
 }
 .page .content-wrap{
   min-height: calc(100% - 75px); 
-  height: calc(100% - 75px);
+  height: auto;
 }
 
 
