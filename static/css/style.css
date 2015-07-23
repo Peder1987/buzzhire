@@ -93,6 +93,10 @@ body{
   min-height: 403px;
 }
 
+.leave-feedback-form-wrap{
+  margin-bottom: 10px;
+}
+
 .leave-feedback-content .booking-box{
   position: relative;
 }
