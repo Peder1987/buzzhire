@@ -1,96 +1,9 @@
 {% load icons humanize %}
 {% with is_freelancer=request.user.is_freelancer %}
- <!--   <div class='well'>
-        <p class='text-center'>
-            <a class='monospace' href='{{ object.get_absolute_url }}'>{{ object.reference_number }}</a><br>
-            {{ 'date'|icon }} {{ object.date }}, {{ object.start_time }} 
-            
-        </p>
-        <table class='table text-left'>
-            <tbody>
-                <tr>
-                    <th>Service</th>
-                    <td>
-                        <span class='label label-default'>{{ object.service|capfirst }}</span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Duration</th>
-                    <td>
-                        {{ object.duration }} hour{{ object.duration|pluralize }}
-                    </td>
-                </tr>
-                {% if not is_freelancer %}
-                    <tr>
-                        <th>Number of freelancers</th>
-                        <td>
-                            {{ object.number_of_freelancers }}
-                        </td>
-                    </tr>
-                {% endif %}
-                <tr>
-                    <th>Location</th>
-                    <td>
-                        <address>
-                           {% include 'job/includes/location.html' %}
-                        </address>
-                    </td>
-                </tr>
-                
-                {% if is_freelancer %}
-                    <tr>
-                        <th>Pay per hour</th>
-                        <td>
-                            &pound;{{ object.freelancer_pay_per_hour.amount }}
-                        </td>
-                    </tr>
-                    <tr style='font-size: 1.2em;'>
-                        <th>TOTAL PAY</th>
-                        <td>
-                            <strong>&pound;{{ object.freelancer_total_pay.amount }}</strong>
-                        </td>
-                    </tr>
-                {% else %}
-                    {% if request.user.is_admin %}
-                        <tr>
-                            <th>Client</th>
-                            <td>
-                                {{ object.client }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Client pay per hour</th>
-                            <td>
-                                &pound;{{ object.client_pay_per_hour.amount }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Freelancer pay per hour</th>
-                            <td>
-                                &pound;{{ object.freelancer_pay_per_hour.amount }}
-                            </td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <th>Pay per hour</th>
-                            <td>
-                                &pound;{{ object.client_pay_per_hour.amount }}
-                            </td>
-                        </tr>
-                    {% endif %}
-                    <tr style='font-size: 1.2em;'>
-                        <th>TOTAL COST</th>
-                        <td>
-                            <strong>&pound;{{ object.client_total_cost.amount }}</strong>
-                        </td>
-                    </tr>
-                {% endif %}
-            </tbody>
-        </table>
-    </div> -->
+ 
 
     <div class="booking-box">
-        <div class="reference"><a href='{{ object.get_absolute_url }}'>#{{ object.reference_number }}</a></div>
+        <div class="reference">#{{ object.reference_number }}</div>
        
         <p class="f20 black">{{ object.date }}, {{ object.start_time }}</p>
 
