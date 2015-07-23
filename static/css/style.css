@@ -132,9 +132,13 @@ select
   color: black;
 }
 
-.vehicles-table tr, .vehicles-table td, .vehicles-table th
+.vehicles-table tr, .vehicles-table td, .vehicles-table th,.availability-table td,.availability-table th
 {
   border: none !important;
+  padding: 20px !important;
+}
+
+.availability-table td, .availability-table th{
   padding: 20px !important;
 }
 
@@ -142,7 +146,7 @@ select
 {
   border-top: none !important;
   border-bottom: 1px solid #ccc;
-  padding: 20px !important;
+  
 }
 
 .availability-table tr:last-child{
