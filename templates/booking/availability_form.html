@@ -23,7 +23,7 @@
                             <tr>
                                 <th>{{ row.heading }}</th>
                                 {% for field in row.fields %}
-                                    <td>{{ field }}</td>
+                                    <td class="availability-select" style="display: none">{{ field }}</td>
                                 {% endfor %}
                             </tr>
                         {% endfor %}
