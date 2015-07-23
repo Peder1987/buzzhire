@@ -7,19 +7,19 @@
         {% if request.user.is_driver and not request.user.driver.vehicle_types.exists %}
             <div class='alert alert-warning'>
                 <p>Before anyone can book you, we need to know which vehicles you drive.</p>
-                <p><a href='{% url 'drivervehicletype_add' %}' class='btn btn-default'>{{ 'create'|icon }} Create a vehicle</a></p>
+                <p><a href='{% url 'drivervehicletype_add' %}' class='btn btn-default'> Create a vehicle</a></p>
             </div>
         {% endif %}
         {% if not request.user.freelancer.availability %}
             <div class='alert alert-warning'>
                 <p>You have not filled out your availability yet.</p>
-                <p><a href='{% url 'availability_update' %}' class='btn btn-default'>{{ 'availability'|icon }} Save availability</a></p>
+                <p><a href='{% url 'availability_update' %}' class='btn btn-default'> Save availability</a></p>
             </div>
         {% endif %}
         {% if not request.user.freelancer.photo %}
             <div class='alert alert-warning'>
                 <p>You have not provided a photo yet.</p>
-                <p><a href='{% url 'freelancer_photo_update' %}' class='btn btn-default'>{{ 'photo'|icon }} Upload photo</a></p>
+                <p><a href='{% url 'freelancer_photo_update' %}' class='btn btn-default'> Upload photo</a></p>
             </div>
         {% endif %}
     {% endif %}

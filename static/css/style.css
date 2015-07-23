@@ -85,6 +85,9 @@ body{
 .posabs{ position: absolute;}
 .bottom{ bottom: 0;}
 .width100{ width: 100%; }
+/*a.btn i, button.btn i{
+  display: none;
+}*/
 
 /* Custom */
 
