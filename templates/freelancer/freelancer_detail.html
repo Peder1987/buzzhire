@@ -13,40 +13,7 @@
 
 {% block content %}
 
-<div class="top-content">
-<h5>Details</h5>
-                   <table class='table table-striped'>
-                    <tr>
-                        <th>Mobile</th>
-                        <td>{{ object.mobile }}</td>
-                    </tr>
-                    <tr>
-                        <th>Rating</th>
-                        <td>
-                            {% average_score object.average_score %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>English fluency</th>
-                        <td>
-                            {{ object.get_english_fluency_display }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Eligible to work in UK</th>
-                        <td>
-                            {{ object.eligible_to_work|yesno|icon }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Years of experience</th>
-                        <td>
-                            {{ object.get_years_experience_display }}
-                        </td>
-                    </tr>
-                    {% block additional_public_fields %}{% endblock %}
-                </table>
-</div>
+
      <div class='row'>
         <div class='col-md-4 col-md-push-8'>
             <div class=' bottom-space'>
