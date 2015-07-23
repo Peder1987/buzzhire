@@ -118,19 +118,21 @@ select
   bottom: 0;
 }
 
-.vehicles-table tr{
+.vehicles-table tr, .availability-table tr{
   background-color: white;
 }
 
-.vehicles-table thead tr{
+.vehicles-table thead tr,.availability-table thead tr{
   background-color: transparent;
 }
 
-.vehicles-table th{
+.vehicles-table th, .availability-table th{
   color: black;
 }
 
-.vehicles-table tr, .vehicles-table td, .vehicles-table th{
+.vehicles-table tr, .vehicles-table td, .vehicles-table th.
+.availability-table tr, .availability-table td, .availability-table th
+{
   border: none !important;
   padding: 20px !important;
 }
