@@ -78,6 +78,10 @@ body{
 .mart20 { margin-top: 20px; }
 .mart40 { margin-top: 40px; }
 .minh470{ min-height: 470px}
+.posrel{ position: relative !important;}
+.posabs{ position: absolute;}
+.bottom{ bottom: 0;}
+.width100{ width: 100%; }
 
 /* Custom */
 
