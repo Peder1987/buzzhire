@@ -137,6 +137,9 @@ select
   padding: 20px !important;
 }
 
+.availability-table thead th, .availability-table td.availability-select-icon{
+  text-align: center;
+}
 
 .notification-table tr td{
   border-top: none !important;
