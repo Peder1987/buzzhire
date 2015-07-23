@@ -123,7 +123,7 @@ select
 }
 
 .vehicles-table thead tr,.availability-table thead tr{
-  background-color: transparent;
+  background-color: transparent !important;
 }
 
 .vehicles-table th, .availability-table th{
