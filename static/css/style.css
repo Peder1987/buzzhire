@@ -92,6 +92,7 @@ appearance:none;
 -webkit-appearance:none; /* Safari and Chrome */
   background-image: url(/static/img/select_caret.png) !important;
   background-repeat: no-repeat;
+  background-position: right;
   background-position-x: 98%;
 }
 
