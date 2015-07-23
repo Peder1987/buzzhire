@@ -91,6 +91,14 @@ body{
 
 /* Custom */
 
+#hint_id_phone_requirement{
+  margin-bottom: 0;
+}
+
+#div_id_phone_requirement{
+  margin-bottom: 0;
+}
+
 select
 {
   appearance:none;
