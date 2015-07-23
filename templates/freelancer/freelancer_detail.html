@@ -3,11 +3,11 @@
 
 {% block page_actions %}
     {% if request.user.is_admin %}
-        <a class='btn btn-default' href='{% url 'admin:driver_driver_change' object.pk %}'>{{ 'edit'|icon }} Edit</a>
+        <a class='btn btn-default' href='{% url 'admin:driver_driver_change' object.pk %}'> Edit</a>
     {% endif %}
 {% endblock %}
 
-{% block page_title_inner %}{{ block.super }} &nbsp;&nbsp;<small><span class='label label-primary'>{{ object.service|capfirst }}</span></small>{% endblock %}
+{% block page_title_inner %} &nbsp;&nbsp;<small><span class='label label-primary'>{{ object.service|capfirst }}</span></small>{% endblock %}
 
 {% block content %}
      <div class='row'>
