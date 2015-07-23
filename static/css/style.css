@@ -286,6 +286,7 @@ span.notification-icon-panel{
 .page .content-wrap{
   min-height: calc(100% - 75px); 
   height: auto;
+  overflow: hidden;
 }
 
 
@@ -314,6 +315,8 @@ span.notification-icon-panel{
 .sidebar-page .after-breadcrumb.sidebar .sidebar-content {
     background-color: #f7f7f7;
     padding: 10px 20px;
+    margin-bottom: -10000px;
+    padding-bottom: 10000px !important;
 }
 .after-breadcrumb .panel.panel-default .badge {
     background-color: #2779bc;
