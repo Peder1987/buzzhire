@@ -4,8 +4,8 @@
         <h5>{{ question }}</h5>
         {% block after_question %}{% endblock %}
         <div class='text-center'>
-            <button class='btn btn-primary btn-lg'>{% if cancel_icon %}{{ action_icon|icon }} {% endif %} {{ action_text }}</button><br>
-            <a class='btn btn-default' href='{{ cancel_url }}'>{% if cancel_icon %}{{ cancel_icon|icon }} {% endif %}{{ cancel_text }}</a>
+            <button class='btn btn-primary btn-lg'> {{ action_text }}</button><br>
+            <a class='btn btn-default' href='{{ cancel_url }}'>{{ cancel_text }}</a>
         </div>
         
     </div>
