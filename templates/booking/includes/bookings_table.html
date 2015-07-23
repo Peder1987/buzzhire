@@ -1,41 +1,11 @@
 {% load icons humanize feedback %}
 {% if object_list %}
-    <!-- <table class='table'>
-        <thead>
-            <th>Job</th>
-            <th>Client</th>
-            <th>Date / time</th>
-            <th>Location</th>
-            <th>Pay per hour</th>
-            <th>Status</th>
-            <th>Your feedback</th>
-        </thead>
-        <tbody>
-            {% for object in object_list %}
-                <tr>
-                    <td class='monospace'><a href='{{ object.jobrequest.get_absolute_url }}'>{{ object.jobrequest.reference_number }}</a></td>
-                    <td>{{ object.jobrequest.client }}</td>
-                    <td>{{ 'date'|icon }} {{ object.jobrequest.date }}<br>{{ 'time'|icon }} {{ object.jobrequest.start_time }}<br>
-                    For {{ object.jobrequest.duration }} hour{{ object.jobrequest.duration|pluralize }}</td>
-                    <td>{% include 'job/includes/location.html' with object=object.jobrequest %}</td>
-                    <td>&pound;{{ object.jobrequest.client_pay_per_hour.amount }}</td>
-                    <td>{{ object.jobrequest.get_status_display }}</td>
-                    <td>
-                        {% if object|freelancer_feedback_needed %}
-                            <a href='{% url 'freelancer_feedback_create' object.jobrequest.pk %}' class='btn btn-primary'>{{ 'feedback'|icon }} Leave feedback</a>
-                        {% endif %}
-                        {% feedback_for_client object %}
-                    </td>
-                    
-                </tr>
-            {% endfor %}        
-        </tbody>
-    </table> -->
+   
 
     {% for object in object_list %}
     <div class="col-md-4">
         <div class="booking-box">
-            <div class="reference"><a href='{{ object.jobrequest.get_absolute_url }}'>#{{ object.jobrequest.reference_number }}</a></div>
+            <div class="reference">#{{ object.jobrequest.reference_number }}</div>
             <div class="profile-picture">{{ 'icon-notification-panel'|icon }}</div>
             
             <p class="f16 black">{{ object.jobrequest.client }}</p>
