@@ -130,7 +130,7 @@ select
   color: black;
 }
 
-.vehicles-table tr, .vehicles-table td, .vehicles-table th.
+.vehicles-table tr, .vehicles-table td, .vehicles-table th,
 .availability-table tr, .availability-table td, .availability-table th
 {
   border: none !important;
