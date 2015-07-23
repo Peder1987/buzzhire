@@ -80,6 +80,17 @@ body{
 
 /* Custom */
 
+.leave-feedback-content .booking-box{
+  min-height: 450px;
+  position: relative;
+}
+
+.leave-feedback-content .booking-box .total-box{
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+
 .vehicles-table tr{
   background-color: white;
 }
