@@ -24,7 +24,7 @@
                                 <th>{{ row.heading }}</th>
                                 {% for field in row.fields %}
                                     <td class="availability-select" style="display: none">{{ field }}</td>
-                                    <td class="availability-select-icon"><i class="fa fa-check-circle fa-lg"</i></td>
+                                    <td class="availability-select-icon"><i class="fa fa-check-circle fa-lg"</i>{{ field.value }}</td>
                                 {% endfor %}
                             </tr>
                         {% endfor %}
