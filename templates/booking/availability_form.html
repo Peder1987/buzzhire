@@ -36,8 +36,10 @@
                 </table>
             </div>
         {% endwith %}
+        <div style="display: inline-block;">
         {% include 'includes/forms/buttons.html' with submit_name='save' icon_name='' submit_text='Save' %} 
-        <button name="edit" class="btn btn-lg btn-primary form-toggle-button" onclick="toggleAvailabilityFields()" type="button" value="hidden"> Edit </button>
+         </div>
+        <button name="edit" class="btn btn-lg btn-primary form-toggle-button" onclick="toggleAvailabilityFields()" type="button" value="hidden" style="display: inline-block;"> Edit </button>
     </form>
 
 

@@ -119,7 +119,7 @@ select
 }
 
 .vehicles-table tr, .availability-table tr{
-  background-color: white;
+  background-color: white !important;
 }
 
 .vehicles-table thead tr,.availability-table thead tr{
