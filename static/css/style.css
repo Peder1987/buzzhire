@@ -40,6 +40,7 @@ body{
 .blue { color: #2779bc; }
 .gray { color: #555; }
 .gray-light { color: #999; }
+.gray-lighter { color: #ccc; }
 .black{ color: black; }
 .clearfix { clear: both; }
 .f16 { font-size: 16px; }
@@ -124,17 +125,28 @@ select
 
 .vehicles-table thead tr,.availability-table thead tr{
   background-color: transparent !important;
+  border: none !important;
 }
 
 .vehicles-table th, .availability-table th{
   color: black;
 }
 
-.vehicles-table tr, .vehicles-table td, .vehicles-table th,
-.availability-table tr, .availability-table td, .availability-table th
+.vehicles-table tr, .vehicles-table td, .vehicles-table th
 {
   border: none !important;
   padding: 20px !important;
+}
+
+.availability-table tr
+{
+  border-top: none !important;
+  border-bottom: 1px solid #ccc;
+  padding: 20px !important;
+}
+
+.availability-table tr:last-child{
+  border: none !important;
 }
 
 .availability-table thead th, .availability-table td.availability-select-icon{
