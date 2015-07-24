@@ -24,7 +24,7 @@ class SignupInnerForm(SignupForm):
     """
     form_tag = False
     submit_name = None
-    wrap_fieldset_title = ''
+    wrap_fieldset_title = ' '
 
 
 class ResetPasswordForm(CrispyFormMixin, forms.ResetPasswordForm):
