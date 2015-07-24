@@ -572,6 +572,12 @@ span.notification-icon-panel{
 .edit-account-form input{
   color: #277dbc;
 }
+.edit-account-form button.btn.btn-primary{
+  background-color: rgb(166, 239, 100);
+  width: 100%;
+  margin-left: 0;
+}
+
 
 .sidebar-right-page .sidebar-content span.booking-form-num {
     border: 1px solid #2779bc;
