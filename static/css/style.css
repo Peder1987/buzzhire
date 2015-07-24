@@ -563,6 +563,12 @@ span.notification-icon-panel{
   padding: 10px 15px;
   height: auto;
 }
+.edit-account-form legend{
+  font-size: 24px;
+  border: none;
+  padding: 15px 0;
+}
+
 .sidebar-right-page .sidebar-content span.booking-form-num {
     border: 1px solid #2779bc;
     border-radius: 100px;
