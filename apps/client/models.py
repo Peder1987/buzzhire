@@ -45,14 +45,14 @@ class Client(models.Model):
     # A link to a user account
     user = models.ForeignKey(settings.AUTH_USER_MODEL, unique=True)
 
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    mobile = models.CharField(max_length=13, validators=[
+    first_name = models.CharField(max_length=30, placeholder="First name")
+    last_name = models.CharField(max_length=30, placeholder="Last name")
+    mobile = models.CharField(max_length=13, placeholder="Mobile", validators=[
             validators.RegexValidator(r'^07[0-9 ]*$',
                            'Please enter a valid UK mobile phone number in '
                            'the form 07xxx xxx xxx')])
     company_name = models.CharField(max_length=50, blank=True,
-                                    help_text='The name of your company.')
+                                    help_text='The name of your company.', placeholder="Company name")
     @property
     def reference_number(self):
         "Returns a reference number for this client."
