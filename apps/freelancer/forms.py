@@ -5,7 +5,6 @@ from apps.core.forms import CrispyFormMixin
 from apps.location.forms import PostcodeFormMixin
 from .models import Freelancer, FREELANCER_MIN_WAGE
 from apps.core.widgets import Bootstrap3SterlingMoneyWidget
-from crispy_forms.helper import FormHelper
 
 
 class PhotoUploadForm(CrispyFormMixin, forms.ModelForm):
@@ -50,8 +49,6 @@ class FreelancerForm(CrispyFormMixin, PostcodeFormMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(FreelancerForm, self).__init__(*args, **kwargs)
 
-        self.helper = FormHelper()
-       # self.helper.form_show_labels = False
 
         amount, currency = self.fields['minimum_pay_per_hour'].fields
         self.fields['minimum_pay_per_hour'].widget = \
@@ -69,13 +66,16 @@ class FreelancerForm(CrispyFormMixin, PostcodeFormMixin, forms.ModelForm):
         if self.instance.postcode:
             self.fields['raw_postcode'].initial = str(self.instance.postcode)
 
+        self.fields['first_name'].label = False
         self.fields['first_name'].widget.attrs['placeholder'] = "First name"
-       
+        self.fields['last_name'].label = False
         self.fields['last_name'].widget.attrs['placeholder'] = "Last name"
-      
+        self.fields['mobile'].label = False
         self.fields['mobile'].widget.attrs['placeholder'] = "Mobile"
-        
+        self.fields['raw_postcode'].label = False
         self.fields['raw_postcode'].widget.attrs['placeholder'] = "Postcode"
+        self.fields['minimum_pay_per_hour'].label = False
+        self.fields['travel_distance'].label = False
 
         self.helper.layout = layout.Layout(
 
