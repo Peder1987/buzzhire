@@ -27,11 +27,12 @@ class SignupInnerForm(SignupForm):
     form_tag = False
     submit_name = None
     wrap_fieldset_title = ''
-    
+
     def __init__(self, *args, **kwargs):
         super(SignupForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_show_labels = False 
+        self.fields['password2'].widget.attrs['placeholder'] = 'Password again'
 
 
 class ResetPasswordForm(CrispyFormMixin, forms.ResetPasswordForm):

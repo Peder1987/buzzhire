@@ -20,6 +20,11 @@ class ClientForm(CrispyFormMixin, forms.ModelForm):
     submit_text = 'Save profile'
     submit_context = {'icon_name': 'edit'}
 
+    def __init__(self, *args, **kwargs):
+        super(ClientForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_show_labels = False
+
     class Meta:
         model = Client
         exclude = ('user',)
