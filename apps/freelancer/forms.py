@@ -67,6 +67,12 @@ class FreelancerForm(CrispyFormMixin, PostcodeFormMixin, forms.ModelForm):
 
         self.fields['first_name'].label = False
         self.fields['first_name'].widget.attrs['placeholder'] = "First name"
+        self.fields['last_name'].label = False
+        self.fields['last_name'].widget.attrs['placeholder'] = "Last name"
+        self.fields['mobile'].label = False
+        self.fields['mobile'].widget.attrs['placeholder'] = "Mobile"
+        self.fields['raw_postcode'].label = False
+        self.fields['raw_postcode'].widget.attrs['placeholder'] = "Postcode"
 
         self.helper.layout = layout.Layout(
 
