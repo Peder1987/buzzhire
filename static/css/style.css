@@ -581,6 +581,7 @@ span.notification-icon-panel{
 .edit-password-form label{
   font-family: HelveticaLight;
   font-size: 20px;
+  padding: 5px 0;
 }
   
 .sidebar-right-page .sidebar-content span.booking-form-num {

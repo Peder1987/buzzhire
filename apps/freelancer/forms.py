@@ -49,6 +49,8 @@ class FreelancerForm(CrispyFormMixin, PostcodeFormMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(FreelancerForm, self).__init__(*args, **kwargs)
 
+        self.helper.form_class = 'edit-account-form col-md-6'
+
 
         amount, currency = self.fields['minimum_pay_per_hour'].fields
         self.fields['minimum_pay_per_hour'].widget = \

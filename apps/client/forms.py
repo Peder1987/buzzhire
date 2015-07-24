@@ -25,7 +25,7 @@ class ClientForm(CrispyFormMixin, forms.ModelForm):
         super(ClientForm, self).__init__(*args, **kwargs)
        
         self.helper.form_show_labels = False
-        self.helper.form_class = 'edit-account-form col-md-6 blue'
+        self.helper.form_class = 'edit-account-form col-md-6'
     
 
     class Meta:
