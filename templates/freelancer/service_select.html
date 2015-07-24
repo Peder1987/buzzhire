@@ -2,7 +2,8 @@
 {% load icons crispy_forms_tags %}
 
 {% block breadcrumbs_wrapper %}{% endblock %}
-{% block content %}
+{% block content_row_wrapper %}
+{% block page_title %}{% endblock %}
     <form method='post' class='text-center'>
         {% csrf_token %}
         <div class='inline-form-field'>
