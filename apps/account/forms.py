@@ -52,6 +52,5 @@ class ChangePasswordForm(CrispyFormMixin, forms.ChangePasswordForm):
     def __init__(self, *args, **kwargs):
         super(ChangePasswordForm, self).__init__(*args, **kwargs)
        
-        self.helper.form_show_labels = False
         self.fields['password2'].widget.attrs['placeholder'] = 'Password again'
         self.helper.form_class = 'edit-password-form col-md-6'
