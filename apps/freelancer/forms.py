@@ -65,7 +65,8 @@ class FreelancerForm(CrispyFormMixin, PostcodeFormMixin, forms.ModelForm):
         if self.instance.postcode:
             self.fields['raw_postcode'].initial = str(self.instance.postcode)
 
-        self.fields['first_name'].label = false;
+        self.fields['first_name'].label = False
+
         self.helper.layout = layout.Layout(
             layout.Fieldset(
                 'Contact details',
