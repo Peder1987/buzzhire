@@ -76,6 +76,10 @@ class FreelancerForm(CrispyFormMixin, PostcodeFormMixin, forms.ModelForm):
         self.fields['raw_postcode'].widget.attrs['placeholder'] = "Postcode"
         self.fields['minimum_pay_per_hour'].label = False
         self.fields['travel_distance'].label = False
+        self.fields['english_fluency'].label = False
+        self.fields['english_fluency'].help_text = 'English fluency'
+        self.fields['years_experience'].label = False
+        self.fields['years_experience'].help_text = 'Years experience'
 
         self.helper.layout = layout.Layout(
 
