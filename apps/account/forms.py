@@ -1,7 +1,6 @@
 from allauth.account import forms
 from apps.core.forms import CrispyFormMixin, ConfirmForm
 from crispy_forms.helper import FormHelper
-from crispy_forms.helper import FormHelper
 
 # Crispify all the allauth forms
 
