@@ -21,23 +21,10 @@ class ClientForm(CrispyFormMixin, forms.ModelForm):
     submit_context = {'icon_name': 'edit'}
     
 
-  """  def __init__(self, *args, **kwargs):
-        super(ClientForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-      #  self.helper.form_show_labels = False
-        self.helper.form_class = 'edit-account-form col-md-6'"""
-
     class Meta:
         model = Client
         exclude = ('user',)
-    """    widgets={
-            "first_name":forms.TextInput(attrs={'placeholder':'First name'}),
-            "last_name":forms.TextInput(attrs={'placeholder':'Last name'}),
-            "mobile":forms.TextInput(attrs={'placeholder':'Mobile'}),
-            "company_name":forms.TextInput(attrs={'placeholder':'Company name'})
-        }  """
-
-
+  
 class ClientInnerForm(ClientForm):
     """A form for filling out client details, included with SignupForm in
     a single html <form>.
