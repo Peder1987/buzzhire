@@ -1,6 +1,7 @@
 {% extends 'page_fullwidth.html' %}
 {% load icons crispy_forms_tags %}
 
+{% block breadcrumbs_wrapper %}{% endblock %}
 {% block content %}
     <form method='post' class='text-center'>
         {% csrf_token %}
