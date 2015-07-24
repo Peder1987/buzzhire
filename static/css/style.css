@@ -558,7 +558,7 @@ span.notification-icon-panel{
     min-width: 50px;
 }
 
-#div_id_account-email label, #div_id_password1 label, #div_id_password2 label{
+#div_id_account-email label, #div_id_account-password1 label, #div_id_account-password2 label{
   display: none;
 }
 .sidebar-right-page .sidebar-content span.booking-form-num {
