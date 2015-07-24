@@ -71,8 +71,8 @@ class FreelancerForm(CrispyFormMixin, PostcodeFormMixin, forms.ModelForm):
         self.helper.layout = layout.Layout(
             layout.Fieldset(
                 'New Group',
-                Field('name', placeholder='Group Name'),
-                Field('notes', placeholder='Group Notes', rows='10', css_class='input-xxlarge'),
+                layout.Field('name', placeholder='Group Name'),
+                layout.Field('notes', placeholder='Group Notes', rows='10', css_class='input-xxlarge'),
             ),
             layout.Fieldset(
                 'Contact details',
