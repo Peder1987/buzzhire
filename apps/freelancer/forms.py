@@ -5,6 +5,7 @@ from apps.core.forms import CrispyFormMixin
 from apps.location.forms import PostcodeFormMixin
 from .models import Freelancer, FREELANCER_MIN_WAGE
 from apps.core.widgets import Bootstrap3SterlingMoneyWidget
+from crispy_forms.helper import FormHelper
 
 
 class PhotoUploadForm(CrispyFormMixin, forms.ModelForm):
