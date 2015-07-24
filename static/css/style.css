@@ -555,6 +555,11 @@ span.notification-icon-panel{
     border-bottom: 1px solid #ccc;
     margin-bottom: 30px;
     padding-bottom: 20px;
+    min-width: 50px;
+}
+
+#div_id_account-email label, #div_id_password1 label, #div_id_password2 label{
+  display: none;
 }
 .sidebar-right-page .sidebar-content span.booking-form-num {
     border: 1px solid #2779bc;
