@@ -24,7 +24,10 @@ class ClientForm(CrispyFormMixin, forms.ModelForm):
         model = Client
         exclude = ('user',)
         widgets={
-            "first_name":forms.TextInput(attrs={'placeholder':'First name'})
+            "first_name":forms.TextInput(attrs={'placeholder':'First name'}),
+            "last_name":forms.TextInput(attrs={'placeholder':'Last name'}),
+            "mobile":forms.TextInput(attrs={'placeholder':'Mobile'}),
+            "company_name":forms.TextInput(attrs={'placeholder':'Company name'})
         }  
 
 
