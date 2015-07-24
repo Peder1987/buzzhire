@@ -73,6 +73,7 @@ body{
 .pad10 { padding: 10px; }
 .pad20 { padding: 20px; }
 .padb20{ padding-bottom: 20px !important;}
+.padb40{ padding-bottom: 0px !important;}
 .mar0 { margin: 0 !important; }
 .mart0 { margin-top: 0 !important; }
 .mart10 { margin-top: 10px; }
