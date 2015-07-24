@@ -559,7 +559,8 @@ span.notification-icon-panel{
     min-width: 50px;
 }
 
-.edit-account-form .form-group input, .edit-password-form .form-group input{
+.edit-account-form .form-group input, .edit-password-form .form-group input,
+.edit-account-form .form-group select{
   padding: 10px 15px;
   height: auto;
 }
@@ -570,7 +571,7 @@ span.notification-icon-panel{
 }
 
 .edit-account-form input, .edit-account-form select, 
-.edit-password-form input, .edit-account-form span.input-group-addon{
+.edit-password-form input, .edit-account-form .input-group span.input-group-addon{
   color: #277dbc;
 }
 .edit-account-form button.btn.btn-primary,.edit-password-form button.btn.btn-primary{
