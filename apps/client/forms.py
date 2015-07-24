@@ -17,7 +17,7 @@ class LeadForm(CrispyFormMixin, forms.ModelForm):
 class ClientForm(CrispyFormMixin, forms.ModelForm):
     """A form for editing client details.
     """
-    submit_text = 'Save profile'
+    submit_text = 'Save changes'
     submit_context = {'icon_name': 'edit'}
     wrap_fieldset_title = 'Account Details'
 

@@ -572,7 +572,7 @@ span.notification-icon-panel{
 .edit-account-form input{
   color: #277dbc;
 }
-.edit-account-form button.btn.btn-primary{
+.edit-account-form button.btn.btn-primary,.edit-password-form button.btn.btn-primary{
   background-color: rgb(166, 239, 100);
   width: 100%;
   margin-left: 0;
