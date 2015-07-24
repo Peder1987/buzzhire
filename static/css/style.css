@@ -91,6 +91,10 @@ body{
 
 /* Custom */
 
+.privacy-policy-page p{
+  font-size: 18px;
+}
+
 #hint_id_phone_requirement{
   margin-bottom: 0;
 }
