@@ -569,7 +569,7 @@ span.notification-icon-panel{
   padding: 15px 0;
 }
 
-.edit-account-form input{
+.edit-account-form input, .edit-account-form select, .edit-password-form input{
   color: #277dbc;
 }
 .edit-account-form button.btn.btn-primary,.edit-password-form button.btn.btn-primary{
