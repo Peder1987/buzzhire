@@ -82,6 +82,8 @@ class FreelancerForm(CrispyFormMixin, PostcodeFormMixin, forms.ModelForm):
         self.fields['english_fluency'].help_text = 'English fluency'
         self.fields['years_experience'].label = False
         self.fields['years_experience'].help_text = 'Years experience'
+        self.fields['english_fluency'].widget.attrs['disabled'] = True
+        self.fields['years_experience'].widget.attrs['disabled'] = True
 
         self.helper.layout = layout.Layout(
 
