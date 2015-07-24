@@ -2,6 +2,7 @@
 {% block breadcrumbs_wrapper %}{% endblock %}
 
 {% block content_row_wrapper %}
+{% block page_title %}{% endblock %}
 
 <div class="top-content" data-background-images="[&quot;https://dev.buzzhire.co/static/img/hero/kitchen.jpg&quot;,
                                                                     &quot;https://dev.buzzhire.co/static/img/hero/cleaner.jpg&quot;,
@@ -11,7 +12,7 @@
                                                                     ]"
                                                                     style="position: relative; z-index: 0; background: none ">
 
-                <div class="dimmer-overlay"></div>
+       
 
                 <div class="container">
 
@@ -19,7 +20,7 @@
 
                         <div class="col-sm-12 col-md-12 col-lg-12">
 
-                            <h2 class="HelveticaLight f50 lett-space-2">Recruitment, on demand.</h2>
+                            <h2 class="HelveticaLight f50 lett-space-2">What are you looking for?</h2>
 
                             <div class="description">
                                 {% include 'job/includes/service_select_form.html' %}
@@ -35,8 +36,6 @@
         <div class="backstretch" style="left: 0px; top: 0px; overflow: hidden; margin: 0px; padding: 0px; height: 600px; width: 1349px; z-index: -999998; position: absolute;">
             
         </div>
-    <p class="select-form-title">What are you looking for?</p>
-    {% include 'job/includes/service_select_form.html' %}
 {% endblock %}
 
 
