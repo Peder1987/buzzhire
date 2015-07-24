@@ -25,6 +25,7 @@ class ClientForm(CrispyFormMixin, forms.ModelForm):
         super(ClientForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_show_labels = False
+        self.helper.form_class = 'edit-account-form'
 
     class Meta:
         model = Client
