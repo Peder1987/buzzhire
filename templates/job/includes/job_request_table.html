@@ -3,9 +3,16 @@
 {% for object in object_list %}
     <div class="col-md-4">
         <div class="booking-box">
-            {% if request.user.is_admin %} admin job request {% endif %}
+            
 
-            <div class="reference">#{{ object.reference_number }}</div>
+            <div class="reference">
+                {% if request.user.is_admin %} 
+                    <a href='{{ object.get_absolute_url }}'>#{{ object.reference_number }}</a>
+                {% else %}
+                    #{{ object.reference_number }}
+                {% endif %}
+
+            </div>
             <div class="profile-picture">{{ 'icon-notification-panel'|icon }}</div>
             {% if request.user.is_admin %}
                 <p class="f14 black">{{ object.client }}</p>
