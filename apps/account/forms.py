@@ -1,6 +1,7 @@
 from allauth.account import forms
 from apps.core.forms import CrispyFormMixin, ConfirmForm
 from crispy_forms.helper import FormHelper
+from crispy_forms.helper import FormHelper
 
 # Crispify all the allauth forms
 
@@ -48,7 +49,7 @@ class ResetPasswordKeyForm(CrispyFormMixin, forms.ResetPasswordKeyForm):
 class ChangePasswordForm(CrispyFormMixin, forms.ChangePasswordForm):
     submit_context = {'icon_name': 'password'}
     submit_text = 'Change password'
-    
+
     def __init__(self, *args, **kwargs):
         super(ClientForm, self).__init__(*args, **kwargs)
        

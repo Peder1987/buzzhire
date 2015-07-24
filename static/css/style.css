@@ -569,6 +569,10 @@ span.notification-icon-panel{
   padding: 15px 0;
 }
 
+.edit-account-form input{
+  color: #277dbc;
+}
+
 .sidebar-right-page .sidebar-content span.booking-form-num {
     border: 1px solid #2779bc;
     border-radius: 100px;
