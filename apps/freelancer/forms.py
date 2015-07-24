@@ -69,9 +69,9 @@ class FreelancerForm(CrispyFormMixin, PostcodeFormMixin, forms.ModelForm):
         self.helper.layout = layout.Layout(
             layout.Fieldset(
                 'Contact details',
-                'first_name',
-                'last_name',
-                'mobile',
+                Field('first_name', placeholder="First Name"),
+              #  'last_name',
+              #  'mobile',
             ),
             layout.Fieldset(
                 'About you',
