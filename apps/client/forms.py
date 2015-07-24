@@ -33,6 +33,11 @@ class ClientInnerForm(ClientForm):
     submit_context = {'icon_name': 'register'}
     wrap_fieldset_title = 'About you'
 
+    def __init__(self, *args, **kwargs):
+        super(ClientForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_show_labels = False
+
     def save(self, user):
         "Saves the client model, given the user."
         self.instance.user = user

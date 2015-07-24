@@ -542,6 +542,7 @@ span.notification-icon-panel{
 .become-freelancer-form button.btn.btn-primary{
     width: 100%;
     margin: 0;
+    margin-bottom: 10px;
 }
 
 .become-freelancer-form button.btn.btn-primary i{
