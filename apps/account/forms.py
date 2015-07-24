@@ -23,8 +23,10 @@ class SignupInnerForm(SignupForm):
     the <form> and submit buttons removed, used for including with other
     forms in a single html <form> tag. 
     """
+
     form_tag = False
     submit_name = None
+    wrap_fieldset_title = ''
     helper = FormHelper()
     helper.form_show_labels = False 
 
