@@ -3,6 +3,8 @@
 {% for object in object_list %}
     <div class="col-md-4">
         <div class="booking-box">
+            {% if request.user.is_admin %} admin job request {% endif %}
+
             <div class="reference">#{{ object.reference_number }}</div>
             <div class="profile-picture">{{ 'icon-notification-panel'|icon }}</div>
             {% if request.user.is_admin %}
