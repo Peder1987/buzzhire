@@ -596,7 +596,7 @@ span.notification-icon-panel{
 }
 
 .edit-password-form input::-webkit-input-placeholder {
-   color: red;
+   color: #277dbc;
 }
 
 .edit-password-form input:-moz-placeholder { /* Firefox 18- */
