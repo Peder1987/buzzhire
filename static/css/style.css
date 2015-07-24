@@ -558,11 +558,11 @@ span.notification-icon-panel{
     padding-bottom: 20px;
     min-width: 50px;
 }
-/*
-#div_id_account-email label, #div_id_account-password1 label, #div_id_account-password2 label{
-  display: none;
+
+.edit-account-form .form-group input, .edit-password-form .form-group input{
+  padding: 10px 15px;
+  height: auto;
 }
-*/
 .sidebar-right-page .sidebar-content span.booking-form-num {
     border: 1px solid #2779bc;
     border-radius: 100px;

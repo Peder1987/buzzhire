@@ -19,6 +19,7 @@ class ClientForm(CrispyFormMixin, forms.ModelForm):
     """
     submit_text = 'Save profile'
     submit_context = {'icon_name': 'edit'}
+    wrap_fieldset_title = 'Account Details'
 
     def __init__(self, *args, **kwargs):
         super(ClientForm, self).__init__(*args, **kwargs)
