@@ -557,7 +557,7 @@
                 selectedValue = ui.item.label;
                 */
 
-
+                selectedValue = ui.item.label;
                 $('.top-content').backstretch("show", backgroundSlideNum(ui.item.value));
 
             });
@@ -590,12 +590,16 @@
                     break;
                 case 'bar':
                     return 2;
+                    break;
                 case 'waiting':
                     return 3;
+                    break;
                 case 'driver':
                     return 4;
+                    break;
                 case 'kitchen':
                     return 0;
+                    break;
             }
         }
 
