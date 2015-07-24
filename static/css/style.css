@@ -580,7 +580,7 @@ span.notification-icon-panel{
 
 
 .edit-account-form input::-webkit-input-placeholder {
-   color: red;
+   color: #277dbc;
 }
 
 .edit-account-form input:-moz-placeholder { /* Firefox 18- */
