@@ -578,11 +578,37 @@ span.notification-icon-panel{
   margin-left: 0;
 }
 
-.edit-account-form input:-moz-placeholder, .edit-password-form input:-moz-placeholder,
-.edit-account-form input:-ms-input-placeholder,.edit-password-form input:-ms-input-placeholder,
-.edit-account-form input::-webkit-input-placeholder,.edit-password-form input::-webkit-input-placeholder
- {
-    color: #277dbc;
+
+.edit-account-form input::-webkit-input-placeholder {
+   color: red;
+}
+
+.edit-account-form input:-moz-placeholder { /* Firefox 18- */
+   color: #277dbc;
+}
+
+.edit-account-form input::-moz-placeholder {  /* Firefox 19+ */
+   color: #277dbc;
+}
+
+.edit-account-form input:-ms-input-placeholder {  
+  color: #277dbc;
+}
+
+.edit-password-form input::-webkit-input-placeholder {
+   color: red;
+}
+
+.edit-password-form input:-moz-placeholder { /* Firefox 18- */
+   color: #277dbc;
+}
+
+.edit-password-form input::-moz-placeholder {  /* Firefox 19+ */
+   color: #277dbc;
+}
+
+.edit-password-form input:-ms-input-placeholder {  
+  color: #277dbc;
 }
 
 .edit-password-form label{
