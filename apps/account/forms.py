@@ -50,7 +50,7 @@ class ChangePasswordForm(CrispyFormMixin, forms.ChangePasswordForm):
     submit_text = 'Change password'
 
     def __init__(self, *args, **kwargs):
-        super(CrispyFormMixin, self).__init__(*args, **kwargs)
+        super(ChangePasswordForm, self).__init__(*args, **kwargs)
        
         self.helper.form_show_labels = False
         self.helper.form_class = 'edit-password-form col-md-6'
