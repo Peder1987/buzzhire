@@ -578,7 +578,11 @@ span.notification-icon-panel{
   margin-left: 0;
 }
 
-
+.edit-password-form label{
+  font-family: HelveticaLight;
+  font-size: 20px;
+}
+  
 .sidebar-right-page .sidebar-content span.booking-form-num {
     border: 1px solid #2779bc;
     border-radius: 100px;
