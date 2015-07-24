@@ -1,6 +1,9 @@
 {% extends 'page_fullwidth.html' %}
+{% block breadcrumbs_wrapper %}{% endblock %}
 
-{% block content %}
+{% block content_row_wrapper %}
+<div class="row mar0">
+        <div class= "col-md-10 col-md-offset-1">
         <p>
         Protecting
         your private information is our priority. This Statement of Privacy
@@ -166,5 +169,6 @@
         Privacy. If you believe that BuzzHire has not adhered to this
         Statement, please <a href='{% url 'contact' %}'>contact BuzzHire</a>.</p>
         
-
+</div>
+</div>
 {% endblock %}
