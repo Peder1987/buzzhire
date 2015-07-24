@@ -13,3 +13,109 @@
         </div>
     </form>    
 {% endblock %}
+
+
+{% block extrascripts %}
+ <script src="/static/js/jquery-ui.js"></script>
+    <script type='text/javascript'>
+
+        var selectedValue = null;
+
+        $(function() {
+            // Carousel
+            var background_images = $('.top-content').data('background-images');
+            $('.top-content').backstretch(background_images, {duration: 3000, fade: 800, loop: false});
+            $('.top-content').backstretch("pause");
+
+            var selectedValue = $( "#id_service option:selected" ).text();
+            var focusedValue = null;
+
+            /* How it works section toggle */
+
+            $('.how-control').click(function(){
+                $('#how-it-works').slideToggle("slow");
+            });
+
+            $( "#id_service" ).selectmenu();
+
+            /* Push the content down/up on select menu open/close */
+
+            $( "#id_service" ).on( "selectmenuopen", function( event, ui ) {
+                $('.description form div.text-center').css('margin-top','180px');
+            } );
+
+            $( "#id_service" ).on( "selectmenuclose", function( event, ui ) {
+                $('.description form div.text-center').css('margin-top','0px');
+                $('.ui-selectmenu-text').html(selectedValue);
+            } );
+
+         
+
+            /* Change top content background image based on selected staff type */
+
+            $( "#id_service" ).on( "selectmenuchange", function( event, ui ) {
+
+                /*
+                $('#home').fadeTo('slow', 0.5, function () {
+
+                    $('#home').css({ 'background-image': 'url(/static/img/hero/' + ui.item.value + '.jpg)' });
+
+                    $('#home').fadeTo('slow', 1);
+                });
+
+                selectedValue = ui.item.label;
+                */
+
+                selectedValue = ui.item.label;
+                $('.top-content').backstretch("show", backgroundSlideNum(ui.item.value));
+
+            });
+
+
+            /* Change select menu option on menu item hover */
+
+                
+            $( "#id_service" ).on( "selectmenufocus", function( event, ui ) {
+                    
+                if(focusedValue != ui.item.value){
+                        focusedValue = ui.item.value;
+                        $('.ui-selectmenu-text').html(ui.item.label);
+
+                        $('.top-content').backstretch("show", backgroundSlideNum(ui.item.value));
+                } 
+                    
+                    
+
+           }); 
+           
+
+
+        });
+
+        function backgroundSlideNum(value){
+            switch(value){
+                case 'cleaner': 
+                    return 1;
+                    break;
+                case 'bar':
+                    return 2;
+                    break;
+                case 'waiting':
+                    return 3;
+                    break;
+                case 'driver':
+                    return 4;
+                    break;
+                case 'kitchen':
+                    return 0;
+                    break;
+            }
+        }
+
+
+
+
+    </script>
+   
+
+{% endblock %}
