@@ -556,7 +556,7 @@ span.notification-icon-panel{
 }
 .sidebar-right-page .sidebar-content fieldset {
     border-bottom: 1px solid #ccc;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     padding-bottom: 20px;
     min-width: 50px;
 }
@@ -681,6 +681,7 @@ span.notification-icon-panel{
   margin: 0;
 }
 #div_id_freelancer-years_experience p.help-block, #div_id_freelancer-english_fluency p.help-block{
+  margin-bottom: 5px;
 }
 .sidebar-right-page .sidebar-content legend,
 .select-form-title {
