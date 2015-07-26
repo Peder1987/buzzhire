@@ -683,6 +683,9 @@ span.notification-icon-panel{
 {
   margin: 0;
 }
+#div_id_freelancer-eligible_to_work{
+  margin-bottom: 0;
+}
 #div_id_freelancer-years_experience p.help-block, #div_id_freelancer-english_fluency p.help-block{
   margin-bottom: 4px;
 }
