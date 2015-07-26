@@ -93,7 +93,17 @@ body{
 /* Custom */
 
 .pricing-table td, .pricing-table th{
-    border: 1px solid #277dbc;
+    border: 1px solid #277dbc !important;
+    text-align: center;
+    color: black;
+}
+
+.pricing-table tbody tr th:first-child, .pricing-table tbody tr td:first-child{
+  text-align: left;
+}
+
+.pricing-table thead tr th:first-child{
+  border: none !important
 }
 
 .privacy-policy-page{
