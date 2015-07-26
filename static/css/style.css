@@ -243,9 +243,13 @@ span.notification-icon-panel{
 }
 
 .booking-box .job-request-table-wrap.invitations-request-table-wrap{
-  min-height: 200px;
-  height: 200px;
+  min-height: 210px;
+  height: 210px;
 
+}
+
+.accept-invitation .box-right{
+  margin-top: 25px;
 }
 
 .booking-box .job-request-table-wrap .leave-feedback-btn{
