@@ -8,6 +8,9 @@ from crispy_forms.helper import FormHelper
 class LoginForm(CrispyFormMixin, forms.LoginForm):
     submit_context = {'icon_name': 'login'}
     submit_text = 'Log in'
+    def __init__(self, *args, **kwargs):
+        super(SignupForm, self).__init__(*args, **kwargs)
+        self.helper.form_show_labels = False 
 
 
 class LogoutForm(CrispyFormMixin, ConfirmForm):
