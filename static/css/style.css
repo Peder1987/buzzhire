@@ -192,10 +192,12 @@ select
   color: #999999;
   text-decoration: none;
   cursor: pointer;
+  font-size: 22px;
 }
 
 .notification-table .notification-date{
   color: #277dbc;
+  font-size: 22px;
 }
 
 span.notification-icon-panel{
