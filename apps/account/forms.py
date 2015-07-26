@@ -10,7 +10,8 @@ class LoginForm(CrispyFormMixin, forms.LoginForm):
     submit_text = 'Log in'
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs)
-        self.helper.form_show_labels = False 
+        self.fields['password'].label = False
+        self.fields['login'].label = False
 
 
 class LogoutForm(CrispyFormMixin, ConfirmForm):
