@@ -677,11 +677,14 @@ span.notification-icon-panel{
     width: 100%;
 }
 
-#div_id_freelancer-years_experience, #div_id_freelancer-english_fluency{
+#div_id_freelancer-years_experience, #div_id_freelancer-english_fluency,
+#div_id_freelancer-mobile, #div_id_freelancer-minimum_pay_per_hour,
+#div_id_freelancer-travel_distance, #div_id_freelancer-raw_postcode
+{
   margin: 0;
 }
 #div_id_freelancer-years_experience p.help-block, #div_id_freelancer-english_fluency p.help-block{
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 }
 .sidebar-right-page .sidebar-content legend,
 .select-form-title {
