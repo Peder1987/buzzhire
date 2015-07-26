@@ -4,20 +4,21 @@
 {% block content_row_wrapper %}
 {% block page_title %}{% endblock %}
 <div class="row mar0 Helvetica f18 privacy-policy-page">
-        <div class="row page-title">
-            <h3>{% block page_title_inner %}{{ title }}{% endblock %}</h3>           
-        </div>
-        <div class= "col-md-10 col-md-offset-1 pad0 padb40">
-       
-        
+    <div class="row page-title">
+        <h3>{% block page_title_inner %}{{ title }}{% endblock %}</h3>           
+    </div>
+    <div class= "col-md-10 col-md-offset-1 pad0 padb40">
+   
         <h4 class="blue HelveticaLight f26">
             Interested in knowing our pricing? Below is the minimum pay for each staff type.
             Pay more and receive a faster response and higher rated freelancers.
         </h4>
-        <table class="table pricing table">
+        <table class="table pricing-table">
             <thead>
-                <th></th>
-                <th colspan=5>Drivers</th>
+                <tr>
+                    <th></th>
+                    <th colspan=5>Drivers</th>
+                </tr>
             </thead>
             <tbody>
                 <tr>
@@ -62,12 +63,14 @@
                 </tr>
             </tbody>
         </table>
-       
-       <table class="table pricing table">
+   
+       <table class="table pricing-table">
             <thead>
-                <th></th>
-                <th>Waiter</th>
-                <th colspan=3>Bar staff</th>
+                <tr>
+                    <th></th>
+                    <th>Waiter</th>
+                    <th colspan=3>Bar staff</th>
+                </tr>
             </thead>
             <tbody>
                 <tr>
@@ -107,13 +110,15 @@
                 </tr>
             </tbody>
         </table>
-                
+            
 
 
-        <table class="table pricing table">
+        <table class="table pricing-table">
             <thead>
-                <th></th>
-                <th colspan=3>Kitchen staff</th>
+                <tr>
+                    <th></th>
+                    <th colspan=3>Kitchen staff</th>
+                </tr>
             </thead>
             <tbody>
                 <tr>
@@ -150,6 +155,6 @@
         </table>
        
         
-</div>
+    </div>
 </div>
 {% endblock %}
