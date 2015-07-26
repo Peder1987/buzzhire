@@ -91,12 +91,14 @@ body{
 }*/
 
 /* Custom */
+
 .pricing-table{
   font-family: HelveticaLight;
-  margin-top: 15px;
-  margin-bottom: 15px;
 }
 
+.pricing-table-wrap{
+  padding: 25px 10px;
+}
 .pricing-table td, .pricing-table th{
     border: 1px solid #277dbc !important;
     text-align: center;
