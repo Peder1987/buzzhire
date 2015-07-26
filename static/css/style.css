@@ -252,6 +252,10 @@ span.notification-icon-panel{
   margin-top: 25px;
 }
 
+.accept-invitation .box-right .well{
+  height: 420px;
+}
+
 .booking-box .job-request-table-wrap .leave-feedback-btn{
   margin-bottom: 10px;
   position: absolute;
