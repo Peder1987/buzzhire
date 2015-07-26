@@ -10,6 +10,7 @@ class LoginForm(CrispyFormMixin, forms.LoginForm):
     submit_text = 'Log in'
     def __init__(self, *args, **kwargs):
         super(SignupForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
         self.helper.form_show_labels = False 
 
 
