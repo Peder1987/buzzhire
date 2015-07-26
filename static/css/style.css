@@ -117,6 +117,11 @@ body{
   font-family: HelveticaBold;
 }
 
+.pricing-table tbody td{
+  max-width: 16%;
+  width: 16%
+}
+
 .privacy-policy-page{
   background: rgb(247, 247, 247);
 }
