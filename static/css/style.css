@@ -91,6 +91,9 @@ body{
 }*/
 
 /* Custom */
+.pricing-table{
+  font-family: HelveticaLight;
+}
 
 .pricing-table td, .pricing-table th{
     border: 1px solid #277dbc !important;
@@ -104,6 +107,10 @@ body{
 
 .pricing-table thead tr th:first-child{
   border: none !important
+}
+
+.pricing-table thead tr th, .pricing-table tbody tr th:first-child{
+  font-family: HelveticaBold;
 }
 
 .privacy-policy-page{
