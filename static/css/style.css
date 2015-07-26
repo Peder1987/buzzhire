@@ -676,6 +676,12 @@ span.notification-icon-panel{
 .sidebar-right-page .sidebar-content .client-signup-form .form-group {
     width: 100%;
 }
+
+#id_freelancer-years_experience, #div_id_freelancer-english_fluency{
+  margin: 0;
+}
+#id_freelancer-years_experience p.help-block, #div_id_freelancer-english_fluency p.help-block{
+}
 .sidebar-right-page .sidebar-content legend,
 .select-form-title {
     border-bottom: none !important;
