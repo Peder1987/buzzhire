@@ -91,6 +91,11 @@ body{
 }*/
 
 /* Custom */
+
+.pricing-table td, .pricing-table th{
+    border: 1px solid #277dbc;
+}
+
 .privacy-policy-page{
   background: rgb(247, 247, 247);
 }
