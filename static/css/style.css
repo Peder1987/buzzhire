@@ -93,6 +93,8 @@ body{
 /* Custom */
 .pricing-table{
   font-family: HelveticaLight;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .pricing-table td, .pricing-table th{
