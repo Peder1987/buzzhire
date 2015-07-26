@@ -2244,6 +2244,7 @@ textarea::-webkit-input-placeholder {
     margin-left: 0 !important;
     vertical-align: top;
     position: relative;
+    cursor: pointer;
 }
 .ui-selectmenu-menu {
     display: none;
