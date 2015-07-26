@@ -113,7 +113,7 @@ body{
   border: none !important
 }
 
-.pricing-table thead tr th, .pricing-table tbody tr th:first-child{
+.pricing-table thead tr th, .pricing-table tbody tr:first-child th:first-child{
   font-family: HelveticaBold;
 }
 
