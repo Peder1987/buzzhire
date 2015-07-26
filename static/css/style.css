@@ -536,7 +536,7 @@ span.notification-icon-panel{
 
 .sidebar-right-page .sidebar-content .become-freelancer-form .form-group {
   margin-bottom: 15px;
-  width: 90%;
+  width: 100%;
   float: left;
   margin-left: 0;
 }
@@ -674,7 +674,7 @@ span.notification-icon-panel{
     font-size: 26px;
 }
 .sidebar-right-page .sidebar-content .client-signup-form .form-group {
-    width: 95%;
+    width: 100%;
 }
 .sidebar-right-page .sidebar-content legend,
 .select-form-title {
