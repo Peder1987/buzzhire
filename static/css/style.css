@@ -94,6 +94,14 @@ body{
 
 /* Custom */
 
+.freelancer-profile .feedback .feedback-score-wrapper .feedback-score{
+    color: #277dbc;
+}
+
+.freelancer-profile .freelancer-details .feedback-score-wrapper .feedback-score{
+    color: #fff;
+}
+
 .accept-job-button.btn.btn-primary.green-btn{
   background-color: rgb(166, 239, 100);
   width: 100%;
