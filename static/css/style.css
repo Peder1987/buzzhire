@@ -3370,9 +3370,9 @@ address {
         font-size: 20px;
         line-height: 24px;
     }
-    .features-container a.btn {
+    /*.features-container a.btn {
         width: 50%;
-    }
+    }*/
     .features-box {
         padding-bottom: 30px;
     }
