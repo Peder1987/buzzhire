@@ -3193,7 +3193,7 @@ form {
     margin-bottom: 1em;
 }
 label {
-    font-family: 'HelveticaBold';
+    font-family: 'HelveticaBold', 'HelveticaLight';
 }
 .checkbox input[type="checkbox"] {
     margin-top: 2px;
