@@ -482,7 +482,7 @@ span.notification-icon-panel{
 }
 
 
-.sidebar-right-page .sidebar-content button.btn[name="client_submit"],
+.sidebar-right-page .sidebar-content button.btn[name="terms_submit"],
 .sidebar-right-page .sidebar-content button.btn[name="submit"],
 .become-freelancer-form button.btn[name="freelancer_submit"] {
     background-color: rgb(166, 239, 100);
