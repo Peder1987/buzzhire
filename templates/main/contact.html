@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
+{% load main_tags %}
 
 {% block content %}
             <div class="row">
-                <div class="col-md-9 col-md-offset-3 contact-address contact-about">
+                <div class="text-center contact-address contact-about">
                     <p><i class="fa fa-envelope"></i>Email: <a href='mailto:{{ contact_email }}'>{{ contact_email }}</a></p>
-                    {#<p><i class="fa fa-phone"></i>Phone: 0111 111 111</p>#}
+                    <p><i class="fa fa-phone"></i>Phone: {% contact_phone %}<br><small>(available from 9am - 6.30pm Monday to Saturday)</small></p>
                     <p><i class="fa fa-facebook"></i>Facebook: <a href='http://{{ facebook_url }}'>{{ facebook_url }}</a></p>
                     <p><i class="fa fa-twitter"></i>Twitter: <a href='http://{{ twitter_url }}'>{{ twitter_url }}</a></p>
                 </div>
