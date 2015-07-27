@@ -2382,8 +2382,6 @@ textarea::-webkit-input-placeholder {
     margin-top: -8px;
     position: absolute;
     top: 50%;
-   /* background-image: url(https://code.jquery.com/ui/1.11.4/themes/smoothness/images/ui-icons_888888_256x240.png);
-    background-position: -64px -16px;*/
     background-image: url(/static/img/select_caret_white.png) !important;
     background-position: 3px 4px;
     background-repeat: no-repeat;
@@ -2391,7 +2389,7 @@ textarea::-webkit-input-placeholder {
 .top-content .description form .btn i {
     display: none
 }
-.top-content .description form .btn {
+.top-content .description form .book-freelancer-btn.btn {
     background-color: rgba(54, 123, 174, 0.7);
     border: none;
     border-radius: 8px;
@@ -2402,7 +2400,13 @@ textarea::-webkit-input-placeholder {
     line-height: 30px;
     font-size: 20px;
     font-family: 'HelveticaLight';
-    margin-bottom: 0;
+}
+
+.top-content .description form .how-control.btn {
+    border: 1px solid white;
+    color: white;
+    border-radius: 8px;
+    padding: 9px 16px;
 }
 .top-content .description .inline-form-field {
     color: white;
@@ -3355,6 +3359,11 @@ address {
     }
 }
 @media (max-width: 767px) {
+
+  .row.after-breadcrumb.sidebar{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
     .features-container .page-title .col-md-7,
     .features-container .page-title .col-md-4 {
         text-align: center;
