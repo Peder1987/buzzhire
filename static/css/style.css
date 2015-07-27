@@ -80,6 +80,7 @@ body{
 .mart20 { margin-top: 20px; }
 .mart30 { margin-top: 30px; }
 .mart40 { margin-top: 40px; }
+.mart45 { margin-top: 45px; }
 .marb15 { margin-bottom: 15px; }
 .minh470{ min-height: 470px}
 .posrel{ position: relative !important;}
@@ -92,6 +93,14 @@ body{
 }*/
 
 /* Custom */
+
+.ffreelancer-reviews .feedback .feedback-score-wrapper .feedback-score{
+    color: #277dbc;
+}
+
+.freelancer-profile .freelancer-details .feedback-score-wrapper .feedback-score{
+    color: #fff;
+}
 
 .accept-job-button.btn.btn-primary.green-btn{
   background-color: rgb(166, 239, 100);
@@ -110,6 +119,12 @@ body{
 .feedback{
   margin: 20px 0;
 }
+
+.feedback .feedback-score-wrapper{
+  display: block;
+  text-align: center;
+}
+
 
 .feedback .feedback-comment p{
   line-height: 1.2;
@@ -833,7 +848,7 @@ span.sidebar-icon-14,
 i.sidebar-icon-14 {
     min-width: 25px;
     background-repeat: no-repeat;
-    min-height: 25px;
+    min-height: 26px;
     display: inline-block;
     margin-bottom: 4px;
     margin-right: 2px !important;
@@ -2400,6 +2415,7 @@ textarea::-webkit-input-placeholder {
     line-height: 30px;
     font-size: 20px;
     font-family: 'HelveticaLight';
+    margin-left: 0;
 }
 
 .top-content .description form .how-control.btn {
