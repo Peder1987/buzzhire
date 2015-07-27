@@ -6,7 +6,10 @@
     <div class="col-md-4">
         <div class="booking-box">
             {% if request.user.is_admin %} admin booking table {% endif %}
-            <div class="reference">#{{ object.jobrequest.reference_number }}</div>
+            <div class="reference">
+               <a href='{{ object.jobrequest.get_absolute_url }}'>#{{ object.jobrequest.reference_number }}</a>
+               
+            </div>
             <div class="profile-picture">{{ 'icon-notification-panel'|icon }}</div>
             
             <p class="f16 black">{{ object.jobrequest.client }}</p>
