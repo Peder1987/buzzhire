@@ -90,16 +90,6 @@
 
             $( "#id_service" ).on( "selectmenuchange", function( event, ui ) {
 
-                /*
-                $('#home').fadeTo('slow', 0.5, function () {
-
-                    $('#home').css({ 'background-image': 'url(/static/img/hero/' + ui.item.value + '.jpg)' });
-
-                    $('#home').fadeTo('slow', 1);
-                });
-
-                selectedValue = ui.item.label;
-                */
 
                 selectedValue = ui.item.label;
                 $('.top-content').backstretch("show", backgroundSlideNum(ui.item.value));

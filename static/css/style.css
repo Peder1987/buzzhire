@@ -120,7 +120,7 @@ body{
   margin: 20px 0;
 }
 
-.feedback-all-wrap .feedback.well{
+.feedback-all-wrap .feedback .well{
   background: rgb(247,247,247);
 }
 
