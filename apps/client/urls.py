@@ -12,4 +12,10 @@ urlpatterns = [
 
     url(r"^(?P<pk>[\d]+)/edit/$", views.ClientUpdateView.as_view(),
         name="client_change"),
+
+    url(r'^terms-and-conditions/$', ContextTemplateView.as_view(
+                        template_name='client/terms.html',
+                        extra_context={'title': 'Terms and conditions'}),
+                        name='client_terms'),
+
 ]

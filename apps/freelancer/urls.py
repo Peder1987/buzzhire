@@ -25,5 +25,10 @@ urlpatterns = [
         name="freelancer_photo"),
     url(r"^photo/add/$", views.FreelancerPhotoUpdateView.as_view(),
         name="freelancer_photo_update"),
+
+    url(r'^terms-and-conditions/$', ContextTemplateView.as_view(
+                        template_name='freelancer/terms.html',
+                        extra_context={'title': 'Terms and conditions'}),
+                        name='freelancer_terms'),
 ]
 

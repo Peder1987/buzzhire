@@ -12,11 +12,12 @@
             <h5>Create an account</h5>
              <form method="post">
                 {% csrf_token %}
-                {% if extra_forms.0.errors or form.errors %}
+                {% if extra_forms.0.errors or extra_forms.1.errors or form.errors %}
                     {% include 'includes/forms/invalid_form_message.html' with force_show=True %}
                 {% endif %}
                 {% crispy form %}
                 {% crispy extra_forms.0 %}
+                {% crispy extra_forms.1 %}
             </form>    
         </div>
     </div>
