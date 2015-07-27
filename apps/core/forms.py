@@ -102,6 +102,7 @@ class CrispyFormMixin(object):
                 layout.Fieldset(*fieldset_kwargs)
             )
 
+        print 'submit_name is %s' % self.submit_name
         if self.submit_name:
             self.helper.layout.append(self.get_submit_button())
 

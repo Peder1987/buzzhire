@@ -30,8 +30,7 @@ class SignupFormFreelancerDetailsMixin(object):
     Should be mixed in with a model form for the relevant Freelancer model.
     """
     form_tag = False
-    submit_text = 'Sign up'
-    submit_context = {'icon_name': 'login'}
+    submit_name = None
 
     def save(self, user):
         "Saves the freelancer model, given the user."
@@ -50,7 +49,6 @@ class FreelancerForm(CrispyFormMixin, PostcodeFormMixin, forms.ModelForm):
         super(FreelancerForm, self).__init__(*args, **kwargs)
 
         self.helper.form_class = 'edit-account-form col-md-6'
-
 
         amount, currency = self.fields['minimum_pay_per_hour'].fields
         self.fields['minimum_pay_per_hour'].widget = \
@@ -110,7 +108,8 @@ class FreelancerForm(CrispyFormMixin, PostcodeFormMixin, forms.ModelForm):
             ),
         )
 
-        self.helper.layout.append(self.get_submit_button())
+        if self.submit_name:
+            self.helper.layout.append(self.get_submit_button())
 
     class Meta:
         model = Freelancer

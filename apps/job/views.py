@@ -106,9 +106,6 @@ class ClientSignUpView(ServiceViewMixin, ExtraFormsView, BaseSignupView):
         }
 
     def get_form_kwargs(self, prefix=None):
-        """Standard get_form_kwargs() method adapted to return
-        the extra forms too."""
-
         form_kwargs = super(ClientSignUpView, self).get_form_kwargs(prefix)
 
         # Set the url for the client terms

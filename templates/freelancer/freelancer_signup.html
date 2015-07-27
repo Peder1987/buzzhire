@@ -6,10 +6,14 @@
     {% block form_message %} 
         <p>Tell us about yourself.</p>
     {% endblock %}
+    {% if extra_forms.0.errors or extra_forms.1.errors or form.errors %}
+        {% include 'includes/forms/invalid_form_message.html' with force_show=True %}
+    {% endif %}
     <form method="post">
         {% csrf_token %}
         {% crispy form %}
-        {% crispy freelancer_form %}
+        {% crispy extra_forms.0 %}
+        {% crispy extra_forms.1 %}
     </form>
 </div>
 <div class="clearfix"></div>
