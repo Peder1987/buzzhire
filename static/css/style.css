@@ -94,7 +94,7 @@ body{
 
 /* Custom */
 
-.freelancer-reviews .feedback .feedback-score-wrapper .feedback-score{
+.feedback-all-wrap .feedback .feedback-score-wrapper .feedback-score{
     color: #277dbc;
 }
 
@@ -116,24 +116,28 @@ body{
   border-bottom: 1px solid #ddd;
 }
 
-.feedback{
+.feedback-all-wrap .feedback{
   margin: 20px 0;
 }
 
-.feedback .feedback-score-wrapper{
+.feedback-all-wrap .feedback.well{
+  background: rgb(247,247,247);
+}
+
+.feedback-all-wrap .feedback .feedback-score-wrapper{
   display: block;
   text-align: center;
 }
 
 
-.feedback .feedback-comment p{
+.feedback-all-wrap .feedback .feedback-comment p{
   line-height: 1.2;
   font-size: 18px;
   margin-bottom: 0.7em;
   font-family: Helvetica;
 }
 
-.feedback-comment{
+.feedback-all-wrap .feedback .feedback-comment{
   min-height: 50px;
   text-align: center;
 }
