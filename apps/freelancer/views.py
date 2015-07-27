@@ -157,7 +157,8 @@ class SignupView(ServiceViewMixin, PolymorphicTemplateMixin, BaseSignupView):
         context['freelancer_form'] = self.get_freelancer_form()
 
         # Tailor the page title to the service
-        context['title'] = '%s sign up' % self.service.title.capitalize()
+        context['title'] = '%s sign up' % \
+                                self.service.freelancer_name.capitalize()
 
         return context
 

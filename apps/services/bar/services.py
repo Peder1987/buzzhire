@@ -6,6 +6,7 @@ from .forms import BarJobRequestForm, BarFreelancerForm, BarJobMatchingForm
 class BarService(Service):
     "Class that defines the bar staff service."
     key = 'bar'
+    weight = -5
 
     job_request_model = BarJobRequest
     job_request_form = BarJobRequestForm

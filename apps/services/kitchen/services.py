@@ -7,7 +7,7 @@ from .forms import (KitchenJobRequestForm, KitchenFreelancerForm,
 class KitchenService(Service):
     "Class that defines the kitchen service."
     key = 'kitchen'
-
+    weight = 5
     job_request_model = KitchenJobRequest
     job_request_form = KitchenJobRequestForm
 

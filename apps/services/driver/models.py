@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse
 from apps.job.models import JobRequest, JobRequestQuerySet
 
 
-DRIVER_SERVICE_TITLE = 'driver'
+DRIVER_SERVICE_TITLE = 'delivery'
 
 def _is_driver(self):
     """Custom method on User model.

@@ -10,7 +10,7 @@ ROLE_BARMAN = 'BM'
 ROLE_BARISTA = 'BT'
 
 ROLE_CHOICES = (
-    (ROLE_BARMAN, 'Barman'),
+    (ROLE_BARMAN, 'Bartender'),
     (ROLE_MIXOLOGIST, 'Mixologist'),
     (ROLE_BARISTA, 'Barista'),
 )
@@ -24,6 +24,7 @@ class BarJobRequest(JobRequest):
                                      default=ROLE_BARMAN,
                                      choices=ROLE_CHOICES)
 
+
 class BarFreelancer(Freelancer):
     "A bar staff is a type of freelancer."
 
@@ -35,3 +36,7 @@ class BarFreelancer(Freelancer):
 
     objects = GeoPolymorphicManager()
     published_objects = PublishedFreelancerManager()
+
+    class Meta:
+        verbose_name = 'bartender'
+        verbose_name_plural = 'bar staff'

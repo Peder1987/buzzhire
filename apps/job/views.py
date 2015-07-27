@@ -37,6 +37,13 @@ class ServiceSelect(ContextMixin, FormView):
     template_name = 'job/service_select.html'
     extra_context = {'title': 'Book a freelancer'}
 
+    def get_form_kwargs(self, *args, **kwargs):
+        form_kwargs = super(ServiceSelect, self).get_form_kwargs(*args,
+                                                                    **kwargs)
+        # Use the plural version of the freelancer title
+        form_kwargs['use_plural'] = True
+        return form_kwargs
+
     def form_valid(self, form):
         return redirect('job_request_create',
                        form.cleaned_data['service'])
@@ -53,7 +60,7 @@ class JobRequestCreate(ClientOnlyMixin, ServiceViewMixin, ContextMixin,
         # Tailor the page title to the service
         context = super(JobRequestCreate, self).get_context_data(
                                                             *args, **kwargs)
-        context['title'] = 'Book a %s' % self.service.title
+        context['title'] = 'Book %s' % self.service.freelancer_name_plural
         return context
 
     @property
@@ -201,7 +208,7 @@ class JobRequestCreateAnonymous(ServiceViewMixin,
         context = super(JobRequestCreateAnonymous,
                         self).get_context_data(*args, **kwargs)
         # Tailor the page title to the service
-        context['title'] = 'Book a %s' % self.service.title
+        context['title'] = 'Book %s' % self.service.freelancer_name_plural.title()
 
         context['extra_forms'] = []
         for prefix, form_class in self.extra_forms.items():

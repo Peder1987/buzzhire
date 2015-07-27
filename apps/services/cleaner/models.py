@@ -3,7 +3,7 @@ from apps.freelancer.models import Freelancer, PublishedFreelancerManager
 from apps.job.models import JobRequest
 from apps.core.models import GeoPolymorphicManager
 
-CLEANER_SERVICE_TITLE = 'cleaner'
+CLEANER_SERVICE_TITLE = 'cleaners'
 
 
 class CleanerJobRequest(JobRequest):
@@ -19,3 +19,7 @@ class Cleaner(Freelancer):
 
     objects = GeoPolymorphicManager()
     published_objects = PublishedFreelancerManager()
+
+
+    class Meta:
+        verbose_name = 'cleaner'

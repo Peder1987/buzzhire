@@ -19,9 +19,9 @@
         
         {% block extra_job_info %}{% endblock %}
         
-        <h5>{{ service.title|capfirst }} details</h5>
+        <h5>{{ service.freelancer_name|capfirst }} details</h5>
         <p></p>
-        <p><strong>Number of {{ service.title }}{{ object.number_of_freelancers|pluralize }}:</strong> {{ object.number_of_freelancers }} </p>
+        <p><strong>Number of {{ service.freelancer_name_plural }}:</strong> {{ object.number_of_freelancers }} </p>
         <p><strong>Minimum years of experience:</strong> {{ object.get_years_experience_display }} </p>
         {% block extra_freelancer_info %}{% endblock %}
         
