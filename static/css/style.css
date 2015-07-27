@@ -111,6 +111,12 @@ body{
   margin: 20px 0;
 }
 
+.feedback .feedback-score-wrapper{
+  display: block;
+  text-align: center;
+}
+
+
 .feedback .feedback-comment p{
   line-height: 1.2;
   font-size: 18px;
@@ -833,7 +839,7 @@ span.sidebar-icon-14,
 i.sidebar-icon-14 {
     min-width: 25px;
     background-repeat: no-repeat;
-    min-height: 25px;
+    min-height: 26px;
     display: inline-block;
     margin-bottom: 4px;
     margin-right: 2px !important;
