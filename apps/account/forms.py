@@ -1,3 +1,4 @@
+from django.forms import Form, BooleanField
 from allauth.account import forms
 from apps.core.forms import CrispyFormMixin, ConfirmForm
 from crispy_forms.helper import FormHelper
@@ -57,3 +58,25 @@ class ChangePasswordForm(CrispyFormMixin, forms.ChangePasswordForm):
 
         self.fields['password2'].widget.attrs['placeholder'] = 'Password again'
         self.helper.form_class = 'edit-password-form col-md-6'
+
+
+class AcceptTermsInnerForm(CrispyFormMixin, Form):
+    """Form for accepting terms and conditions.
+    
+    Should be instantiated with the terms_url to link to.
+    """
+    form_tag = False
+    submit_text = 'Sign up'
+    submit_context = {'icon_name': 'register'}
+    wrap_fieldset_title = 'Terms and conditions'
+
+    terms = BooleanField(error_messages={
+            'required': "You must agree to the terms and conditions."})
+
+    def __init__(self, *args, **kwargs):
+        self.terms_url = kwargs.pop('terms_url')
+        super(AcceptTermsInnerForm, self).__init__(*args, **kwargs)
+        self.fields['terms'].label = \
+                'I accept the ' \
+                '<a target="_blank" href="%s">terms and conditions</a>.' \
+                                % self.terms_url
