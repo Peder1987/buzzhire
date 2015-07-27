@@ -34,7 +34,6 @@ class SignupInnerForm(SignupForm):
 
     def __init__(self, *args, **kwargs):
         super(SignupForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
         self.helper.form_show_labels = False
         self.fields['password2'].widget.attrs['placeholder'] = 'Password again'
 
