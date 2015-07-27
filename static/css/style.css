@@ -3530,7 +3530,7 @@ address {
 }
 @media (max-width: 474px){
   .sidebar-content-header .sidebar-breadcrumbs {
-    float: noe;
+    float: none;
     max-width: 100%;
     display: inline-block;
   }
