@@ -73,8 +73,6 @@ class Live(HueyMixin,
 
     CONTACT_EMAIL = 'contact@buzzhire.co'
 
-    COMING_SOON = True
-
     AWS_ACCESS_KEY_ID = 'AKIAI7ZMKSCZQGQRGUJQ'
     AWS_BUCKET_NAME = 'buzzhire-backups-media'
 
