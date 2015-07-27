@@ -6,12 +6,8 @@
             
 
             <div class="reference">
-                {% if request.user.is_admin %} 
                     <a href='{{ object.get_absolute_url }}'>#{{ object.reference_number }}</a>
-                {% else %}
-                    #{{ object.reference_number }}
-                {% endif %}
-
+               
             </div>
             <div class="profile-picture">{{ 'icon-notification-panel'|icon }}</div>
             {% if request.user.is_admin %}

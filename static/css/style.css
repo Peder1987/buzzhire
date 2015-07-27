@@ -111,9 +111,9 @@ body{
   margin: 20px 0;
 }
 
-.feedback p{
+.feedback .feedback-comment p{
   line-height: 1.2;
-  font-size: 16px;
+  font-size: 18px;
   margin-bottom: 0.7em;
   font-family: Helvetica;
 }
