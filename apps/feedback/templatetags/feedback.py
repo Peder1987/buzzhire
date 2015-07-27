@@ -50,7 +50,7 @@ def freelancer_feedback_exists(booking):
             ...
         {% endif %}
     """
-    
+
     return BookingFeedback.objects.freelancer_feedback_exists(
                                     booking.jobrequest, booking.freelancer)
 
@@ -113,11 +113,12 @@ def split_score(score):
     """
     items = []
     for i in range(BookingFeedback.MAX_SCORE):
-        difference = i + 1 - score
-        if difference <= 0:
-            items.append(1)
-        elif difference < 1:
-            items.append(difference)
+        difference = score - i
+        if difference > 0:
+            if difference < 1:
+                items.append(difference)
+            else:
+                items.append(1)
         else:
             items.append(0)
     return items
