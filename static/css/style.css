@@ -124,6 +124,7 @@ body{
 .freelancer-details .detail-desc{
   display: block;
   font-size: 18px;
+  line-height: 1.2;
 }
 
 .freelancer-details .detail-data{
