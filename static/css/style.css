@@ -3366,7 +3366,7 @@ address {
 }
 /***** Media queries *****/
 
-@media (min-width: 768px) {} @media (min-width: 768px) and (max-width: 991px) {
+ @media (min-width: 768px) and (max-width: 991px) {
     .top-content .buttons-row {
         margin-top: 4em;
     }
@@ -3513,6 +3513,11 @@ address {
     .social-icon {
         margin-top: 15px;
     }
+
+    .notification-table td a, .notification-table .notification-date  {
+      font-size: 20px;
+    }
+
 }
 @media (max-width: 540px) {
     .subscribe form input {
@@ -3523,6 +3528,22 @@ address {
         margin-top: 10px;
     }
 }
+@media (max-width: 474px){
+  .sidebar-content-header .sidebar-breadcrumbs {
+    float: noe;
+    max-width: 100%;
+    display: inline-block;
+  }
+
+  .sidebar-page-title h4{
+    padding-left: 15px;
+  }
+
+  .notification-table td a, .notification-table .notification-date  {
+    font-size: 16px;
+  }
+}
+
 @media (max-width: 345px) {
     .top-content h2,
     .top-content .logo a,
