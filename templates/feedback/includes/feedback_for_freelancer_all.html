@@ -15,6 +15,10 @@
               
            
         </div>
+
+        {% if forloop.counter0|divisibleby:3 %}
+        <hr>
+        {% endif %}
     {% endfor %}
     <div class="clearfix"></div>
 {% endif %}
