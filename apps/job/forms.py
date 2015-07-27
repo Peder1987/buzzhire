@@ -173,7 +173,7 @@ class JobRequestUpdateMixin(object):
 
 
 class JobRequestCheckoutForm(CrispyFormMixin, forms.Form):
-    submit_text = 'Confirm and pay'
+    submit_text = 'Confirm job'
     submit_context = {'icon_name': 'pay'}
     submit_template_name = 'payment/forms/buttons.html'
 
