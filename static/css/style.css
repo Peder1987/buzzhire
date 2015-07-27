@@ -487,7 +487,9 @@ span.notification-icon-panel{
 .become-freelancer-form button.btn[name="freelancer_submit"] {
     background-color: rgb(166, 239, 100);
     font-family: 'Helvetica';
-    min-width: 250px;
+    
+    width: 100%;
+    margin-left: 0;
 }
 .sidebar-right-page .sidebar-content button.btn[name="client_submit"] {
     width: 100%;
