@@ -39,3 +39,4 @@ class BarFreelancer(Freelancer):
 
     class Meta:
         verbose_name = 'bartender'
+        verbose_name_plural = 'bar staff'

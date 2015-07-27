@@ -46,3 +46,4 @@ class KitchenFreelancer(Freelancer):
 
     class Meta:
         verbose_name = 'chef'
+        verbose_name_plural = 'kitchen staff'
