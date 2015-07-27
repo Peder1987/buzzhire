@@ -97,7 +97,7 @@ body{
 }
 
 .feedback-all-title{
-  padding: 20px 0;
+  padding: 15px 0;
   border-bottom: 1px solid #ddd;
 }
 
@@ -121,9 +121,9 @@ body{
 }
 
 .freelancer-details{
-  margin: 20px 0;
+  margin: 15px 0;
   font-family: HelveticaLight;
-    line-height: 1.2;
+  line-height: 1.2;
 }
 
 .freelancer-details .detail-desc{
@@ -134,7 +134,7 @@ body{
 }
 
 .freelancer-details .detail-data{
-  font-size: 30px;
+  font-size: 25px;
   line-height: 1.2;
 }
 
