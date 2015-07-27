@@ -93,7 +93,7 @@ body{
 
 /* Custom */
 
-.accept-job.button.btn.btn-primary{
+.accept-job-button.btn.btn-primary.green-btn{
   background-color: rgb(166, 239, 100);
   width: 100%;
 }
