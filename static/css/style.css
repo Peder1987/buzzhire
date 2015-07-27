@@ -3359,6 +3359,11 @@ address {
     }
 }
 @media (max-width: 767px) {
+
+  .row.after-breadcrumb.sidebar{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
     .features-container .page-title .col-md-7,
     .features-container .page-title .col-md-4 {
         text-align: center;
