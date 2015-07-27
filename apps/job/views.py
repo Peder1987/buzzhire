@@ -335,7 +335,7 @@ class JobRequestCheckout(OwnedByClientMixin, SingleObjectMixin,
     def get_context_data(self, *args, **kwargs):
         context = super(JobRequestCheckout, self).get_context_data(*args,
                                                                     **kwargs)
-        context['title'] = 'Confirm and pay'
+        context['title'] = 'Confirm job'
         context['service'] = service_from_class(self.object.__class__)
         return context
 
