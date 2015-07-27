@@ -3539,16 +3539,23 @@ address {
     padding-left: 15px;
   }
 
-  .notification-table td a, .notification-table .notification-date  {
+  .notification-table td a {
     font-size: 16px;
   }
 
+  .notification-table .notification-date  {
+    font-size: 14px;
+    text-align: left;
+    padding: 0;
+  }
+
   span.notification-icon-panel {
-    width: 48px;
-    height: 45px;
+    width: 38px;
+    height: 40px;
     display: inline-block;
     background-size: 100%;
   }
+  
 }
 
 @media (max-width: 345px) {
