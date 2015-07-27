@@ -22,6 +22,9 @@ class WeightedRegistry(Registry):
     def __iter__(self):
         return self._ordered_dict.__iter__()
 
+    def values(self):
+        return self._ordered_dict.values()
+
 
 class classproperty(object):
     """Decorator for class-level properties.

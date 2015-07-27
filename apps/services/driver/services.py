@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse_lazy
 class DriverService(Service):
     "Class that defines the driver service."
     key = 'driver'
-
+    weight = -10
     job_request_model = DriverJobRequest
     job_request_form = DriverJobRequestForm
 
