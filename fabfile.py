@@ -99,11 +99,11 @@ def deploy(skip_backup=False):
       fab deploy:'skip'
     """
     with virtualenv():
-        run("git pull")
-        run("pip install -r requirements.pip")
-
         if env.backup_on_deploy and not skip_backup:
             dbbackup()
+
+        run("git pull")
+        run("pip install -r requirements.pip")
 
         run("./manage.py migrate")
         run('./manage.py collectstatic --noinput')

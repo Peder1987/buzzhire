@@ -73,8 +73,6 @@ class Live(HueyMixin,
 
     CONTACT_EMAIL = 'contact@buzzhire.co'
 
-    COMING_SOON = True
-
     AWS_ACCESS_KEY_ID = 'AKIAI7ZMKSCZQGQRGUJQ'
     AWS_BUCKET_NAME = 'buzzhire-backups-media'
 
@@ -97,6 +95,7 @@ class Live(HueyMixin,
 class Stage(Live):
     "The staging site - duplicates the live site, for deployment rehearsals."
     WEBFACTION_APPNAME = 'stage'
+    DOMAIN = 'stage.buzzhire.co'
     HUEY_NAME = 'stage'
     HUEY_PORT = 17610
     COMING_SOON = False
