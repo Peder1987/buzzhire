@@ -2228,9 +2228,9 @@ textarea::-webkit-input-placeholder {
 }
 .top-content.freelancer-profile{
   background-image:url(/static/img/profile-top-content-bck.png); 
-  background-size: 100%;
+  background-size: cover;
   background-repeat: no-repeat;
-  height: 490px;
+  height: 550px;
 }
 
 .top-content.freelancer-profile .profile-photo-page .profile-photo {
