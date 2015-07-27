@@ -125,6 +125,7 @@ body{
   display: block;
   font-size: 18px;
   line-height: 1.2;
+  color: rgba(247,247,247,0.7);
 }
 
 .freelancer-details .detail-data{
