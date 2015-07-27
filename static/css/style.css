@@ -93,15 +93,17 @@ body{
 /* Custom */
 
 .freelancer-details{
-
+  margin: 20px 0;
+  font-family: HelveticaLight;
 }
 
 .freelancer-details .detail-desc{
-
+  display: block;
+  font-size: 18px;
 }
 
-.freelancer-details .details-data{
-
+.freelancer-details .detail-data{
+  font-size: 30px;
 }
 
 .pricing-table{
