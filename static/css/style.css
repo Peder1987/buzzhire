@@ -2391,7 +2391,7 @@ textarea::-webkit-input-placeholder {
 .top-content .description form .btn i {
     display: none
 }
-.top-content .description form .btn {
+.top-content .description form .book-freelancer-btn.btn {
     background-color: rgba(54, 123, 174, 0.7);
     border: none;
     border-radius: 8px;
@@ -2402,7 +2402,6 @@ textarea::-webkit-input-placeholder {
     line-height: 30px;
     font-size: 20px;
     font-family: 'HelveticaLight';
-    margin-bottom: 0;
 }
 .top-content .description .inline-form-field {
     color: white;
