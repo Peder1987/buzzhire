@@ -92,6 +92,19 @@ body{
 
 /* Custom */
 
+.feedback-all-title{
+  padding: 20px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.feedback-comment{
+  min-height: 80px;
+}
+
+.feedback-all-wrap{
+  background: rgb(247,247,247);
+}
+
 .freelancer-details{
   margin: 20px 0;
   font-family: HelveticaLight;
