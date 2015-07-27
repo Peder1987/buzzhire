@@ -8,7 +8,6 @@
             {% if request.user.is_admin %} admin booking table {% endif %}
             <div class="reference">
                <a href='{{ object.jobrequest.get_absolute_url }}'>#{{ object.jobrequest.reference_number }}</a>
-               
             </div>
             <div class="profile-picture">{{ 'icon-notification-panel'|icon }}</div>
             
