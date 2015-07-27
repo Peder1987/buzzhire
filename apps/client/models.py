@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from multiselectfield import MultiSelectField
-from apps.freelancer.models import Freelancer
 from django.conf import settings
 from django.core import validators
 from django.core.urlresolvers import reverse
@@ -52,7 +51,8 @@ class Client(models.Model):
             validators.RegexValidator(r'^07[0-9 ]*$',
                            'Please enter a valid UK mobile phone number in '
                            'the form 07xxx xxx xxx')])
-
+    company_name = models.CharField(max_length=50, blank=True,
+                                    help_text='The name of your company')
     @property
     def reference_number(self):
         "Returns a reference number for this client."

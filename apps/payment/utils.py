@@ -1,6 +1,10 @@
 import braintree
 from braintree.exceptions.not_found_error import NotFoundError
 from django.conf import settings
+import logging
+
+
+logger = logging.getLogger('project')
 
 
 class PaymentException(Exception):
@@ -79,5 +83,7 @@ class PaymentAPI(object):
                 "order_id": order_id,
         })
         if not result.is_success:
+            logger.error('Payment error: %s' % \
+                            [e for e in result.errors.deep_errors])
             raise PaymentException('Could not take payment.')
         return result

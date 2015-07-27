@@ -7,10 +7,10 @@ class JobRequestAdmin(FSMTransitionMixin, admin.ModelAdmin):
     list_display = ('reference_number', 'client', 'date', 'start_time',
                     'duration', 'end_datetime', 'postcode')
     list_filter = ('status', 'date',)
-    search_fields = ('reference_number',)
+    search_fields = ('id',)
     date_hierarchy = 'date'
     fsm_field = ['status']
-    exclude = ['status']
+    exclude = ('status', 'phone_requirement_old')
     readonly_fields = ['status_display', 'end_datetime']
 
     def status_display(self, instance):
@@ -18,12 +18,3 @@ class JobRequestAdmin(FSMTransitionMixin, admin.ModelAdmin):
     status_display.short_description = 'Status'
 
 admin.site.register(models.JobRequest, JobRequestAdmin)
-
-
-class DriverJobRequestAdmin(JobRequestAdmin):
-    list_display = ('reference_number', 'client', 'date', 'start_time',
-                    'duration', 'end_datetime',
-                    'client_pay_per_hour', 'number_of_freelancers',
-                    'status')
-
-admin.site.register(models.DriverJobRequest, DriverJobRequestAdmin)

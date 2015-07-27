@@ -8,7 +8,11 @@ def datamigration(apps, schema_editor):
     # Loading JobRequest using apps.get_model doesn't trigger the save()
     # method, so we need to import directly
     from ..models import JobRequest
-    [j.save() for j in JobRequest.objects.all()]
+    try:
+        [j.save() for j in JobRequest.objects.all()]
+    except:
+        print 'Did not successfully resave all JobRequests - skipping.'
+        pass
 
 class Migration(migrations.Migration):
 

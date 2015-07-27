@@ -4,6 +4,10 @@ from __future__ import unicode_literals
 from django.db import models, migrations
 from apps.location.models import Postcode
 
+def create_postcode(apps, schema_editor):
+    if not Postcode.objects.exists():
+        Postcode.objects.create(compressed_postcode='SW1A1AA')
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -12,6 +16,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RunPython(create_postcode),
         migrations.AddField(
             model_name='jobrequest',
             name='postcode',

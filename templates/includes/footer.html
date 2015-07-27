@@ -3,15 +3,28 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-7 copyright">
-                <p>&copy; 2015 Buzzhire
-                    | <a href='{% url 'contact' %}'>Contact</a>
-                    | <a href='{% url 'privacy' %}'>Privacy policy</a>
-                    | <a href='{% url 'credits' %}'>Site credits</a>
-                </p>
+                <ul class="white list-inline footer-list mar0">
+                    <li>&copy; 2015 BuzzHire</li>
+                    <li>
+                        <a href="{% url 'contact' %}">Contact</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'faq' %}">FAQ</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'privacy' %}">Privacy policy</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'pricing' %}">Pricing</a>
+                    </li>
+                  
+                   
+                </ul>
             </div>
+
             <div class="col-sm-5 social-icon">
-                <a href="http://{{ facebook_url }}" class="social-icon"><i class="fa fa-facebook"></i></a>
-                <a href="http://{{ twitter_url }}" class="social-icon"><i class="fa fa-twitter"></i></a>
+                <a class="social-icon externalLink fa fa-facebook" href="http://{{ facebook_url }}"></a>
+                <a class="social-icon externalLink fa fa-twitter" href="http://{{ twitter_url }}"></a>
             </div>
         </div>
     </div>

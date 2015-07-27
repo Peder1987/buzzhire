@@ -5,6 +5,8 @@ import logging
 from .forms import ConfirmForm
 from django.contrib.auth.views import redirect_to_login
 from django.core.exceptions import PermissionDenied
+from django.apps.registry import apps
+from .utils import template_names_from_polymorphic_model
 
 # A GBP sign
 POUND_SIGN = u'\u00A3'
@@ -237,3 +239,193 @@ class OwnerOnlyMixin(object):
                 raise PermissionDenied
         return super(OwnerOnlyMixin, self).dispatch(request, *args, **kwargs)
 
+
+class GrantCheckingMixin(object):
+    """Views mixin for checking multiple grants, and allowing other apps
+    to register grants too.
+    
+    A grant is a function that receives the view, and returns True if the
+    user can proceed.
+    
+    # TODO - improve the API for this (decorators?)
+    
+    Usage:
+    
+        class MyView(GrantCheckingMixin, DetailView):
+            model = MyModel
+            grant_methods = ['is_foo']
+            
+            def is_foo(self):
+                # If the user can access the object, return True
+            
+        # In another app
+        
+        from apps.myapp.views import MyView
+        
+        def _is_bar(self):
+            # Return True or False
+        MyView.is_bar = _is_bar
+        MyView.grant_methods.append('is_bar')
+    """
+    require_login = True  # Whether to require the user is logged in
+    allow_admin = True  # Whether to allow admins access
+    # List of grant methods on the view class - can also be strings
+    grant_methods = []
+    # Whether to run self.object = self.get_object() before the grants
+    populate_object = True
+
+
+    def dispatch(self, request, *args, **kwargs):
+        # If the user is not logged in, give them the chance to
+        if self.require_login and self.request.user.is_anonymous():
+            return redirect_to_login(self.request.path)
+
+        if self.populate_object:
+            self.object = self.get_object()
+
+        granted = False
+        for method in self.get_grant_methods():
+            if method():
+                granted = True
+
+        if not granted:
+            # None of the grants returned True;
+            # Do a final check to see if the user is admin
+            if not (self.allow_admin and self.request.user.is_admin):
+                raise PermissionDenied
+
+        return super(GrantCheckingMixin, self).dispatch(request, *args,
+                                                        **kwargs)
+
+    def get_grant_methods(self):
+        """Returns list of grant methods, converting string based methods
+        to callable methods.
+        """
+        methods = []
+        for method in self.grant_methods:
+            # Convert it to callable
+            method = getattr(self, method)
+            methods.append(method)
+        return methods
+
+
+class PolymorphicTemplateMixin(object):
+    """Views mixin to allow specifying template names for job requests
+    to override the template.  For example, if the template_suffix is '_detail'
+    and the model is DriverJobRequest, the view will look first for a template
+    driver/driverjobrequest_detail.html and then fall back to
+    job/jobrequest_detail.html.
+    
+    It will try to get the model class from the self.object, failing that it
+    will use self.model.
+    
+    Usage:
+    
+        class MyView(PolymorphicTemplateMixin, FormView):
+            model = MyModel
+            template_suffix = '_register'
+            
+    """
+    template_suffix = ''
+
+    def get_template_names(self):
+        """Give subclassing job requests the chance to override the template,
+        falling back to a default.
+        """
+        # Prefer self.object to the model_class.  This is because for detail
+        # views, the model may be the parent class.
+        if getattr(self, 'object', None):
+            model_class = self.object.__class__
+        else:
+            model_class = self.model
+
+        return template_names_from_polymorphic_model(model_class,
+                                                     self.template_suffix)
+
+
+class ExtraFormsView(FormView):
+    """FormView for handling a main form and a number of extra forms.
+    
+    Usually you will want to specify the form_class, and override
+    get_extra_forms() and form_valid().
+    """
+    form_class = None
+    prefix = 'main'  # The form prefix for the main form
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ExtraFormsView,
+                        self).get_context_data(*args, **kwargs)
+        context['extra_forms'] = []
+        for prefix, form_class in self.extra_forms.items():
+            context['extra_forms'].append(self.get_form(form_class, prefix))
+        return context
+
+    def get_form(self, form_class, prefix=None):
+        # Now is a good time to set the extra_forms too
+        self.extra_forms = self.get_extra_forms()
+        # Pass the prefix through to get_form_kwargs
+        return form_class(**self.get_form_kwargs(prefix))
+
+    def get_extra_forms(self):
+        """
+            Returns a dictionary of the extra form classes, keyed with their
+            form prefixes.
+            
+            Usage:
+            
+                def get_extra_forms(self):
+                    return {
+                        'client': ClientInnerForm,
+                    }
+        """
+        return {}
+
+    def get_form_kwargs(self, prefix=None):
+        """Standard get_form_kwargs() method adapted to return
+        the extra forms too."""
+
+        if prefix is None:
+            # This is for the main form
+            prefix = self.get_prefix()
+
+        kwargs = {
+            'initial': self.get_initial(),
+            'prefix': prefix,
+        }
+
+        if self.request.method in ('POST', 'PUT'):
+            kwargs.update({
+                'data': self.request.POST,
+                'files': self.request.FILES,
+            })
+        return kwargs
+
+    def post(self, request, *args, **kwargs):
+        "Standard post method adapted to validate all forms."
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        self.bound_forms = {self.get_prefix(): form}
+        for prefix, form_class in self.extra_forms.items():
+            self.bound_forms[prefix] = self.get_form(form_class, prefix)
+
+        if all([f.is_valid() for f in self.bound_forms.values()]):
+            # If all the forms validate
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        """Action to perform once the forms validate.
+        
+        Usage:
+        
+            def form_valid(self, form):
+                instance = form.save()
+
+                # Save extra forms too
+                for extra_form in self.bound_forms.items():
+                    extra_form.save()
+
+                return self.get_success_url()
+        """
+        pass

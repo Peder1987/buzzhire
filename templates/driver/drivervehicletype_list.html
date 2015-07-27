@@ -2,6 +2,6 @@
 {% load icons %}
 
 {% block content %}
-    <p><a href='{% url 'drivervehicletype_add' %}' class='btn btn-default'>{{ 'create'|icon }} Add vehicle</a></p>
+    <p><a href='{% url 'drivervehicletype_add' %}' class='btn btn-primary f18 mart10'> + New Vehicle</a></p>
     {% include 'driver/includes/vehicle_list.html' %}
 {% endblock %}  

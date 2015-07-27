@@ -1,0 +1,19 @@
+{% load core_tags admin_urls %}
+<p>The following job request is now fully booked.
+Please confirm it, which will notify the client.</p>
+
+<table class="button" style='margin-top: 10px; margin-bottom: 10px;'>
+    <tr>
+      <td>
+        <a href='{% base_url %}{% url object|model_opts|admin_urlname:'change' object.pk %}'>Confirm this job</a>
+      </td>
+    </tr>
+</table>
+
+{% summary_for_email object 'admin' %}
+
+{% with object.bookings.all as bookings %}
+    <p></p>
+    <h4>Booking{{ bookings|pluralize }}</h4>
+    {% include 'booking/email/includes/bookings_for_job_request.html' %}
+{% endwith %}

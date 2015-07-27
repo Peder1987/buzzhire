@@ -15,8 +15,9 @@ urlpatterns = [
         name="account_change_password"),
     url(r"^password/set/$", views.views.PasswordSetView.as_view(),
         name="account_set_password"),
-#
-#     url(r"^inactive/$", views.account_inactive, name="account_inactive"),
+
+    url(r"^inactive/$", views.AccountInactiveView.as_view(),
+        name="account_inactive"),
 #
 #     # E-mail
 #     url(r"^email/$", views.email, name="account_email"),

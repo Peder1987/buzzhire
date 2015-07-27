@@ -10,3 +10,4 @@ class JobConfig(AppConfig):
 
         # import signal handlers
         from . import receivers
+

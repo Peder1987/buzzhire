@@ -1,6 +1,0 @@
-{% extends 'job/email/includes/driver_driverjobrequest.html' %}
-
-{% block budget_details %}
-    <p><strong>Client pay per hour:</strong> &pound;{{ object.client_pay_per_hour.amount }} </p>
-    <p><strong>Driver pay per hour:</strong> &pound;{{ object.freelancer_pay_per_hour.amount }} </p>
-{% endblock %}

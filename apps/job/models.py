@@ -6,17 +6,16 @@ from django.utils import timezone
 from django.core import validators
 from multiselectfield import MultiSelectField
 from djmoney.models.fields import MoneyField
-from apps.driver.models import Driver, VehicleType, \
-                                DriverVehicleType, FlexibleVehicleType
 from apps.client.models import Client
+from apps.freelancer.models import Freelancer
 from apps.location.models import Postcode
 from apps.freelancer.models import client_to_freelancer_rate
 from decimal import Decimal
 from django_fsm import FSMField, transition
-from boto.ec2.instancestatus import Status
+from polymorphic import PolymorphicModel, PolymorphicQuerySet
 
 
-class JobRequestQuerySet(models.QuerySet):
+class JobRequestQuerySet(PolymorphicQuerySet):
     "Custom queryset for JobRequests."
 
     def future(self):
@@ -46,15 +45,12 @@ class JobRequestQuerySet(models.QuerySet):
         """
         return self.filter(status=JobRequest.STATUS_CONFIRMED).past()
 
-class JobRequest(models.Model):
+
+class JobRequest(PolymorphicModel):
     """A request by a client for a service for a particular
     period of time, to be performed by one or more freelancers.
-    
-    For the moment, we will not really use this model directly,
-    but will use the DriverJobRequest model.  But it's sensible to split
-    up the generic job request code from the driver specific stuff
-    from the beginning.
     """
+    service = None  # This is needed for the API serializer
 
     # The client who is making the job request
     client = models.ForeignKey(Client, related_name='job_requests')
@@ -124,27 +120,40 @@ class JobRequest(models.Model):
     date_submitted = models.DateTimeField(auto_now_add=True)
 
     client_pay_per_hour = MoneyField('Pay per hour',
-                  max_digits=5, decimal_places=2,
-                  default_currency='GBP',
-                  default=Decimal(settings.CLIENT_MIN_WAGE),
-                  help_text='How much you will pay per hour, for each driver.',
-                  validators=[
-                    validators.MinValueValidator(settings.CLIENT_MIN_WAGE)])
+              max_digits=5, decimal_places=2,
+              default_currency='GBP',
+              default=Decimal(settings.CLIENT_MIN_WAGE),
+              help_text='How much you will pay per hour, for each freelancer.',
+              validators=[
+                validators.MinValueValidator(settings.CLIENT_MIN_WAGE)])
 
     tips_included = models.BooleanField('Inclusive of tips', default=False,
                                         blank=False)
 
     date = models.DateField(default=date.today)
     start_time = models.TimeField(default='9:00 AM')
-    duration = models.PositiveSmallIntegerField(default=1,
-                    help_text='Length of the job, in hours.')
+    duration = models.PositiveSmallIntegerField(
+        default=settings.MIN_JOB_DURATION,
+        validators=[validators.MinValueValidator(settings.MIN_JOB_DURATION)],
+        help_text='Length of the job, in hours.')
     end_datetime = models.DateTimeField(
             help_text='Automatically generated, the time when this '
                     'job request finishes.')
 
     number_of_freelancers = models.PositiveSmallIntegerField(
-                                'Number of drivers required',
+                                'Number of freelancers required',
                                 choices=[(i, i) for i in range(1, 10)],
+                                default=1)
+
+    YEARS_EXPERIENCE_CHOICES = (
+        (0, 'No preference'),
+        (1, '1 year'),
+        (3, '3 years'),
+        (5, '5 years'),
+    )
+    years_experience = models.PositiveSmallIntegerField(
+                                'Minimum years of experience',
+                                choices=YEARS_EXPERIENCE_CHOICES,
                                 default=1)
 
     address1 = models.CharField('Address line 1', max_length=75)
@@ -162,12 +171,12 @@ class JobRequest(models.Model):
     postcode = models.ForeignKey(Postcode)
 
 
+    # Legacy field - to delete once migrated
     PHONE_REQUIREMENT_NOT_REQUIRED = 'NR'
     PHONE_REQUIREMENT_ANY = 'AY'
     PHONE_REQUIREMENT_ANDROID = 'AN'
     PHONE_REQUIREMENT_IPHONE = 'IP'
     PHONE_REQUIREMENT_WINDOWS = 'WI'
-
     PHONE_REQUIREMENT_CHOICES = (
         (PHONE_REQUIREMENT_NOT_REQUIRED, 'No smart phone needed'),
         (PHONE_REQUIREMENT_ANY, 'Any smart phone'),
@@ -175,15 +184,14 @@ class JobRequest(models.Model):
         (PHONE_REQUIREMENT_IPHONE, 'iPhone'),
         (PHONE_REQUIREMENT_WINDOWS, 'Windows'),
     )
-    phone_requirement = models.CharField(max_length=2,
+    phone_requirement_old = models.CharField(max_length=2,
             choices=PHONE_REQUIREMENT_CHOICES,
             default=PHONE_REQUIREMENT_NOT_REQUIRED,
-            help_text='Whether the driver needs a smart phone to do '
+            help_text='Whether the freelancer needs a smart phone to do '
                 'this job (for example, if you need them to run an app).')
 
     comments = models.TextField(
-                    blank=True,
-                    help_text='Anything else to tell the driver.')
+                    blank=True)
 
     objects = JobRequestQuerySet.as_manager()
 
@@ -200,6 +208,11 @@ class JobRequest(models.Model):
         "Returns the total cost to the client for this job."
         return self.client_pay_per_hour * self.duration \
                 * self.number_of_freelancers
+
+    @property
+    def freelancer_total_pay(self):
+        "Returns the total pay to a single freelancer for this job."
+        return self.freelancer_pay_per_hour * self.duration
 
     @property
     def reference_number(self):
@@ -229,52 +242,3 @@ class JobRequest(models.Model):
 
     class Meta:
         ordering = '-date_submitted',
-
-
-class DriverJobRequestManager(models.Manager):
-    """Manager for DriverJobRequests."""
-
-    def get_from_jobrequest(self, jobrequest):
-        "Gets a DriverJobRequest object from the JobRequest."""
-        return self.get(pk=jobrequest.pk)
-
-
-class DriverJobRequest(JobRequest):
-    """A JobRequest that is specifically for drivers to complete.
-    """
-    # To delete
-    vehicle_types_old = models.ManyToManyField(VehicleType,
-           related_name='jobrequests_old', blank=True, null=True)
-
-    vehicle_type = models.ForeignKey(FlexibleVehicleType,
-           related_name='jobrequests',
-           blank=True, null=True,
-           help_text="Which type of vehicle would be appropriate for the job. ")
-
-    minimum_delivery_box = models.PositiveSmallIntegerField(
-            choices=DriverVehicleType.DELIVERY_BOX_CHOICES,
-            default=DriverVehicleType.DELIVERY_BOX_NONE,
-            help_text='For scooters, motorcycles and bicycles, '
-                        'the minimum delivery box size.')
-
-    driving_experience = models.PositiveSmallIntegerField(
-                                'Minimum driving experience',
-                                choices=Driver.DRIVING_EXPERIENCE_CHOICES,
-                                default=Driver.DRIVING_EXPERIENCE_LESS_ONE)
-
-    own_vehicle = models.BooleanField(
-                            'The driver must supply their own vehicle.',
-                            default=True)
-
-    objects = DriverJobRequestManager.from_queryset(JobRequestQuerySet)()
-
-    def get_vehicle_type_display(self):
-        "Returns the vehicle type, or 'Any' if there is none."
-        if self.vehicle_type:
-            return self.vehicle_type
-        return 'Any'
-
-    @property
-    def delivery_box_applicable(self):
-        "Returns whether or not the minimum delivery box is applicable."
-        return self.own_vehicle and self.vehicle_type.delivery_box_applicable

@@ -8,9 +8,11 @@ def setup_perms(apps, schema_editor):
     """Adds ability for site admin to create, edit and delete driver
     job requests.
     """
-    DriverJobRequest = apps.get_model('job', 'DriverJobRequest')
-    add_admin_perms(DriverJobRequest)
-
+    try:
+        DriverJobRequest = apps.get_model('job', 'DriverJobRequest')
+        add_admin_perms(DriverJobRequest)
+    except:
+        pass
 
 class Migration(migrations.Migration):
 

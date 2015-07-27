@@ -24,6 +24,23 @@ def live():
     env.backup_on_deploy = True
     env.django_configuration = 'Live'
 
+@task
+def stage():
+    """
+    Use the stage deployment environment.
+    """
+    env.hosts = ['stage.buzzhire.co']
+    env.user = 'buzzhire'
+    env.virtualenv_dir = '/home/buzzhire/.virtualenvs/stage'
+    env.code_dir = '/home/buzzhire/webapps/stage/project'
+    env.activate = 'source %s/bin/activate' % env.virtualenv_dir
+    env.wsgi_reload_file = '/home/buzzhire/tmp/stage.reload'
+    env.nginx_process = 'stage_nginx'
+    env.uwsgi_process = 'stage_uwsgi'
+    env.huey_process = 'stage_huey'
+    env.backup_on_deploy = False
+    env.django_configuration = 'Stage'
+
 
 @task
 def dev():
@@ -92,6 +109,16 @@ def deploy(skip_backup=False):
         run('./manage.py collectstatic --noinput')
         reload_wsgi()
         restart_huey()
+
+@task
+def quickdeploy(skip_backup=False):
+    """
+    A quick deploy for front end changes.
+    """
+    with virtualenv():
+        run("git pull")
+        run('./manage.py collectstatic --noinput')
+        reload_wsgi()
 
 @task
 def dbbackup():

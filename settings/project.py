@@ -7,7 +7,7 @@ class ProjectConfiguration(StandardConfiguration):
 #     STATICFILES_DIRS = (
 #         os.path.join(BASE_DIR, "static"),
 #     )
-    SITE_TITLE = 'Buzzhire'
+    SITE_TITLE = 'BuzzHire'
     PROJECT_NAME = 'buzzhire'
     INSTALLED_APPS = StandardConfiguration.INSTALLED_APPS + (
         # Apps lower down the list should import from apps higher up the list,
@@ -24,20 +24,27 @@ class ProjectConfiguration(StandardConfiguration):
         'djangobower',
         'dbbackup',
         'fsm_admin',
+        'polymorphic',
         'django_bootstrap_breadcrumbs',
         'huey.djhuey',
         'rest_framework',
         'rest_framework.authtoken',
         'apps.core',
+        'apps.notification',
         'apps.location',
         'apps.account',
-        'apps.freelancer',
+        'apps.service',
         'apps.client',
-        'apps.driver',
+        'apps.freelancer',
         'apps.payment',
         'apps.job',
         'apps.booking',
         'apps.feedback',
+        'apps.services.driver',
+        'apps.services.kitchen',
+        'apps.services.bar',
+        'apps.services.waiting',
+        'apps.services.cleaner',
         'apps.api',
         'apps.main',
     )
@@ -58,6 +65,7 @@ class ProjectConfiguration(StandardConfiguration):
 
     MIDDLEWARE_CLASSES = StandardConfiguration.MIDDLEWARE_CLASSES + (
        'apps.feedback.middleware.FeedbackMiddleware',
+       'apps.core.middleware.StrictAuthenticationMiddleware',
     )
 
     CRISPY_TEMPLATE_PACK = 'bootstrap3'
@@ -109,7 +117,7 @@ class ProjectConfiguration(StandardConfiguration):
     # Min pay per hour, before commission
     CLIENT_MIN_WAGE = 8.0
     # The percent commission we charge on client rates
-    COMMISSION_PERCENT = 15
+    COMMISSION_PERCENT = 0
     # Number of pence to round to
     COMMISSION_ROUND_PENCE = 25
 
@@ -121,3 +129,24 @@ class ProjectConfiguration(StandardConfiguration):
             'rest_framework.authentication.SessionAuthentication',
         )
     }
+
+    def CONTACT_FROM_EMAIL(self):
+        return 'BuzzHire <%s>' % self.CONTACT_EMAIL
+
+    def BOOKINGS_EMAIL(self):
+        return self.CONTACT_EMAIL
+
+    def BOOKINGS_FROM_EMAIL(self):
+        return 'BuzzHire <%s>' % self.BOOKINGS_EMAIL
+
+
+    # The minimum number of hours notice allowed to create a job request
+    JOB_REQUEST_MINIMUM_HOURS_NOTICE = 4
+
+    # Minimum number of hours a job can last
+    MIN_JOB_DURATION = 2
+
+    PARSE_APPLICATION_ID = '87WebYikYitgl6GOnavbGesoGvA6lka2oLVnH5i3'
+    PARSE_REST_API_KEY = 'fI0mhqGrii6fB3euOY2jeNLi44J6ijAXNAt43BWX'
+
+    CONTACT_PHONE = '07831 551 927'

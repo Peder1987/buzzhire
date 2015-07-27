@@ -60,3 +60,4 @@ class BookingFeedbackForm(forms.ModelForm):
             'booking': HiddenInput,
             'comment': Textarea(attrs={'rows': 3})
         }
+        fields = ('score', 'author_type', 'booking', 'comment')

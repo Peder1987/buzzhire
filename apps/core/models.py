@@ -1,6 +1,10 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 from .slugs import unique_slugify
+from django.contrib.gis.db.models import GeoManager
+from django.contrib.gis.db.models.query import GeoQuerySet
+from polymorphic import PolymorphicManager
+from polymorphic.query import PolymorphicQuerySet
 
 
 class SlugModel(models.Model):
@@ -23,3 +27,20 @@ class SlugModel(models.Model):
 
     class Meta:
         abstract = True
+
+
+class GeoPolymorphicQuerySet(GeoQuerySet, PolymorphicQuerySet):
+    '''
+    QuerySet used in GeoPolymorphicManager.
+    '''
+    pass
+
+
+class GeoPolymorphicManager(GeoManager, PolymorphicManager):
+    '''
+    GeoManager with polymorphism functionalities (for django-polymorphic).
+    '''
+    queryset_class = GeoPolymorphicQuerySet
+
+    def get_queryset(self):
+        return self.queryset_class(self.model, using=self._db)

@@ -1,6 +1,7 @@
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
-from django.template.loader import render_to_string
+from django.template.loader import render_to_string, select_template
+from .utils import template_names_from_polymorphic_model
 
 
 def send_mail(to, subject, template_name, context, from_email=None):
@@ -19,7 +20,7 @@ def send_mail(to, subject, template_name, context, from_email=None):
         to = [to]
 
     if not from_email:
-        from_email = settings.CONTACT_EMAIL
+        from_email = settings.CONTACT_FROM_EMAIL
 
     context['domain'] = settings.DOMAIN
     context['contact_email'] = settings.CONTACT_EMAIL
@@ -35,3 +36,37 @@ def send_mail(to, subject, template_name, context, from_email=None):
                                  to)
     msg.attach_alternative(content['html'], "text/html")
     msg.send()
+
+
+# def render_model_for_email(instance, suffix):
+#     """Returns a rendered version of the supplied model instance,
+#     for inclusion in an email.
+#
+#     Arguments:
+#
+#         - instance: the model instance
+#         - suffix: the suffix to add to the template name.
+#
+#     Example:
+#
+#         render_model_for_email(driver_job_request, '_freelancer') will look for
+#         the template 'driver/email/includes/driverjobrequest_freelancer.html',
+#         falling back to 'job/email/includes/jobrequest_freelancer.html'.
+#     """
+#     template_names = template_names_from_polymorphic_model(instance.__class__,
+#                                                 suffix=suffix,
+#                                                 subdirectory='email/includes')
+#     # Pass the available base template to the context.  This allows
+#     # templates to extend the base template specific to the model type,
+#     # without us needing to create specific templates for each suffix
+#     # for that type.  For example, we can create a specific base template
+#     # for DriverJobRequest without needing to have a specific DriverJobRequest
+#     # client template to extend it.
+#     BASE_SUFFIX = '_base'
+#     if suffix is not BASE_SUFFIX:
+#         base_template = select_template(template_names_from_polymorphic_model(
+#                                         instance.__class__,
+#                                         suffix=BASE_SUFFIX,
+#                                         subdirectory='email/includes')).name
+#     return render_to_string(template_names, {'object': instance,
+#                                              'base_template': base_template})

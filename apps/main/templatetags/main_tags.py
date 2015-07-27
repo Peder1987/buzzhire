@@ -1,4 +1,6 @@
 from django import template
+from django.conf import settings
+
 
 register = template.Library()
 
@@ -14,3 +16,24 @@ def is_in_dashboard(path):
         <a{% if request.path|is_in_dashboard %} class='active'{% endif %}>
     """
     return True
+
+
+@register.simple_tag
+def contact_email():
+    """Returns the contact email.
+    
+    Usage:
+    
+        {% contact_email %}
+    """
+    return settings.CONTACT_EMAIL
+
+@register.simple_tag
+def contact_phone():
+    """Returns the contact phone number.
+    
+    Usage:
+    
+        {% contact_phone %}
+    """
+    return settings.CONTACT_PHONE

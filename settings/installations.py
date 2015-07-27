@@ -27,6 +27,7 @@ class HueyMixin(object):
             'consumer_options': {'workers': 1},
         }
 
+
 class Local(BraintreeSandboxMixin, HueyMixin,
             installations.LocalMixin, ProjectConfiguration):
     PROJECT_ROOT = '/home/david/www/buzzhire'
@@ -38,13 +39,17 @@ class Local(BraintreeSandboxMixin, HueyMixin,
     HUEY_NAME = 'buzzhire'
     API_ACTIVE = True
 
+    INSTALLED_APPS = ProjectConfiguration.INSTALLED_APPS + (
+        'debug_toolbar',
+    )
+
 
 class Dev(BraintreeSandboxMixin, HueyMixin,
           installations.WebfactionDevMixin, ProjectConfiguration):
     DOMAIN = 'dev.buzzhire.co'
     WEBFACTION_USER = 'buzzhire'
     EMAIL_HOST_USER = 'buzzhire_dev'
-
+    DEBUG = False
     ACCOUNT_PASSWORD_MIN_LENGTH = 1
 
     HUEY_NAME = 'dev'
@@ -52,10 +57,8 @@ class Dev(BraintreeSandboxMixin, HueyMixin,
 
     API_ACTIVE = True
 
-    def BOOKINGS_EMAIL(self):
-        return self.CONTACT_EMAIL
-
-
+    # Allow embedding, so responsinator.com can be used for testing
+    X_FRAME_OPTIONS = "ALLOWALL"
 
 class Live(HueyMixin,
            installations.WebfactionLiveMixin, ProjectConfiguration):
@@ -68,10 +71,7 @@ class Live(HueyMixin,
     HUEY_NAME = 'live'
     HUEY_PORT = 17610
 
-    def BOOKINGS_EMAIL(self):
-        return self.CONTACT_EMAIL
-
-    COMING_SOON = True
+    CONTACT_EMAIL = 'contact@buzzhire.co'
 
     AWS_ACCESS_KEY_ID = 'AKIAI7ZMKSCZQGQRGUJQ'
     AWS_BUCKET_NAME = 'buzzhire-backups-media'
@@ -90,3 +90,11 @@ class Live(HueyMixin,
     BRAINTREE_MERCHANT_ID = 'q6xbcpbpcm4vtvcw'
     BRAINTREE_PUBLIC_KEY = 'skmbrjfnnc4kfxq5'
     BRAINTREE_SANDBOX = False
+
+
+class Stage(Live):
+    "The staging site - duplicates the live site, for deployment rehearsals."
+    WEBFACTION_APPNAME = 'stage'
+    HUEY_NAME = 'stage'
+    HUEY_PORT = 17610
+    COMING_SOON = False

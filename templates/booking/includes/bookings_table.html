@@ -1,36 +1,91 @@
 {% load icons humanize feedback %}
 {% if object_list %}
-    <table class='table'>
-        <thead>
-            <th>Job</th>
-            <th>Client</th>
-            <th>Date / time</th>
-            <th>Location</th>
-            <th>Pay per hour</th>
-            <th>Status</th>
-            <th>Your feedback</th>
-        </thead>
-        <tbody>
-            {% for object in object_list %}
-                <tr>
-                    <td class='monospace'>{{ object.jobrequest.reference_number }}</td>
-                    <td>{{ object.jobrequest.client }}</td>
-                    <td>{{ 'date'|icon }} {{ object.jobrequest.date }}<br>{{ 'time'|icon }} {{ object.jobrequest.start_time }}<br>
-                    For {{ object.jobrequest.duration }} hour{{ object.jobrequest.duration|pluralize }}</td>
-                    <td>{% include 'job/includes/location.html' with object=object.jobrequest %}</td>
-                    <td>&pound;{{ object.jobrequest.client_pay_per_hour.amount }}</td>
-                    <td>{{ object.jobrequest.get_status_display }}</td>
-                    <td>
-                        {% if object|freelancer_feedback_allowed %}
-                            <a href='{% url 'freelancer_feedback_create' object.jobrequest.pk %}' class='btn btn-primary'>{{ 'feedback'|icon }} Leave feedback</a>
-                        {% endif %}
-                        {% feedback_for_client object %}
-                    </td>
-                    
-                </tr>
-            {% endfor %}        
-        </tbody>
-    </table>
+   
+
+    {% for object in object_list %}
+    <div class="col-md-4">
+        <div class="booking-box">
+            {% if request.user.is_admin %} admin booking table {% endif %}
+            <div class="reference">
+               <a href='{{ object.jobrequest.get_absolute_url }}'>#{{ object.jobrequest.reference_number }}</a>
+            </div>
+            <div class="profile-picture">{{ 'icon-notification-panel'|icon }}</div>
+            
+            <p class="f16 black">{{ object.jobrequest.client }}</p>
+            
+            
+            <p class="f20 black">{{ object.jobrequest.date }}, {{ object.jobrequest.start_time }}</p>
+            
+             
+            <div class="job-request-table-wrap booking-request-table-wrap">
+                <table class="table job-request-table black f14">
+                   
+                    <tr>
+                        <td> Duration </td>
+                        <td class="blue"> {{ object.jobrequest.duration }} hour{{ object.duration.jobrequest|pluralize }}</td>
+                    </tr>
+                    <tr>
+                        <td> Location </td>
+                        <td class="blue"> 
+                            
+                                {% include 'job/includes/location.html' with object=object.jobrequest %}
+                            
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Pay per hour</td>
+                        <td class="blue">&pound;{{ object.jobrequest.client_pay_per_hour.amount }}</td>
+                    </tr>
+                   
+                    <tr>
+                        <td>Tip</td>
+                        <td class="blue">
+                            {% if object.jobrequest.tips_included %} 
+                            <i class="fa fa-check"></i> 
+                            {% else %}
+                            <i class="fa fa-times"></i>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td class="blue">
+                            {{ object.jobrequest.get_status_display }}
+                        </td>
+                    </tr>
+                    {% if not object|freelancer_feedback_needed and object|freelancer_feedback_exists %}
+                    <tr>
+                        <td>Your feedback </td>
+                        <td class="comment-cell">
+                            {% feedback_for_client object %}
+                        </td>
+                    </tr>
+                    {% endif %}
+                </table>
+                {% if object|freelancer_feedback_needed %}
+                    <a href='{% url 'freelancer_feedback_create' object.jobrequest.pk %}' class='btn btn-primary leave-feedback-btn' style="margin-bottom: 10px">Leave feedback</a>
+                {% endif %}
+            </div>
+             
+            <div class="total-box blue-bck">
+          
+                <table class="table total-table white f14 mar0">
+                    <tr>
+                        <td> Total pay</td>
+                        <td>
+                            &pound;{{ object.jobrequest.freelancer_total_pay.amount }}
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+    {% endfor %} 
+    <div class="clearfix"></div>
+
     {% include 'includes/paginator.html' %}
 {% else %}
     <p class='well top-space'>No bookings.</p>

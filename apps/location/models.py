@@ -15,6 +15,14 @@ class Postcode(models.Model):
 
     objects = models.GeoManager()
 
+    @property
+    def latitude(self):
+        return self.point.y
+
+    @property
+    def longitude(self):
+        return self.point.x
+
     def save(self, *args, **kwargs):
         # Set the point based on the postcode
         if not self.point:

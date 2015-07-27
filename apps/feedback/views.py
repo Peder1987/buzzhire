@@ -4,7 +4,7 @@ from extra_views import FormSetView
 from apps.client.views import OwnedByClientMixin, ClientOnlyMixin
 from apps.core.views import ContextMixin
 from apps.freelancer.views import FreelancerOnlyMixin
-from apps.job.models import JobRequest, DriverJobRequest
+from apps.job.models import JobRequest
 from apps.booking.views import FreelancerHasBookingMixin
 from apps.booking.models import Booking
 from .models import BookingFeedback, \
@@ -32,7 +32,7 @@ class FeedbackAllowedMixin(object):
         if self.object.status != JobRequest.STATUS_COMPLETE:
             message = "You cannot leave feedback for a job that " \
                         "hasn't finished yet."
-        elif self.has_already_left_feedback():
+        elif self.has_given_all_feedback():
             message = 'You have already left feedback for this job.'
         if message:
             messages.error(self.request, message)
@@ -41,12 +41,12 @@ class FeedbackAllowedMixin(object):
         return super(FeedbackAllowedMixin, self).dispatch(request,
                                                            *args, **kwargs)
 
-    def has_already_left_feedback(self):
-        """Returns whether or not the user (client or freelancer) has already
-        left feedback on this job request.
+    def has_given_all_feedback(self):
+        """Returns whether or not the user (client or freelancer) has given
+        all the feedback needed for this job request.
         """
         if self.author_type == BookingFeedback.AUTHOR_TYPE_CLIENT:
-            return BookingFeedback.objects.client_feedback_exists(self.object)
+            return not self.object.needs_feedback_from_client
         else:
             return BookingFeedback.objects.freelancer_feedback_exists(
                                                 self.object, self.freelancer)
@@ -82,7 +82,7 @@ class BaseFeedbackCreateView(FeedbackAllowedMixin,
     """
     template_name = 'feedback/feedback_create.html'
     extra_context = {'title': 'Leave feedback'}
-    model = DriverJobRequest
+    model = JobRequest
     extra = 0
     form_class = BookingFeedbackForm
     author_type = None  # This should be overridden in the subclass
@@ -113,6 +113,7 @@ class ClientFeedbackCreate(OwnedByClientMixin,
     def get_success_url(self):
         return self.object.get_absolute_url()
 
+
 class FreelancerFeedbackCreate(FreelancerHasBookingMixin,
                                BaseFeedbackCreateView):
     """Page for a freelancer to leave feedback on the client
@@ -128,5 +129,5 @@ class FreelancerFeedbackCreate(FreelancerHasBookingMixin,
     def get_context_data(self, *args, **kwargs):
         context = super(FreelancerFeedbackCreate, self).get_context_data(*args,
                                                                     **kwargs)
-        context['for_driver'] = True
+        context['for_freelancer'] = True
         return context

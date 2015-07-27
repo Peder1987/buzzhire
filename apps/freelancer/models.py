@@ -2,6 +2,8 @@ from decimal import Decimal
 from django.contrib.gis.db import models
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from polymorphic import PolymorphicModel
+from apps.core.models import GeoPolymorphicManager
 from django.conf import settings
 from datetime import date
 from django.core import validators
@@ -12,6 +14,7 @@ from django.contrib.humanize.templatetags.humanize import apnumber
 from django.template.defaultfilters import pluralize
 from apps.core.views import POUND_SIGN
 from apps.location.models import Postcode
+from apps.core.validators import mobile_validator
 import calendar
 
 
@@ -32,8 +35,6 @@ def _freelancer(self):
     return self.freelancer_set.get()
 User.freelancer = property(_freelancer)
 
-from decimal import Decimal
-
 
 def client_to_freelancer_rate(client_rate):
     """Given a client rate as a moneyed.Money object,
@@ -52,8 +53,7 @@ def client_to_freelancer_rate(client_rate):
 FREELANCER_MIN_WAGE = client_to_freelancer_rate(Money(settings.CLIENT_MIN_WAGE,
                                                   'GBP')).amount
 
-
-class PublishedFreelancerManager(models.GeoManager):
+class PublishedFreelancerManager(GeoPolymorphicManager):
     """Manager for published freelancers.
     Note that models inheriting Freelancer should redeclare it:
     
@@ -62,27 +62,27 @@ class PublishedFreelancerManager(models.GeoManager):
             published_objects = PublishedFreelancerManager()
     """
     def get_queryset(self):
-        return self.model.objects.filter(published=True)
         queryset = super(PublishedFreelancerManager, self).get_queryset()
         return queryset.filter(published=True)
 
 
-class Freelancer(models.Model):
+class Freelancer(PolymorphicModel):
     "A freelancer is a person offering a professional service."
 
+    service = None  # Needed for API
+
     published = models.BooleanField(default=True,
-        help_text='Whether or not the freelancer shows up in search '
-        'results.')
+        help_text='Whether or not the freelancer is matched with jobs.')
 
     # A link to a user account.
     user = models.ForeignKey(settings.AUTH_USER_MODEL, unique=True)
 
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    mobile = models.CharField(max_length=13, validators=[
-            validators.RegexValidator(r'^07[0-9 ]*$',
-                           'Please enter a valid UK mobile phone number in '
-                           'the form 07xxx xxx xxx')])
+    mobile = models.CharField(max_length=13,
+          validators=[mobile_validator],
+          help_text='Your mobile phone number will be visible to clients on '
+            'whose jobs you are booked.')
 
     photo = models.ImageField(upload_to='freelancer/photos/%Y/%m/%d',
                               blank=True)
@@ -101,6 +101,7 @@ class Freelancer(models.Model):
     eligible_to_work = models.BooleanField('I am eligible to work in the UK.',
                                            default=False)
 
+    # TODO - Legacy field, remove once migrated
     PHONE_TYPE_ANDROID = 'AN'
     PHONE_TYPE_IPHONE = 'IP'
     PHONE_TYPE_WINDOWS = 'WI'
@@ -113,7 +114,7 @@ class Freelancer(models.Model):
         (PHONE_TYPE_OTHER, 'Other smartphone'),
         (PHONE_TYPE_NON_SMARTPHONE, 'Non smartphone'),
     )
-    phone_type = models.CharField(max_length=2, choices=PHONE_TYPE_CHOICES,
+    phone_type_old = models.CharField(max_length=2, choices=PHONE_TYPE_CHOICES,
                                   blank=True)
 
     # TODO - remove days_available and hours_available
@@ -155,7 +156,23 @@ class Freelancer(models.Model):
         choices=DISTANCE_CHOICES, default=5,
         help_text='The maximum distance you are prepared to travel to a job.')
 
-    objects = models.GeoManager()
+    # The integer stored in experience denotes that they have
+    # AT LEAST that number of years experience.
+    YEARS_EXPERIENCE_LESS_ONE = 0
+    YEARS_EXPERIENCE_ONE = 1
+    YEARS_EXPERIENCE_THREE = 3
+    YEARS_EXPERIENCE_FIVE = 5
+    YEARS_EXPERIENCE_CHOICES = (
+        (YEARS_EXPERIENCE_LESS_ONE, 'Less than 1 year'),
+        (YEARS_EXPERIENCE_ONE, '1 - 3 years'),
+        (YEARS_EXPERIENCE_THREE, '3 - 5 years'),
+        (YEARS_EXPERIENCE_FIVE, 'More than 5 years'),
+    )
+    years_experience = models.PositiveSmallIntegerField(
+                                default=YEARS_EXPERIENCE_ONE,
+                                choices=YEARS_EXPERIENCE_CHOICES)
+
+    objects = GeoPolymorphicManager()
     published_objects = PublishedFreelancerManager()
 
     @property
@@ -169,7 +186,7 @@ class Freelancer(models.Model):
                           self.last_name)
 
     def get_absolute_url(self):
-        return reverse('driver_detail', args=(self.pk,))
+        return reverse('freelancer_detail', args=(self.pk,))
 
     def __unicode__(self):
         return self.get_full_name()

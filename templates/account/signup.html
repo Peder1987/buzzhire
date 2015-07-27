@@ -1,7 +1,18 @@
-{% extends 'form_page.html' %}
+{% extends 'page_sidebar_right.html' %}
 {% load icons %}
 
 {% block content %}
-    {#{% block already_have_account %}<p>Already have an account? <a class='btn btn-sm btn-default' href="{% url 'account_login' %}">{{ 'login'|icon }} Log in</a></p>{% endblock %}#}
+<div class="row">
+<div class="col-md-6" style="padding-right: 15px; padding-left: 0 !important" class="login-signup-column">
+    {% block already_have_account %}
+    <p>
+    	Already have an account? 
+    	<a class='btn btn-lg btn-primary' href="{% url 'account_login' %}" style="width: 100%; margin: 20px 0">Log in</a>
+    </p>
+    
+    {% endblock %}
+</div>
     {% block form_content %}{{ block.super }}{% endblock %}
+</div>
+
 {% endblock %}
