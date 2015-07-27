@@ -11,7 +11,7 @@
     {% if object|booking_exists_for_freelancer:request.user.freelancer %}
         {% breadcrumb 'Bookings' 'freelancer_bookings_list' %}
     {% else %}
-        {% breadcrumb 'Open invitations' 'freelancer_invitations_list' %}
+        {% breadcrumb 'Pending job requests' 'freelancer_invitations_list' %}
     {% endif %}
   {% endif %}
 {% endblock %}

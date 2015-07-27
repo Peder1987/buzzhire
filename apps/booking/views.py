@@ -67,7 +67,7 @@ class FreelancerInvitationsList(FreelancerOnlyMixin,
     """List of current invitations for a freelancer.
     """
     paginate_by = 15
-    extra_context = {'title': 'Invitations'}
+    extra_context = {'title': 'Pending job requests'}
 
     def get_queryset(self, *args, **kwargs):
         return Invitation.objects.open_for_freelancer(self.freelancer)

@@ -3,7 +3,7 @@
 
 {% block inner_breadcrumb %}
   {{ block.super }}
-  {% breadcrumb 'Open invitations' 'freelancer_invitations_list' %}
+  {% breadcrumb 'Pending job requests' 'freelancer_invitations_list' %}
   {% breadcrumb job_request job_request.get_absolute_url %}
 {% endblock %}
 
