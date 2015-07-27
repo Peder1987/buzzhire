@@ -1,7 +1,7 @@
 {% load icons crispy_forms_tags %}
 <form method='post' class='text-center' action='{% url 'service_select' %}'>
     {% csrf_token %}
-    <div class='inline-form-field'>I need {{ form.service }}</div>
+    <div class='inline-form-field'>I need {% if not form.use_plural %}a {% endif %}{{ form.service }}</div>
     <div class='text-center'>
       <button class='btn btn-primary btn-lg'> Book a freelancer</button>
     </div>

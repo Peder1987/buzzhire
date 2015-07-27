@@ -1,5 +1,6 @@
 from apps.core.utils import WeightedRegistry, classproperty
 from django.utils.module_loading import autodiscover_modules
+from django.utils.encoding import force_text
 
 
 default_app_config = 'apps.service.config.ServiceConfig'
@@ -35,11 +36,24 @@ class Service(object):
     job_matching_form = None
 
     @classproperty
-    def title(cls):
-        """Human readable version of the service.  Should be the name of
-        the kind of person that performs the service.
+    def service_name(cls):
+        """Human readable version of the service, e.g. 'delivery'.
         """
         return cls.job_request_model.service
+
+    @classproperty
+    def freelancer_name(cls):
+        """Human readable version of the type of freelancer for this service.
+        Should be in the singular version.
+        """
+        return cls.freelancer_model._meta.verbose_name
+
+    @classproperty
+    def freelancer_name_plural(cls):
+        """Human readable version used to refer to multiple freelancers
+        for this service.
+        """
+        return force_text(cls.freelancer_model._meta.verbose_name_plural)
 
 
 def autodiscover():

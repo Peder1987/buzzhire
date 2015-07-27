@@ -20,7 +20,7 @@
           {% get_services as services %}
           {% for service in services %}
               {% url 'job_request_create' service.key as link_url %}
-              {% include 'includes/panel_link.html' with icon_name='icon-'|add:service.key link_text=service.title|capfirst %}
+              {% include 'includes/panel_link.html' with icon_name='icon-'|add:service.key link_text=service.freelancer_name_plural|capfirst %}
           {% endfor %}
           
       </div>

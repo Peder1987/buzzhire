@@ -3,7 +3,7 @@ from apps.freelancer.models import Freelancer, PublishedFreelancerManager
 from apps.job.models import JobRequest
 from apps.core.models import GeoPolymorphicManager
 
-WAITING_SERVICE_TITLE = 'waiting staff'
+WAITING_SERVICE_TITLE = 'waiters'
 
 
 class WaitingJobRequest(JobRequest):
@@ -19,3 +19,7 @@ class WaitingFreelancer(Freelancer):
 
     objects = GeoPolymorphicManager()
     published_objects = PublishedFreelancerManager()
+
+
+    class Meta:
+        verbose_name = 'waiter'

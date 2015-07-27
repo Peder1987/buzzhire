@@ -42,3 +42,7 @@ class KitchenFreelancer(Freelancer):
 
     objects = GeoPolymorphicManager()
     published_objects = PublishedFreelancerManager()
+
+
+    class Meta:
+        verbose_name = 'chef'

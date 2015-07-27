@@ -5,7 +5,7 @@
     <h4 class="sidebar-right-page-title">Booking Summary</h4>
     <div class="sidebar-right-page-right-content">
     {% if service %}
-        <p>Booking for a <strong>{{ service.title }}</strong>.</p>
+        <p>Booking for <strong>{{ service.freelancer_name_plural }}</strong>.</p>
     {% endif %}
     {% if object %}
         <p>{{ object.date }}</p>
