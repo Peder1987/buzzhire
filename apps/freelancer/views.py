@@ -2,7 +2,7 @@ from django.shortcuts import redirect
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.views import redirect_to_login
 from apps.core.views import ContextMixin, PolymorphicTemplateMixin, \
-    OwnerOnlyMixin
+    OwnerOnlyMixin, ExtraFormsView
 from allauth.account.utils import complete_signup
 from allauth.account import app_settings
 from .models import Freelancer
@@ -12,9 +12,10 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse_lazy
 from apps.service.forms import ServiceSelectForm
 from apps.service.views import ServiceViewMixin
+from django.core.urlresolvers import reverse
 from django.views.generic.edit import FormView
 from apps.account.views import SignupView as BaseSignupView
-from apps.account.forms import SignupInnerForm
+from apps.account.forms import SignupInnerForm, AcceptTermsInnerForm
 from .utils import service_for_freelancer
 from apps.core.views import PolymorphicTemplateMixin
 
@@ -135,7 +136,8 @@ class SignupServiceSelect(ContextMixin, FormView):
         return redirect('freelancer_signup', form.cleaned_data['service'])
 
 
-class SignupView(ServiceViewMixin, PolymorphicTemplateMixin, BaseSignupView):
+class SignupView(ServiceViewMixin, PolymorphicTemplateMixin,
+                 ExtraFormsView, BaseSignupView):
     """Freelancer sign up view.
     
     Uses the service key specified in the url to pull in the correct
@@ -154,7 +156,6 @@ class SignupView(ServiceViewMixin, PolymorphicTemplateMixin, BaseSignupView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(SignupView, self).get_context_data(*args, **kwargs)
-        context['freelancer_form'] = self.get_freelancer_form()
 
         # Tailor the page title to the service
         context['title'] = '%s sign up' % \
@@ -162,7 +163,7 @@ class SignupView(ServiceViewMixin, PolymorphicTemplateMixin, BaseSignupView):
 
         return context
 
-    def get_freelancer_form(self):
+    def get_extra_forms(self):
         # Dynamically create a form class by mixing in the
         # SignupFormFreelancerDetailsMixin
         # with the freelancer form for this service
@@ -171,32 +172,21 @@ class SignupView(ServiceViewMixin, PolymorphicTemplateMixin, BaseSignupView):
                 (SignupFormFreelancerDetailsMixin,
                 self.service.freelancer_form),
                 {})
-        return form_class(**self.get_freelancer_form_kwargs())
-
-    def get_freelancer_form_kwargs(self):
-        """Standard get_form_kwargs() method adapted for the driver form."""
-
-        kwargs = {
-            'initial': self.get_initial(),
-            'prefix': 'freelancer',
+        return {
+            'freelancer': form_class,
+            'terms': AcceptTermsInnerForm,
         }
 
-        if self.request.method in ('POST', 'PUT'):
-            kwargs.update({
-                'data': self.request.POST,
-                'files': self.request.FILES,
-            })
-        return kwargs
 
-    def post(self, request, *args, **kwargs):
-        "Standard post method adapted to validate both forms."
-        form_class = self.get_form_class()
-        form = self.get_form(form_class)
-        self.freelancer_form = self.get_freelancer_form()
-        if form.is_valid() and self.freelancer_form.is_valid():
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
+    def get_form_kwargs(self, prefix=None):
+        form_kwargs = super(SignupView, self).get_form_kwargs(prefix)
+
+        # Set the url for the freelancer terms
+        if prefix == 'terms':
+            form_kwargs['terms_url'] = reverse('freelancer_terms')
+
+        return form_kwargs
+
 
     def form_valid(self, form):
         """Adapted from BaseSignupView to save the freelancer too.
@@ -204,7 +194,7 @@ class SignupView(ServiceViewMixin, PolymorphicTemplateMixin, BaseSignupView):
 
         user = form.save(self.request)
         # Save freelancer form too
-        self.freelancer_form.save(user)
+        self.bound_forms['freelancer'].save(user)
         return complete_signup(self.request, user,
                                app_settings.EMAIL_VERIFICATION,
                                self.get_success_url())

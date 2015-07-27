@@ -341,3 +341,91 @@ class PolymorphicTemplateMixin(object):
 
         return template_names_from_polymorphic_model(model_class,
                                                      self.template_suffix)
+
+
+class ExtraFormsView(FormView):
+    """FormView for handling a main form and a number of extra forms.
+    
+    Usually you will want to specify the form_class, and override
+    get_extra_forms() and form_valid().
+    """
+    form_class = None
+    prefix = 'main'  # The form prefix for the main form
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ExtraFormsView,
+                        self).get_context_data(*args, **kwargs)
+        context['extra_forms'] = []
+        for prefix, form_class in self.extra_forms.items():
+            context['extra_forms'].append(self.get_form(form_class, prefix))
+        return context
+
+    def get_form(self, form_class, prefix=None):
+        # Now is a good time to set the extra_forms too
+        self.extra_forms = self.get_extra_forms()
+        # Pass the prefix through to get_form_kwargs
+        return form_class(**self.get_form_kwargs(prefix))
+
+    def get_extra_forms(self):
+        """
+            Returns a dictionary of the extra form classes, keyed with their
+            form prefixes.
+            
+            Usage:
+            
+                def get_extra_forms(self):
+                    return {
+                        'client': ClientInnerForm,
+                    }
+        """
+        return {}
+
+    def get_form_kwargs(self, prefix=None):
+        """Standard get_form_kwargs() method adapted to return
+        the extra forms too."""
+
+        if prefix is None:
+            # This is for the main form
+            prefix = self.get_prefix()
+
+        kwargs = {
+            'initial': self.get_initial(),
+            'prefix': prefix,
+        }
+
+        if self.request.method in ('POST', 'PUT'):
+            kwargs.update({
+                'data': self.request.POST,
+                'files': self.request.FILES,
+            })
+        return kwargs
+
+    def post(self, request, *args, **kwargs):
+        "Standard post method adapted to validate all forms."
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        self.bound_forms = {self.get_prefix(): form}
+        for prefix, form_class in self.extra_forms.items():
+            self.bound_forms[prefix] = self.get_form(form_class, prefix)
+
+        if all([f.is_valid() for f in self.bound_forms.values()]):
+            # If all the forms validate
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        """Action to perform once the forms validate.
+        
+        Usage:
+        
+            def form_valid(self, form):
+                instance = form.save()
+
+                # Save extra forms too
+                for extra_form in self.bound_forms.items():
+                    extra_form.save()
+
+                return self.get_success_url()
+        """
+        pass

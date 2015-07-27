@@ -11,7 +11,8 @@ from allauth.account.utils import complete_signup
 from django.shortcuts import redirect
 from braces.views._access import AnonymousRequiredMixin
 from apps.core.views import ContextMixin, TabsMixin, ConfirmationMixin, \
-                                GrantCheckingMixin, PolymorphicTemplateMixin
+                                GrantCheckingMixin, PolymorphicTemplateMixin, \
+                                ExtraFormsView
 from apps.account.views import AdminOnlyMixin
 from apps.account.forms import LoginForm, AcceptTermsInnerForm
 from apps.client.views import ClientOnlyMixin, OwnedByClientMixin
@@ -88,25 +89,11 @@ class JobRequestCreate(ClientOnlyMixin, ServiceViewMixin, ContextMixin,
         return HttpResponseRedirect(self.get_success_url())
 
 
-class ClientSignUpView(ServiceViewMixin, BaseSignupView):
+class ClientSignUpView(ServiceViewMixin, ExtraFormsView, BaseSignupView):
     template_name = 'job/client_signup.html'
     form_class = JobRequestSignupInnerForm
     # The form prefix for the account form
     prefix = 'account'
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(ClientSignUpView,
-                        self).get_context_data(*args, **kwargs)
-        context['extra_forms'] = []
-        for prefix, form_class in self.extra_forms.items():
-            context['extra_forms'].append(self.get_form(form_class, prefix))
-        return context
-
-    def get_form(self, form_class, prefix=None):
-        # Now is a good time to set the extra_forms too
-        self.extra_forms = self.get_extra_forms()
-        # Pass the prefix through to get_form_kwargs
-        return form_class(**self.get_form_kwargs(prefix))
 
     def get_extra_forms(self):
         # Dynamically generate a JobRequestInnerForm that is specific to
@@ -119,43 +106,13 @@ class ClientSignUpView(ServiceViewMixin, BaseSignupView):
         }
 
     def get_form_kwargs(self, prefix=None):
-        """Standard get_form_kwargs() method adapted to return
-        the extra forms too."""
-
-        if prefix is None:
-            # This is for the main form (signup form)
-            prefix = self.get_prefix()
-
-        kwargs = {
-            'initial': self.get_initial(),
-            'prefix': prefix,
-        }
-
-        if self.request.method in ('POST', 'PUT'):
-            kwargs.update({
-                'data': self.request.POST,
-                'files': self.request.FILES,
-            })
+        form_kwargs = super(ClientSignUpView, self).get_form_kwargs(prefix)
 
         # Set the url for the client terms
         if prefix == 'terms':
-            kwargs['terms_url'] = reverse('client_terms')
+            form_kwargs['terms_url'] = reverse('client_terms')
 
-        return kwargs
-
-    def post(self, request, *args, **kwargs):
-        "Standard post method adapted to validate both forms."
-        form_class = self.get_form_class()
-        form = self.get_form(form_class)
-        self.bound_forms = {self.get_prefix(): form}
-        for prefix, form_class in self.extra_forms.items():
-            self.bound_forms[prefix] = self.get_form(form_class, prefix)
-
-        if all([f.is_valid() for f in self.bound_forms.values()]):
-            # If all the forms validate
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
+        return form_kwargs
 
     def form_valid(self, form):
         """Adapted from BaseSignupView to save the client and log them in.

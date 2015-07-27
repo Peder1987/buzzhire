@@ -27,8 +27,8 @@ urlpatterns = [
         name="freelancer_photo_update"),
 
     url(r'^terms-and-conditions/$', ContextTemplateView.as_view(
-                        template_name='freelancer/terms.html',
-                        extra_context={'title': 'Terms and conditions'}),
-                        name='freelancer_terms'),
+                    template_name='freelancer/terms.html',
+                    extra_context={'title': 'Freelancer terms and conditions'}),
+                    name='freelancer_terms'),
 ]
 
