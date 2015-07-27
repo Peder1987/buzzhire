@@ -4,11 +4,12 @@
 {% block content_row_wrapper %}
 {% block page_title %}{% endblock %}
 
-<div class="top-content" data-background-images="[&quot;https://dev.buzzhire.co/static/img/hero/kitchen.jpg&quot;,
+<div id="home" class="top-content" data-background-images="[&quot;https://dev.buzzhire.co/static/img/hero/top_content_bck.jpg&quot;,
                                                                     &quot;https://dev.buzzhire.co/static/img/hero/cleaner.jpg&quot;,
                                                                     &quot;https://dev.buzzhire.co/static/img/hero/bar.jpg&quot;,
                                                                     &quot;https://dev.buzzhire.co/static/img/hero/waiting.jpg&quot;,
-                                                                    &quot;https://dev.buzzhire.co/static/img/hero/driver.jpg&quot;
+                                                                    &quot;https://dev.buzzhire.co/static/img/hero/driver.jpg&quot;,
+                                                                    &quot;https://dev.buzzhire.co/static/img/hero/kitchen.jpg&quot;
                                                                     ]"
                                                                     style="position: relative; z-index: 0; background: none ">
 
@@ -101,6 +102,7 @@
            
         });
 
+        
         function backgroundSlideNum(value){
             switch(value){
                 case 'cleaner': 
@@ -116,7 +118,7 @@
                     return 4;
                     break;
                 case 'kitchen':
-                    return 0;
+                    return 5;
                     break;
             }
         }

@@ -19,7 +19,7 @@
         <div class=' bottom-space profile-photo-page'>
             {% profile_photo object 'medium' %}
         </div>
-        <h4 class="HelveticaLight white f40">{{ object.get_full_name }}</p>
+        <h4 class="HelveticaLight white f35 mar0">{{ object.get_full_name }}</h4>
         <div class="freelancer-details">
             <span class="detail-desc"> Service </span>
             <span class="detail-data"> {{ object.service|capfirst }} </span>
@@ -29,17 +29,28 @@
             <span class="detail-data"> &pound;{{ object.minimum_pay_per_hour.amount }} </span>
         </div>
         <div class="freelancer-details">
-            <span class="detail-desc"> Rating </span>
-            <span class="detail-data"> &pound;{{ object.minimum_pay_per_hour.amount }} </span>
+            <span class="detail-desc"> Experience </span>
+            <span class="detail-data"> {{ object.get_years_experience_display }} </span>
         </div>
+        <div class="freelancer-details">
+            <span class="detail-desc"> Rating </span>
+            <span class="detail-data"> {% average_score object.average_score %} </span>
+        </div>
+        
     </div>
 </div>
-     <div class='row'>
+     <div class='row mar0' class="feedback-all-wrap">
+        <div class="container">
+            {% feedback_for_freelancer_all object %}
+        </div>
+        
+        {% if request.user.is_admin %}
         <div class='col-md-4 col-md-push-8'>
-            <div class=' bottom-space'>
-                {% profile_photo object 'large' %}
-            </div>
-            {% if request.user.is_admin %}
+            
+            
+                <div class=' bottom-space'>
+                    {% profile_photo object 'large' %}
+                </div>
                 <h5>Contact</h5>
                 <table class='table table-striped'>
                     <tr>
@@ -112,7 +123,7 @@
                     {% block additional_admin_fields %}{% endblock %}
                 </table>
             {% else %}
-                <h5>Details</h5>
+                <!--<h5>Details</h5>
                    <table class='table table-striped'>
                     <tr>
                         <th>Mobile</th>
@@ -143,17 +154,18 @@
                         </td>
                     </tr>
                     {% block additional_public_fields %}{% endblock %}
-                </table>
+                </table> -->
             
-            {% endif %}
+            
         </div>
+        {% endif %}
         <div class='col-md-8 col-md-pull-4'>
            <!-- {% block additional_sections %}{% endblock %} -->
             {% if request.user.is_admin %}
                 <h5>Availability</h5>
                 {% include 'booking/includes/availability_summary.html' with form=object|availability_form_for_freelancer %}
             {% endif %}
-            {% feedback_for_freelancer_all object %}
+            
         </div>
      </div>    
 {% endblock %}

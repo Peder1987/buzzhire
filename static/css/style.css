@@ -86,11 +86,59 @@ body{
 .posabs{ position: absolute;}
 .bottom{ bottom: 0;}
 .width100{ width: 100%; }
+.block{ display: block;}
 /*a.btn i, button.btn i{
   display: none;
 }*/
 
 /* Custom */
+
+.top-content.freelancer-profile .container {
+  padding-top: 50px;
+}
+
+.feedback-all-title{
+  padding: 15px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.feedback{
+  margin: 20px 0;
+}
+
+.feedback p{
+  line-height: 1.2;
+  font-size: 16px;
+  margin-bottom: 0.7em;
+  font-family: Helvetica;
+}
+
+.feedback-comment{
+  min-height: 50px;
+  text-align: center;
+}
+
+.feedback-all-wrap{
+  background: rgb(247,247,247);
+}
+
+.freelancer-details{
+  margin: 15px 0;
+  font-family: HelveticaLight;
+  line-height: 1.2;
+}
+
+.freelancer-details .detail-desc{
+  display: block;
+  font-size: 18px;
+  line-height: 1.2;
+  color: rgba(247,247,247,0.7);
+}
+
+.freelancer-details .detail-data{
+  font-size: 25px;
+  line-height: 1.2;
+}
 
 .pricing-table{
   font-family: HelveticaLight;
@@ -2182,9 +2230,9 @@ textarea::-webkit-input-placeholder {
 }
 .top-content.freelancer-profile{
   background-image:url(/static/img/profile-top-content-bck.png); 
-  background-size: 100%;
+  background-size: cover;
   background-repeat: no-repeat;
-  height: 490px;
+  height: 550px;
 }
 
 .top-content.freelancer-profile .profile-photo-page .profile-photo {

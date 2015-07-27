@@ -4,10 +4,10 @@
 {% block content %}
             <div class="row">
                 <div class="text-center contact-address contact-about">
-                    <p><i class="fa fa-envelope"></i>Email: <a href='mailto:{{ contact_email }}'>{{ contact_email }}</a></p>
-                    <p><i class="fa fa-phone"></i>Phone: {% contact_phone %}<br><small>(available from 9am - 6.30pm Monday to Saturday)</small></p>
-                    <p><i class="fa fa-facebook"></i>Facebook: <a href='http://{{ facebook_url }}'>{{ facebook_url }}</a></p>
-                    <p><i class="fa fa-twitter"></i>Twitter: <a href='http://{{ twitter_url }}'>{{ twitter_url }}</a></p>
+                    <p><i class="fa fa-envelope"></i><a href='mailto:{{ contact_email }}'>{{ contact_email }}</a></p>
+                    <p><i class="fa fa-phone"></i> {% contact_phone %}<br><small>(available from 9am - 6.30pm Monday to Saturday)</small></p>
+                    <p><i class="fa fa-facebook"></i> <a href='http://{{ facebook_url }}'>{{ facebook_url }}</a></p>
+                    <p><i class="fa fa-twitter"></i><a href='http://{{ twitter_url }}'>{{ twitter_url }}</a></p>
                 </div>
             </div>
 
