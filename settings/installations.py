@@ -57,6 +57,8 @@ class Dev(BraintreeSandboxMixin, HueyMixin,
 
     API_ACTIVE = True
 
+    # Allow embedding, so responsinator.com can be used for testing
+    X_FRAME_OPTIONS = "ALLOWALL"
 
 class Live(HueyMixin,
            installations.WebfactionLiveMixin, ProjectConfiguration):
