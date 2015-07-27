@@ -93,6 +93,11 @@ body{
 
 /* Custom */
 
+.accept-job-button.btn.btn-primary.green-btn{
+  background-color: rgb(166, 239, 100);
+  width: 100%;
+}
+
 .top-content.freelancer-profile .container {
   padding-top: 50px;
 }

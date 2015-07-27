@@ -21,16 +21,7 @@
         <a class='btn btn-default' href='{% url 'job_matching_for_job_request' object.pk %}'>{{ 'job_matching'|icon }} Job matching</a>
         <a class='btn btn-default' href='{% url 'jobrequest_edit' object.pk %}'>{{ 'edit'|icon }} Edit</a>
         <a class='btn btn-default' href='{% url object|model_opts|admin_urlname:'change' object.pk %}'>{{ 'admin'|icon }} View in Django admin</a>
-    {% elif request.user.is_freelancer %}
-        {% if object|booking_exists_for_freelancer:request.user.freelancer %}
-            <span class='label label-success'>{{ 'yes'|icon }} You have been booked</span>
-        {% else %}
-            {% with object|invitation_for_freelancer:request.user.freelancer as invitation %}
-                {% if invitation.can_be_accepted %}
-                    <a class='btn btn-primary' href='{% url 'invitation_accept' invitation.pk %}'>{{ 'confirm'|icon }} Accept job</a>
-                {% endif %}
-            {% endwith %}
-        {% endif %}
+        
     {% endif %}
 {% endblock %}
 
@@ -189,6 +180,18 @@
             {% endif %}
             
             {% include 'booking/includes/bookings_for_job_request.html' %}
+
+            {% if request.user.is_freelancer %}
+            {% if object|booking_exists_for_freelancer:request.user.freelancer %}
+                <span class='label label-success'>{{ 'yes'|icon }} You have been booked</span>
+            {% else %}
+                {% with object|invitation_for_freelancer:request.user.freelancer as invitation %}
+                    {% if invitation.can_be_accepted %}
+                        <a class='btn btn-primary green-btn accept-job-button' href='{% url 'invitation_accept' invitation.pk %}'> Accept job</a>
+                    {% endif %}
+                {% endwith %}
+            {% endif %}
+        {% endif %}
         </div>
     </div>
 {% endblock %}
