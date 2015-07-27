@@ -35,6 +35,7 @@
     </div>
 </div>
      <div class='row'>
+        {% feedback_for_freelancer_all object %}
         <div class='col-md-4 col-md-push-8'>
             <div class=' bottom-space'>
                 {% profile_photo object 'large' %}
@@ -153,7 +154,7 @@
                 <h5>Availability</h5>
                 {% include 'booking/includes/availability_summary.html' with form=object|availability_form_for_freelancer %}
             {% endif %}
-            {% feedback_for_freelancer_all object %}
+            
         </div>
      </div>    
 {% endblock %}
