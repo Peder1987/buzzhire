@@ -2400,6 +2400,7 @@ textarea::-webkit-input-placeholder {
     line-height: 30px;
     font-size: 20px;
     font-family: 'HelveticaLight';
+    margin-left: 0;
 }
 
 .top-content .description form .how-control.btn {
