@@ -497,7 +497,7 @@ span.notification-icon-panel{
     font-family: 'Helvetica';
     
     min-width: 250px;
-    width: 80%;
+    width: 100%;
     margin-left: 0;
     margin-right: 0;
 }
