@@ -187,7 +187,7 @@
             {% else %}
                 {% with object|invitation_for_freelancer:request.user.freelancer as invitation %}
                     {% if invitation.can_be_accepted %}
-                        <a class='btn btn-primary green-btn' href='{% url 'invitation_accept' invitation.pk %}'> Accept job</a>
+                        <a class='btn btn-primary green-btn accept-job-button' href='{% url 'invitation_accept' invitation.pk %}'> Accept job</a>
                     {% endif %}
                 {% endwith %}
             {% endif %}
