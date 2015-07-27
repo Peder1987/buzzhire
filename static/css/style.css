@@ -86,6 +86,7 @@ body{
 .posabs{ position: absolute;}
 .bottom{ bottom: 0;}
 .width100{ width: 100%; }
+.block{ display: block;}
 /*a.btn i, button.btn i{
   display: none;
 }*/
@@ -114,6 +115,7 @@ body{
 
 .feedback-comment{
   min-height: 50px;
+  text-align: center;
 }
 
 .feedback-all-wrap{

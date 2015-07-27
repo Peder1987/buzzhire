@@ -43,11 +43,14 @@
         <div class="container">
             {% feedback_for_freelancer_all object %}
         </div>
+        
+        {% if request.user.is_admin %}
         <div class='col-md-4 col-md-push-8'>
-            <div class=' bottom-space'>
-                {% profile_photo object 'large' %}
-            </div>
-            {% if request.user.is_admin %}
+            
+            
+                <div class=' bottom-space'>
+                    {% profile_photo object 'large' %}
+                </div>
                 <h5>Contact</h5>
                 <table class='table table-striped'>
                     <tr>
@@ -153,8 +156,9 @@
                     {% block additional_public_fields %}{% endblock %}
                 </table> -->
             
-            {% endif %}
+            
         </div>
+        {% endif %}
         <div class='col-md-8 col-md-pull-4'>
            <!-- {% block additional_sections %}{% endblock %} -->
             {% if request.user.is_admin %}
