@@ -1,6 +1,6 @@
 {% load feedback icons %}
 {% if object_list %}
-    <h5 class="blue text-center f36 feedback-all-title"> Reviews</h5>
+    <h5 class="blue text-center f35 feedback-all-title"> Reviews</h5>
     {% for object in object_list %}
         <div class='feedback col-md-4'>
             
@@ -12,7 +12,8 @@
                 <div class='feedback-comment'>{{ object.comment|linebreaks }}</div>
             {% endif %}
               
-            </div>
+           
         </div>
     {% endfor %}
+    <div class="clearfix"></div>
 {% endif %}
