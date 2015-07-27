@@ -481,7 +481,7 @@ span.notification-icon-panel{
   overflow: hidden;
 }
 
-
+.sidebar-right-page .sidebar-content button.btn[name="client_submit"],
 .sidebar-right-page .sidebar-content button.btn[name="terms_submit"],
 .sidebar-right-page .sidebar-content button.btn[name="submit"],
 .become-freelancer-form button.btn[name="freelancer_submit"] {
