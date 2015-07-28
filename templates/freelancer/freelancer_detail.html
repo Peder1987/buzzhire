@@ -123,6 +123,14 @@
                     {% block additional_admin_fields %}{% endblock %}
                 </table>
             </div>
+             <div class='container'>
+                {% block additional_sections %}{% endblock %} 
+                
+                    <h5>Availability</h5>
+                    {% include 'booking/includes/availability_summary.html' with form=object|availability_form_for_freelancer %}
+               
+                
+            </div>
             {% else %}
                 <!--<h5>Details</h5>
                    <table class='table table-striped'>
@@ -160,14 +168,7 @@
             
         
         
-        <div class='container'>
-           <!-- {% block additional_sections %}{% endblock %} -->
-            
-                <h5>Availability</h5>
-                {% include 'booking/includes/availability_summary.html' with form=object|availability_form_for_freelancer %}
-           
-            
-        </div>
+       
         {% endif %}
      </div>    
 {% endblock %}
