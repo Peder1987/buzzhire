@@ -3578,6 +3578,12 @@ address {
       padding-right: 10px;
     }
 
+    .sidebar-page-title h4{
+      padding-left: 15px;
+      font-size: 26px;
+      padding-top: 10px;
+    }
+
 
 }
 @media (max-width: 540px) {
@@ -3590,8 +3596,6 @@ address {
     }
 }
 @media (max-width: 474px){
-
-  
 
   .privacy-policy-page h3{
       margin: 0;
@@ -3660,11 +3664,7 @@ address {
     display: inline-block;
   }
 
-  .sidebar-page-title h4{
-    padding-left: 15px;
-    font-size: 26px;
-    padding-top: 10px;
-  }
+  
 
   .notification-table td a {
     font-size: 16px;
