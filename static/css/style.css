@@ -3392,6 +3392,19 @@ address {
 }
 @media (max-width: 767px) {
 
+  .product-bg2 h3 {
+      font-size: 35px;
+  }
+
+  .product-container.product-bg2 .nav-tabs>li, .product-container.product-bg2 .nav-tabs>li.active {
+    width: 90%;
+  }
+
+  .product-container.product-bg2 .nav-tabs>li a, .product-container.product-bg2 .nav-tabs>li.active a{
+    margin: 10px 0;
+    width: 100%;
+  }
+
   .row.after-breadcrumb.sidebar{
     padding-left: 10px;
     padding-right: 10px;
