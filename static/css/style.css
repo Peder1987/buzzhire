@@ -3577,7 +3577,7 @@ address {
     }
 }
 @media (max-width: 474px){
-  .sidebar-right-page .sidebar-main{
+  .sidebar-right-page .sidebar-main h4, .sidebar-right-page .sidebar-main div:not(.checkout-sidebar-wrap){
     display: none;
   }
 

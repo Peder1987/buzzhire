@@ -32,9 +32,11 @@
                 </div>
                 
             </div>
+            {% block sidebarmain %}
             <div class='col-md-4 sidebar-main' style='color: white; background: rgba(0, 0, 0, 0) linear-gradient(to right, rgb(44, 124, 187), rgb(60, 153, 227)) repeat scroll 0 0;'>
                 {% block sidebar %}{% endblock %}
             </div>
+            {% endblock %}
         </div>
     </div>
     </div>
