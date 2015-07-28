@@ -3392,7 +3392,7 @@ address {
 }
 @media (max-width: 767px) {
 
-  .row.after-breadcrumb.sidebar{
+  .sidebar-right-page .sidebar-content, .sidebar-right-page .sidebar-page-title{
     padding-left: 10px;
     padding-right: 10px;
   }
