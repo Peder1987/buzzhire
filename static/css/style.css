@@ -3536,13 +3536,14 @@ address {
 
   .top-content .description .inline-form-field{
     width: 100%;
-    text-align: left;
+    text-align: center;
   }
 
   .top-content .description form .how-control.btn, .top-content .description form .book-freelancer-btn.btn{
     width: 100%;
     max-width: 100%;
     margin: 5px 0 !important;
+    text-align: center;
   }
 
   .product-bg2 h3 {
