@@ -2411,15 +2411,11 @@ textarea::-webkit-input-placeholder {
     line-height: 1.2;
 }
 .ui-icon.ui-icon-triangle-1-s {
-    right: 8px;
-    width: 16px;
-    height: 16px;
-    left: auto;
-    margin-top: -8px;
-    position: absolute;
-    top: 50%;
+    
+   
+   
     background-image: url(/static/img/select_caret_white.png) !important;
-    background-position: 3px 4px;
+
     background-repeat: no-repeat;
 }
 .top-content .description form .btn i {
