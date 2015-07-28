@@ -3577,6 +3577,18 @@ address {
     }
 }
 @media (max-width: 474px){
+
+  .privacy-policy-page{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .privacy-policy-page h3{
+      margin: 0;
+      font-size: 40px;
+      line-height: 1.2;
+  }
+
   .sidebar-right-page .sidebar-main > h4, .sidebar-right-page .sidebar-main > div:not(.checkout-sidebar-wrap){
     display: none;
   }
