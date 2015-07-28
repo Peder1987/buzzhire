@@ -12205,8 +12205,8 @@ var selectmenu = $.widget( "ui.selectmenu", {
 			button: "ui-icon-triangle-1-s"
 		},
 		position: {
-			my: "left top",
-			at: "left bottom",
+			my: "right middle",
+			at: "right middle",
 			collision: "none"
 		},
 		width: null,
