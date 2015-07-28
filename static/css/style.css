@@ -3578,6 +3578,14 @@ address {
 }
 @media (max-width: 474px){
 
+  form.edit-password-form{
+    padding: 0;
+  }
+
+  .edit-password-form label{
+    font-size: 18px;
+  }
+
   .sidebar-right-page .sidebar-content #div_id_comments.form-group {
       width: 95%;
   }
@@ -3639,6 +3647,8 @@ address {
 
   .sidebar-page-title h4{
     padding-left: 15px;
+    font-size: 26px;
+    padding-top: 10px;
   }
 
   .notification-table td a {
