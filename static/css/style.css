@@ -3592,7 +3592,7 @@ address {
   }
 
   .top-content .description form .how-control.btn, .top-content .description form .book-freelancer-btn.btn{
-    width: 100%;
+    width: 90%;
     max-width: 100%;
     margin: 5px 0 !important;
     text-align: center;
