@@ -3618,6 +3618,15 @@ address {
     line-height: 1.2;
     font-size: 35px;
   }
+
+  .top-content .description {
+        font-size: 20px;
+        line-height: 32px;
+        padding: 0;
+    }
+    .top-content .description form, .top-content .description .inline-form-field{
+      width: 100%;
+    }
   
 }
 
@@ -3638,11 +3647,7 @@ address {
     .top-content h2{
       font-size: 35px !important;
     }
-    .top-content .description {
-        font-size: 22px;
-        line-height: 32px;
-        letter-spacing: 1px;
-    }
+    
     .btn-lg {
         height: auto;
         padding-bottom: 2px;
