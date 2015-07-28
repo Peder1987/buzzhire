@@ -3581,7 +3581,7 @@ address {
     .sidebar-page-title h4{
       padding-left: 15px;
       font-size: 26px;
-      padding-top: 10px;
+      padding-top: 0px;
     }
 
 
@@ -3603,7 +3603,11 @@ address {
       line-height: 1.2;
   }
 
-  
+  .sidebar-page-title h4{
+    padding-left: 15px;
+    font-size: 26px;
+    padding-top: 10px;
+  }
 
   form.edit-password-form,form.edit-account-form{ padding: 0; }
 
