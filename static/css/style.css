@@ -3639,15 +3639,15 @@ address {
       height: 12px;
       left: auto;
       margin-top: -8px;
-      position: absolute;
-      top: 50%;
+      /*position: absolute;
+      top: 50%;*/
       background-image: url('/static/img/select_caret_white.png?bea9576b3148') !important;
       background-position: 0px 4px;
       background-repeat: no-repeat;
       background-size: 100%;
   }
   .ui-selectmenu-button.ui-widget{
-    width: 215px;
+
     max-width: 100%;
   }
     .top-content .description form, .top-content .description .inline-form-field{
