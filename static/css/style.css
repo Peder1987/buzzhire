@@ -3578,7 +3578,7 @@ address {
 }
 @media (max-width: 474px){
 
-  form.edit-password-form{
+  form.edit-password-form,form.edit-account-form{
     padding: 0;
   }
 
