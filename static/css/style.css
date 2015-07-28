@@ -3561,6 +3561,10 @@ address {
       background-size: 100%;*/
     }
 
+    .sidebar-right-page .sidebar-main > h4, .sidebar-right-page .sidebar-main > div:not(.checkout-sidebar-wrap){
+      display: none;
+    }
+
 
 }
 @media (max-width: 540px) {
@@ -3593,17 +3597,11 @@ address {
       line-height: 1.2;
   }
 
-  .sidebar-right-page .sidebar-main > h4, .sidebar-right-page .sidebar-main > div:not(.checkout-sidebar-wrap){
-    display: none;
-  }
+  
 
-  form.edit-password-form,form.edit-account-form{
-    padding: 0;
-  }
+  form.edit-password-form,form.edit-account-form{ padding: 0; }
 
-  .edit-password-form label{
-    font-size: 18px;
-  }
+  .edit-password-form label{ font-size: 18px; }
 
   .sidebar-right-page .sidebar-content #div_id_comments.form-group {
       width: 95%;
@@ -3614,13 +3612,9 @@ address {
     float: none;
   }
 
-  .description{
-    padding: 0;
-  }
+  .description{ padding: 0; }
 
-  .ready-sec h4{
-    font-size: 26px;
-  }
+  .ready-sec h4{ font-size: 26px; }
 
   .ready-sec .btn{
     margin: 20px auto;
