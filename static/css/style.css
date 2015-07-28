@@ -94,6 +94,10 @@ body{
 
 /* Custom */
 
+#div_iv_city.form-group{
+  clear: both;
+}
+
 .sidebar-right-page .sidebar-content .client-signup-form .form-group{
   float: none;
 }
