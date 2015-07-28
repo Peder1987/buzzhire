@@ -94,6 +94,10 @@ body{
 
 /* Custom */
 
+.sidebar-right-page .sidebar-content .client-signup-form .form-group{
+  float: none;
+}
+
 .login-signup-column{
   padding-right: 15px;
   padding-left: 0 !important;
@@ -665,7 +669,7 @@ span.notification-icon-panel{
 .sidebar-right-page .sidebar-content .become-freelancer-form .form-group {
   margin-bottom: 15px;
   width: 100%;
-  float: left;
+  float: none;
   margin-left: 0;
 }
 
@@ -2431,7 +2435,7 @@ textarea::-webkit-input-placeholder {
       background-repeat: no-repeat;
       background-position: 95%;
     }
-    
+
 .top-content .description form .btn i {
     display: none
 }
