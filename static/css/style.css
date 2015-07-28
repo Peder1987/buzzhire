@@ -3534,9 +3534,14 @@ address {
     font-size: 26px;
   }
 
+  .top-content .description .inline-form-field{
+    width: 100%;
+    text-align: left;
+  }
+
   .top-content .description form .how-control.btn, .top-content .description form .book-freelancer-btn.btn{
-    width: 90%;
-    max-width: 90%;
+    width: 100%;
+    max-width: 100%;
     margin: 5px 0 !important;
   }
 
