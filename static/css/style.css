@@ -3540,7 +3540,7 @@ address {
 
   .ready-sec .btn{
     margin: 20px auto;
-    width: 90%;
+    width: 90% !important;
   }
 
   .top-content .description .inline-form-field{
