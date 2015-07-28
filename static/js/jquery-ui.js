@@ -12205,8 +12205,8 @@ var selectmenu = $.widget( "ui.selectmenu", {
 			button: "ui-icon-triangle-1-s"
 		},
 		position: {
-			my: "right middle",
-			at: "right middle",
+			my: "left top",
+			at: "left bottom",
 			collision: "none"
 		},
 		width: null,
@@ -12274,7 +12274,7 @@ var selectmenu = $.widget( "ui.selectmenu", {
 			.appendTo( this.button );
 
 		this._setText( this.buttonText, this.element.find( "option:selected" ).text() );
-		this._resizeButton();
+	//	this._resizeButton();
 
 		this._on( this.button, this._buttonEvents );
 		this.button.one( "focusin", function() {
