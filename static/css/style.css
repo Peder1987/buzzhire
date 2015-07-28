@@ -3530,8 +3530,17 @@ address {
 }
 @media (max-width: 474px){
 
+  .description{
+    padding: 0;
+  }
+
   .ready-sec h4{
     font-size: 26px;
+  }
+
+  .ready-sec .btn{
+    margin: 20px auto;
+    width: 90%;
   }
 
   .top-content .description .inline-form-field{
@@ -3551,12 +3560,13 @@ address {
   }
 
   .product-container.product-bg2 .nav-tabs>li, .product-container.product-bg2 .nav-tabs>li.active {
-    width: 90%;
+    width: 100%;
+    padding: 0 15px;
   }
 
   .product-container.product-bg2 .nav-tabs>li a, .product-container.product-bg2 .nav-tabs>li.active a{
-    margin: 5px 0 !important;
-    width: 100%;
+    margin: 5px auto !important;
+    width: 90%;
   }
 
   .prominent-box{
@@ -3593,6 +3603,7 @@ address {
 
   .top-content h2 {
     line-height: 1.2;
+    font-size: 35px;
   }
   
 }
