@@ -3646,6 +3646,10 @@ address {
       background-repeat: no-repeat;
       background-size: 100%;
   }
+  .ui-selectmenu-button.ui-widget{
+    width: 215px;
+    max-width: 100%;
+  }
     .top-content .description form, .top-content .description .inline-form-field{
       width: 100%;
     }
