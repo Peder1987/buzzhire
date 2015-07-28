@@ -15,10 +15,9 @@
                 {% if extra_forms.0.errors or extra_forms.1.errors or form.errors %}
                     {% include 'includes/forms/invalid_form_message.html' with force_show=True %}
                 {% endif %}
-                {% crispy form %}\
+                {% crispy form %}
                 
                 {# Temporary fix #}
-                <div style='clear: both;'></div>
                 
                 {% crispy extra_forms.0 %}
                 {% crispy extra_forms.1 %}
