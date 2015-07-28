@@ -2411,6 +2411,8 @@ textarea::-webkit-input-placeholder {
     line-height: 1.2;
 }
 .ui-selectmenu-button.ui-widget .ui-icon {
+  display: none;
+  /*
     right: 2px;
     width: 16px;
     height: 16px;
@@ -2421,7 +2423,15 @@ textarea::-webkit-input-placeholder {
     background-image: url(/static/img/select_caret_white.png) !important;
     background-position: 0px 4px;
     background-repeat: no-repeat;
+    */
+
 }
+.ui-selectmenu-button.ui-widget{
+      background-image: url('/static/img/select_caret_white.png?bea9576b3148&bea9576b3148') !important;
+      background-repeat: no-repeat;
+      background-position: 95%;
+    }
+    
 .top-content .description form .btn i {
     display: none
 }
@@ -3532,6 +3542,8 @@ address {
     }
 
     .ui-selectmenu-button.ui-widget .ui-icon  {
+      display: none;
+      /*display: none;
       right: 6px;
       width: 10px;
       height: 12px;
@@ -3542,7 +3554,7 @@ address {
       background-image: url('/static/img/select_caret_white.png?bea9576b3148') !important;
       background-position: 0px 4px;
       background-repeat: no-repeat;
-      background-size: 100%;
+      background-size: 100%;*/
     }
 
 }

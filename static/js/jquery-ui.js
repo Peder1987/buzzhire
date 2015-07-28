@@ -12671,7 +12671,7 @@ var selectmenu = $.widget( "ui.selectmenu", {
 		if ( key === "icons" ) {
 			this.button.find( "span.ui-icon" )
 				.removeClass( this.options.icons.button )
-				.addClass( value.button ).css("right", "6px");
+				.addClass( value.button );
 		}
 
 		this._super( key, value );
