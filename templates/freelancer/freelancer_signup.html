@@ -13,9 +13,7 @@
         {% csrf_token %}
         {% crispy form %}
         
-        {# Temporary fix #}
-        <div style='clear: both;'></div>
-        
+       
         {% crispy extra_forms.0 %}
         {% crispy extra_forms.1 %}
     </form>

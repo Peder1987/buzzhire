@@ -63,10 +63,10 @@ body{
 .f170 { font-size: 170px; }
 .f200 { font-size: 200px; }
 .lett-space-2 { letter-spacing: 2px; }
-.HelveticaRegular { font-family: 'HelveticaRegular'; }
-.HelveticaLight { font-family: 'HelveticaLight'; }
-.HelveticaOblique { font-family: 'HelveticaOblique'; }
-.Helvetica { font-family: 'Helvetica'; }
+.HelveticaRegular { font-family: 'HelveticaRegular','Open Sans'; }
+.HelveticaLight { font-family: 'HelveticaLight','Open Sans'; }
+.HelveticaOblique { font-family: 'HelveticaOblique','Open Sans'; }
+.Helvetica { font-family: 'Helvetica','HelveticaLight','Open Sans'; }
 .def-a { text-decoration: none; cursor: pointer;}
 .pad0 { padding: 0 !important; }
 .pad5 { padding: 5px; }
@@ -93,6 +93,19 @@ body{
 }*/
 
 /* Custom */
+
+#div_id_city.form-group{
+  clear: both;
+}
+
+.sidebar-right-page .sidebar-content .client-signup-form .form-group{
+  float: none;
+}
+
+.login-signup-column{
+  padding-right: 15px;
+  padding-left: 0 !important;
+}
 
 .feedback-all-wrap .feedback .feedback-score-wrapper .feedback-score{
     color: #277dbc;
@@ -134,7 +147,7 @@ body{
   line-height: 1.2;
   font-size: 18px;
   margin-bottom: 0.7em;
-  font-family: Helvetica;
+  font-family: Helvetica,'HelveticaLight','Open Sans';
 }
 
 .feedback-all-wrap .feedback .feedback-comment{
@@ -148,7 +161,7 @@ body{
 
 .freelancer-details{
   margin: 15px 0;
-  font-family: HelveticaLight;
+  font-family: 'HelveticaLight','Open Sans';
   line-height: 1.2;
 }
 
@@ -165,7 +178,7 @@ body{
 }
 
 .pricing-table{
-  font-family: HelveticaLight;
+  font-family: 'HelveticaLight','Open Sans';
 }
 
 .pricing-table-wrap{
@@ -186,7 +199,7 @@ body{
 }
 
 .pricing-table thead tr th, .pricing-table tbody tr:first-child th:first-child{
-  font-family: HelveticaBold;
+  font-family: 'HelveticaBold', 'HelveticaLight','Open Sans';
 }
 
 .pricing-table tbody td{
@@ -365,7 +378,7 @@ span.notification-icon-panel{
   bottom: 10px;
   left: 0;
   width: 100%;
-  padding: 11px 35px;
+  padding: 11px 20px;
 }
 
 .booking-box .job-request-table td, .booking-box .total-box .total-table td,
@@ -486,7 +499,7 @@ span.notification-icon-panel{
 .sidebar-right-page .sidebar-content button.btn[name="submit"],
 .become-freelancer-form button.btn[name="freelancer_submit"] {
     background-color: rgb(166, 239, 100);
-    font-family: 'Helvetica';
+    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
     
     width: 100%;
     margin-left: 0;
@@ -494,10 +507,10 @@ span.notification-icon-panel{
 
 .sidebar-right-page .sidebar-content button.btn[name="submit"]{
     background-color: rgb(166, 239, 100);
-    font-family: 'Helvetica';
+    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
     
     min-width: 250px;
-    width: 80%;
+    width: 100%;
     margin-left: 0;
     margin-right: 0;
 }
@@ -537,7 +550,7 @@ span.notification-icon-panel{
 }
 .sidebar-breadcrumbs .breadcrumb li a {
     color: rgba(255, 255, 255, 0.6);
-    font-family: 'Helvetica', 'HelveticaLight';
+    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
     font size: 13px;
 }
 .sidebar-breadcrumbs .breadcrumb li a:hover {
@@ -567,7 +580,7 @@ span.notification-icon-panel{
     color: #2779bc !important;
     font-weight: normal;
     font-size: 16px;
-    font-family: 'Helvetica', 'HelveticaLight';
+    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
 }
 .navbar-default.menu-top.menu-shrink li a.btn,
 .navbar-default.menu-top li a.btn {
@@ -579,7 +592,7 @@ span.notification-icon-panel{
     font-size: 18px !important;
 }
 .after-breadcrumb.sidebar .panel-default {
-    font-family: 'Helvetica', 'HelveticaLight';
+    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
     border: none;
     box-shadow: none !important;
 }
@@ -660,7 +673,7 @@ span.notification-icon-panel{
 .sidebar-right-page .sidebar-content .become-freelancer-form .form-group {
   margin-bottom: 15px;
   width: 100%;
-  float: left;
+  float: none;
   margin-left: 0;
 }
 
@@ -740,7 +753,7 @@ span.notification-icon-panel{
 }
 
 .edit-password-form label{
-  font-family: HelveticaLight;
+  font-family: 'HelveticaLight','Open Sans';
   font-size: 20px;
   padding: 5px 0;
 }
@@ -794,7 +807,7 @@ span.notification-icon-panel{
 .sidebar-right-page .client-login-form h5 {
     border-bottom: none !important;
     color: #2779bc;
-    font-family: 'HelveticaLight';
+    font-family: 'HelveticaLight','Open Sans';
     font-size: 26px;
 }
 .sidebar-right-page .sidebar-content .client-signup-form .form-group {
@@ -817,7 +830,7 @@ span.notification-icon-panel{
 .select-form-title {
     border-bottom: none !important;
     color: #2779bc;
-    font-family: 'HelveticaLight';
+    font-family: 'HelveticaLight','Open Sans';
 }
 .sidebar-right-page .sidebar-main {
     padding-bottom: 10000px !important;
@@ -831,11 +844,11 @@ span.notification-icon-panel{
 }
 .sidebar-right-page-right-content p {
     margin-bottom: 5px;
-    font-family: 'Helvetica';
+    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
     font-size: 18px;
 }
 .sidebar-right-page-right-content h6 {
-    font-family: 'HelveticaLight';
+    font-family: 'HelveticaLight','Open Sans';
     font-size: 26px;
     margin-top: 20px;
 }
@@ -1934,7 +1947,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 
 body {
     background: #fff;
-    font-family: 'Helvetica', 'HelveticaLight';
+    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
     -webkit-text-size-adjust: 100%;
@@ -1970,7 +1983,7 @@ a:hover {
 h2,
 h3 {
     margin-top: 10px;
-    font-family: 'HelveticaLight';
+    font-family: 'HelveticaLight','Open Sans';
     font-size: 50px;
     font-weight: 300;
     line-height: 54px;
@@ -1981,7 +1994,7 @@ h4 {
     font-weight: 300;
     color: #888;
     line-height: 34px;
-    font-family: 'HelveticaLight';
+    font-family: 'HelveticaLight','Open Sans';
 }
 h5 {
     font-size: 1.4em;
@@ -2017,7 +2030,7 @@ img {
 .btn {
     border-radius: 0px;
     font-weight: 300;
-    font-family: 'Helvetica', 'HelveticaLight';
+    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
 }
 .btn-block {
     margin-bottom: 20px;
@@ -2054,7 +2067,7 @@ img {
     background-color: #2779bc;
     border-radius: 8px;
     box-shadow: none;
-    font-family: 'Helvetica', 'HelveticaLight';
+    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
     font-size: 22px !important;
 }
 .btn-info {
@@ -2113,7 +2126,7 @@ textarea::-webkit-input-placeholder {
     vertical-align: middle;
     background: #FF6065;
     border: 0;
-    font-family: 'Helvetica', 'HelveticaLight';
+    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
     font-size: 22px;
     font-weight: 300;
     line-height: 52px;
@@ -2158,7 +2171,7 @@ textarea::-webkit-input-placeholder {
 /***** Top menu *****/
 
 .navbar-default {
-    font-family: 'Helvetica', 'HelveticaLight';
+    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
     border: none;
     border-radius: 0;
     margin-bottom: 0;
@@ -2340,7 +2353,7 @@ textarea::-webkit-input-placeholder {
     padding: 10px 50px;
     border: 1px solid #2779bc;
     box-shadow: none;
-    font-family: 'Helvetica', 'HelveticaLight';
+    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
     margin: 0 16px 0 15px;
     background-color: white;
     color: #2779bc
@@ -2362,7 +2375,7 @@ textarea::-webkit-input-placeholder {
     line-height: 38px;
     margin: 0 8px 6px 10px;
     font-size: 28px;
-    font-family: 'HelveticaLight';
+    font-family: 'HelveticaLight','Open Sans';
     min-height: 45px;
 }
 .ui-selectmenu-button.ui-widget {
@@ -2376,7 +2389,7 @@ textarea::-webkit-input-placeholder {
     line-height: 37px;
     margin: 0px 8px 0 10px;
     font-size: 28px;
-    font-family: 'HelveticaLight';
+    font-family: 'HelveticaLight','Open Sans';
     min-height: 45px;
     margin-left: 0 !important;
     vertical-align: top;
@@ -2394,7 +2407,7 @@ textarea::-webkit-input-placeholder {
     color: white;
     border-radius: 8px;
     font-size: 28px;
-    font-family: HelveticaLight;
+    font-family: 'HelveticaLight','Open Sans';
     padding-left: 10px;
     padding-bottom: 10px;
     cursor: pointer;
@@ -2405,8 +2418,10 @@ textarea::-webkit-input-placeholder {
 .ui-menu.ui-widget.ui-widget-content li {
     line-height: 1.2;
 }
-.ui-icon.ui-icon-triangle-1-s {
-    right: 8px;
+.ui-selectmenu-button.ui-widget .ui-icon {
+  display: none;
+  /*
+    right: 2px;
     width: 16px;
     height: 16px;
     left: auto;
@@ -2414,9 +2429,17 @@ textarea::-webkit-input-placeholder {
     position: absolute;
     top: 50%;
     background-image: url(/static/img/select_caret_white.png) !important;
-    background-position: 3px 4px;
+    background-position: 0px 4px;
     background-repeat: no-repeat;
+    */
+
 }
+.ui-selectmenu-button.ui-widget{
+      background-image: url('/static/img/select_caret_white.png?bea9576b3148&bea9576b3148') !important;
+      background-repeat: no-repeat;
+      background-position: 95%;
+    }
+
 .top-content .description form .btn i {
     display: none
 }
@@ -2430,7 +2453,7 @@ textarea::-webkit-input-placeholder {
     text-align: left;
     line-height: 30px;
     font-size: 20px;
-    font-family: 'HelveticaLight';
+    font-family: 'HelveticaLight','Open Sans';
     margin-left: 0;
 }
 
@@ -2442,27 +2465,27 @@ textarea::-webkit-input-placeholder {
 }
 .top-content .description .inline-form-field {
     color: white;
-    font-family: 'HelveticaLight';
+    font-family: 'HelveticaLight','Open Sans';
 }
 .top-content input::-webkit-input-placeholder {
     color: white;
     text-align: center;
-    font-family: 'HelveticaLight';
+    font-family: 'HelveticaLight','Open Sans';
 }
 .top-content input:-moz-placeholder {
     color: white;
     text-align: center;
-    font-family: 'HelveticaLight';
+    font-family: 'HelveticaLight','Open Sans';
 }
 .top-content input::-moz-placeholder {
     color: white;
     text-align: center;
-    font-family: 'HelveticaLight';
+    font-family: 'HelveticaLight','Open Sans';
 }
 .top-content input:-ms-input-placeholder {
     color: white;
     text-align: center;
-    font-family: 'HelveticaLight';
+    font-family: 'HelveticaLight','Open Sans';
 }
 /***** Features *****/
 
@@ -2685,11 +2708,11 @@ h3 {
     text-align: center;
 }
 .testimonials h3 {
-    font-family: 'HelveticaLight';
+    font-family: 'HelveticaLight','Open Sans';
     font-size: 50px;
     font-weight: 300;
     color: black;
-    line-height: 54px;
+    line-height: 1.2;
     margin-top: 40px;
 }
 .testimonials p {
@@ -2705,8 +2728,8 @@ h3 {
 .reviews .review p {
     line-height: 22px;
     font-size: 22px;
-    padding: 20px 10px;
-    text-align: left;
+    padding: 20px 20px;
+    text-align: center;
 }
 .reviews .review-author {
     margin-left: 20px;
@@ -2730,7 +2753,7 @@ h3 {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-    min-height: 270px;
+    min-height: 240px;
 }
 .reviews-panel p {
     margin-bottom: 0;
@@ -2740,7 +2763,7 @@ h3 {
     padding: 0 15px 20px 0;
     display: block;
     font-size: 16px;
-    text-align: right;
+    text-align: center;
 }
 .box-arrow-down {
     position: relative;
@@ -2827,7 +2850,7 @@ h3 {
     padding-bottom: 10px;
 }
 .team h3 {
-    font-family: 'Helvetica', 'HelveticaLight';
+    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
     font-size: 50px;
     font-weight: 300;
     line-height: 54px;
@@ -2851,7 +2874,7 @@ h3 {
     position: absolute;
     bottom: 50px;
     left: 20px;
-    font-family: 'Helvetica', 'HelveticaLight';
+    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
     font-size: 24px;
     font-weight: 600;
     color: #fff;
@@ -2949,7 +2972,7 @@ h3 {
     border-bottom: 2px solid #FF797E;
 }
 .faq .faq-box h4 {
-    font-family: 'Helvetica', 'HelveticaLight';
+    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
     font-size: 18px;
     color: #888;
 }
@@ -2975,7 +2998,7 @@ h3 {
     text-align: center;
 }
 .contact h3 {
-    font-family: 'HelveticaLight';
+    font-family: 'HelveticaLight','Open Sans';
     font-size: 50px;
     font-weight: 300;
     color: #555;
@@ -3014,7 +3037,7 @@ h3 {
     background: #f5f5f5;
     border: none;
     border-bottom: 1px solid #ccc;
-    font-family: 'Helvetica', 'HelveticaLight';
+    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
     font-size: 22px;
     font-weight: 300;
     line-height: 50px;
@@ -3113,7 +3136,7 @@ footer a:hover {
     vertical-align: middle;
     background: #07699a;
     border: 0;
-    font-family: 'Helvetica', 'HelveticaLight';
+    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
     font-size: 22px;
     font-weight: 300;
     line-height: 52px;
@@ -3193,7 +3216,7 @@ form {
     margin-bottom: 1em;
 }
 label {
-    font-family: 'HelveticaBold';
+    font-family: 'HelveticaBold', 'HelveticaLight','Open Sans';
 }
 .checkbox input[type="checkbox"] {
     margin-top: 2px;
@@ -3247,13 +3270,13 @@ label.checkbox {
     margin-bottom: -20px;
 }
 .after-breadcrumb {
-    font-family: 'Helvetica', 'HelveticaLight';
+    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
 }
 .navbar-text {
     line-height: 1em;
     font-size: 16px;
     margin-top: 17px;
-    font-family: 'Helvetica', 'HelveticaLight';
+    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
     color: #2779bc;
 }
 .sidebar-main h4 {
@@ -3366,7 +3389,7 @@ address {
 }
 /***** Media queries *****/
 
-@media (min-width: 768px) {} @media (min-width: 768px) and (max-width: 991px) {
+ @media (min-width: 768px) and (max-width: 991px) {
     .top-content .buttons-row {
         margin-top: 4em;
     }
@@ -3392,10 +3415,18 @@ address {
 }
 @media (max-width: 767px) {
 
-  .row.after-breadcrumb.sidebar{
-    padding-left: 10px;
-    padding-right: 10px;
-  }
+    .sidebar-right-page .sidebar-content, .sidebar-right-page .sidebar-page-title{
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    .login-signup-column{
+      padding-right: 15px;
+      padding-left: 15px !important;
+    }
+
+
+    .sidebar-right-page .sidebar-content
     .features-container .page-title .col-md-7,
     .features-container .page-title .col-md-4 {
         text-align: center;
@@ -3513,6 +3544,51 @@ address {
     .social-icon {
         margin-top: 15px;
     }
+
+    .notification-table td a, .notification-table .notification-date  {
+      font-size: 20px;
+    }
+
+    .ui-selectmenu-button.ui-widget .ui-icon  {
+      display: none;
+      /*display: none;
+      right: 6px;
+      width: 10px;
+      height: 12px;
+      left: auto;
+      margin-top: -8px;
+      position: absolute;
+      top: 50%;
+      background-image: url('/static/img/select_caret_white.png?bea9576b3148') !important;
+      background-position: 0px 4px;
+      background-repeat: no-repeat;
+      background-size: 100%;*/
+    }
+
+    .sidebar-right-page .sidebar-main > h4, .sidebar-right-page .sidebar-main > div:not(.checkout-sidebar-wrap){
+      display: none;
+    }
+
+    .after-breadcrumb.sidebar .panel-default{
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    .sidebar-page .after-breadcrumb.sidebar .sidebar-content{
+      padding: 10px;
+    }
+
+    .privacy-policy-page{
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    .sidebar-page-title h4{
+      padding-left: 15px;
+      font-size: 26px;
+      padding-top: 0px;
+    }
+
+
 }
 @media (max-width: 540px) {
     .subscribe form input {
@@ -3523,6 +3599,124 @@ address {
         margin-top: 10px;
     }
 }
+@media (max-width: 474px){
+
+  .privacy-policy-page h3{
+      margin: 0;
+      font-size: 40px;
+      line-height: 1.2;
+  }
+
+  .sidebar-page-title h4{
+    padding-left: 15px;
+    font-size: 26px;
+    padding-top: 10px;
+  }
+
+  form.edit-password-form,form.edit-account-form{ padding: 0; }
+
+  .edit-password-form label{ font-size: 18px; }
+
+  .sidebar-right-page .sidebar-content #div_id_comments.form-group {
+      width: 95%;
+  }
+
+  .sidebar-right-page .sidebar-content .form-group{
+    width: 95%;
+    float: none;
+  }
+
+  .description{ padding: 0; }
+
+  .ready-sec h4{ font-size: 26px; }
+
+  .ready-sec .btn{
+    margin: 20px auto;
+    width: 90% !important;
+  }
+
+  .top-content .description .inline-form-field{
+    width: 100%;
+    text-align: center;
+  }
+
+  .top-content .description form .how-control.btn, .top-content .description form .book-freelancer-btn.btn{
+    width: 90%;
+    max-width: 100%;
+    margin: 5px 0 !important;
+    text-align: center;
+  }
+
+  .product-bg2 h3 {
+      font-size: 35px;
+  }
+
+  .product-container.product-bg2 .nav-tabs>li, .product-container.product-bg2 .nav-tabs>li.active {
+    width: 100%;
+    padding: 0 15px;
+  }
+
+  .product-container.product-bg2 .nav-tabs>li a, .product-container.product-bg2 .nav-tabs>li.active a{
+    margin: 5px auto !important;
+    width: 90%;
+  }
+
+  .prominent-box{
+    padding-bottom: 0 !important;
+    padding-top: 20px;
+  }
+
+  .sidebar-content-header .sidebar-breadcrumbs {
+    float: none;
+    max-width: 100%;
+    display: inline-block;
+  }
+
+  
+
+  .notification-table td a {
+    font-size: 16px;
+  }
+
+  .notification-table .notification-date  {
+    font-size: 14px;
+    text-align: left;
+    padding: 0;
+  }
+
+  span.notification-icon-panel {
+    width: 38px;
+    height: 40px;
+    display: inline-block;
+    background-size: 100%;
+  }
+
+  .top-content h2 {
+    line-height: 1.2;
+    font-size: 35px;
+  }
+
+  .top-content .description {
+        font-size: 20px;
+        line-height: 1.2;
+        padding: 0;
+        letter-spacing: 0;
+    }
+    .top-content .description .ui-selectmenu-text{
+      font-size:  20px;
+      letter-spacing: 0;
+    }
+    .ui-menu.ui-widget.ui-widget-content{
+      font-size:  20px !important;
+      letter-spacing: 0  !important;
+    }
+    
+    .top-content .description form, .top-content .description .inline-form-field{
+      width: 100%;
+    }
+  
+}
+
 @media (max-width: 345px) {
     .top-content h2,
     .top-content .logo a,
@@ -3537,11 +3731,10 @@ address {
         font-size: 30px;
         padding: 0 20px;
     }
-    .top-content .description {
-        font-size: 22px;
-        line-height: 32px;
-        letter-spacing: 1px;
+    .top-content h2{
+      font-size: 35px !important;
     }
+    
     .btn-lg {
         height: auto;
         padding-bottom: 2px;
