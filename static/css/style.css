@@ -3555,6 +3555,7 @@ address {
 
   .prominent-box{
     padding-bottom: 0 !important;
+    padding-top: 20px;
   }
 
   .sidebar-content-header .sidebar-breadcrumbs {
