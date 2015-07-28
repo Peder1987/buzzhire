@@ -12,6 +12,12 @@
         
 {% endblock %}
 
+{% block sidebar %}
+<div class="checkout-sidebar-wrap">
+{{ block.super }}
+</div>
+{% endblock %}
+
 {% block extrascripts %}
     {{ block.super }}
     <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
