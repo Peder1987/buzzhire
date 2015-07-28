@@ -3577,6 +3577,9 @@ address {
     }
 }
 @media (max-width: 474px){
+  .sidebar-page .after-breadcrumb.sidebar .sidebar-content{
+    padding: 10px 0;
+  }
 
   .privacy-policy-page{
     padding-left: 10px;
