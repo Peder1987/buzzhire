@@ -3565,6 +3565,19 @@ address {
       display: none;
     }
 
+    .after-breadcrumb.sidebar .panel-default{
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    .sidebar-page .after-breadcrumb.sidebar .sidebar-content{
+      padding: 10px;
+    }
+
+    .privacy-policy-page{
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
 
 }
 @media (max-width: 540px) {
@@ -3578,18 +3591,7 @@ address {
 }
 @media (max-width: 474px){
 
-  .after-breadcrumb.sidebar .panel-default{
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-  .sidebar-page .after-breadcrumb.sidebar .sidebar-content{
-    padding: 10px;
-  }
-
-  .privacy-policy-page{
-    padding-left: 10px;
-    padding-right: 10px;
-  }
+  
 
   .privacy-policy-page h3{
       margin: 0;
