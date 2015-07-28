@@ -2730,7 +2730,7 @@ h3 {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-    min-height: 270px;
+    min-height: 240px;
 }
 .reviews-panel p {
     margin-bottom: 0;
@@ -2740,7 +2740,7 @@ h3 {
     padding: 0 15px 20px 0;
     display: block;
     font-size: 16px;
-    text-align: right;
+    text-align: center;
 }
 .box-arrow-down {
     position: relative;
