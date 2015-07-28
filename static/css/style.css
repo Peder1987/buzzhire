@@ -2689,7 +2689,7 @@ h3 {
     font-size: 50px;
     font-weight: 300;
     color: black;
-    line-height: 54px;
+    line-height: 1.2;
     margin-top: 40px;
 }
 .testimonials p {
@@ -3392,24 +3392,6 @@ address {
 }
 @media (max-width: 767px) {
 
-  .top-content .description form .how-control.btn, .top-content .description form .book-freelancer-btn.btn{
-    width: 90%;
-    max-width: 90%;
-  }
-
-  .product-bg2 h3 {
-      font-size: 35px;
-  }
-
-  .product-container.product-bg2 .nav-tabs>li, .product-container.product-bg2 .nav-tabs>li.active {
-    width: 90%;
-  }
-
-  .product-container.product-bg2 .nav-tabs>li a, .product-container.product-bg2 .nav-tabs>li.active a{
-    margin: 10px 0 !important;
-    width: 100%;
-  }
-
   .row.after-breadcrumb.sidebar{
     padding-left: 10px;
     padding-right: 10px;
@@ -3547,6 +3529,34 @@ address {
     }
 }
 @media (max-width: 474px){
+
+  .ready-sec h4{
+    font-size: 26px;
+  }
+
+  .top-content .description form .how-control.btn, .top-content .description form .book-freelancer-btn.btn{
+    width: 90%;
+    max-width: 90%;
+    margin: 5px 0 !important;
+  }
+
+  .product-bg2 h3 {
+      font-size: 35px;
+  }
+
+  .product-container.product-bg2 .nav-tabs>li, .product-container.product-bg2 .nav-tabs>li.active {
+    width: 90%;
+  }
+
+  .product-container.product-bg2 .nav-tabs>li a, .product-container.product-bg2 .nav-tabs>li.active a{
+    margin: 5px 0 !important;
+    width: 100%;
+  }
+
+  .prominent-box{
+    padding-bottom: 0 !important;
+  }
+
   .sidebar-content-header .sidebar-breadcrumbs {
     float: none;
     max-width: 100%;
