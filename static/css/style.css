@@ -3573,6 +3573,11 @@ address {
     }
 }
 @media (max-width: 474px){
+
+  .after-breadcrumb.sidebar .panel-default{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
   .sidebar-page .after-breadcrumb.sidebar .sidebar-content{
     padding: 10px;
   }
