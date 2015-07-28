@@ -3622,6 +3622,9 @@ address {
         font-size: 30px;
         padding: 0 20px;
     }
+    .top-content h2{
+      font-size: 35px !important;
+    }
     .top-content .description {
         font-size: 22px;
         line-height: 32px;
