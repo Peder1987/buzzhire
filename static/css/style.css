@@ -3624,6 +3624,9 @@ address {
         line-height: 32px;
         padding: 0;
     }
+    .top-content .description .ui-selectmenu-menu-text{
+      font-size:  20px;
+    }
     .top-content .description form, .top-content .description .inline-form-field{
       width: 100%;
     }
