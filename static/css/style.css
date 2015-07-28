@@ -3392,6 +3392,11 @@ address {
 }
 @media (max-width: 767px) {
 
+  .top-content .description form .how-control.btn, .top-content .description form .book-freelancer-btn.btn{
+    width: 90%;
+    max-width: 90%;
+  }
+
   .product-bg2 h3 {
       font-size: 35px;
   }
@@ -3401,7 +3406,7 @@ address {
   }
 
   .product-container.product-bg2 .nav-tabs>li a, .product-container.product-bg2 .nav-tabs>li.active a{
-    margin: 10px 0;
+    margin: 10px 0 !important;
     width: 100%;
   }
 
