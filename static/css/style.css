@@ -3625,7 +3625,7 @@ address {
         padding: 0;
         letter-spacing: 0;
     }
-    .top-content .description .ui-selectmenu-menu-text{
+    .top-content .description .ui-selectmenu-text{
       font-size:  20px;
       letter-spacing: 0;
     }
