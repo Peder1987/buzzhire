@@ -3561,10 +3561,6 @@ address {
       background-size: 100%;*/
     }
 
-    .sidebar-page .sidebar.after-breadcrumb{
-      padding-left: 10px;
-      padding-right: 10px;
-    }
 
 }
 @media (max-width: 540px) {
@@ -3578,7 +3574,7 @@ address {
 }
 @media (max-width: 474px){
   .sidebar-page .after-breadcrumb.sidebar .sidebar-content{
-    padding: 10px 0;
+    padding: 10px;
   }
 
   .privacy-policy-page{
