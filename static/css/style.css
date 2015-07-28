@@ -3621,11 +3621,13 @@ address {
 
   .top-content .description {
         font-size: 20px;
-        line-height: 32px;
+        line-height: 1.2;
         padding: 0;
+        letter-spacing: 0;
     }
     .top-content .description .ui-selectmenu-menu-text{
       font-size:  20px;
+      letter-spacing: 0;
     }
     .top-content .description form, .top-content .description .inline-form-field{
       width: 100%;
