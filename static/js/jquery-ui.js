@@ -12274,7 +12274,7 @@ var selectmenu = $.widget( "ui.selectmenu", {
 			.appendTo( this.button );
 
 		this._setText( this.buttonText, this.element.find( "option:selected" ).text() );
-	//	this._resizeButton();
+		this._resizeButton();
 
 		this._on( this.button, this._buttonEvents );
 		this.button.one( "focusin", function() {
@@ -12668,11 +12668,11 @@ var selectmenu = $.widget( "ui.selectmenu", {
 	},
 
 	_setOption: function( key, value ) {
-		if ( key === "icons" ) {
+	/*	if ( key === "icons" ) {
 			this.button.find( "span.ui-icon" )
 				.removeClass( this.options.icons.button )
 				.addClass( value.button );
-		}
+		}*/
 
 		this._super( key, value );
 
@@ -12695,9 +12695,9 @@ var selectmenu = $.widget( "ui.selectmenu", {
 			}
 		}
 
-		if ( key === "width" ) {
+	/*	if ( key === "width" ) {
 			this._resizeButton();
-		}
+		}*/
 	},
 
 	_appendTo: function() {
