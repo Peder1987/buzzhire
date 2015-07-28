@@ -3409,7 +3409,7 @@ address {
         margin-bottom: 0;
     }
 }
-@media (max-width: 968px) {
+@media (max-width: 767px) {
 
     .sidebar-right-page .sidebar-content, .sidebar-right-page .sidebar-page-title{
       padding-left: 10px;
