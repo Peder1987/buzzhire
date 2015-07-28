@@ -94,6 +94,11 @@ body{
 
 /* Custom */
 
+.login-signup-column{
+  padding-right: 15px;
+  padding-left: 0 !important;
+}
+
 .feedback-all-wrap .feedback .feedback-score-wrapper .feedback-score{
     color: #277dbc;
 }
@@ -3392,10 +3397,18 @@ address {
 }
 @media (max-width: 767px) {
 
-  .sidebar-right-page .sidebar-content, .sidebar-right-page .sidebar-page-title{
-    padding-left: 10px;
-    padding-right: 10px;
-  }
+    .sidebar-right-page .sidebar-content, .sidebar-right-page .sidebar-page-title{
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    .login-signup-column{
+      padding-right: 15px;
+      padding-left: 15px !important;
+    }
+
+
+    .sidebar-right-page .sidebar-content
     .features-container .page-title .col-md-7,
     .features-container .page-title .col-md-4 {
         text-align: center;
