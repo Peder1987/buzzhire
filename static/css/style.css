@@ -2410,7 +2410,7 @@ textarea::-webkit-input-placeholder {
 .ui-menu.ui-widget.ui-widget-content li {
     line-height: 1.2;
 }
-.ui-icon.ui-icon-triangle-1-s {
+.ui-selectmenu-button.ui-widget .ui-icon {
     right: 2px;
     width: 16px;
     height: 16px;
@@ -3633,7 +3633,7 @@ address {
       font-size:  20px !important;
       letter-spacing: 0  !important;
     }
-    .ui-icon.ui-icon-triangle-1-s {
+    .ui-selectmenu-button.ui-widget .ui-icon {
       right: 6px;
       width: 10px;
       height: 12px;
