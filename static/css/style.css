@@ -3561,6 +3561,11 @@ address {
       background-size: 100%;*/
     }
 
+    .sidebar-page .sidebar.after-breadcrumb{
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
 }
 @media (max-width: 540px) {
     .subscribe form input {
@@ -3572,6 +3577,10 @@ address {
     }
 }
 @media (max-width: 474px){
+
+  .sidebar-right-page .sidebar-content #div_id_comments.form-group {
+      width: 95%;
+  }
 
   .sidebar-right-page .sidebar-content .form-group{
     width: 95%;
