@@ -92,6 +92,19 @@ body{
 
 /* Custom */
 
+.mobile-menu-toggler{
+  color: white;
+  padding: 20px;
+  background: black;
+  font-size: 22px;
+}
+
+.mobile-menu-toggler a{
+  color: white;
+  text-decoration: none;
+  width: 95%;
+}
+
 .collapse{ display: block; height: auto !important;}
 
 .desktop-heading{ display: block; }
