@@ -4,14 +4,14 @@
     <div class="panel panel-default">
 
       <div class="panel-heading mobile-menu-toggler" role="tab" id="heading1">
-         <a href="#collapse1" aria-expanded="true" aria-controls="collapse1" data-toggle="collapse" data-parent="#accordion">
+         <a href="#collapse1" aria-expanded="false" aria-controls="collapse1" data-toggle="collapse" data-parent="#accordion">
           Bookings
         </a>
       </div>
      
       <div class="panel-heading desktop-heading">Bookings</div>
      
-      <div id="collapse1" class="list-group collapse in" role="tabpanel" aria-labelledby="heading1">
+      <div id="collapse1" class="list-group collapse" role="tabpanel" aria-labelledby="heading1">
           {% url 'requested_jobs' as link_url %}
           {% include 'includes/panel_link.html' with icon_name='icon-my-bookings' link_text='My bookings' %}
           {% url 'notification_list' as link_url %}
