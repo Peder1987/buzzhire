@@ -12,7 +12,14 @@
     <div class='container sidebar-page'>
         <div class='row after-breadcrumb sidebar'>
             <div class='col-md-2 col-md-offset-1 pad0'>
+               <div class="mobile-menu-toggler" role="tab" id="heading1">
+                 <a href="#collapse1" aria-expanded="false" aria-controls="collapse1" data-toggle="collapse" data-parent="#accordion">
+                  Manage Account <i class="fa fa-arrow-down white"></i>
+                </a>
+              </div>
+              <div id="collapse1" class="list-group collapse" role="tabpanel" aria-labelledby="heading1">
                 {% block sidebar %}{% endblock %}
+              </div>
             </div>
             <div class='col-md-9 sidebar-main pad0'>
               
