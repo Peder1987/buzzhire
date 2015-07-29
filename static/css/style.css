@@ -88,15 +88,15 @@ body{
 .bottom{ bottom: 0;}
 .width100{ width: 100%; }
 .block{ display: block;}
-/*a.btn i, button.btn i{
-  display: none;
-}*/
+
 
 /* Custom */
 
-#div_id_city.form-group{
-  clear: both;
-}
+.desktop-heading{ display: block; }
+
+.mobile-menu-toggler{ display: none; }
+
+#div_id_city.form-group{ clear: both; }
 
 .sidebar-right-page .sidebar-content .client-signup-form .form-group{
   float: none;
@@ -614,7 +614,8 @@ span.notification-icon-panel{
     color: #909090;
     padding: 8px 0px;
 }
-.after-breadcrumb.sidebar .panel .list-group.collapse a.list-group-item {
+.after-breadcrumb.sidebar .panel .list-group.collapse a.list-group-item,
+.after-breadcrumb.sidebar .panel .list-group.collapsing a.list-group-item{
     font-size: 15px;
     border: none;
     box-shadow: none;
@@ -3396,6 +3397,12 @@ address {
 }
 /***** Media queries *****/
 
+  @media (max-width: 968px) {
+    .desktop-heading{ display: none; }
+
+    .mobile-menu-toggler{ display: block; }
+  }
+
  @media (min-width: 768px) and (max-width: 991px) {
     .top-content .buttons-row {
         margin-top: 4em;
@@ -3449,9 +3456,6 @@ address {
         font-size: 20px;
         line-height: 24px;
     }
-    /*.features-container a.btn {
-        width: 50%;
-    }*/
     .features-box {
         padding-bottom: 30px;
     }
@@ -3515,62 +3519,29 @@ address {
         font-size: 1.2em;
         margin: 0.5em;
     }
-    .top-content .container {
-        padding-top: 2em;
-    }
+    .top-content .container { padding-top: 2em; }
     .features-box p,
     .team-member p,
     .contact-address p {
         padding: 0 20px;
     }
-    .contact-form,
-    .contact-address {
-        text-align: center;
-    }
-    .contact-form {
-        padding-bottom: 40px;
-    }
-    .contact-form form input,
-    .contact-form form textarea {
-        width: 100%;
-    }
-    .contact-address {
-        padding-bottom: 65px;
-    }
+    .contact-form, .contact-address { text-align: center; }
+    .contact-form { padding-bottom: 40px; }
+    .contact-form form input, .contact-form form textarea { width: 100%; }
+    .contact-address { padding-bottom: 65px; }
     .reviews-panel p {
         padding: 20px;
         margin-bottom: 0;
     }
-    .copyright,
-    .social-icon {
-        text-align: center;
-    }
-    .copyright p {
-        padding: 0 20px;
-    }
-    .social-icon {
-        margin-top: 15px;
-    }
+    .copyright, .social-icon { text-align: center; }
+    .copyright p { padding: 0 20px; }
+    .social-icon { margin-top: 15px; }
 
     .notification-table td a, .notification-table .notification-date  {
       font-size: 20px;
     }
 
-    .ui-selectmenu-button.ui-widget .ui-icon  {
-      display: none;
-      /*display: none;
-      right: 6px;
-      width: 10px;
-      height: 12px;
-      left: auto;
-      margin-top: -8px;
-      position: absolute;
-      top: 50%;
-      background-image: url('/static/img/select_caret_white.png?bea9576b3148') !important;
-      background-position: 0px 4px;
-      background-repeat: no-repeat;
-      background-size: 100%;*/
-    }
+    .ui-selectmenu-button.ui-widget .ui-icon  { display: none; }
 
     .sidebar-right-page .sidebar-main > h4, .sidebar-right-page .sidebar-main > div:not(.checkout-sidebar-wrap){
       display: none;
@@ -3580,9 +3551,7 @@ address {
       padding-left: 10px;
       padding-right: 10px;
     }
-    .sidebar-page .after-breadcrumb.sidebar .sidebar-content{
-      padding: 10px;
-    }
+    .sidebar-page .after-breadcrumb.sidebar .sidebar-content{ padding: 10px; }
 
     .privacy-policy-page{
       padding-left: 10px;
