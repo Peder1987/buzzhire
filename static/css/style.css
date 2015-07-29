@@ -92,7 +92,7 @@ body{
 
 /* Custom */
 
-.collapse{ display: block;}
+.collapse{ display: block; height: auto !important;}
 
 .desktop-heading{ display: block; }
 
