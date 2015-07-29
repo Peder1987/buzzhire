@@ -92,6 +92,8 @@ body{
 
 /* Custom */
 
+.collapse{ display: block;}
+
 .desktop-heading{ display: block; }
 
 .mobile-menu-toggler{ display: none; }
@@ -3401,6 +3403,8 @@ address {
     .desktop-heading{ display: none; }
 
     .mobile-menu-toggler{ display: block; }
+
+    .collapse{ display: none;}
   }
 
  @media (min-width: 768px) and (max-width: 991px) {
