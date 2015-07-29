@@ -24,12 +24,12 @@
     </div>
     <div class="panel panel-default">
       <div class="panel-heading mobile-menu-toggler" role="tab" id="heading2">
-         <a href="#collapse2" aria-expanded="true" aria-controls="collapse2" data-toggle="collapse" data-parent="#accordion">
+         <a href="#collapse2" aria-expanded="false" aria-controls="collapse2" data-toggle="collapse" data-parent="#accordion">
           Create booking
         </a>
       </div>
       <div class="panel-heading desktop-heading">Create booking</div>
-      <div id="collapse2" class="list-group collapse in" role="tabpanel" aria-labelledby="heading2">
+      <div id="collapse2" class="list-group collapse" role="tabpanel" aria-labelledby="heading2">
           {% get_services as services %}
           {% for service in services %}
               {% url 'job_request_create' service.key as link_url %}
