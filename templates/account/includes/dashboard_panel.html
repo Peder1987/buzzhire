@@ -1,12 +1,13 @@
 {% load icons freelancer %}
 <div class="panel panel-default">
-  <div class="panel-heading mobile-menu-toggler" role="tab" id="heading3">
+  <!--<div class="panel-heading mobile-menu-toggler" role="tab" id="heading3">
      <a href="#collapse3" aria-expanded="false" aria-controls="collapse3" data-toggle="collapse" data-parent="#accordion">
       Account
     </a>
-  </div>
+  </div>-->
   <div class="panel-heading desktop-heading">Account</div>
-  <div id="collapse3" class="list-group collapse" role="tabpanel" aria-labelledby="heading3">
+  <!--<div id="collapse3" class="list-group collapse" role="tabpanel" aria-labelledby="heading3">-->
+    <div class="list-group">
 
       {% with client=request.user.client freelancer=request.user.freelancer %}
           {% if client %}
