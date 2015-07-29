@@ -103,6 +103,11 @@ body{
   color: white;
   text-decoration: none;
   width: 95%;
+  display: block;
+  text-align: center;
+}
+.mobile-menu-toggler a:hover, .mobile-menu-toggler a:focus{
+  color: white;
 }
 
 .collapse{ display: block; height: auto !important;}
