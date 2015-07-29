@@ -12,7 +12,15 @@
     <div class='container sidebar-page'>
         <div class='row after-breadcrumb sidebar'>
             <div class='col-md-2 col-md-offset-1 pad0'>
+
+              <div class="panel panel-default mobile-menu-toggler">
+                <div class="panel-heading">
+                  <a href="#menu-tab" aria-controls="cat1" role="tab" data-toggle="tab" class="btn homepage-navtab">Menu</a>
+                </div>
+              </div>
+              <div id="menu-tab" role="tabpanel" class="tab-pane in active">
                 {% block sidebar %}{% endblock %}
+              </div>
             </div>
             <div class='col-md-9 sidebar-main pad0'>
               
