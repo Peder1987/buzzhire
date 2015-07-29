@@ -10,7 +10,7 @@
       </div>
 
       <div class="panel-heading">Bookings</div>
-      <div class="list-group tab-pane in active" role="tabpanel" id="#menu-tab1">
+      <div class="list-group tab-pane in active" role="tabpanel" id="menu-tab1">
           {% url 'requested_jobs' as link_url %}
           {% include 'includes/panel_link.html' with icon_name='icon-my-bookings' link_text='My bookings' %}
           {% url 'notification_list' as link_url %}
