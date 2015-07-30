@@ -32,16 +32,19 @@
                     {% if request.user.is_freelancer %}
                         {% url 'account_dashboard' as link_url %}
                         {% include 'includes/menu_link.html' with icon_name='' link_text='Dashboard' %}
+                        {% url 'freelancer_bookings_list' as link_url %}
+                        {% include 'includes/menu_link.html' with icon_name='' link_text='My bookings' %}
                         
                     {% else %}
 
                         {% url 'service_select' as link_url %}
                         {% include 'includes/menu_link.html' with link_text='Book a freelancer' %}
+                        {% url 'requested_jobs' as link_url %}
+                        {% include 'includes/menu_link.html' with icon_name='' link_text='My bookings' %}
 
                     {% endif %}
 
-                    {% url 'freelancer_bookings_list' as link_url %}
-                    {% include 'includes/menu_link.html' with icon_name='' link_text='My bookings' %}
+                    
                     {% url 'notification_list' as link_url %}
                     {% include 'includes/menu_link.html' with icon_name='icon-notification' link_text='' %}
 
@@ -53,7 +56,7 @@
                             {{ request.user }}
                         {% else %}
 
-                            {{ request.user.company_name }}
+                            {{ user_display(request.user) }}
                         
                         {% endif %}
                         <!--Logged in as {{ request.user }}-->
