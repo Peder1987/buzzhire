@@ -25,17 +25,22 @@
                    
                     <li><a href="{% url 'account_login' %}" class="btn blue-bck white">Log in</a></li>
                 {% else %}
-                    {% comment %}
+                    <!--{% comment %}
                         {% url 'account_dashboard' as link_url %}
                         {% include 'includes/menu_link.html' with icon_name='dashboard' link_text='Dashboard' %}
-                    {% endcomment %}
+                    {% endcomment %}-->
+                    {% if request.user.is_freelancer %}
+                        {% url 'account_dashboard' as link_url %}
+                        {% include 'includes/menu_link.html' with icon_name='dashboard' link_text='Dashboard' %}
+                    {% endif %}
                     <p class="navbar-text {% if request.user.is_freelancer %}photo-navbar-item {%endif %}blue">
                         {% if request.user.is_freelancer %}
                         
                             {% profile_photo request.user.freelancer 'small' %}
                         
                         {% endif %}
-                        Logged in as {{ request.user }}
+                        <!--Logged in as {{ request.user }}-->
+                        {{ request.user }}
                     </p>
                     <p class="navbar-text logout-navbar-item"><a href="{% url 'account_logout' %}">{{ 'logout'|icon }} Log out</a></p>
                  {% endif %}
