@@ -2366,7 +2366,7 @@ textarea::-webkit-input-placeholder {
     border-radius: 8px;
     padding: 9px 16px;
 }
-.product-container.product-bg2 ul.nav.nav-tabs {
+.product-container.product-bg2 ul.nav-tabs {
     text-align: center;
     border-bottom: none;
     border: none;
@@ -2375,7 +2375,7 @@ textarea::-webkit-input-placeholder {
     float: none;
     display: inline-block;
 }
-.product-container.product-bg2 .nav.nav-tabs li a {
+.product-container.product-bg2 .nav-tabs li a {
     border: 1px solid #2779bc;
     border-radius: 8px;
     padding: 10px 50px;
@@ -2386,7 +2386,7 @@ textarea::-webkit-input-placeholder {
     background-color: white;
     color: #2779bc
 }
-.product-container.product-bg2 .nav.nav-tabs li.active a {
+.product-container.product-bg2 .nav-tabs li.active a {
     background-color: #2779bc;
     color: white
 }
