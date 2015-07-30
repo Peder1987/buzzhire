@@ -1,4 +1,4 @@
-{% load thumbnail icons static staticthumbnail main_tags freelancer %}
+{% load thumbnail icons static staticthumbnail main_tags freelancer booking %}
 
 <div class="navbar navbar-default navbar-fixed-top menu-top">
     <div class="container">
@@ -31,7 +31,11 @@
                     {% endcomment %}-->
                     {% if request.user.is_freelancer %}
                         {% url 'account_dashboard' as link_url %}
-                        {% include 'includes/menu_link.html' with icon_name='dashboard' link_text='Dashboard' %}
+                        {% include 'includes/menu_link.html' with link_text='Dashboard' %}
+                        {% url 'freelancer_bookings_list' as link_url %}
+                        {% include 'includes/panel_link.html' with icon_name='icon-my-bookings' link_text='My bookings' %}
+                        {% url 'notification_list' as link_url %}
+          {% include 'includes/panel_link.html' with icon_name='icon-notification' link_text='Notifications' %}
                     {% endif %}
                     <p class="navbar-text {% if request.user.is_freelancer %}photo-navbar-item {%endif %}blue">
                         {% if request.user.is_freelancer %}
