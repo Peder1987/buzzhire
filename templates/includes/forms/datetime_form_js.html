@@ -1,7 +1,7 @@
 {# Include this when wanting to have date and time pickers on a form #}
 <script type='text/javascript'>
     $(function() {
-        $('.dateinput').datepicker({autoclose: true, format: 'dd/mm/yyyy',
+        $('.dateinput').datepicker({autoclose: true, format: 'dd/mm/yyyy', orientation: "bottom",
         	// Prevent giving dates in the past
         	startDate: Date()});
         $('.timeinput').timepicker();
