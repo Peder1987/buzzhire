@@ -2334,7 +2334,7 @@ textarea::-webkit-input-placeholder {
 }
 
 .top-content.freelancer-profile.waiters{
-  background-image:url(/static/img/hero/bar.jpg); 
+  background-image:url(/static/img/hero/waiting.jpg); 
   background-size: cover;
   background-repeat: no-repeat;
   height: 550px;
@@ -2347,7 +2347,7 @@ textarea::-webkit-input-placeholder {
   height: 550px;
 }
 
-.top-content.freelancer-profile.kitchen.stuff{
+.top-content.freelancer-profile.kitchen.staff{
   background-image:url(/static/img/hero/kitchen.jpg); 
   background-size: cover;
   background-repeat: no-repeat;
