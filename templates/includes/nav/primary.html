@@ -56,7 +56,7 @@
                             {{ request.user }}
                         {% else %}
 
-                            {{ request.user.client.company_name }}
+                            {{ request.user.client.get_full_name() }}
                         
                         {% endif %}
                         <!--Logged in as {{ request.user }}-->
