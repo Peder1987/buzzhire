@@ -39,7 +39,7 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
 
     def __init__(self, *args, **kwargs):
         self.service = service_from_class(self.Meta.model)
-        self.helper.form_show_labels = False
+
 
         if 'data' in kwargs:
             # If the form has been submitted, add the disabled city widget
@@ -52,6 +52,8 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
             data[self.add_prefix('city')] = JobRequest.CITY_LONDON
             kwargs['data'] = data
         super(JobRequestForm, self).__init__(*args, **kwargs)
+
+        self.helper.form_show_labels = False
 
         amount, currency = self.fields['client_pay_per_hour'].fields
         self.fields['client_pay_per_hour'].widget = Bootstrap3SterlingMoneyWidget(
