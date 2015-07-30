@@ -92,6 +92,11 @@ body{
 
 /* Custom */
 
+.pay-button{
+  width: 100%;
+  background: rgb(166, 239, 100);
+}
+
 .mobile-menu-toggler{
   color: white;
   padding: 20px;
