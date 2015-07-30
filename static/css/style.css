@@ -95,6 +95,7 @@ body{
 #pay-button{
   width: 100%;
   background: rgb(166, 239, 100);
+  margin: 0;
 }
 
 .mobile-menu-toggler{
