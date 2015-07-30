@@ -53,7 +53,7 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
             kwargs['data'] = data
         super(JobRequestForm, self).__init__(*args, **kwargs)
 
-        self.helper.form_show_labels = False
+       
 
         amount, currency = self.fields['client_pay_per_hour'].fields
         self.fields['client_pay_per_hour'].widget = Bootstrap3SterlingMoneyWidget(
