@@ -60,7 +60,6 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
         self.fields['raw_postcode'].label = False
         self.fields['raw_postcode'].widget.attrs['placeholder'] = "Postcode"
         self.fields['city'].label = False
-        self.fields['client_pay_per_hour_0'].label = False
 
         amount, currency = self.fields['client_pay_per_hour'].fields
         self.fields['client_pay_per_hour'].widget = Bootstrap3SterlingMoneyWidget(
@@ -73,6 +72,10 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
         self.fields['city'].widget.attrs = {'disabled': 'disabled'}
 
         self.fields['comments'].widget.attrs = {'rows': 3}
+        self.fields['comments'].label = False
+
+        self.fields['client_pay_per_hour'].label = False
+
 
         # Allow subclassing forms to insert service-specific text
         # in the comments field
