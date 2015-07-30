@@ -62,10 +62,7 @@ class Client(models.Model):
         "Returns the full name of the client."
         return '%s %s' % (self.first_name,
                           self.last_name)
-    def get_company_name(self):
-        "Returns the company name of the client."
-        return '%s' % (self.company_name)
-
+    
     def __unicode__(self):
         return self.get_full_name()
 

@@ -48,7 +48,7 @@
                     {% url 'notification_list' as link_url %}
                     {% include 'includes/menu_link.html' with icon_name='icon-notification' link_text='' %}
 
-                    <p class="navbar-text {% if request.user.is_freelancer %}photo-navbar-item {%endif %}blue">
+                    <p class="navbar-text {% if request.user.is_freelancer %}photo-navbar-item {%endif %} blue">
                         {% if request.user.is_freelancer %}
                         
                             {% profile_photo request.user.freelancer 'small' %}
