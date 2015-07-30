@@ -92,6 +92,13 @@ body{
 
 /* Custom */
 
+ .sidebar-right-page .sidebar-content .become-freelancer-form legend, 
+  .sidebar-right-page .sidebar-content .become-freelancer-form h5,
+  .sidebar-right-page .sidebar-content .client-signup-form legend,
+  .sidebar-right-page .sidebar-content .client-signup-form h5{
+    margin-bottom: 5px;
+  }
+
 #pay-button{
   width: 100%;
   background: rgb(166, 239, 100);
@@ -3462,12 +3469,7 @@ address {
 }
 @media (max-width: 767px) {
 
-  .sidebar-right-page .sidebar-content .become-freelancer-form legend, 
-  .sidebar-right-page .sidebar-content .become-freelancer-form h5,
-  .sidebar-right-page .sidebar-content .client-signup-form legend,
-  .sidebar-right-page .sidebar-content .client-signup-form h5{
-    margin-bottom: 5px;
-  }
+ 
 
     .sidebar-right-page .sidebar-content, .sidebar-right-page .sidebar-page-title{
       padding-left: 10px;
