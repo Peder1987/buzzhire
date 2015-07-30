@@ -32,19 +32,32 @@
                     {% if request.user.is_freelancer %}
                         {% url 'account_dashboard' as link_url %}
                         {% include 'includes/menu_link.html' with icon_name='' link_text='Dashboard' %}
-                        {% url 'freelancer_bookings_list' as link_url %}
-                        {% include 'includes/menu_link.html' with icon_name='' link_text='My bookings' %}
-                        {% url 'notification_list' as link_url %}
-                        {% include 'includes/menu_link.html' with icon_name='icon-notification' link_text='' %}
+                        
+                    {% else %}
+
+                        {% url 'service_select' as link_url %}
+                        {% include 'includes/menu_link.html' with link_text='Book a freelancer' %}
+
                     {% endif %}
+
+                    {% url 'freelancer_bookings_list' as link_url %}
+                    {% include 'includes/menu_link.html' with icon_name='' link_text='My bookings' %}
+                    {% url 'notification_list' as link_url %}
+                    {% include 'includes/menu_link.html' with icon_name='icon-notification' link_text='' %}
+
                     <p class="navbar-text {% if request.user.is_freelancer %}photo-navbar-item {%endif %}blue">
                         {% if request.user.is_freelancer %}
                         
                             {% profile_photo request.user.freelancer 'small' %}
+
+                            {{ request.user }}
+                        {% else %}
+
+                            {{ request.user.company_name }}
                         
                         {% endif %}
                         <!--Logged in as {{ request.user }}-->
-                        {{ request.user }}
+                        
                     </p>
                     <p class="navbar-text logout-navbar-item"><a href="{% url 'account_logout' %}">{{ 'logout'|icon }} Log out</a></p>
                  {% endif %}
