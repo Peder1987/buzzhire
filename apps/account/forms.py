@@ -53,8 +53,6 @@ class ResetPasswordKeyForm(CrispyFormMixin, forms.ResetPasswordKeyForm):
     submit_context = {'icon_name': 'password'}
     def __init__(self, *args, **kwargs):
         super(ResetPasswordKeyForm, self).__init__(*args, **kwargs)
-        self.helper.form_show_labels = False
-        self.fields['email'].widget.attrs['placeholder'] = 'Email'
 
 
 class ChangePasswordForm(CrispyFormMixin, forms.ChangePasswordForm):
