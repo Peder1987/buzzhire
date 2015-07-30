@@ -92,7 +92,7 @@ body{
 
 /* Custom */
 
-.pay-button{
+#pay-button{
   width: 100%;
   background: rgb(166, 239, 100);
 }
