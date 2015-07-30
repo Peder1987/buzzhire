@@ -60,7 +60,8 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
         self.fields['raw_postcode'].label = False
         self.fields['raw_postcode'].widget.attrs['placeholder'] = "Postcode"
         self.fields['city'].label = False
-        
+        self.fields['client_pay_per_hour_0'].label = False
+
         amount, currency = self.fields['client_pay_per_hour'].fields
         self.fields['client_pay_per_hour'].widget = Bootstrap3SterlingMoneyWidget(
           amount_widget=widgets.NumberInput(
