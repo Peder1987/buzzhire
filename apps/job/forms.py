@@ -38,6 +38,7 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
 
     def __init__(self, *args, **kwargs):
         self.service = service_from_class(self.Meta.model)
+        self.helper.form_show_labels = False
 
         if 'data' in kwargs:
             # If the form has been submitted, add the disabled city widget
