@@ -2354,6 +2354,13 @@ textarea::-webkit-input-placeholder {
   height: 550px;
 }
 
+.top-content.freelancer-profile.bar.staff{
+  background-image:url(/static/img/hero/kitchen.jpg); 
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 550px;
+}
+
 .top-content.freelancer-profile .profile-photo-page .profile-photo {
   border: 10px solid rgb(219,219,219);
 }
