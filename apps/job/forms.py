@@ -53,7 +53,15 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
             kwargs['data'] = data
         super(JobRequestForm, self).__init__(*args, **kwargs)
 
-       
+        self.fields['address1'].label = False
+        self.fields['address1'].widget.attrs['placeholder'] = "Address line 1"
+        self.fields['address2'].label = False
+        self.fields['address2'].widget.attrs['placeholder'] = "Address line 2"
+        self.fields['raw_postcode'].label = False
+        self.fields['raw_postcode'].widget.attrs['placeholder'] = "Postcode"
+        self.fields['city'].label = False
+        self.fields['client_pay_per_hour_0'].label = False
+        self.fields['comments'].label = False
 
         amount, currency = self.fields['client_pay_per_hour'].fields
         self.fields['client_pay_per_hour'].widget = Bootstrap3SterlingMoneyWidget(
