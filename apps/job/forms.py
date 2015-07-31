@@ -18,6 +18,7 @@ from apps.payment.utils import PaymentAPI, PaymentException
 from .models import JobRequest
 from . import service_from_class
 from .validators import validate_start_date_and_time
+from crispy_forms.helper import FormHelper
 import logging
 
 
@@ -39,6 +40,7 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
     def __init__(self, *args, **kwargs):
         self.service = service_from_class(self.Meta.model)
 
+
         if 'data' in kwargs:
             # If the form has been submitted, add the disabled city widget
             # value to the data before continuing.  This is because otherwise,
@@ -51,6 +53,14 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
             kwargs['data'] = data
         super(JobRequestForm, self).__init__(*args, **kwargs)
 
+        self.fields['address1'].label = False
+        self.fields['address1'].widget.attrs['placeholder'] = "Address line 1"
+        self.fields['address2'].label = False
+        self.fields['address2'].widget.attrs['placeholder'] = "Address line 2"
+        self.fields['raw_postcode'].label = False
+        self.fields['raw_postcode'].widget.attrs['placeholder'] = "Postcode"
+        self.fields['city'].label = False
+
         amount, currency = self.fields['client_pay_per_hour'].fields
         self.fields['client_pay_per_hour'].widget = Bootstrap3SterlingMoneyWidget(
           amount_widget=widgets.NumberInput(
@@ -62,6 +72,10 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
         self.fields['city'].widget.attrs = {'disabled': 'disabled'}
 
         self.fields['comments'].widget.attrs = {'rows': 3}
+        self.fields['comments'].label = False
+
+        self.fields['client_pay_per_hour'].label = False
+
 
         # Allow subclassing forms to insert service-specific text
         # in the comments field

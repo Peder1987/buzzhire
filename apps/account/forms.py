@@ -54,7 +54,8 @@ class ResetPasswordKeyForm(CrispyFormMixin, forms.ResetPasswordKeyForm):
     def __init__(self, *args, **kwargs):
         super(ResetPasswordKeyForm, self).__init__(*args, **kwargs)
         self.helper.form_show_labels = False
-        self.fields['email'].widget.attrs['placeholder'] = 'Email'
+        self.fields['password1'].widget.attrs['placeholder'] = 'Password'
+        self.fields['password2'].widget.attrs['placeholder'] = 'Password again'
 
 
 class ChangePasswordForm(CrispyFormMixin, forms.ChangePasswordForm):
