@@ -39,6 +39,8 @@ class Local(BraintreeSandboxMixin, HueyMixin,
     HUEY_NAME = 'buzzhire'
     API_ACTIVE = True
 
+    JOBS_EMAIL = 'jobs-local@dev.buzzhire.co'
+
     INSTALLED_APPS = ProjectConfiguration.INSTALLED_APPS + (
         'debug_toolbar',
     )
@@ -51,6 +53,8 @@ class Dev(BraintreeSandboxMixin, HueyMixin,
     EMAIL_HOST_USER = 'buzzhire_dev'
     DEBUG = False
     ACCOUNT_PASSWORD_MIN_LENGTH = 1
+
+    JOBS_EMAIL = 'jobs@dev.buzzhire.co'
 
     HUEY_NAME = 'dev'
     HUEY_PORT = 17610
@@ -72,6 +76,7 @@ class Live(HueyMixin,
     HUEY_PORT = 17610
 
     CONTACT_EMAIL = 'contact@buzzhire.co'
+    JOBS_EMAIL = 'jobs@buzzhire.co'
 
     AWS_ACCESS_KEY_ID = 'AKIAI7ZMKSCZQGQRGUJQ'
     AWS_BUCKET_NAME = 'buzzhire-backups-media'

@@ -4,7 +4,7 @@ from apps.freelancer.admin import FreelancerAdmin
 from . import models
 
 
-class BarFreelancerAdmin(admin.ModelAdmin):
+class BarFreelancerAdmin(FreelancerAdmin):
     list_display = FreelancerAdmin.list_display + ('role',)
 
 admin.site.register(models.BarFreelancer, BarFreelancerAdmin)
