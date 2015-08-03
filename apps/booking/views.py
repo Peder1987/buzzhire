@@ -11,10 +11,10 @@ from apps.job.models import JobRequest
 from .models import (Booking, Availability, Invitation,
                      JobAlreadyBookedByFreelancer, JobFullyBooked, JobInPast)
 from .forms import AvailabilityForm, JobMatchingForm, \
-                    BookingOrInvitationConfirmForm, InvitationAcceptForm
+                    BookingOrInvitationConfirmForm, InvitationApplyForm
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import get_object_or_404, redirect
-from .signals import booking_created, invitation_created
+from .signals import invitation_created, invitation_applied
 from django.core.exceptions import PermissionDenied
 from apps.job.views import JobRequestDetail
 from django.http.response import HttpResponseRedirect
@@ -237,24 +237,24 @@ class InvitationConfirm(BaseInvitationOrBookingConfirm):
         return response
 
 
-class InvitationAccept(FreelancerOnlyMixin,
+class InvitationApply(FreelancerOnlyMixin,
                        ConfirmationMixin,
                        FormView):
-    """Confirmation form for the creation of a Booking
-    - i.e. assigning a freelancer to a job.
+    """Confirmation form for a freelancer applying to a Job.
     """
-    question = 'Are you sure you want to accept this job?'
-    action_text = 'Accept'
+    question = 'Are you sure you want to apply for this job?'
+    action_text = 'Apply'
     action_icon = 'confirm'
-    template_name = 'booking/accept.html'
-    form_class = InvitationAcceptForm
+    template_name = 'booking/apply.html'
+    form_class = InvitationApplyForm
 
     def dispatch(self, *args, **kwargs):
         try:
-            return super(InvitationAccept, self).dispatch(*args, **kwargs)
+            return super(InvitationApply, self).dispatch(*args, **kwargs)
         except JobFullyBooked:
             return render(self.request, 'booking/fully_booked.html',
                           {'title': self.job_request})
+        # TODO - add test for already applied for job
         except JobAlreadyBookedByFreelancer:
             messages.add_message(self.request, messages.WARNING,
                                  'You are already booked for this job.')
@@ -276,32 +276,32 @@ class InvitationAccept(FreelancerOnlyMixin,
         else:
             self.job_request = self.invitation.jobrequest
 
-        self.invitation.validate_can_be_accepted()
+        self.invitation.validate_can_be_applied_to()
 
-        form_kwargs = super(InvitationAccept,
+        form_kwargs = super(InvitationApply,
                             self).get_form_kwargs(*args, **kwargs)
         form_kwargs.update({
             'invitation': self.invitation,
-            'action_text': 'Accept',
+            'action_text': 'Apply',
             'action_icon': 'confirm',
             'cancel_url': self.job_request.get_absolute_url()
         })
         return form_kwargs
 
     def get_context_data(self, *args, **kwargs):
-        context = super(InvitationAccept, self).get_context_data(
+        context = super(InvitationApply, self).get_context_data(
                                                             *args, **kwargs)
-        context['title'] = 'Accept job?'
+        context['title'] = 'Apply for job?'
         context['job_request'] = self.job_request
 
         return context
 
     def form_valid(self, form):
-        self.booking = form.save()
-        messages.success(self.request, 'Your booking is now confirmed.')
+        form.save()
+        messages.success(self.request, 'You have now applied for the job.')
         # Dispatch signal
-        booking_created.send(sender=self, booking=self.booking)
-        return redirect(self.booking.jobrequest.get_absolute_url())
+        invitation_applied.send(sender=self, invitation=self.invitation)
+        return redirect(self.invitation.jobrequest.get_absolute_url())
 
 
 # Add the ability for booked freelancers to see job requests on the job

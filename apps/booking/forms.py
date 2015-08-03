@@ -159,12 +159,14 @@ class BookingOrInvitationConfirmForm(ConfirmForm):
         context['request'] = self.request
         return context
 
-class InvitationAcceptForm(ConfirmForm):
+class InvitationApplyForm(ConfirmForm):
     def __init__(self, *args, **kwargs):
         self.invitation = kwargs.pop('invitation')
-        super(InvitationAcceptForm, self).__init__(*args, **kwargs)
+        super(InvitationApplyForm, self).__init__(*args, **kwargs)
 
     def save(self):
         # Create the booking
-        return Booking.objects.create(jobrequest=self.invitation.jobrequest,
-                               freelancer=self.invitation.freelancer)
+        # TODO - this should instead make the invitation applied
+        # return Booking.objects.create(jobrequest=self.invitation.jobrequest,
+        #                        freelancer=self.invitation.freelancer)
+        pass

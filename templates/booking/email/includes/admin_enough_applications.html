@@ -1,6 +1,5 @@
 {% load core_tags admin_urls %}
-<p>The following job request is now fully booked.
-Please confirm it, which will notify the client.</p>
+<p>The following job request now has enough applications to be confirmed.</p>
 
 <table class="button" style='margin-top: 10px; margin-bottom: 10px;'>
     <tr>
@@ -11,7 +10,7 @@ Please confirm it, which will notify the client.</p>
 </table>
 
 {% summary_for_email object 'admin' %}
-
+{# TODO - this should show applications, not bookings #}
 {% with object.bookings.all as bookings %}
     <p></p>
     <h4>Booking{{ bookings|pluralize }}</h4>

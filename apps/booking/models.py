@@ -127,10 +127,10 @@ class Invitation(models.Model):
             return False
         return True
 
-    def validate_can_be_accepted(self):
-        """Validates whether the invitation can be accepted.
+    def validate_can_be_applied_to(self):
+        """Validates whether the invitation can be applied to.
         
-        Raises JobFullyBooked or JobAlreadyBookedByFreelancer on failure.
+        Raises JobInPast or JobAlreadyBookedByFreelancer on failure.
         """
         # Check that the job request is not in the past
         if self.jobrequest.end_datetime < timezone.now():
@@ -140,9 +140,9 @@ class Invitation(models.Model):
         if self.jobrequest.bookings.for_freelancer(self.freelancer).exists():
             raise JobAlreadyBookedByFreelancer()
 
-        # Check that the job request isn't fully booked
-        if self.jobrequest.is_full:
-            raise JobFullyBooked()
+        # Check that the job request hasn't been applied to by
+        # this freelancer already
+        # TODO
 
 
     objects = InvitationQuerySet.as_manager()
@@ -266,6 +266,15 @@ def _is_full(self):
     "Returns whether or not the job request is full."
     return self.bookings.count() >= self.number_of_freelancers
 JobRequest.is_full = property(_is_full)
+
+
+def _has_enough_applications(self):
+    """Returns whether or not the job request has received enough applications
+    to be suitable for confirmation.
+    """
+    # TODO
+    return False
+JobRequest.has_enough_applications = property(_has_enough_applications)
 
 
 def get_job_requests_pending_confirmation():
