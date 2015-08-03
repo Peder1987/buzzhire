@@ -3,11 +3,6 @@ from apps.core.views import ContextTemplateView
 from . import views
 
 urlpatterns = [
-   url(r'^$', ContextTemplateView.as_view(
-            template_name='driver/become.html',
-            extra_context={'title': 'Become a driver'}),
-            name='driver_become'),
-
     url(r"^vehicles/$", views.DriverVehicleTypeListView.as_view(),
         name="drivervehicletype_list"),
     url(r"^vehicles/add/$", views.DriverVehicleTypeCreateView.as_view(),
