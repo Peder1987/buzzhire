@@ -71,7 +71,7 @@ class Freelancer(PolymorphicModel):
 
     service = None  # Needed for API
 
-    published = models.BooleanField(default=True,
+    published = models.BooleanField(default=False,
         help_text='Whether or not the freelancer is matched with jobs.')
 
     # A link to a user account.
