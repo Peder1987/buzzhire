@@ -34,7 +34,7 @@ sudo /etc/init.d/postgresql restart
 # sudo su postgres -c "createuser -d -R -P $PROJNAME"
 # Hardcoded to buzzhire for now
 
-sudo su postgres ./dbcreator.sh
+sudo su postgres -c "cd /vagrant/; ./dbcreator.sh"
 sudo /etc/init.d/postgresql restart
 
 # PIP REQUIREMENTS
@@ -54,4 +54,5 @@ echo "BRAINTREE_PRIVATE_KEY = 'yyy'" >> /vagrant/settings/secret.py
 
 mkdir -p /vagrant/logs/
 
-cd /vagrant; ./manage.py runserver 0.0.0.0:8000
+cd /vagrant; ./manage.py runserver 0.0.0.0:8000 &
+echo "DONE"
