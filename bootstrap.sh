@@ -1,13 +1,14 @@
 # SETUP FOR VAGRANT DEV BOX BUZZHIRE
 PROJNAME=buzzhire
-echo 'export DJANGO_CONFIGURATION="VagrantDev"' >> ~/.profile
+echo 'export DJANGO_CONFIGURATION="VagrantDev"' >> /home/vagrant/.profile
 DJANGO_CONFIGURATION="VagrantDev"
-source ~/.profile
+source /home/vagrant/.profile
 
 # GENERAL SETUP
 sudo apt-get update
 sudo apt-get -y install vim
 sudo apt-get -y install curl
+sudo apt-get -y install redis-server
 
 #PYTHON / DJANGO
 sudo apt-get -y install python-pip

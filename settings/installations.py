@@ -66,6 +66,7 @@ class VagrantDev(BraintreeSandboxMixin, HueyMixin,
     PROJECT_ROOT = '/vagrant'
     WEBFACTION_USER = 'buzzhire'
     EMAIL_HOST_USER = 'buzzhire_dev'
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     DEBUG = True
     ACCOUNT_PASSWORD_MIN_LENGTH = 1
 
@@ -86,7 +87,7 @@ class VagrantDev(BraintreeSandboxMixin, HueyMixin,
         return '/vagrant/logs/'
 
     HUEY_NAME = 'dev'
-    HUEY_PORT = 17610
+    HUEY_PORT = 6379
 
     API_ACTIVE = True
 
