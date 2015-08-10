@@ -85,7 +85,14 @@ class InvitationQuerySet(BookingOrInvitationQuerySet):
 
         return queryset
 
-
+    def undeclined_applications(self):
+        """Returns all the applications that have not been declined.
+        To use with a job request:
+        
+            job_request.invitations.undeclined_applications()
+        """
+        return self.filter(date_applied__isnull=False,
+                           date_declined__isnull=True)
 
 class JobInPast(Exception):
     "Exception raised when a job is in the past."
@@ -318,7 +325,7 @@ class Availability(models.Model):
 
 
 def _is_full(self):
-    "Returns whether or not the job request is full."
+    "Returns whether or not the job request is fully booked."
     return self.bookings.count() >= self.number_of_freelancers
 JobRequest.is_full = property(_is_full)
 
@@ -327,8 +334,8 @@ def _has_enough_applications(self):
     """Returns whether or not the job request has received enough applications
     to be suitable for confirmation.
     """
-    # TODO
-    return False
+    undeclined_applications = self.invitations.undeclined_applications()
+    return undeclined_applications.count() >= self.number_of_freelancers
 JobRequest.has_enough_applications = property(_has_enough_applications)
 
 
@@ -338,6 +345,6 @@ def get_job_requests_pending_confirmation():
     # TODO - this should be optimised!
     pending_job_request_ids = []
     for job_request in JobRequest.objects.filter(status=JobRequest.STATUS_OPEN):
-        if job_request.is_full:
+        if job_request.has_enough_applications:
             pending_job_request_ids.append(job_request.id)
     return JobRequest.objects.filter(id__in=pending_job_request_ids)

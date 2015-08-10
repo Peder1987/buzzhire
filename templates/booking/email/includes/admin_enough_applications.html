@@ -4,15 +4,15 @@
 <table class="button" style='margin-top: 10px; margin-bottom: 10px;'>
     <tr>
       <td>
-        <a href='{% base_url %}{% url object|model_opts|admin_urlname:'change' object.pk %}'>Confirm this job</a>
+        <a href='{% base_url %}{{ object.get_absolute_url }}'>View job request</a>
       </td>
     </tr>
 </table>
 
 {% summary_for_email object 'admin' %}
-{# TODO - this should show applications, not bookings #}
-{% with object.bookings.all as bookings %}
+
+{% with object.invitations.undeclined_applications as invitations %}
     <p></p>
-    <h4>Booking{{ bookings|pluralize }}</h4>
-    {% include 'booking/email/includes/bookings_for_job_request.html' %}
+    <h4>Application{{ invitations|pluralize }}</h4>
+    {% include 'booking/email/includes/bookings_or_invitations_for_job_request.html' with object_list=invitations %}
 {% endwith %}

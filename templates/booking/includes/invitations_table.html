@@ -32,7 +32,9 @@
                     </tr>
                     
                 </table>
-                {% if object.date_applied %}
+                {% if object.date_declined %}
+                    <p><strong>Unsuccessful</strong></p>
+                {% elif object.date_applied %}
                     <p><strong>Applied to</strong></p>
                 {% else %}
                     <a href='{% url 'invitation_apply' object.pk %}' class='btn btn-primary leave-feedback-btn'> 
