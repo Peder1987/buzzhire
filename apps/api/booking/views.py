@@ -13,6 +13,12 @@ class BookingForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
     """All bookings for the currently logged in freelancer.
     
     Note: you must be logged in as a freelancer.
+
+    ## Query parameters
+    
+    - `dateslice` Optional. Limit results by date.  Choices are:
+        - `past` All past bookings for the Freelancer.
+        - `future` All future bookings for the Freelancer.
     
     ## Fields
     
@@ -26,7 +32,12 @@ class BookingForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (FreelancerOnlyPermission,)
 
     def get_queryset(self):
-        return Booking.objects.for_freelancer(self.request.user.freelancer)
+        queryset = Booking.objects.for_freelancer(self.request.user.freelancer)
+        if self.request.GET.get('dateslice') == 'future':
+            queryset = queryset.future()
+        elif self.request.GET.get('dateslice') == 'past':
+            queryset = queryset.past()
+        return queryset
 
 
 class InvitationForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):

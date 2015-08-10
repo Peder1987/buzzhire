@@ -1,6 +1,9 @@
 from rest_framework import mixins
 from rest_framework import viewsets
 
+class ViewAndDeleteViewset(mixins.DestroyModelMixin, viewsets.ReadOnlyModelViewSet):
+  """A viewset to view & delete but not modify things"""
+  pass
 
 class RetrieveViewset(mixins.RetrieveModelMixin,
                        viewsets.GenericViewSet):
