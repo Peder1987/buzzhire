@@ -2,6 +2,10 @@ from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.template.loader import render_to_string, select_template
 from .utils import template_names_from_polymorphic_model
+from smtplib import SMTPRecipientsRefused
+import logging
+
+logger = logging.getLogger('project')
 
 
 def send_mail(to, subject, template_name, context, from_email=None):
@@ -35,7 +39,12 @@ def send_mail(to, subject, template_name, context, from_email=None):
                                  settings.DEFAULT_FROM_EMAIL,
                                  to)
     msg.attach_alternative(content['html'], "text/html")
-    msg.send()
+    try:
+        msg.send()
+    except SMTPRecipientsRefused:
+        # This happens if the domain isn't recognised - we don't
+        # want an exception here
+        logger.error('Failed to send email "%s" to %s.' % (subject, to[0]))
 
 
 # def render_model_for_email(instance, suffix):
