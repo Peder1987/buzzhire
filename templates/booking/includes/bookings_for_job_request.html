@@ -7,6 +7,7 @@
             <thead>
                 <th>Freelancer</th>
                 <th>Booking reference</th>
+                <th>Date created</th>
                 <th></th>
             </thead>
             {% for booking in object.bookings.all %}
@@ -18,6 +19,7 @@
                     </a>
                   </td>
                   <td class='monospace'>{{ booking }}</td>
+                  <td>{{ booking.date_created }}</td>
                   <td class='text-right'><a class='btn btn-sm btn-default' href='{% url 'admin:booking_booking_change' booking.pk %}'>{{ 'edit'|icon }} edit</a>
                </tr>
             {% endfor %}
@@ -32,7 +34,8 @@
             <thead>
                 <th>Freelancer</th>
                 <th>Date invited</th>
-                <th>Date accepted</th>
+                <th>Date applied</th>
+                <th></th>
                 <th></th>
             </thead>
             {% for invitation in object.invitations.all %}
@@ -43,9 +46,26 @@
                         {{ invitation.freelancer.get_full_name }}
                     </a>
                   </td>
-                  <td>{{ invitation.date_created|naturalday }}</td>
-                  <td>{% if invitation.date_accepted %}{{ invitation.date_accepted|naturalday }}{% endif %}</td>
-                  <td class='text-right'><a class='btn btn-sm btn-default' href='{% url 'admin:booking_invitation_change' invitation.pk %}'>{{ 'edit'|icon }} edit</a>
+                  <td>{{ invitation.date_created }}</td>
+                  {% if invitation.date_applied %}
+                    <td>{{ invitation.date_applied }}</td>
+                  {% else %}
+                    <td>Not applied</td>
+                  {% endif %}
+                    
+                  {% if invitation.is_accepted %}
+                    <td>{{ 'yes'|icon }} Accepted</td>
+                  {% elif invitation.date_declined %}
+                    <td>{{ 'no'|icon }} Declined</td>
+                  {% elif invitation.can_be_accepted %}
+                    <td>
+                      <a class='btn btn-sm btn-success' href='{% url 'booking_create' invitation.jobrequest.pk invitation.freelancer.pk %}'>{{ 'yes'|icon }} Accept</a>
+                      <a class='btn btn-sm btn-danger' href='{% url 'invitation_decline' invitation.pk %}'>{{ 'no'|icon }} Decline</a>
+                    </td>
+                  {% else %}
+                    <td></td>
+                  {% endif %} 
+                  <td class='text-right'><a class='btn btn-sm btn-default' href='{% url 'admin:booking_invitation_change' invitation.pk %}'>{{ 'edit'|icon }} edit</a></td>
                </tr>
             {% endfor %}
         </table>

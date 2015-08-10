@@ -9,6 +9,6 @@
     
     <p></p>
     <h4>Your freelancer{{ bookings|pluralize }}</h4>
-    {% include 'booking/email/includes/bookings_for_job_request.html' %}
+    {% include 'booking/email/includes/bookings_or_invitations_for_job_request.html' with object_list=bookings %}
 
 {% endwith %}

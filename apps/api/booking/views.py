@@ -30,7 +30,8 @@ class BookingForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class InvitationForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
-    """All open invitations for the currently logged in freelancer.
+    """All invitations that can be applied to by the currently
+    logged in freelancer.
     
     Note: you must be logged in as a freelancer.
     
@@ -60,7 +61,7 @@ class InvitationForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (FreelancerOnlyPermission,)
 
     def get_queryset(self):
-        return Invitation.objects.open_for_freelancer(
+        return Invitation.objects.can_be_applied_to_by_freelancer(
                                                 self.request.user.freelancer)
 
     @detail_route(methods=['post'])
