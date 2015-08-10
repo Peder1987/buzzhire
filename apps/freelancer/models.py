@@ -50,8 +50,10 @@ def client_to_freelancer_rate(client_rate):
         "%.2f" % (round(float(freelancer_rate.amount) / ROUNDING) * ROUNDING))
     return freelancer_rate
 
-FREELANCER_MIN_WAGE = client_to_freelancer_rate(Money(settings.CLIENT_MIN_WAGE,
-                                                  'GBP')).amount
+# FREELANCER_MIN_WAGE = client_to_freelancer_rate(Money(settings.CLIENT_MIN_WAGE,
+#                       'GBP')).amount
+FREELANCER_MIN_WAGE = 6
+
 
 class PublishedFreelancerManager(GeoPolymorphicManager):
     """Manager for published freelancers.
