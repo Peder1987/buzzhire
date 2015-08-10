@@ -5,7 +5,8 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from .models import Booking
 from apps.job.models import JobRequest
-from .signals import booking_created, invitation_created
+from .signals import (invitation_created, invitation_applied,
+                      booking_created, invitation_declined)
 from django_fsm.signals import post_transition
 from apps.notification.models import Notification
 from . import tasks
@@ -19,6 +20,21 @@ def invite_matching_freelancers(sender, instance, name,
     if name == 'open' and issubclass(sender, JobRequest):
         tasks.invite_matching_freelancers(instance)
 
+
+@receiver(invitation_applied)
+def notify_freelancer_on_apply(sender, invitation, **kwargs):
+    "Notifies the freelancer when they apply for a job."
+    subject = 'You have now applied for %s' % \
+                invitation.jobrequest.reference_number
+    content = render_to_string(
+        'booking/email/includes/freelancer_invitation_applied.html',
+        {'object': invitation.jobrequest})
+    send_mail(invitation.freelancer.user.email,
+              subject,
+              'email/base',
+              {'title': 'We have received your application',
+               'content': content},
+              from_email=settings.BOOKINGS_FROM_EMAIL)
 
 @receiver(booking_created)
 def notify_freelancer_on_booking(sender, booking, **kwargs):
@@ -36,16 +52,34 @@ def notify_freelancer_on_booking(sender, booking, **kwargs):
               from_email=settings.BOOKINGS_FROM_EMAIL)
 
 
-@receiver(booking_created)
-def notify_admin_on_booking(sender, booking, **kwargs):
-    "Notifies the admin when a booking is created that fully books a job."
-    job_request = booking.jobrequest
-    if job_request.is_full:
-        subject = 'Job request %s now awaiting confirmation' % \
+@receiver(invitation_declined)
+def notify_freelancer_on_decline(sender, invitation, **kwargs):
+    "Notifies the freelancer when their job application is declined."
+    subject = 'Unsuccessful application for job for %s' % \
+                invitation.jobrequest.reference_number
+    content = render_to_string(
+        'booking/email/includes/freelancer_invitation_declined.html',
+        {'object': invitation.jobrequest})
+    send_mail(invitation.freelancer.user.email,
+              subject,
+              'email/base',
+              {'title': 'Your application was unsuccessful',
+               'content': content},
+              from_email=settings.BOOKINGS_FROM_EMAIL)
+
+
+@receiver(invitation_applied)
+def notify_admin_when_invitation_has_enough_applications(sender,
+                                                       invitation, **kwargs):
+    """Notifies the admin when an invitation is applied for that
+    means there are enough applications to confirm the job."""
+    job_request = invitation.jobrequest
+    if job_request.has_enough_applications:
+        subject = 'Job request %s now has enough applications' % \
                 job_request.reference_number
 
         content = render_to_string(
-            'booking/email/includes/admin_fully_booked.html',
+            'booking/email/includes/admin_enough_applications.html',
             {'object': job_request}
         )
 

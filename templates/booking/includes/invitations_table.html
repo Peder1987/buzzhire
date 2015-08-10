@@ -22,9 +22,7 @@
                     <tr>
                         <td> Location </td>
                         <td class="blue"> 
-                            
-                                {% include 'job/includes/location.html' with object=object.jobrequest %}
-                            
+                           {% include 'job/includes/location.html' with object=object.jobrequest %}
                         </td>
                     </tr>
 
@@ -34,10 +32,15 @@
                     </tr>
                     
                 </table>
-                <a href='{% url 'invitation_accept' object.pk %}' class='btn btn-primary leave-feedback-btn'> 
-                    Accept
-                </a>
-              
+                {% if object.date_declined %}
+                    <p><strong>Unsuccessful</strong></p>
+                {% elif object.date_applied %}
+                    <p><strong>Applied to</strong></p>
+                {% else %}
+                    <a href='{% url 'invitation_apply' object.pk %}' class='btn btn-primary leave-feedback-btn'> 
+                        Apply
+                    </a>
+                {% endif %}
             </div>
              
         </div>
@@ -47,5 +50,9 @@
     <div class="clearfix"></div>
     {% include 'includes/paginator.html' %}
 {% else %}
-    <p class='well top-space'>You have no open invitations.</p>
+    {% if applications_mode %}
+        <p class='well top-space'>No jobs.</p>
+    {% else %}
+        <p class='well top-space'>You have no open invitations.</p>
+    {% endif %}
 {% endif %}   

@@ -9,12 +9,15 @@ from apps.freelancer.views import FreelancerOnlyMixin
 from apps.freelancer.models import Freelancer
 from apps.job.models import JobRequest
 from .models import (Booking, Availability, Invitation,
-                     JobAlreadyBookedByFreelancer, JobFullyBooked, JobInPast)
+            JobAlreadyBookedByFreelancer, JobAlreadyAppliedToByFreelancer,
+            JobFullyBooked, JobInPast)
 from .forms import AvailabilityForm, JobMatchingForm, \
-                    BookingOrInvitationConfirmForm, InvitationAcceptForm
+                    BookingOrInvitationConfirmForm, InvitationApplyForm, \
+                    InvitationDeclineForm
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import get_object_or_404, redirect
-from .signals import booking_created, invitation_created
+from .signals import (invitation_created, invitation_applied,
+                      booking_created, invitation_declined)
 from django.core.exceptions import PermissionDenied
 from apps.job.views import JobRequestDetail
 from django.http.response import HttpResponseRedirect
@@ -70,7 +73,31 @@ class FreelancerInvitationsList(FreelancerOnlyMixin,
     extra_context = {'title': 'Pending job requests'}
 
     def get_queryset(self, *args, **kwargs):
-        return Invitation.objects.open_for_freelancer(self.freelancer)
+        return Invitation.objects.can_be_applied_to_by_freelancer(
+                                                            self.freelancer)
+
+
+class FreelancerApplicationsList(FreelancerOnlyMixin,
+                                 ContextMixin, TabsMixin, ListView):
+    """List of jobs that a freelancer has applied to.
+    This view has two modes - if self.past is True, it will return the
+    jobs in the past, otherwise it will show upcoming jobs.   
+    """
+    template_name = 'booking/application_list.html'
+    paginate_by = 15
+    extra_context = {'title': 'Jobs applied to'}
+    tabs = [
+        ('Upcoming', reverse_lazy('freelancer_applications_list')),
+        ('Past', reverse_lazy('freelancer_applications_list_past')),
+    ]
+    past = False
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = Invitation.objects.applied_to_by_freelancer(self.freelancer)
+        if self.past:
+            return queryset.past()
+        else:
+            return queryset.future()
 
 
 class AvailabilityUpdate(FreelancerOnlyMixin, SuccessMessageMixin,
@@ -237,24 +264,26 @@ class InvitationConfirm(BaseInvitationOrBookingConfirm):
         return response
 
 
-class InvitationAccept(FreelancerOnlyMixin,
+class InvitationApply(FreelancerOnlyMixin,
                        ConfirmationMixin,
                        FormView):
-    """Confirmation form for the creation of a Booking
-    - i.e. assigning a freelancer to a job.
+    """Confirmation form for a freelancer applying to a Job.
     """
-    question = 'Are you sure you want to accept this job?'
-    action_text = 'Accept'
+    question = 'Are you sure you want to apply for this job?'
+    action_text = 'Apply'
     action_icon = 'confirm'
-    template_name = 'booking/accept.html'
-    form_class = InvitationAcceptForm
+    template_name = 'booking/apply_or_decline.html'
+    form_class = InvitationApplyForm
 
     def dispatch(self, *args, **kwargs):
         try:
-            return super(InvitationAccept, self).dispatch(*args, **kwargs)
+            return super(InvitationApply, self).dispatch(*args, **kwargs)
         except JobFullyBooked:
             return render(self.request, 'booking/fully_booked.html',
                           {'title': self.job_request})
+        except JobAlreadyAppliedToByFreelancer:
+            messages.add_message(self.request, messages.WARNING,
+                                 'You have already applied to this job.')
         except JobAlreadyBookedByFreelancer:
             messages.add_message(self.request, messages.WARNING,
                                  'You are already booked for this job.')
@@ -276,32 +305,85 @@ class InvitationAccept(FreelancerOnlyMixin,
         else:
             self.job_request = self.invitation.jobrequest
 
-        self.invitation.validate_can_be_accepted()
+        self.invitation.validate_can_be_applied_to()
 
-        form_kwargs = super(InvitationAccept,
+        form_kwargs = super(InvitationApply,
                             self).get_form_kwargs(*args, **kwargs)
         form_kwargs.update({
             'invitation': self.invitation,
-            'action_text': 'Accept',
+            'action_text': 'Apply',
             'action_icon': 'confirm',
             'cancel_url': self.job_request.get_absolute_url()
         })
         return form_kwargs
 
     def get_context_data(self, *args, **kwargs):
-        context = super(InvitationAccept, self).get_context_data(
+        context = super(InvitationApply, self).get_context_data(
                                                             *args, **kwargs)
-        context['title'] = 'Accept job?'
+        context['title'] = 'Apply for job?'
         context['job_request'] = self.job_request
 
         return context
 
     def form_valid(self, form):
-        self.booking = form.save()
-        messages.success(self.request, 'Your booking is now confirmed.')
+        form.save()
+        messages.success(self.request, 'You have now applied for the job.')
         # Dispatch signal
-        booking_created.send(sender=self, booking=self.booking)
-        return redirect(self.booking.jobrequest.get_absolute_url())
+        invitation_applied.send(sender=self, invitation=self.invitation)
+        return redirect(self.invitation.jobrequest.get_absolute_url())
+
+class InvitationDecline(AdminOnlyMixin,
+                       ConfirmationMixin,
+                       FormView):
+    """Confirmation form for the admin declining a freelancer's application.
+    """
+    question = "Decline this freelancer's application?"
+    action_text = 'Decline'
+    action_icon = 'no'
+    template_name = 'booking/apply_or_decline.html'
+    form_class = InvitationDeclineForm
+
+    def dispatch(self, *args, **kwargs):
+        try:
+            return super(InvitationDecline, self).dispatch(*args, **kwargs)
+        except JobAlreadyBookedByFreelancer:
+            messages.add_message(self.request, messages.WARNING,
+                        'The freelancer is already booked on the job.')
+        return redirect(self.job_request.get_absolute_url())
+
+    def get_form_kwargs(self, *args, **kwargs):
+        # Pass the job request and freelancer to the form
+
+        self.invitation = get_object_or_404(Invitation,
+                                            pk=self.kwargs['invitation_pk'])
+        self.job_request = self.invitation.jobrequest
+
+        self.invitation.validate_can_be_declined()
+
+        form_kwargs = super(InvitationDecline,
+                            self).get_form_kwargs(*args, **kwargs)
+        form_kwargs.update({
+            'invitation': self.invitation,
+            'action_text': 'Decline',
+            'action_icon': 'no',
+            'cancel_url': self.job_request.get_absolute_url()
+        })
+        return form_kwargs
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(InvitationDecline, self).get_context_data(
+                                                            *args, **kwargs)
+        context['title'] = 'Decline application?'
+        context['job_request'] = self.job_request
+
+        return context
+
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request, 'Declined.')
+        # Dispatch signal
+        invitation_declined.send(sender=self, invitation=self.invitation)
+        return redirect(self.invitation.jobrequest.get_absolute_url())
 
 
 # Add the ability for booked freelancers to see job requests on the job

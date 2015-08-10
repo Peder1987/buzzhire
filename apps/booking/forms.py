@@ -159,12 +159,20 @@ class BookingOrInvitationConfirmForm(ConfirmForm):
         context['request'] = self.request
         return context
 
-class InvitationAcceptForm(ConfirmForm):
+class InvitationApplyForm(ConfirmForm):
     def __init__(self, *args, **kwargs):
         self.invitation = kwargs.pop('invitation')
-        super(InvitationAcceptForm, self).__init__(*args, **kwargs)
+        super(InvitationApplyForm, self).__init__(*args, **kwargs)
 
     def save(self):
-        # Create the booking
-        return Booking.objects.create(jobrequest=self.invitation.jobrequest,
-                               freelancer=self.invitation.freelancer)
+        # Mark the invitation as applied to
+        self.invitation.mark_as_applied()
+
+
+class InvitationDeclineForm(ConfirmForm):
+    def __init__(self, *args, **kwargs):
+        self.invitation = kwargs.pop('invitation')
+        super(InvitationDeclineForm, self).__init__(*args, **kwargs)
+
+    def save(self):
+        self.invitation.decline()
