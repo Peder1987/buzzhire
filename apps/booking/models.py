@@ -45,36 +45,6 @@ class BookingOrInvitationQuerySet(models.QuerySet):
 class InvitationQuerySet(BookingOrInvitationQuerySet):
     "Queryset for invitations."
 
-#     def open_for_freelancer(self, freelancer):
-#         """Returns all invitations that are currently 'open' for the supplied
-#         freelancer.
-#
-#         TODO - this may need rethinking with the new job workflow.
-#         """
-#         # Filter by freelancer
-#         queryset = self.filter(freelancer=freelancer)
-#
-#         # Exclude invitations for past job requests
-#         queryset = queryset.future()
-#
-#         # Filter by job requests that are open
-#         queryset.filter(jobrequest__status=JobRequest.STATUS_OPEN)
-#
-#         # Filter by job requests that they aren't already booked on
-#         already_booked_on = Booking.objects.for_freelancer(
-#                             freelancer).values_list('jobrequest_id', flat=True)
-#         queryset = queryset.exclude(jobrequest_id__in=already_booked_on)
-#
-#         # Filter by job requests that aren't full
-#         job_request_ids = queryset.values_list('jobrequest_id', flat=True)
-#         not_full_job_requests = JobRequest.objects\
-#                 .filter(id__in=job_request_ids)\
-#                 .annotate(number_of_bookings=Count('bookings'))\
-#                 .filter(number_of_freelancers__gt=F('number_of_bookings'))
-#         queryset = queryset.filter(jobrequest__in=not_full_job_requests)
-#
-#         return queryset
-
     def can_be_applied_to_by_freelancer(self, freelancer):
         """Returns all invitations that the supplied freelancer
         can apply to.
@@ -106,7 +76,7 @@ class InvitationQuerySet(BookingOrInvitationQuerySet):
         queryset = self.filter(freelancer=freelancer)
 
         # Filter by whether the invitation has been applied to
-        queryset = self.filter(date_applied__isnull=False)
+        queryset = queryset.filter(date_applied__isnull=False)
 
         # Filter by job requests that they aren't already booked on
         already_booked_on = Booking.objects.for_freelancer(
@@ -126,6 +96,9 @@ class JobFullyBooked(Exception):
     "Exception raised when a job is fully booked."
     pass
 
+class JobAlreadyAppliedToByFreelancer(Exception):
+    "Exception raised when the freelancer has already applied to the job."
+    pass
 
 class JobAlreadyBookedByFreelancer(Exception):
     "Exception raised when the freelancer has already been booked on the job."
@@ -143,6 +116,10 @@ class Invitation(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_applied = models.DateTimeField(blank=True, null=True,
                 help_text='When the freelancer applied to the job.')
+    date_declined = models.DateTimeField(blank=True, null=True,
+                help_text='When the freelancer was declined for the job.')
+    # TODO date_accepted should be deleted, as it is now the same as when
+    # the creation date of the booking
     date_accepted = models.DateTimeField(blank=True, null=True)
     manual = models.BooleanField(default=True,
                 help_text='Whether this invitation was created manually.')
@@ -164,10 +141,10 @@ class Invitation(models.Model):
         # A single freelancer can't be invited twice for the same job
         unique_together = (("freelancer", "jobrequest"),)
 
-    def can_be_accepted(self):
-        "Whether or not the invitaton can be accepted."
+    def can_be_applied_to(self):
+        "Whether or not the invitation can be applied to."
         try:
-            self.validate_can_be_accepted()
+            self.validate_can_be_applied_to()
         except:
             return False
         return True
@@ -181,18 +158,46 @@ class Invitation(models.Model):
         if self.jobrequest.end_datetime < timezone.now():
             raise JobInPast()
 
-        # Check that they're not already booked
-        if self.jobrequest.bookings.for_freelancer(self.freelancer).exists():
-            raise JobAlreadyBookedByFreelancer()
-
         # Check that the job request hasn't been applied to by
         # this freelancer already
-        # TODO
+        if self.date_applied:
+            raise JobAlreadyAppliedToByFreelancer()
+
+        # Check that they're not already booked
+        if self.is_accepted():
+            raise JobAlreadyBookedByFreelancer()
+
+    def validate_can_be_declined(self):
+        """Validates whether the invitation can be declined.
+        
+        Raises JobAlreadyBookedByFreelancer on failure.
+        """
+        # Check that they're not already booked
+        if self.is_accepted():
+            raise JobAlreadyBookedByFreelancer()
 
     def mark_as_applied(self):
         """Marks the invitation as applied."""
         self.date_applied = timezone.now()
-        # TODO - dispatch signal
+        self.save()
+
+    def is_accepted(self):
+        """Whether or not the invitation has been accepted."""
+        return self.jobrequest.bookings.for_freelancer(
+                                                    self.freelancer).exists()
+
+    def can_be_accepted(self):
+        """Whether or not the invitation can be accepted,
+        i.e. if it has been applied to, and hasn't already
+        been accepted/declined.
+        """
+        return bool(self.date_applied) and not bool(self.date_declined) \
+            and not self.is_accepted()
+
+    def decline(self):
+        """Mark the invitation as declined.
+        """
+        self.date_declined = timezone.now()
         self.save()
 
     objects = InvitationQuerySet.as_manager()

@@ -167,3 +167,12 @@ class InvitationApplyForm(ConfirmForm):
     def save(self):
         # Mark the invitation as applied to
         self.invitation.mark_as_applied()
+
+
+class InvitationDeclineForm(ConfirmForm):
+    def __init__(self, *args, **kwargs):
+        self.invitation = kwargs.pop('invitation')
+        super(InvitationDeclineForm, self).__init__(*args, **kwargs)
+
+    def save(self):
+        self.invitation.decline()

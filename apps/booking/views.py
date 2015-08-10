@@ -9,12 +9,15 @@ from apps.freelancer.views import FreelancerOnlyMixin
 from apps.freelancer.models import Freelancer
 from apps.job.models import JobRequest
 from .models import (Booking, Availability, Invitation,
-                     JobAlreadyBookedByFreelancer, JobFullyBooked, JobInPast)
+            JobAlreadyBookedByFreelancer, JobAlreadyAppliedToByFreelancer,
+            JobFullyBooked, JobInPast)
 from .forms import AvailabilityForm, JobMatchingForm, \
-                    BookingOrInvitationConfirmForm, InvitationApplyForm
+                    BookingOrInvitationConfirmForm, InvitationApplyForm, \
+                    InvitationDeclineForm
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import get_object_or_404, redirect
-from .signals import invitation_created, invitation_applied
+from .signals import (invitation_created, invitation_applied,
+                      booking_created, invitation_declined)
 from django.core.exceptions import PermissionDenied
 from apps.job.views import JobRequestDetail
 from django.http.response import HttpResponseRedirect
@@ -269,7 +272,7 @@ class InvitationApply(FreelancerOnlyMixin,
     question = 'Are you sure you want to apply for this job?'
     action_text = 'Apply'
     action_icon = 'confirm'
-    template_name = 'booking/apply.html'
+    template_name = 'booking/apply_or_decline.html'
     form_class = InvitationApplyForm
 
     def dispatch(self, *args, **kwargs):
@@ -278,7 +281,9 @@ class InvitationApply(FreelancerOnlyMixin,
         except JobFullyBooked:
             return render(self.request, 'booking/fully_booked.html',
                           {'title': self.job_request})
-        # TODO - add test for already applied for job
+        except JobAlreadyAppliedToByFreelancer:
+            messages.add_message(self.request, messages.WARNING,
+                                 'You have already applied to this job.')
         except JobAlreadyBookedByFreelancer:
             messages.add_message(self.request, messages.WARNING,
                                  'You are already booked for this job.')
@@ -325,6 +330,59 @@ class InvitationApply(FreelancerOnlyMixin,
         messages.success(self.request, 'You have now applied for the job.')
         # Dispatch signal
         invitation_applied.send(sender=self, invitation=self.invitation)
+        return redirect(self.invitation.jobrequest.get_absolute_url())
+
+class InvitationDecline(AdminOnlyMixin,
+                       ConfirmationMixin,
+                       FormView):
+    """Confirmation form for the admin declining a freelancer's application.
+    """
+    question = "Decline this freelancer's application?"
+    action_text = 'Decline'
+    action_icon = 'no'
+    template_name = 'booking/apply_or_decline.html'
+    form_class = InvitationDeclineForm
+
+    def dispatch(self, *args, **kwargs):
+        try:
+            return super(InvitationDecline, self).dispatch(*args, **kwargs)
+        except JobAlreadyBookedByFreelancer:
+            messages.add_message(self.request, messages.WARNING,
+                        'The freelancer is already booked on the job.')
+        return redirect(self.job_request.get_absolute_url())
+
+    def get_form_kwargs(self, *args, **kwargs):
+        # Pass the job request and freelancer to the form
+
+        self.invitation = get_object_or_404(Invitation,
+                                            pk=self.kwargs['invitation_pk'])
+        self.job_request = self.invitation.jobrequest
+
+        self.invitation.validate_can_be_declined()
+
+        form_kwargs = super(InvitationDecline,
+                            self).get_form_kwargs(*args, **kwargs)
+        form_kwargs.update({
+            'invitation': self.invitation,
+            'action_text': 'Decline',
+            'action_icon': 'no',
+            'cancel_url': self.job_request.get_absolute_url()
+        })
+        return form_kwargs
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(InvitationDecline, self).get_context_data(
+                                                            *args, **kwargs)
+        context['title'] = 'Decline application?'
+        context['job_request'] = self.job_request
+
+        return context
+
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request, 'Declined.')
+        # Dispatch signal
+        invitation_declined.send(sender=self, invitation=self.invitation)
         return redirect(self.invitation.jobrequest.get_absolute_url())
 
 

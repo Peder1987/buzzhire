@@ -26,6 +26,10 @@ urlpatterns = [
          views.InvitationApply.as_view(),
          name='invitation_apply'),
 
+    url(r'^decline/(?P<invitation_pk>[\d]+)/$',
+         views.InvitationDecline.as_view(),
+         name='invitation_decline'),
+
     url(r'^applied/$', views.FreelancerApplicationsList.as_view(),
          name='freelancer_applications_list'),
 
