@@ -165,8 +165,5 @@ class InvitationApplyForm(ConfirmForm):
         super(InvitationApplyForm, self).__init__(*args, **kwargs)
 
     def save(self):
-        # Create the booking
-        # TODO - this should instead make the invitation applied
-        # return Booking.objects.create(jobrequest=self.invitation.jobrequest,
-        #                        freelancer=self.invitation.freelancer)
-        pass
+        # Mark the invitation as applied to
+        self.invitation.mark_as_applied()

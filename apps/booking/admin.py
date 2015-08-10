@@ -6,6 +6,7 @@ class InvitationAdmin(admin.ModelAdmin):
                     'date_created', 'date_accepted', 'manual')
     search_fields = ('jobrequest', 'freelancer')
     raw_id_fields = ('jobrequest', 'freelancer')
+    readonly_fields = ('date_created', 'date_applied', 'date_accepted')
     list_filter = ('manual',)
 
 admin.site.register(models.Invitation, InvitationAdmin)

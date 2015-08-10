@@ -26,6 +26,12 @@ urlpatterns = [
          views.InvitationApply.as_view(),
          name='invitation_apply'),
 
+    url(r'^applied/$', views.FreelancerApplicationsList.as_view(),
+         name='freelancer_applications_list'),
+
+    url(r'^applied/past/$', views.FreelancerApplicationsList.as_view(past=True),
+         name='freelancer_applications_list_past'),
+
     url(r'^availability/$', views.AvailabilityUpdate.as_view(),
          name='availability_update'),
 

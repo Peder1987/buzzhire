@@ -64,5 +64,6 @@ def availability_form_for_freelancer(freelancer):
 @register.assignment_tag(takes_context=True)
 def freelancer_open_invitations_count(context):
     # TODO - this would be a good candidate for caching
-    return Invitation.objects.open_for_freelancer(
+    return Invitation.objects.can_be_applied_to_by_freelancer(
                                 context['request'].user.freelancer).count()
+

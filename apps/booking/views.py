@@ -70,7 +70,31 @@ class FreelancerInvitationsList(FreelancerOnlyMixin,
     extra_context = {'title': 'Pending job requests'}
 
     def get_queryset(self, *args, **kwargs):
-        return Invitation.objects.open_for_freelancer(self.freelancer)
+        return Invitation.objects.can_be_applied_to_by_freelancer(
+                                                            self.freelancer)
+
+
+class FreelancerApplicationsList(FreelancerOnlyMixin,
+                                 ContextMixin, TabsMixin, ListView):
+    """List of jobs that a freelancer has applied to.
+    This view has two modes - if self.past is True, it will return the
+    jobs in the past, otherwise it will show upcoming jobs.   
+    """
+    template_name = 'booking/application_list.html'
+    paginate_by = 15
+    extra_context = {'title': 'Jobs applied to'}
+    tabs = [
+        ('Upcoming', reverse_lazy('freelancer_applications_list')),
+        ('Past', reverse_lazy('freelancer_applications_list_past')),
+    ]
+    past = False
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = Invitation.objects.applied_to_by_freelancer(self.freelancer)
+        if self.past:
+            return queryset.past()
+        else:
+            return queryset.future()
 
 
 class AvailabilityUpdate(FreelancerOnlyMixin, SuccessMessageMixin,

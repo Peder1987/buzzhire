@@ -45,15 +45,48 @@ class BookingOrInvitationQuerySet(models.QuerySet):
 class InvitationQuerySet(BookingOrInvitationQuerySet):
     "Queryset for invitations."
 
-    def open_for_freelancer(self, freelancer):
-        """Returns all invitations that are currently 'open' for the supplied
-        freelancer.
+#     def open_for_freelancer(self, freelancer):
+#         """Returns all invitations that are currently 'open' for the supplied
+#         freelancer.
+#
+#         TODO - this may need rethinking with the new job workflow.
+#         """
+#         # Filter by freelancer
+#         queryset = self.filter(freelancer=freelancer)
+#
+#         # Exclude invitations for past job requests
+#         queryset = queryset.future()
+#
+#         # Filter by job requests that are open
+#         queryset.filter(jobrequest__status=JobRequest.STATUS_OPEN)
+#
+#         # Filter by job requests that they aren't already booked on
+#         already_booked_on = Booking.objects.for_freelancer(
+#                             freelancer).values_list('jobrequest_id', flat=True)
+#         queryset = queryset.exclude(jobrequest_id__in=already_booked_on)
+#
+#         # Filter by job requests that aren't full
+#         job_request_ids = queryset.values_list('jobrequest_id', flat=True)
+#         not_full_job_requests = JobRequest.objects\
+#                 .filter(id__in=job_request_ids)\
+#                 .annotate(number_of_bookings=Count('bookings'))\
+#                 .filter(number_of_freelancers__gt=F('number_of_bookings'))
+#         queryset = queryset.filter(jobrequest__in=not_full_job_requests)
+#
+#         return queryset
+
+    def can_be_applied_to_by_freelancer(self, freelancer):
+        """Returns all invitations that the supplied freelancer
+        can apply to.
         """
         # Filter by freelancer
         queryset = self.filter(freelancer=freelancer)
 
         # Exclude invitations for past job requests
         queryset = queryset.future()
+
+        # Filter by invitations they haven't already applied to
+        queryset = queryset.filter(date_applied__isnull=True)
 
         # Filter by job requests that are open
         queryset.filter(jobrequest__status=JobRequest.STATUS_OPEN)
@@ -63,15 +96,25 @@ class InvitationQuerySet(BookingOrInvitationQuerySet):
                             freelancer).values_list('jobrequest_id', flat=True)
         queryset = queryset.exclude(jobrequest_id__in=already_booked_on)
 
-        # Filter by job requests that aren't full
-        job_request_ids = queryset.values_list('jobrequest_id', flat=True)
-        not_full_job_requests = JobRequest.objects\
-                .filter(id__in=job_request_ids)\
-                .annotate(number_of_bookings=Count('bookings'))\
-                .filter(number_of_freelancers__gt=F('number_of_bookings'))
-        queryset = queryset.filter(jobrequest__in=not_full_job_requests)
+        return queryset
+
+    def applied_to_by_freelancer(self, freelancer):
+        """Returns all invitations that the supplied freelancer
+        has applied to.  Excludes any applications that have been accepted. 
+        """
+        # Filter by freelancer
+        queryset = self.filter(freelancer=freelancer)
+
+        # Filter by whether the invitation has been applied to
+        queryset = self.filter(date_applied__isnull=False)
+
+        # Filter by job requests that they aren't already booked on
+        already_booked_on = Booking.objects.for_freelancer(
+                            freelancer).values_list('jobrequest_id', flat=True)
+        queryset = queryset.exclude(jobrequest_id__in=already_booked_on)
 
         return queryset
+
 
 
 class JobInPast(Exception):
@@ -98,6 +141,8 @@ class Invitation(models.Model):
     freelancer = models.ForeignKey(Freelancer, related_name='invitations')
     jobrequest = models.ForeignKey(JobRequest, related_name='invitations')
     date_created = models.DateTimeField(auto_now_add=True)
+    date_applied = models.DateTimeField(blank=True, null=True,
+                help_text='When the freelancer applied to the job.')
     date_accepted = models.DateTimeField(blank=True, null=True)
     manual = models.BooleanField(default=True,
                 help_text='Whether this invitation was created manually.')
@@ -144,6 +189,11 @@ class Invitation(models.Model):
         # this freelancer already
         # TODO
 
+    def mark_as_applied(self):
+        """Marks the invitation as applied."""
+        self.date_applied = timezone.now()
+        # TODO - dispatch signal
+        self.save()
 
     objects = InvitationQuerySet.as_manager()
 
