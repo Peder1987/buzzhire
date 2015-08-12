@@ -34,6 +34,13 @@ def notify_freelancer_on_booking(sender, booking, **kwargs):
               {'title': 'Confirmation of booking',
                'content': content},
               from_email=settings.BOOKINGS_FROM_EMAIL)
+    
+    # Notification for app
+    Notification.objects.create(
+            message='Your booking has been confirmed.',
+            category='freelancer_booked',
+            related_object=booking.jobrequest,
+            user=booking.freelancer.user)
 
 
 @receiver(booking_created)
