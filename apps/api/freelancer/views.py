@@ -1,5 +1,6 @@
 from django.db.models import Q
 from rest_framework import viewsets
+from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from ..client.permissions import ClientOnlyPermission
 from apps.api.views import RetrieveAndUpdateViewset
@@ -8,7 +9,12 @@ from ..booking.serializers import AvailabilitySerializer
 from .permissions import FreelancerOnlyPermission
 from apps.freelancer.models import Freelancer
 from apps.booking.models import Booking, Availability
-
+from apps.job.models import JobRequest
+from rest_framework.response import Response
+from rest_framework import status
+from collections import defaultdict
+from moneyed.classes import Money
+from decimal import Decimal
 
 class FreelancerForClientViewSet(viewsets.ReadOnlyModelViewSet):
     """The freelancers that the currently logged in client has permission to see.
@@ -126,5 +132,27 @@ class OwnFreelancerAvailabilityViewSet(RetrieveAndUpdateViewset):
     def get_object(self):
         return self.request.user.freelancer.availability
 
-    class Meta:
-      pass
+class FreelancerEarningView(APIView):
+    """The currently logged in freelancer's earnings.
+
+    A bit crude, this should probably change for future versions of the app.
+
+    ## Fields
+
+    - `"CF"` - Confirmed.  The freelancers confirmed jobs.
+    - `"CP"` - Complete.  The freelancers completed jobs.
+    """
+    permission_classes = (FreelancerOnlyPermission,)
+
+    def get(self, request, format=None):
+      fl = self.request.user.freelancer
+      jrs = JobRequest.objects.filter(bookings__freelancer=fl)
+      # TODO: Foreign currencies are ignored for now
+      result = defaultdict(lambda:Money(0,"GBP"))
+      for j in filter(lambda x:x.status in set(['CP','CF']), jrs):
+        result[j.status] += j.client_pay_per_hour * j.duration
+      # Converting for serialization
+      for st in result.keys(): 
+        result[st] = result[st].amount
+      return Response(result, status=status.HTTP_200_OK)
+

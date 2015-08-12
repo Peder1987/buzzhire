@@ -175,4 +175,5 @@ urlpatterns = [
                               namespace='rest_framework')),
     url(r'^v1/token-auth/', views.obtain_auth_token),
     url(r'^v1/', include(router.urls)),
+    url(r'^v1/freelancer/earnings/$', freelancer_views.FreelancerEarningView.as_view(), name='combined-list')
 ]
