@@ -22,9 +22,19 @@ urlpatterns = [
          views.FreelancerInvitationsList.as_view(),
          name='freelancer_invitations_list'),
 
-    url(r'^accept/(?P<invitation_pk>[\d]+)/$',
-         views.InvitationAccept.as_view(),
-         name='invitation_accept'),
+    url(r'^apply/(?P<invitation_pk>[\d]+)/$',
+         views.InvitationApply.as_view(),
+         name='invitation_apply'),
+
+    url(r'^decline/(?P<invitation_pk>[\d]+)/$',
+         views.InvitationDecline.as_view(),
+         name='invitation_decline'),
+
+    url(r'^applied/$', views.FreelancerApplicationsList.as_view(),
+         name='freelancer_applications_list'),
+
+    url(r'^applied/past/$', views.FreelancerApplicationsList.as_view(past=True),
+         name='freelancer_applications_list_past'),
 
     url(r'^availability/$', views.AvailabilityUpdate.as_view(),
          name='availability_update'),

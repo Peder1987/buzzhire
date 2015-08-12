@@ -85,6 +85,9 @@ class CrispyFormMixin(object):
     bottom_html_dict = {}
     form_tag = True
     wrap_fieldset_title = ''  # The title of the fieldset to wrap the form in
+    labels_as_placeholders = False  # Set to true if the form should use
+                        # placeholders instead of labels
+
 
     def __init__(self, *args, **kwargs):
         super(CrispyFormMixin, self).__init__(*args, **kwargs)
@@ -102,7 +105,6 @@ class CrispyFormMixin(object):
                 layout.Fieldset(*fieldset_kwargs)
             )
 
-        print 'submit_name is %s' % self.submit_name
         if self.submit_name:
             self.helper.layout.append(self.get_submit_button())
 
@@ -113,6 +115,10 @@ class CrispyFormMixin(object):
         if self.bottom_html:
             self.helper.layout.append(layout.HTML(
                                     self.bottom_html % self.bottom_html_dict))
+
+        if self.labels_as_placeholders:
+            self.labels_to_placeholders()
+
 
     def get_full_submit_name(self):
         if self.prefix:
@@ -130,3 +136,26 @@ class CrispyFormMixin(object):
         context.update(self.submit_context)
         return layout.HTML(render_to_string(
                                 self.submit_template_name, context))
+
+    def labels_to_placeholders(self):
+        """Convert all the labels of text fields to placeholders.
+        """
+        FIELDS_TO_HIDE = (forms.ChoiceField, forms.MultiValueField)
+
+        for field_name in self.fields:
+            field = self.fields[field_name]
+            if isinstance(field, forms.CharField):
+                # Make Charfields have a placeholder as the label
+                field.widget.attrs['placeholder'] = field.label
+                field.label = ''
+            else:
+                for field_class in FIELDS_TO_HIDE:
+                    if isinstance(field, field_class):
+                        # Hide the label on certain other fields.
+                        # If there is no he]p text, use the label as
+                        # the help text.
+                        if not field.help_text:
+                            field.help_text = "%s." % field.label
+                        field.label = ''
+                        continue
+

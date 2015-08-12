@@ -43,9 +43,24 @@ class FreelancerForm(CrispyFormMixin, PostcodeFormMixin, forms.ModelForm):
     """Edit form for a freelancer's profile."""
     submit_text = 'Save profile'
     submit_context = {'icon_name': 'edit'}
+    labels_as_placeholders = True
+    # Which fields should be disabled during editing for the freelancer
+    disabled_in_edit_fields = ('english_fluency', 'years_experience')
 
 
     def __init__(self, *args, **kwargs):
+        # If the form has been submitted, populate the disabled fields.
+        if 'data' in kwargs:
+            instance = kwargs.get('instance', None)
+            if instance:
+                # If this is the edit form
+                data = kwargs['data'].copy()
+                self.prefix = kwargs.get('prefix')
+                for field_name in self.disabled_in_edit_fields:
+                     data[self.add_prefix(field_name)] = getattr(instance,
+                                                                field_name)
+                kwargs['data'] = data
+
         super(FreelancerForm, self).__init__(*args, **kwargs)
 
         self.helper.form_class = 'edit-account-form col-md-6'
@@ -65,22 +80,6 @@ class FreelancerForm(CrispyFormMixin, PostcodeFormMixin, forms.ModelForm):
         # Prepopulate raw_postcode field if there is already a postcode
         if self.instance.postcode:
             self.fields['raw_postcode'].initial = str(self.instance.postcode)
-
-        self.fields['first_name'].label = False
-        self.fields['first_name'].widget.attrs['placeholder'] = "First name"
-        self.fields['last_name'].label = False
-        self.fields['last_name'].widget.attrs['placeholder'] = "Last name"
-        self.fields['mobile'].label = False
-        self.fields['mobile'].widget.attrs['placeholder'] = "Mobile"
-        self.fields['raw_postcode'].label = False
-        self.fields['raw_postcode'].widget.attrs['placeholder'] = "Postcode"
-        self.fields['minimum_pay_per_hour'].label = False
-        self.fields['travel_distance'].label = False
-        self.fields['english_fluency'].label = False
-        self.fields['english_fluency'].help_text = 'English fluency'
-        self.fields['years_experience'].label = False
-        self.fields['years_experience'].help_text = 'Years experience'
-
 
         self.helper.layout = layout.Layout(
 
@@ -109,6 +108,18 @@ class FreelancerForm(CrispyFormMixin, PostcodeFormMixin, forms.ModelForm):
 
         if self.submit_name:
             self.helper.layout.append(self.get_submit_button())
+
+        self.adjust_edit_form()
+
+    def adjust_edit_form(self):
+        """If this form is being used to edit a profile (rather than create
+        one), make some adjustments.
+        """
+        if self.instance.pk:
+           # Disable fields on the front end
+           for field_name in self.disabled_in_edit_fields:
+               self.fields[field_name].widget.attrs = {'disabled':
+                                                          'disabled'}
 
     class Meta:
         model = Freelancer

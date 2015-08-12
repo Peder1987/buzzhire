@@ -83,9 +83,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Fully booked?</th>
+                    <th>Has enough applications?</th>
                     <td>
-                        {{ object.is_full|yesno|icon }}
+                        {{ object.has_enough_applications|yesno|icon }}
                     </td>
                 </tr>
              </table>
@@ -186,8 +186,12 @@
                 <span class='label label-success'>{{ 'yes'|icon }} You have been booked</span>
             {% else %}
                 {% with object|invitation_for_freelancer:request.user.freelancer as invitation %}
-                    {% if invitation.can_be_accepted %}
-                        <a class='btn btn-primary green-btn accept-job-button' href='{% url 'invitation_accept' invitation.pk %}'> Accept job</a>
+                    {% if invitation.date_declined %}
+                        <span class='label label-warning'>{{ 'no'|icon }} Your application for this job was unsuccessful</span>
+                    {% elif invitation.can_be_applied_to %}
+                        <a class='btn btn-primary green-btn accept-job-button' href='{% url 'invitation_apply' invitation.pk %}'> Apply for job</a>
+                    {% else %}
+                        <span class='label label-info'>{{ 'yes'|icon }} You have applied to this job</span>
                     {% endif %}
                 {% endwith %}
             {% endif %}

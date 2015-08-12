@@ -8,12 +8,11 @@
 {% endblock %}
 
 {% block content %}
-    <div class='row accept-invitation' style='margin-top: 3em;'>
+    <div class='row' style='margin-top: 3em;'>
         <div class='col-md-5 box-left'>
             {% summary job_request %}
         </div>
-       
-        <div class='col-md-6 box-right'>
+        <div class='col-md-6 box-right' style='margin-top: 25px;'>
             {% crispy form %}  
         </div>
     </div>
