@@ -153,6 +153,6 @@ class FreelancerEarningView(APIView):
         result[j.status] += j.client_pay_per_hour * j.duration
       # Converting for serialization
       for st in result.keys(): 
-        result[st] = result[st].amount
+        result[st] = {"amount": result[st].amount, "currency": result[st].currency.code}
       return Response(result, status=status.HTTP_200_OK)
 
