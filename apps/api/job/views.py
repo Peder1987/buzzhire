@@ -144,6 +144,11 @@ class JobRequestForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
         # Limit to job requests that the freelancer has been
         # invited to or booked on
         freelancer = self.request.user.freelancer
-        return self.model_class.objects.filter(
-                    Q(bookings__freelancer=freelancer) | \
-                    Q(invitations__freelancer=freelancer))
+        # TODO: This returned the same JobRequest object multiple times.
+        #       Not that bad for the overview, but breaks the individual views:
+        #       fine:   /api/v1/freelancer/job-requests/
+        #       broken: /api/v1/freelancer/job-requests/155/
+        from_bookings = map(lambda x:x.jobrequest.id,freelancer.bookings.all())
+        from_invitations = map(lambda x:x.jobrequest.id,freelancer.invitations.all())
+        x = self.model_class.objects.filter(id__in=set(from_bookings+from_invitations))
+        return x 
