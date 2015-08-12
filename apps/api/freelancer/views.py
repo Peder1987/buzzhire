@@ -4,9 +4,10 @@ from rest_framework.permissions import IsAuthenticated
 from ..client.permissions import ClientOnlyPermission
 from apps.api.views import RetrieveAndUpdateViewset
 from .serializers import FreelancerForClientSerializer, OwnFreelancerSerializer
+from ..booking.serializers import AvailabilitySerializer
 from .permissions import FreelancerOnlyPermission
 from apps.freelancer.models import Freelancer
-from apps.booking.models import Booking
+from apps.booking.models import Booking, Availability
 
 
 class FreelancerForClientViewSet(viewsets.ReadOnlyModelViewSet):
@@ -113,3 +114,17 @@ class OwnFreelancerViewSet(RetrieveAndUpdateViewset):
 
     def get_object(self):
         return self.request.user.freelancer
+
+class OwnFreelancerAvailabilityViewSet(RetrieveAndUpdateViewset):
+    """The currently logged in freelancer's availability.
+    """
+    model = Availability
+    serializer_class = AvailabilitySerializer 
+
+    permission_classes = (FreelancerOnlyPermission,)
+
+    def get_object(self):
+        return self.request.user.freelancer.availability
+
+    class Meta:
+      pass

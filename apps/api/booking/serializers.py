@@ -1,6 +1,6 @@
 from django.forms import widgets
 from rest_framework import serializers
-from apps.booking.models import Booking, Invitation
+from apps.booking.models import Booking, Invitation, Availability
 from ..job import serializers as job_serializers
 from ..freelancer.serializers import SpecificFreelancerIdentityField
 
@@ -54,3 +54,9 @@ class BookingsJobRequestForClientSerializer(
     class Meta(job_serializers.JobRequestForClientSerializer.Meta):
         fields = job_serializers.JobRequestForClientSerializer.Meta.fields + (
                         'bookings',)
+
+class AvailabilitySerializer(serializers.ModelSerializer):
+    "Serializer for Freelancer Availability."
+    class Meta:
+      model = Availability
+      exclude = ('freelancer','id')
