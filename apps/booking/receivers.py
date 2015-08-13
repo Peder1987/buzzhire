@@ -50,6 +50,13 @@ def notify_freelancer_on_booking(sender, booking, **kwargs):
               {'title': 'Confirmation of booking',
                'content': content},
               from_email=settings.BOOKINGS_FROM_EMAIL)
+    
+    # Notification for app
+    Notification.objects.create(
+            message='Your booking has been confirmed.',
+            category='freelancer_booked',
+            related_object=booking.jobrequest,
+            user=booking.freelancer.user)
 
 
 @receiver(invitation_declined)
@@ -69,11 +76,11 @@ def notify_freelancer_on_decline(sender, invitation, **kwargs):
 
 
 @receiver(invitation_applied)
-def notify_admin_when_invitation_has_enough_applications(sender,
-                                                       invitation, **kwargs):
-    """Notifies the admin when an invitation is applied for that
-    means there are enough applications to confirm the job."""
+def notify_admin_when_invitation_applied(sender, invitation, **kwargs):
+    """Notifies the admin when a job request is applied for.
+    """
     job_request = invitation.jobrequest
+
     if job_request.has_enough_applications:
         subject = 'Job request %s now has enough applications' % \
                 job_request.reference_number
@@ -82,8 +89,18 @@ def notify_admin_when_invitation_has_enough_applications(sender,
             'booking/email/includes/admin_enough_applications.html',
             {'object': job_request}
         )
+    else:
+        # Just the regular notification
+        subject = 'New application for job request %s' % \
+                job_request.reference_number
 
-        send_mail(settings.BOOKINGS_EMAIL,
+        content = render_to_string(
+            'booking/email/includes/admin_invitation_applied.html',
+            {'object': job_request,
+             'freelancer': invitation.freelancer}
+        )
+
+    send_mail(settings.BOOKINGS_EMAIL,
                   subject,
                   'email/base',
                   {'title': subject,

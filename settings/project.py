@@ -117,7 +117,7 @@ class ProjectConfiguration(StandardConfiguration):
     # Min pay per hour, before commission
     CLIENT_MIN_WAGE = 8.0
     # The percent commission we charge on client rates
-    COMMISSION_PERCENT = 0
+    COMMISSION_PERCENT = 15
     # Number of pence to round to
     COMMISSION_ROUND_PENCE = 25
 

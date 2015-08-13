@@ -15,7 +15,7 @@ class NotificationQuerySet(models.QuerySet):
 
     def for_user(self, user):
         "Filters by notifications for the current user."
-        return self.filter(user=user)
+        return self.filter(user=user).filter(datetime_deleted=None)
 
 
 class Notification(models.Model):
@@ -32,6 +32,7 @@ class Notification(models.Model):
     user = models.ForeignKey(User, related_name='notifications')
 
     datetime_created = models.DateTimeField(auto_now_add=True)
+    datetime_deleted = models.DateTimeField(null=True, blank=True)
 
     # Optionally, relate the notification to another model
     content_type = models.ForeignKey(ContentType, blank=True, null=True)

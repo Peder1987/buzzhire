@@ -64,6 +64,40 @@ class Dev(BraintreeSandboxMixin, HueyMixin,
     # Allow embedding, so responsinator.com can be used for testing
     X_FRAME_OPTIONS = "ALLOWALL"
 
+class VagrantDev(BraintreeSandboxMixin, HueyMixin,
+          installations.WebfactionDevMixin, ProjectConfiguration):
+    DOMAIN = 'buzz.ubn'
+    PROJECT_ROOT = '/vagrant'
+    WEBFACTION_USER = 'buzzhire'
+    EMAIL_HOST_USER = 'buzzhire_dev'
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    DEBUG = True
+    ACCOUNT_PASSWORD_MIN_LENGTH = 1
+
+    @property
+    def DATABASES(self):
+        return {
+            'default': {
+                'NAME': self.DEFAULT_DATABASE_NAME,
+                'USER': self.DEFAULT_DATABASE_USER,
+                'PASSWORD': self.DEFAULT_DATABASE_PASSWORD,
+                'ENGINE': self.DEFAULT_DATABASE_ENGINE,
+                'HOST': self.DEFAULT_DATABASE_HOST,
+            }
+        }
+
+    @property
+    def LOG_PATH(self):
+        return '/vagrant/logs/'
+
+    HUEY_NAME = 'dev'
+    HUEY_PORT = 6379
+
+    API_ACTIVE = True
+
+    # Allow embedding, so responsinator.com can be used for testing
+    X_FRAME_OPTIONS = "ALLOWALL"
+
 class Live(HueyMixin,
            installations.WebfactionLiveMixin, ProjectConfiguration):
     DOMAIN = 'buzzhire.co'

@@ -108,6 +108,9 @@ router.register(r'client/feedback',
 router.register(r'freelancer',
                 freelancer_views.OwnFreelancerViewSet,
                 base_name='freelancer_own')
+router.register(r'freelancer/availability',
+                freelancer_views.OwnFreelancerAvailabilityViewSet,
+                base_name='freelancer_availability_own')
 router.register(r'freelancer/driver',
                 driver_views.OwnDriverViewSet,
                 base_name='driver_freelancer_own')
@@ -172,4 +175,5 @@ urlpatterns = [
                               namespace='rest_framework')),
     url(r'^v1/token-auth/', views.obtain_auth_token),
     url(r'^v1/', include(router.urls)),
+    url(r'^v1/freelancer/earnings/$', freelancer_views.FreelancerEarningView.as_view(), name='combined-list')
 ]

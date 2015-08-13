@@ -53,6 +53,10 @@ class FreelancerForClientSerializer(serializers.ModelSerializer):
     """Serializer that exposes information on the freelancer
     appropriate for client use.
     """
+    reviews = serializers.SerializerMethodField()
+    def get_reviews(self, obj):
+      for r in obj.reviews():
+        yield {'comment': r.comment, "score":r.score}
 
     service_key = serializers.SerializerMethodField()
     def get_service_key(self, obj):
@@ -79,7 +83,7 @@ class FreelancerForClientSerializer(serializers.ModelSerializer):
                   'photo_thumbnail_large', 'english_fluency',
                   'full_name', 'first_name', 'last_name', 'mobile',
                   'years_experience', 'minimum_pay_per_hour',
-                  'average_score')
+                  'average_score', 'reviews')
 
 
 class OwnFreelancerSerializer(FreelancerForClientSerializer):

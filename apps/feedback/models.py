@@ -35,8 +35,13 @@ def _average_score(self):
 
     return round(sum(averages) / len(averages), 1)
 
-Freelancer.average_score = _average_score
+def _reviews(self, limit=20):
+  feedback = BookingFeedback.objects.feedback_for_freelancer(self).order_by('-date')
+  # TODO: Look at BookingFeedback Serializer
+  return feedback[:limit] 
 
+Freelancer.average_score = _average_score
+Freelancer.reviews = _reviews
 
 class FakeQuerySet(list):
     """An object that can be used to 'fake' a queryset, but which is actually a
