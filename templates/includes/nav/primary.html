@@ -37,10 +37,14 @@
                         
                     {% else %}
 
-                        {% url 'service_select' as link_url %}
-                        {% include 'includes/menu_link.html' with link_text='Book a freelancer' %}
-                        {% url 'requested_jobs' as link_url %}
-                        {% include 'includes/menu_link.html' with icon_name='' link_text='My bookings' %}
+                        {% if request.user.is_client %}
+
+                            {% url 'service_select' as link_url %}
+                            {% include 'includes/menu_link.html' with link_text='Book a freelancer' %}
+                            {% url 'requested_jobs' as link_url %}
+                            {% include 'includes/menu_link.html' with icon_name='' link_text='My bookings' %}
+
+                        {% endif %}    
 
                     {% endif %}
 
@@ -57,6 +61,7 @@
                         {% else %}
 
                             {{ request.user.client }}
+                            {{ request.user.admin }}
                         
                         {% endif %}
                         <!--Logged in as {{ request.user }}-->
