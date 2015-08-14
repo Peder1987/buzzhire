@@ -59,9 +59,11 @@
 
                             {{ request.user }}
                         {% else %}
-
-                            {{ request.user.client }}
-                            {{ request.user }}
+                            {% if request.user.is_client %}
+                                {{ request.user.client }}
+                            {% else %}
+                                {{ request.user }}
+                            {% endif %}
                         
                         {% endif %}
                         <!--Logged in as {{ request.user }}-->
