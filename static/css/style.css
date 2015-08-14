@@ -24,6 +24,36 @@
     font-weight: normal;
 }
 
+@font-face {
+    font-family: 'OpenSans';
+    src: url('../fonts/OpenSans-Regular.ttf');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: 'OpenSansLight';
+    src: url('../fonts/OpenSans-Light.ttf');
+    font-weight: normal;
+}
+@font-face {
+    font-family: 'OpenSansLightItalic';
+    src: url('../fonts/OpenSans-LightItalic.ttf');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'OpenSansBold';
+    src: url('../fonts/OpenSans-Bold.ttf');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'OpenSansBoldItalic';
+    src: url('../fonts/OpenSans-BoldItalic.ttf');
+    font-weight: normal;
+}
+
+
 html{
   height: 100%;
   min-height: 100%;
@@ -63,10 +93,10 @@ body{
 .f170 { font-size: 170px; }
 .f200 { font-size: 200px; }
 .lett-space-2 { letter-spacing: 2px; }
-.HelveticaRegular { font-family: 'HelveticaRegular','Open Sans'; }
-.HelveticaLight { font-family: 'HelveticaLight','Open Sans'; }
-.HelveticaOblique { font-family: 'HelveticaOblique','Open Sans'; }
-.Helvetica { font-family: 'Helvetica','HelveticaLight','Open Sans'; }
+.HelveticaRegular { font-family: 'OpenSans'; }
+.HelveticaLight { font-family: 'OpenSansLight'; }
+.HelveticaOblique { font-family: 'OpenSansItalic'; }
+.Helvetica { font-family: 'OpenSans'; }
 .def-a { text-decoration: none; cursor: pointer;}
 .pad0 { padding: 0 !important; }
 .pad5 { padding: 5px; }
@@ -180,7 +210,7 @@ body{
   line-height: 1.2;
   font-size: 18px;
   margin-bottom: 0.7em;
-  font-family: Helvetica,'HelveticaLight','Open Sans';
+  font-family: 'OpenSans';
 }
 
 .feedback-all-wrap .feedback .feedback-comment{
@@ -194,7 +224,7 @@ body{
 
 .freelancer-details{
   margin: 15px 0;
-  font-family: 'HelveticaLight','Open Sans';
+  font-family: 'OpenSansLight','OpenSans';
   line-height: 1.2;
 }
 
@@ -211,7 +241,7 @@ body{
 }
 
 .pricing-table{
-  font-family: 'HelveticaLight','Open Sans';
+  font-family: 'OpenSansLight','OpenSans';
 }
 
 .pricing-table-wrap{
@@ -232,7 +262,7 @@ body{
 }
 
 .pricing-table thead tr th, .pricing-table tbody tr:first-child th:first-child{
-  font-family: 'HelveticaBold', 'HelveticaLight','Open Sans';
+  font-family: 'OpenSansBold', 'OpenSans';
 }
 
 .pricing-table tbody td{
@@ -532,7 +562,7 @@ span.notification-icon-panel{
 .sidebar-right-page .sidebar-content button.btn[name="submit"],
 .become-freelancer-form button.btn[name="freelancer_submit"] {
     background-color: rgb(166, 239, 100);
-    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
+    font-family: 'OpenSans';
     
     width: 100%;
     margin-left: 0;
@@ -540,7 +570,7 @@ span.notification-icon-panel{
 
 .sidebar-right-page .sidebar-content button.btn[name="submit"]{
     background-color: rgb(166, 239, 100);
-    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
+    font-family: 'OpenSans';
     
     min-width: 250px;
     width: 100%;
@@ -583,7 +613,7 @@ span.notification-icon-panel{
 }
 .sidebar-breadcrumbs .breadcrumb li a {
     color: rgba(255, 255, 255, 0.6);
-    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
+    font-family: 'OpenSans';
     font size: 13px;
 }
 .sidebar-breadcrumbs .breadcrumb li a:hover {
@@ -613,7 +643,7 @@ span.notification-icon-panel{
     color: #2779bc !important;
     font-weight: normal;
     font-size: 16px;
-    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
+    font-family: 'OpenSans';
 }
 .navbar-default.menu-top.menu-shrink li a.btn,
 .navbar-default.menu-top li a.btn {
@@ -625,7 +655,7 @@ span.notification-icon-panel{
     font-size: 18px !important;
 }
 .after-breadcrumb.sidebar .panel-default {
-    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
+    font-family: 'OpenSans';
     border: none;
     box-shadow: none !important;
 }
@@ -794,7 +824,7 @@ span.notification-icon-panel{
 }
 
 .edit-password-form label{
-  font-family: 'HelveticaLight','Open Sans';
+  font-family: 'OpenSansLight','OpenSans';
   font-size: 20px;
   padding: 5px 0;
 }
@@ -848,7 +878,7 @@ span.notification-icon-panel{
 .sidebar-right-page .client-login-form h5 {
     border-bottom: none !important;
     color: #2779bc;
-    font-family: 'HelveticaLight','Open Sans';
+    font-family: 'OpenSansLight','OpenSans';
     font-size: 26px;
 }
 .sidebar-right-page .sidebar-content .client-signup-form .form-group {
@@ -871,7 +901,7 @@ span.notification-icon-panel{
 .select-form-title {
     border-bottom: none !important;
     color: #2779bc;
-    font-family: 'HelveticaLight','Open Sans';
+    font-family: 'OpenSansLight','OpenSans';
 }
 .sidebar-right-page .sidebar-main {
     padding-bottom: 10000px !important;
@@ -885,11 +915,11 @@ span.notification-icon-panel{
 }
 .sidebar-right-page-right-content p {
     margin-bottom: 5px;
-    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
+    font-family: 'OpenSans';
     font-size: 18px;
 }
 .sidebar-right-page-right-content h6 {
-    font-family: 'HelveticaLight','Open Sans';
+    font-family: 'OpenSansLight','OpenSans';
     font-size: 26px;
     margin-top: 20px;
 }
@@ -1989,7 +2019,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 
 body {
     background: #fff;
-    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
+    font-family: 'OpenSans';
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
     -webkit-text-size-adjust: 100%;
@@ -2025,7 +2055,7 @@ a:hover {
 h2,
 h3 {
     margin-top: 10px;
-    font-family: 'HelveticaLight','Open Sans';
+    font-family: 'OpenSansLight','OpenSans';
     font-size: 50px;
     font-weight: 300;
     line-height: 54px;
@@ -2036,7 +2066,7 @@ h4 {
     font-weight: 300;
     color: #888;
     line-height: 34px;
-    font-family: 'HelveticaLight','Open Sans';
+    font-family: 'OpenSansLight','OpenSans';
 }
 h5 {
     font-size: 1.4em;
@@ -2072,7 +2102,7 @@ img {
 .btn {
     border-radius: 0px;
     font-weight: 300;
-    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
+    font-family: 'OpenSans';
 }
 .btn-block {
     margin-bottom: 20px;
@@ -2109,7 +2139,7 @@ img {
     background-color: #2779bc;
     border-radius: 8px;
     box-shadow: none;
-    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
+    font-family: 'OpenSans';
     font-size: 22px !important;
 }
 .btn-info {
@@ -2168,7 +2198,7 @@ textarea::-webkit-input-placeholder {
     vertical-align: middle;
     background: #FF6065;
     border: 0;
-    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
+    font-family: 'OpenSans';
     font-size: 22px;
     font-weight: 300;
     line-height: 52px;
@@ -2213,7 +2243,7 @@ textarea::-webkit-input-placeholder {
 /***** Top menu *****/
 
 .navbar-default {
-    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
+    font-family: 'OpenSans';
     border: none;
     border-radius: 0;
     margin-bottom: 0;
@@ -2430,7 +2460,7 @@ textarea::-webkit-input-placeholder {
     padding: 10px 50px;
     border: 1px solid #2779bc;
     box-shadow: none;
-    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
+    font-family: 'OpenSans';
     margin: 0 16px 0 15px;
     background-color: white;
     color: #2779bc
@@ -2452,7 +2482,7 @@ textarea::-webkit-input-placeholder {
     line-height: 38px;
     margin: 0 8px 6px 10px;
     font-size: 28px;
-    font-family: 'HelveticaLight','Open Sans';
+    font-family: 'OpenSansLight','OpenSans';
     min-height: 45px;
 }
 .ui-selectmenu-button.ui-widget {
@@ -2466,7 +2496,7 @@ textarea::-webkit-input-placeholder {
     line-height: 37px;
     margin: 0px 8px 0 10px;
     font-size: 28px;
-    font-family: 'HelveticaLight','Open Sans';
+    font-family: 'OpenSansLight','OpenSans';
     min-height: 45px;
     margin-left: 0 !important;
     vertical-align: top;
@@ -2484,7 +2514,7 @@ textarea::-webkit-input-placeholder {
     color: white;
     border-radius: 8px;
     font-size: 28px;
-    font-family: 'HelveticaLight','Open Sans';
+    font-family: 'OpenSansLight','OpenSans';
     padding-left: 10px;
     padding-bottom: 10px;
     cursor: pointer;
@@ -2530,7 +2560,7 @@ textarea::-webkit-input-placeholder {
     text-align: left;
     line-height: 30px;
     font-size: 20px;
-    font-family: 'HelveticaLight','Open Sans';
+    font-family: 'OpenSansLight','OpenSans';
     margin-left: 0;
 }
 
@@ -2542,27 +2572,27 @@ textarea::-webkit-input-placeholder {
 }
 .top-content .description .inline-form-field {
     color: white;
-    font-family: 'HelveticaLight','Open Sans';
+    font-family: 'OpenSansLight','OpenSans';
 }
 .top-content input::-webkit-input-placeholder {
     color: white;
     text-align: center;
-    font-family: 'HelveticaLight','Open Sans';
+    font-family: 'OpenSansLight','OpenSans';
 }
 .top-content input:-moz-placeholder {
     color: white;
     text-align: center;
-    font-family: 'HelveticaLight','Open Sans';
+    font-family: 'OpenSansLight','OpenSans';
 }
 .top-content input::-moz-placeholder {
     color: white;
     text-align: center;
-    font-family: 'HelveticaLight','Open Sans';
+    font-family: 'OpenSansLight','OpenSans';
 }
 .top-content input:-ms-input-placeholder {
     color: white;
     text-align: center;
-    font-family: 'HelveticaLight','Open Sans';
+    font-family: 'OpenSansLight','OpenSans';
 }
 /***** Features *****/
 
@@ -2789,7 +2819,7 @@ h3 {
     text-align: center;
 }
 .testimonials h3 {
-    font-family: 'HelveticaLight','Open Sans';
+    font-family: 'OpenSansLight','OpenSans';
     font-size: 50px;
     font-weight: 300;
     color: black;
@@ -2931,7 +2961,7 @@ h3 {
     padding-bottom: 10px;
 }
 .team h3 {
-    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
+    font-family: 'OpenSans';
     font-size: 50px;
     font-weight: 300;
     line-height: 54px;
@@ -2955,7 +2985,7 @@ h3 {
     position: absolute;
     bottom: 50px;
     left: 20px;
-    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
+    font-family: 'OpenSans';
     font-size: 24px;
     font-weight: 600;
     color: #fff;
@@ -3053,7 +3083,7 @@ h3 {
     border-bottom: 2px solid #FF797E;
 }
 .faq .faq-box h4 {
-    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
+    font-family: 'OpenSans';
     font-size: 18px;
     color: #888;
 }
@@ -3079,7 +3109,7 @@ h3 {
     text-align: center;
 }
 .contact h3 {
-    font-family: 'HelveticaLight','Open Sans';
+    font-family: 'OpenSansLight','OpenSans';
     font-size: 50px;
     font-weight: 300;
     color: #555;
@@ -3118,7 +3148,7 @@ h3 {
     background: #f5f5f5;
     border: none;
     border-bottom: 1px solid #ccc;
-    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
+    font-family: 'OpenSans';
     font-size: 22px;
     font-weight: 300;
     line-height: 50px;
@@ -3217,7 +3247,7 @@ footer a:hover {
     vertical-align: middle;
     background: #07699a;
     border: 0;
-    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
+    font-family: 'OpenSans';
     font-size: 22px;
     font-weight: 300;
     line-height: 52px;
@@ -3297,7 +3327,7 @@ form {
     margin-bottom: 1em;
 }
 label {
-    font-family: 'HelveticaBold', 'HelveticaLight','Open Sans';
+    font-family: 'OpenSansBold', 'OpenSansLight','OpenSans';
 }
 .checkbox input[type="checkbox"] {
     margin-top: 2px;
@@ -3351,13 +3381,13 @@ label.checkbox {
     margin-bottom: -20px;
 }
 .after-breadcrumb {
-    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
+    font-family: 'OpenSans';
 }
 .navbar-text {
     line-height: 1em;
     font-size: 16px;
     margin-top: 17px;
-    font-family: 'Helvetica', 'HelveticaLight','Open Sans';
+    font-family: 'OpenSans';
     color: #2779bc !important;
 }
 .sidebar-main h4 {
