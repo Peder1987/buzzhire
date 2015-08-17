@@ -149,4 +149,4 @@ class ProjectConfiguration(StandardConfiguration):
     PARSE_APPLICATION_ID = '87WebYikYitgl6GOnavbGesoGvA6lka2oLVnH5i3'
     PARSE_REST_API_KEY = 'fI0mhqGrii6fB3euOY2jeNLi44J6ijAXNAt43BWX'
 
-    CONTACT_PHONE = '07831 551 927'
+    CONTACT_PHONE = '020 3322 3738'
