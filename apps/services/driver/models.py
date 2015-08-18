@@ -5,7 +5,7 @@ from apps.core.models import GeoPolymorphicManager
 from apps.freelancer.models import Freelancer, PublishedFreelancerManager
 from django.core.urlresolvers import reverse
 from apps.job.models import JobRequest, JobRequestQuerySet
-from apps.paygrade.models import BasePayGrade
+from apps.paygrade.models import BasePayGrade, BasePayGradeManager
 
 
 DRIVER_SERVICE_TITLE = 'delivery'
@@ -289,12 +289,27 @@ class DriverJobRequest(JobRequest):
         return self.own_vehicle and self.vehicle_type.delivery_box_applicable
 
 
+class DriverPayGradeManager(BasePayGradeManager):
+    "Model manager for DriverPayGrades."
+
+    def get_matching_pay_grades(self, vehicle_type, **kwargs):
+        """Returns queryset of matching pay grades for the supplied
+        filter terms, ordered by most relevant.
+        """
+        return super(DriverPayGradeManager, self).get_matching_pay_grades(
+            **kwargs).filter(vehicle_type=vehicle_type)
+
+
 class DriverPayGrade(BasePayGrade):
     "Pay grade model for drivers."
 
     vehicle_type = models.ForeignKey(FlexibleVehicleType,
            blank=True, null=True,
            help_text='Leave blank to specify drivers with no vehicle.')
+
+    filter_fields = BasePayGrade.filter_fields + ('vehicle_type',)
+
+    objects = DriverPayGradeManager()
 
     class Meta(BasePayGrade.Meta):
         unique_together = ('years_experience', 'vehicle_type')

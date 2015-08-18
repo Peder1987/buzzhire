@@ -2,7 +2,7 @@ from django.contrib.gis.db import models
 from apps.freelancer.models import Freelancer, PublishedFreelancerManager
 from apps.core.models import GeoPolymorphicManager
 from apps.job.models import JobRequest
-from apps.paygrade.models import BasePayGrade
+from apps.paygrade.models import BasePayGrade, BasePayGradeManager
 
 
 BAR_SERVICE_TITLE = 'bar staff'
@@ -44,11 +44,26 @@ class BarFreelancer(Freelancer):
         verbose_name_plural = 'bar staff'
 
 
+class BarPayGradeManager(BasePayGradeManager):
+    "Model manager for BarPayGrades."
+
+    def get_matching_pay_grades(self, role, **kwargs):
+        """Returns queryset of matching pay grades for the supplied
+        filter terms, ordered by most relevant.
+        """
+        return super(BarPayGradeManager, self).get_matching_pay_grades(
+            **kwargs).filter(role=role)
+
+
 class BarPayGrade(BasePayGrade):
     "Pay grade model for bar staff."
 
     role = models.CharField(max_length=2,
                              choices=ROLE_CHOICES)
+
+    filter_fields = BasePayGrade.filter_fields + ('role',)
+
+    objects = BarPayGradeManager()
 
     class Meta(BasePayGrade.Meta):
         unique_together = ('years_experience', 'role')

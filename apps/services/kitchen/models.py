@@ -5,7 +5,7 @@ from apps.freelancer.models import Freelancer, PublishedFreelancerManager
 from django.core.urlresolvers import reverse
 from apps.job.models import JobRequest, JobRequestQuerySet
 from apps.core.models import GeoPolymorphicManager
-from apps.paygrade.models import BasePayGrade
+from apps.paygrade.models import BasePayGrade, BasePayGradeManager
 
 
 ROLE_CHEF = 'CH'
@@ -50,11 +50,26 @@ class KitchenFreelancer(Freelancer):
         verbose_name_plural = 'kitchen staff'
 
 
+class KitchenPayGradeManager(BasePayGradeManager):
+    "Model manager for KitchenPayGrades."
+
+    def get_matching_pay_grades(self, role, **kwargs):
+        """Returns queryset of matching pay grades for the supplied
+        filter terms, ordered by most relevant.
+        """
+        return super(KitchenPayGradeManager, self).get_matching_pay_grades(
+            **kwargs).filter(role=role)
+
+
 class KitchenPayGrade(BasePayGrade):
     "Pay grade model for kitchen staff."
 
     role = models.CharField(max_length=2,
                              choices=ROLE_CHOICES)
+
+    objects = KitchenPayGradeManager()
+
+    filter_fields = BasePayGrade.filter_fields + ('role',)
 
     class Meta(BasePayGrade.Meta):
         unique_together = ('years_experience', 'role')

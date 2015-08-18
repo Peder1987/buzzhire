@@ -52,6 +52,14 @@ class BasePayGrade(models.Model):
               validators=[
                 validators.MinValueValidator(settings.CLIENT_MIN_WAGE)])
 
+    # Define which fields should be used to filter out the correct
+    # pay grade.  Models subclassing BasePayGrade and adding extra fields
+    # should extend filter_fields like so:
+    #
+    #    filter_fields = BasePayGrade.filter_fields + ('my_field',)
+    #
+    filter_fields = ('years_experience',)
+
     objects = BasePayGradeManager()
 
     def __unicode__(self):
