@@ -2,6 +2,8 @@ from django.contrib.gis.db import models
 from apps.freelancer.models import Freelancer, PublishedFreelancerManager
 from apps.job.models import JobRequest
 from apps.core.models import GeoPolymorphicManager
+from apps.paygrade.models import BasePayGrade
+
 
 CLEANER_SERVICE_TITLE = 'cleaners'
 
@@ -23,3 +25,9 @@ class Cleaner(Freelancer):
 
     class Meta:
         verbose_name = 'cleaner'
+
+
+class CleanerPayGrade(BasePayGrade):
+    "Pay grade model for cleaners."
+
+    pass

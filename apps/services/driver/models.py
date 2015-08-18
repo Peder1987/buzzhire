@@ -5,6 +5,7 @@ from apps.core.models import GeoPolymorphicManager
 from apps.freelancer.models import Freelancer, PublishedFreelancerManager
 from django.core.urlresolvers import reverse
 from apps.job.models import JobRequest, JobRequestQuerySet
+from apps.paygrade.models import BasePayGrade
 
 
 DRIVER_SERVICE_TITLE = 'delivery'
@@ -286,3 +287,11 @@ class DriverJobRequest(JobRequest):
     def delivery_box_applicable(self):
         "Returns whether or not the minimum delivery box is applicable."
         return self.own_vehicle and self.vehicle_type.delivery_box_applicable
+
+
+class DriverPayGrade(BasePayGrade):
+    "Pay grade model for drivers."
+
+    vehicle_type = models.ForeignKey(FlexibleVehicleType,
+           blank=True, null=True,
+           help_text='Leave blank to specify drivers with no vehicle.')

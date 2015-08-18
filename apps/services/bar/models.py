@@ -2,6 +2,8 @@ from django.contrib.gis.db import models
 from apps.freelancer.models import Freelancer, PublishedFreelancerManager
 from apps.core.models import GeoPolymorphicManager
 from apps.job.models import JobRequest
+from apps.paygrade.models import BasePayGrade
+
 
 BAR_SERVICE_TITLE = 'bar staff'
 
@@ -40,3 +42,10 @@ class BarFreelancer(Freelancer):
     class Meta:
         verbose_name = 'bartender'
         verbose_name_plural = 'bar staff'
+
+
+class BarPayGrade(BasePayGrade):
+    "Pay grade model for bar staff."
+
+    role = models.CharField(max_length=2,
+                             choices=ROLE_CHOICES)

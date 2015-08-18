@@ -5,6 +5,7 @@ from apps.freelancer.models import Freelancer, PublishedFreelancerManager
 from django.core.urlresolvers import reverse
 from apps.job.models import JobRequest, JobRequestQuerySet
 from apps.core.models import GeoPolymorphicManager
+from apps.paygrade.models import BasePayGrade
 
 
 ROLE_CHEF = 'CH'
@@ -47,3 +48,10 @@ class KitchenFreelancer(Freelancer):
     class Meta:
         verbose_name = 'chef'
         verbose_name_plural = 'kitchen staff'
+
+
+class KitchenPayGrade(BasePayGrade):
+    "Pay grade model for kitchen staff."
+
+    role = models.CharField(max_length=2,
+                             choices=ROLE_CHOICES)
