@@ -8,7 +8,7 @@ from apps.account.forms import SignupInnerForm
 from django.template.loader import render_to_string
 from apps.core.email import send_mail
 from crispy_forms import layout
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from apps.core.widgets import ChoiceAttrsRadioSelect
 from django.forms.widgets import HiddenInput
 from apps.core.widgets import Bootstrap3SterlingMoneyWidget, Bootstrap3TextInput
@@ -64,7 +64,7 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
         amount, currency = self.fields['client_pay_per_hour'].fields
         self.fields['client_pay_per_hour'].widget = Bootstrap3SterlingMoneyWidget(
           amount_widget=widgets.NumberInput(
-                                    attrs={'min': settings.CLIENT_MIN_WAGE}),
+                    attrs={'min': self.get_min_client_pay_per_hour_amount()}),
           currency_widget=widgets.HiddenInput,
           attrs={'step': '0.25'})
         self.fields['start_time'].widget = forms.TimeInput()
@@ -84,23 +84,28 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
                                                     self.comment_placeholder
 
         self.helper.layout = layout.Layout(
-            layout.Fieldset('<span class="booking-form-num">1</span>Date and time',
+            layout.Fieldset(
+                '<span class="booking-form-num">1</span>Date and time',
                 'date', 'start_time', 'duration',
             ),
-            layout.Fieldset('<span class="booking-form-num">2</span>Job location',
+            layout.Fieldset(
+                '<span class="booking-form-num">2</span>Job location',
                 'address1', 'address2',
                 'city',
                 'raw_postcode',
             ),
-            layout.Fieldset('<span class="booking-form-num">3</span>Freelancer details',
+            layout.Fieldset(
+                '<span class="booking-form-num">3</span>Freelancer details',
                 'number_of_freelancers',
                 'years_experience',
             ),
-            layout.Fieldset('<span class="booking-form-num">4</span>Budget',
+            layout.Fieldset(
+                '<span class="booking-form-num">4</span>Budget',
                 'client_pay_per_hour',
                 'tips_included',
             ),
-            layout.Fieldset('<span class="booking-form-num">5</span>Further info',
+            layout.Fieldset(
+                '<span class="booking-form-num">5</span>Further info',
                 'comments'
             ),
         )
@@ -108,6 +113,29 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
         # Add the submit button, but allow subclassing forms to suppress it
         if self.submit_name:
             self.helper.layout.append(self.get_submit_button())
+
+    def get_min_client_pay_per_hour_amount(self, **kwargs):
+        """Returns the minimum client pay per hour for the job request
+        being created, as a decimal.
+        
+        Keyword arguments should be valid keyword arguments to be passed to the
+        pay grade model's get_pay_grade method, which will vary depending on
+        the pay grade model.
+        """
+        # Set a default years_experience, if not provided
+        if 'years_experience' not in kwargs:
+            kwargs['years_experience'] = self.fields['years_experience'].initial
+
+        pay_grade_model = self.service.pay_grade_model
+        try:
+            pay_grade = pay_grade_model.objects.get_pay_grade(**kwargs)
+        except ObjectDoesNotExist:
+            # Fall back to settings.CLIENT_MIN_WAGE on error
+            print 'Could not get pay grade.'
+            return settings.CLIENT_MIN_WAGE
+        else:
+            print 'Matched %s' % pay_grade
+            return pay_grade.min_client_pay_per_hour.amount
 
     def clean(self):
         cleaned_data = super(JobRequestForm, self).clean()

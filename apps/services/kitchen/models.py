@@ -55,3 +55,6 @@ class KitchenPayGrade(BasePayGrade):
 
     role = models.CharField(max_length=2,
                              choices=ROLE_CHOICES)
+
+    class Meta(BasePayGrade.Meta):
+        unique_together = ('years_experience', 'role')

@@ -295,3 +295,6 @@ class DriverPayGrade(BasePayGrade):
     vehicle_type = models.ForeignKey(FlexibleVehicleType,
            blank=True, null=True,
            help_text='Leave blank to specify drivers with no vehicle.')
+
+    class Meta(BasePayGrade.Meta):
+        unique_together = ('years_experience', 'vehicle_type')
