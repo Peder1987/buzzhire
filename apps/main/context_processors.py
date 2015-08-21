@@ -8,6 +8,7 @@ def main(request):
 
     return {
         'contact_email': settings.CONTACT_EMAIL,
+        'bookings_email': settings.BOOKINGS_EMAIL,
         'facebook_url': settings.FACEBOOK_URL,
         'twitter_url': settings.TWITTER_URL,
         'coming_soon': settings.COMING_SOON,

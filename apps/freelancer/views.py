@@ -60,9 +60,8 @@ class FreelancerDetailView(PolymorphicTemplateMixin, DetailView):
             raise PermissionDenied
 
         # Forbid other freelancers
-        if self.request.user.is_driver and self.request.user.driver != object:
-            # TODO: Only drivers are excluded
-            # TODO: Does this mean bartenders etc. can see each other?
+        if self.request.user.is_freelancer and \
+                    self.request.user.freelancer != object:
             raise PermissionDenied
 
         # Forbid clients who don't have the freelancers as booked on their job
