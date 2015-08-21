@@ -6,7 +6,7 @@
       // Gets the correct minimum pay via AJAX,
       // and updates the pay input
       $.ajax({
-        url: "{% min_pay_ajax_endpoint %}",
+        url: "{% min_pay_ajax_endpoint 'waiter' %}",
         context: {hello: 'there'},
       })
       .done(function(data) {

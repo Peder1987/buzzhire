@@ -151,3 +151,8 @@ class ProjectConfiguration(StandardConfiguration):
     PARSE_REST_API_KEY = 'fI0mhqGrii6fB3euOY2jeNLi44J6ijAXNAt43BWX'
 
     CONTACT_PHONE = '020 3322 3738'
+
+    # This setting provides a way to specify the endpoint for getting
+    # the minimum pay grade, while keeping apps.paygrade naive about apps.api.
+    # See apps.paygrade.templatetags.min_pay_ajax_endpoint()
+    PAY_GRADE_REVERSE_URL = '%(service)s_pay_grade_for_client-detail'
