@@ -1,0 +1,33 @@
+{% load paygrade %}
+{# For including on a job request form, to update minimum pay #}
+<script type='text/javascript'>
+  $(function() {
+    function get_min_pay_and_update() {
+      // Gets the correct minimum pay via AJAX,
+      // and updates the pay input
+      $.ajax({
+        url: "{% min_pay_ajax_endpoint %}",
+        context: {hello: 'there'},
+      })
+      .done(function(data) {
+          console.log(data);
+      });
+    }
+    
+    $('#id_years_experience').change(get_min_pay_and_update);
+    
+  });
+  
+</script>
+
+{% comment %}
+function() {
+        min_pay_input = $('#id_client_pay_per_hour_0');
+        min_pay = 10.50;
+        min_pay_input.attr('min', min_pay);
+        console.log(min_pay_input.val());
+        // Increase the pay value, if it's less than the min pay
+        if (min_pay_input.val() < min_pay) {
+          min_pay_input.val(min_pay); 
+      }
+{% endcomment %}

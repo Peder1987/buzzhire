@@ -15,8 +15,15 @@ class SpecificJobRequestIdentityField(serializers.HyperlinkedIdentityField):
     non-generic version of the job request.
     """
     def get_url(self, obj, view_name, request, format):
-        service = service_from_class(obj.__class__)
-        view_name = service.key + '_' + view_name
+        try:
+            service = service_from_class(obj.__class__)
+        except ValueError:
+            # This can happen if a job request doesn't have a specific
+            # service associated with it - don't cause the whole API to break
+            # as a result
+            pass
+        else:
+            view_name = service.key + '_' + view_name
         return super(SpecificJobRequestIdentityField, self).get_url(obj,
                                                     view_name, request, format)
 
@@ -26,7 +33,11 @@ class BaseJobRequestSerializer(serializers.ModelSerializer):
     service_key = serializers.SerializerMethodField()
     def get_service_key(self, obj):
         "Returns the service key."
-        return service_from_class(obj.__class__).key
+        try:
+            return service_from_class(obj.__class__).key
+        except ValueError:
+            return 'unknown'
+
 
 
 

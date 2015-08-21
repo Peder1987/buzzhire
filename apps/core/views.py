@@ -1,5 +1,5 @@
 from django.views.generic.edit import FormView, FormMixin
-from django.views.generic import TemplateView
+from django.views.generic import View, TemplateView
 from django.core.urlresolvers import reverse
 import logging
 from .forms import ConfirmForm
@@ -7,6 +7,8 @@ from django.contrib.auth.views import redirect_to_login
 from django.core.exceptions import PermissionDenied
 from django.apps.registry import apps
 from .utils import template_names_from_polymorphic_model
+from django.http import JsonResponse
+
 
 # A GBP sign
 POUND_SIGN = u'\u00A3'
@@ -429,3 +431,18 @@ class ExtraFormsView(FormView):
                 return self.get_success_url()
         """
         pass
+
+
+class JSONResponseView(View):
+    """
+    A views mixin that can be used to render a JSON response.
+    """
+    def get(self, request, *args, **kwargs):
+        context = self.get_data()
+        return JsonResponse(context)
+
+    def get_data(self):
+        """
+        Returns an object that will be serialized as JSON by json.dumps().
+        """
+        return None

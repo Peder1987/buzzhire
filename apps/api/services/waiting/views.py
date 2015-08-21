@@ -2,8 +2,11 @@ from ...freelancer.views import (FreelancerForClientViewSet,
                                        OwnFreelancerViewSet)
 from ...job.views import (JobRequestForFreelancerViewSet,
                           ServiceSpecificJobRequestForClientViewSet)
-from apps.services.waiting.models import WaitingFreelancer, WaitingJobRequest
-from .serializers import WaitingJobRequestForClientSerializer
+from apps.services.waiting.models import (WaitingFreelancer, WaitingJobRequest,
+                                          WaitingPayGrade)
+from .serializers import (WaitingJobRequestForClientSerializer,
+                          WaitingPayGradeSerializer)
+from ...paygrade.views import BaseClientPayGradeViewSet
 
 
 class OwnWaitingFreelancerViewSet(OwnFreelancerViewSet):
@@ -58,3 +61,27 @@ class WaitingJobRequestForFreelancerViewSet(JobRequestForFreelancerViewSet):
  
     """
     model_class = WaitingJobRequest
+
+
+class ClientWaitingPayGradeViewSet(BaseClientPayGradeViewSet):
+    """Returns pay grade information for the waiting job,
+    given information about what kind of job it is.
+    
+    ## Required parameters
+    
+    - `years_experience` The minimum number of years of working experience
+       required. Integer.  Choices are:
+        - `0` - No preference
+        - `1` - 1 year
+        - `3` - 3 years
+        - `5` - 5 years
+    
+    ## Returned fields
+    
+    - `min_client_pay_per_hour` The minimum pay per hour that will be accepted
+      for the client to pay.
+
+
+    """
+    model_class = WaitingPayGrade
+    serializer_class = WaitingPayGradeSerializer

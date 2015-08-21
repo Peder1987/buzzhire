@@ -11,11 +11,13 @@ from .serializers import (DriverForClientSerializer,
                     FlexibleVehicleTypeSerializer,
                     DriverJobRequestForFreelancerSerializer,
                     DriverJobRequestForClientSerializer,
-                    DriverVehicleTypeSerializer)
+                    DriverVehicleTypeSerializer,
+                    DriverPayGradeSerializer)
 from apps.services.driver.models import (VehicleType, FlexibleVehicleType, Driver,
-                      DriverJobRequest, DriverVehicleType)
+                      DriverJobRequest, DriverVehicleType, DriverPayGrade)
 from .permissions import DriverOnlyPermission
 from ...views import RetrieveAndUpdateViewset
+from ...paygrade.views import BaseClientPayGradeViewSet
 
 
 class DriverForClientViewSet(FreelancerForClientViewSet):
@@ -175,3 +177,33 @@ class DriverVehicleForDriverViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return self.request.user.driver.drivervehicletype_set.all()
 
+
+class ClientDriverPayGradeViewSet(BaseClientPayGradeViewSet):
+    """Returns pay grade information for the driving job,
+    given information about what kind of job it is.
+    
+    ## Required parameters
+    
+    - `years_experience` The minimum number of years of working experience
+       required. Integer.  Choices are:
+        - `0` - No preference
+        - `1` - 1 year
+        - `3` - 3 years
+        - `5` - 5 years
+    
+    ## Optional parameters
+    
+    - `vehicle_type`: The id of the flexible vehicle type that would
+      be appropriate for the job.  Do not supply if any vehicle
+      would be appropriate.
+      
+    ## Returned fields
+    
+    - `min_client_pay_per_hour` The minimum pay per hour that will be accepted
+      for the client to pay.
+    
+    """
+    model_class = DriverPayGrade
+    serializer_class = DriverPayGradeSerializer
+    required_filters = ['years_experience']
+    optional_filters = {'vehicle_type': None}

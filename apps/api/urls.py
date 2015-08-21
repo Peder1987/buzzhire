@@ -13,6 +13,7 @@ from .services.waiting import views as waiting_views
 from .feedback import views as feedback_views
 from .payment import views as payment_views
 from .notification import views as notification_views
+from .paygrade import views as paygrade_views
 
 
 # This app is where we define the endpoints for the API,
@@ -81,6 +82,24 @@ router.register(r'client/bar/job-requests',
 router.register(r'client/waiting/job-requests',
                 waiting_views.WaitingJobRequestForClientViewSet,
                 base_name='waiting_job_requests_for_client')
+
+# Client pay grade info
+router.register(r'client/driver/pay-grade',
+                driver_views.ClientDriverPayGradeViewSet,
+                base_name='driver_pay_grade_for_client')
+router.register(r'client/cleaner/pay-grade',
+                cleaner_views.ClientCleanerPayGradeViewSet,
+                base_name='cleaner_pay_grade_for_client')
+router.register(r'client/kitchen/pay-grade',
+                kitchen_views.ClientKitchenPayGradeViewSet,
+                base_name='kitchen_pay_grade_for_client')
+router.register(r'client/bar/pay-grade',
+                bar_views.ClientBarPayGradeViewSet,
+                base_name='bar_pay_grade_for_client')
+router.register(r'client/waiting/pay-grade',
+                waiting_views.ClientWaitingPayGradeViewSet,
+                base_name='waiting_pay_grade_for_client')
+
 
 # Client payment
 router.register(r'client/payment/token',
@@ -175,5 +194,6 @@ urlpatterns = [
                               namespace='rest_framework')),
     url(r'^v1/token-auth/', views.obtain_auth_token),
     url(r'^v1/', include(router.urls)),
-    url(r'^v1/freelancer/earnings/$', freelancer_views.FreelancerEarningView.as_view(), name='combined-list')
+    url(r'^v1/freelancer/earnings/$',
+        freelancer_views.FreelancerEarningView.as_view(), name='combined-list'),
 ]
