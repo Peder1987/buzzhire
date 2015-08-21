@@ -133,9 +133,6 @@ class ProjectConfiguration(StandardConfiguration):
     def CONTACT_FROM_EMAIL(self):
         return 'BuzzHire <%s>' % self.CONTACT_EMAIL
 
-    def BOOKINGS_EMAIL(self):
-        return self.CONTACT_EMAIL
-
     def BOOKINGS_FROM_EMAIL(self):
         return 'BuzzHire <%s>' % self.BOOKINGS_EMAIL
 
@@ -150,3 +147,4 @@ class ProjectConfiguration(StandardConfiguration):
     PARSE_REST_API_KEY = 'fI0mhqGrii6fB3euOY2jeNLi44J6ijAXNAt43BWX'
 
     CONTACT_PHONE = '020 3322 3738'
+    BOOKINGS_EMAIL = 'support@buzzhire.co'

@@ -15,7 +15,7 @@ def notify_admin_on_freelancer_created(sender, instance, created, **kwargs):
             'freelancer/email/includes/freelancer_created.html',
             {'object': instance}
         )
-        send_mail(settings.JOBS_EMAIL,
+        send_mail(settings.BOOKINGS_EMAIL,
                   subject,
                   'email/base',
                   {'title': subject,
