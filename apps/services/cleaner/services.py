@@ -1,5 +1,5 @@
 from apps.service import services, Service
-from .models import CleanerJobRequest, Cleaner
+from .models import CleanerJobRequest, Cleaner, CleanerPayGrade
 from .forms import CleanerJobRequestForm, CleanerForm
 
 
@@ -13,5 +13,6 @@ class CleanerService(Service):
     freelancer_model = Cleaner
     freelancer_form = CleanerForm
 
+    pay_grade_model = CleanerPayGrade
 
 services.register(CleanerService)

@@ -1,4 +1,5 @@
 from decimal import Decimal
+from moneyed import Money
 from datetime import date, datetime, timedelta
 from django import forms
 from django.forms import widgets
@@ -8,7 +9,7 @@ from apps.account.forms import SignupInnerForm
 from django.template.loader import render_to_string
 from apps.core.email import send_mail
 from crispy_forms import layout
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from apps.core.widgets import ChoiceAttrsRadioSelect
 from django.forms.widgets import HiddenInput
 from apps.core.widgets import Bootstrap3SterlingMoneyWidget, Bootstrap3TextInput
@@ -20,6 +21,7 @@ from . import service_from_class
 from .validators import validate_start_date_and_time
 from crispy_forms.helper import FormHelper
 import logging
+from django.utils.safestring import mark_safe
 
 
 logger = logging.getLogger('project')
@@ -62,9 +64,11 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
         self.fields['city'].label = False
 
         amount, currency = self.fields['client_pay_per_hour'].fields
+        default_min_pay = self.get_min_client_pay_per_hour()
+        self.fields['client_pay_per_hour'].initial = default_min_pay
         self.fields['client_pay_per_hour'].widget = Bootstrap3SterlingMoneyWidget(
           amount_widget=widgets.NumberInput(
-                                    attrs={'min': settings.CLIENT_MIN_WAGE}),
+                    attrs={'min': default_min_pay.amount}),
           currency_widget=widgets.HiddenInput,
           attrs={'step': '0.25'})
         self.fields['start_time'].widget = forms.TimeInput()
@@ -84,23 +88,28 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
                                                     self.comment_placeholder
 
         self.helper.layout = layout.Layout(
-            layout.Fieldset('<span class="booking-form-num">1</span>Date and time',
+            layout.Fieldset(
+                '<span class="booking-form-num">1</span>Date and time',
                 'date', 'start_time', 'duration',
             ),
-            layout.Fieldset('<span class="booking-form-num">2</span>Job location',
+            layout.Fieldset(
+                '<span class="booking-form-num">2</span>Job location',
                 'address1', 'address2',
                 'city',
                 'raw_postcode',
             ),
-            layout.Fieldset('<span class="booking-form-num">3</span>Freelancer details',
+            layout.Fieldset(
+                '<span class="booking-form-num">3</span>Freelancer details',
                 'number_of_freelancers',
                 'years_experience',
             ),
-            layout.Fieldset('<span class="booking-form-num">4</span>Budget',
+            layout.Fieldset(
+                '<span class="booking-form-num">4</span>Budget',
                 'client_pay_per_hour',
                 'tips_included',
             ),
-            layout.Fieldset('<span class="booking-form-num">5</span>Further info',
+            layout.Fieldset(
+                '<span class="booking-form-num">5</span>Further info',
                 'comments'
             ),
         )
@@ -109,14 +118,59 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
         if self.submit_name:
             self.helper.layout.append(self.get_submit_button())
 
+    def get_min_client_pay_per_hour(self, **kwargs):
+        """Returns the minimum client pay per hour for the job request
+        being created, as a moneyed.Money object.
+        
+        Keyword arguments should be valid keyword arguments to be passed to the
+        pay grade model's get_pay_grade method, which will vary depending on
+        the pay grade model.
+        
+        If kwargs are not supplied, it will use the defaults.
+        """
+        pay_grade_model = self.service.pay_grade_model
+
+        # Set default fields, if not provided
+        for filter_field in pay_grade_model.filter_fields:
+            if filter_field not in kwargs:
+                if not self.is_bound:
+                    # The form hasn't been submitted, so use the defaults
+                    kwargs[filter_field] = self.fields[filter_field].initial
+                else:
+                    # The form has been submitted; use the data
+                    kwargs[filter_field] = self.data[filter_field]
+
+        try:
+            pay_grade = pay_grade_model.objects.get_pay_grade(**kwargs)
+        except ObjectDoesNotExist:
+            # Fall back to settings.CLIENT_MIN_WAGE on error
+            print 'Could not get pay grade.'
+            return Money(settings.CLIENT_MIN_WAGE, 'GBP')
+        else:
+            print 'Matched %s' % pay_grade
+            return pay_grade.min_client_pay_per_hour
+
     def clean(self):
-        cleaned_data = super(JobRequestForm, self).clean()
+        self.cleaned_data = super(JobRequestForm, self).clean()
+
+        # Validate the pay
+        self.validate_client_pay_per_hour()
 
         # Validate the date and time
-        validate_start_date_and_time(cleaned_data.get('date'),
-                                     cleaned_data.get('start_time'))
+        validate_start_date_and_time(self.cleaned_data.get('date'),
+                                     self.cleaned_data.get('start_time'))
 
-
+    def validate_client_pay_per_hour(self):
+        """Validates the client pay per hour based on the other fields,
+        making sure it matches the pay grade.
+        """
+        # Get what the minimum pay should be based on those fields
+        min_pay = self.get_min_client_pay_per_hour()
+        # Validate
+        if self.cleaned_data['client_pay_per_hour'].amount < min_pay.amount:
+            self.add_error('client_pay_per_hour',
+                mark_safe('This is below the minimum pay for a freelancer ' \
+                'with that experience, which is &pound;%s.' % min_pay.amount))
 
     def save(self, client, commit=True):
         """We require the client to be passed at save time.  This is

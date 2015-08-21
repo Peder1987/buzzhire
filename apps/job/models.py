@@ -13,6 +13,7 @@ from apps.freelancer.models import client_to_freelancer_rate
 from decimal import Decimal
 from django_fsm import FSMField, transition
 from polymorphic import PolymorphicModel, PolymorphicQuerySet
+from apps.paygrade.models import YEARS_EXPERIENCE_CHOICES
 
 
 class JobRequestQuerySet(PolymorphicQuerySet):
@@ -145,12 +146,10 @@ class JobRequest(PolymorphicModel):
                                 choices=[(i, i) for i in range(1, 10)],
                                 default=1)
 
-    YEARS_EXPERIENCE_CHOICES = (
-        (0, 'No preference'),
-        (1, '1 year'),
-        (3, '3 years'),
-        (5, '5 years'),
-    )
+    # Set a reference to YEARS_EXPERIENCE_CHOICES on the JobRequest,
+    # for consistency
+    YEARS_EXPERIENCE_CHOICES = YEARS_EXPERIENCE_CHOICES
+
     years_experience = models.PositiveSmallIntegerField(
                                 'Minimum years of experience',
                                 choices=YEARS_EXPERIENCE_CHOICES,

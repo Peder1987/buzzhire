@@ -2,6 +2,8 @@ from django.contrib.gis.db import models
 from apps.freelancer.models import Freelancer, PublishedFreelancerManager
 from apps.job.models import JobRequest
 from apps.core.models import GeoPolymorphicManager
+from apps.paygrade.models import BasePayGrade
+
 
 WAITING_SERVICE_TITLE = 'waiters'
 
@@ -23,3 +25,9 @@ class WaitingFreelancer(Freelancer):
 
     class Meta:
         verbose_name = 'waiter'
+
+
+class WaitingPayGrade(BasePayGrade):
+    "Pay grade model for waiting staff."
+
+    pass

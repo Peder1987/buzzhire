@@ -37,6 +37,7 @@ class ProjectConfiguration(StandardConfiguration):
         'apps.client',
         'apps.freelancer',
         'apps.payment',
+        'apps.paygrade',
         'apps.job',
         'apps.booking',
         'apps.feedback',
@@ -148,3 +149,8 @@ class ProjectConfiguration(StandardConfiguration):
 
     CONTACT_PHONE = '020 3322 3738'
     BOOKINGS_EMAIL = 'support@buzzhire.co'
+
+    # This setting provides a way to specify the endpoint for getting
+    # the minimum pay grade, while keeping apps.paygrade naive about apps.api.
+    # See apps.paygrade.templatetags.min_pay_ajax_endpoint()
+    PAY_GRADE_REVERSE_URL = '%(service)s_pay_grade_for_client-detail'

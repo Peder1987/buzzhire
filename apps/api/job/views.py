@@ -148,7 +148,8 @@ class JobRequestForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
         #       Not that bad for the overview, but breaks the individual views:
         #       fine:   /api/v1/freelancer/job-requests/
         #       broken: /api/v1/freelancer/job-requests/155/
-        from_bookings = map(lambda x:x.jobrequest.id,freelancer.bookings.all())
-        from_invitations = map(lambda x:x.jobrequest.id,freelancer.invitations.all())
-        x = self.model_class.objects.filter(id__in=set(from_bookings+from_invitations))
-        return x 
+        from_bookings = map(lambda x:x.jobrequest.id, freelancer.bookings.all())
+        from_invitations = map(lambda x:x.jobrequest.id, freelancer.invitations.all())
+        x = self.model_class.objects.filter(id__in=set(from_bookings + from_invitations))
+        return x
+

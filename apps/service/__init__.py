@@ -34,6 +34,7 @@ class Service(object):
     freelancer_model = None
     freelancer_additional_menu_items = []
     job_matching_form = None
+    pay_grade_model = None
 
     @classproperty
     def service_name(cls):
