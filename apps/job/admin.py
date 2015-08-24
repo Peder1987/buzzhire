@@ -12,6 +12,7 @@ class JobRequestAdmin(FSMTransitionMixin, admin.ModelAdmin):
     fsm_field = ['status']
     exclude = ('status', 'phone_requirement_old')
     readonly_fields = ['status_display', 'end_datetime']
+    raw_id_fields = ('client',)
 
     def status_display(self, instance):
         return instance.get_status_display()

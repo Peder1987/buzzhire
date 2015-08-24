@@ -138,16 +138,19 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
                     kwargs[filter_field] = self.fields[filter_field].initial
                 else:
                     # The form has been submitted; use the data
-                    kwargs[filter_field] = self.data[filter_field]
+                    submitted_value = self.data[filter_field]
+                    # Convert empty strings to None, to be valid
+                    # for get_pay_grade()
+                    if not submitted_value:
+                        submitted_value = None
+                    kwargs[filter_field] = submitted_value
 
         try:
             pay_grade = pay_grade_model.objects.get_pay_grade(**kwargs)
         except ObjectDoesNotExist:
             # Fall back to settings.CLIENT_MIN_WAGE on error
-            print 'Could not get pay grade.'
             return Money(settings.CLIENT_MIN_WAGE, 'GBP')
         else:
-            print 'Matched %s' % pay_grade
             return pay_grade.min_client_pay_per_hour
 
     def clean(self):
