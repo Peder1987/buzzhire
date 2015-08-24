@@ -159,6 +159,9 @@ router.register(r'freelancer/bookings',
 router.register(r'freelancer/invitations',
                 booking_views.InvitationForFreelancerViewSet,
                 base_name='invitations_for_freelancer')
+router.register(r'freelancer/applications',
+                booking_views.ApplicationForFreelancerViewSet,
+                base_name='applications_for_freelancer')
 
 # Freelancer's job requests (all types)
 router.register(r'freelancer/job-requests',

@@ -125,7 +125,7 @@ class OwnFreelancerAvailabilityViewSet(RetrieveAndUpdateViewset):
     """The currently logged in freelancer's availability.
     """
     model = Availability
-    serializer_class = AvailabilitySerializer 
+    serializer_class = AvailabilitySerializer
 
     permission_classes = (FreelancerOnlyPermission,)
 
@@ -148,11 +148,11 @@ class FreelancerEarningView(APIView):
       fl = self.request.user.freelancer
       jrs = JobRequest.objects.filter(bookings__freelancer=fl)
       # TODO: Foreign currencies are ignored for now
-      result = defaultdict(lambda:Money(0,"GBP"))
-      for j in filter(lambda x:x.status in set(['CP','CF']), jrs):
+      result = defaultdict(lambda:Money(0, "GBP"))
+      for j in filter(lambda x:x.status in set(['CP', 'CF']), jrs):
         result[j.status] += j.client_pay_per_hour * j.duration
       # Converting for serialization
-      for st in result.keys(): 
+      for st in result.keys():
         result[st] = {"amount": result[st].amount, "currency": result[st].currency.code}
       return Response(result, status=status.HTTP_200_OK)
 

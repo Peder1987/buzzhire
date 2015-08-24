@@ -34,3 +34,30 @@ class CreateUpdateNotDestroyViewset(mixins.CreateModelMixin,
     a standard ModelViewSet.
     """
     pass
+
+
+class DateSliceMixin(object):
+    """Mixin for Views/Viewsets wishing to implement a past/future 
+    dateslice API.
+    
+    Requires that the queryset being used has the appropriate past()/future()
+    methods on it.
+    
+    If the Viewset overrides get_queryset, be sure to called
+    self.datesliced_queryset() before returning the queryset.
+    
+    """
+    def get_queryset(self):
+        queryset = super(DateSliceMixin, self).get_queryset()
+        queryset = self.datesliced_queryset(queryset)
+        return queryset
+
+    def datesliced_queryset(self, queryset):
+        """Filter the queryset by past/future, if the queryset arguments
+        are supplied.
+        """
+        if self.request.GET.get('dateslice') == 'future':
+            queryset = queryset.future()
+        elif self.request.GET.get('dateslice') == 'past':
+            queryset = queryset.past()
+        return queryset

@@ -6,6 +6,7 @@ from datetime import date, time
 import calendar
 from apps.freelancer.models import Freelancer
 from apps.job.models import JobRequest
+from .signals import invitation_applied
 
 
 class BookingOrInvitationQuerySet(models.QuerySet):
@@ -187,6 +188,8 @@ class Invitation(models.Model):
         """Marks the invitation as applied."""
         self.date_applied = timezone.now()
         self.save()
+        # Dispatch signal
+        invitation_applied.send(sender=self.__class__, invitation=self)
 
     def is_accepted(self):
         """Whether or not the invitation has been accepted."""
