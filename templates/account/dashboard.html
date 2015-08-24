@@ -28,12 +28,14 @@
                 <p><a href='{% url 'availability_update' %}' class='btn btn-default'> Save availability</a></p>
             </div>
         {% endif %}
-        {% if not request.user.freelancer.photo %}
-            <div class='alert alert-warning'>
-                <p>You have not provided a photo yet.</p>
-                <p><a href='{% url 'freelancer_photo_update' %}' class='btn btn-default'> Upload photo</a></p>
-            </div>
-        {% endif %}
+        {% comment %}
+            {% if not request.user.freelancer.photo %}
+                <div class='alert alert-warning'>
+                    <p>You have not provided a photo yet.</p>
+                    <p><a href='{% url 'freelancer_photo_update' %}' class='btn btn-default'> Upload photo</a></p>
+                </div>
+            {% endif %}
+        {% endcomment %}
     {% endif %}
     {% include 'feedback/includes/dashboard_nag.html' %}
 {% endblock %}
