@@ -133,6 +133,12 @@
                         {{ 'time'|icon }} {{ object.start_time }}
                     </td>
                 </tr>
+                {% if request.user.is_freelancer %}
+                    <tr>
+                        <th>Arrival time</th>
+                        <td>{{ 'time'|icon }} {{ object.arrival_time }}</td>
+                    </tr>
+                {% endif %}
                 <tr>
                     <th>Duration</th>
                     <td>

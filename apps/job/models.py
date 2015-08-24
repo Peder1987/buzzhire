@@ -218,6 +218,19 @@ class JobRequest(PolymorphicModel):
         "Returns a reference number for this request."
         return 'JR%s' % str(self.pk).zfill(5)
 
+    @property
+    def start_datetime(self):
+        return timezone.make_aware(
+                                datetime.combine(self.date, self.start_time),
+                                timezone.get_current_timezone())
+
+    @property
+    def arrival_time(self):
+        "Returns the time that a freelancer should arrive before booking."
+        arrival_datetime = self.start_datetime - timedelta(
+                                    minutes=settings.ARRIVAL_PERIOD_MINUTES)
+        return arrival_datetime.time()
+
     def get_absolute_url(self):
         return reverse('jobrequest_detail', args=(self.pk,))
 
@@ -228,11 +241,7 @@ class JobRequest(PolymorphicModel):
         # we need to assume that the date and time are provided as the default
         # timezone.  For example, if someone has specified a date during British
         # Summertime, we need to take that into account.
-        local_start_datetime = timezone.make_aware(
-                                datetime.combine(self.date, self.start_time),
-                                timezone.get_current_timezone())
-
-        local_end_datetime = local_start_datetime + timedelta(
+        local_end_datetime = self.start_datetime + timedelta(
                                                         hours=self.duration)
         # Now we have a correct timezone aware datetime, we need to convert it
         # to UTC (which is how it's stored in the database) before saving.

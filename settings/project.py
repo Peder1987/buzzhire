@@ -154,3 +154,6 @@ class ProjectConfiguration(StandardConfiguration):
     # the minimum pay grade, while keeping apps.paygrade naive about apps.api.
     # See apps.paygrade.templatetags.min_pay_ajax_endpoint()
     PAY_GRADE_REVERSE_URL = '%(service)s_pay_grade_for_client-detail'
+
+    # The number of minutes before the booking a freelancer should arrive
+    ARRIVAL_PERIOD_MINUTES = 15

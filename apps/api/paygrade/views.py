@@ -2,7 +2,7 @@ from rest_framework import viewsets, mixins, status
 from .serializers import BasePayGradeSerializer
 from apps.paygrade.models import BasePayGrade
 from apps.api.views import RetrieveViewset
-from apps.api.client.permissions import ClientOnlyPermission
+from apps.api.client.permissions import ClientOrAdminOnlyPermission
 from rest_framework.exceptions import ValidationError, NotFound
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -28,7 +28,7 @@ class BaseClientPayGradeViewSet(RetrieveViewset):
     """
     model_class = BasePayGrade
     serializer_class = BasePayGradeSerializer
-    permission_classes = (ClientOnlyPermission,)
+    permission_classes = (ClientOrAdminOnlyPermission,)
     required_filters = ['years_experience']
     optional_filters = {}  # Can specify optional filters, keys as names,
                            # values as defaults
@@ -50,8 +50,9 @@ class BaseClientPayGradeViewSet(RetrieveViewset):
             raise ValidationError({'missing_filters': missing_filters})
 
         for filter_name, default_value in self.optional_filters.items():
-            filter_kwargs[filter_name] = self.request.GET.get(filter_name,
-                                                              default_value)
+            get_value = self.request.GET.get(filter_name, None)
+            filter_kwargs[filter_name] = get_value if get_value \
+                                         else default_value
 
         try:
             return self.model_class.objects.get_pay_grade(**filter_kwargs)
