@@ -1,7 +1,7 @@
 from .project import ProjectConfiguration
 from configurations_seddonym import installations
 import os
-
+import logging
 
 class BraintreeSandboxMixin(object):
     """Settings for the Braintree sandbox.
