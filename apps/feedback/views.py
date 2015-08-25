@@ -46,7 +46,7 @@ class FeedbackAllowedMixin(object):
         all the feedback needed for this job request.
         """
         if self.author_type == BookingFeedback.AUTHOR_TYPE_CLIENT:
-            return not self.object.needs_feedback_from_client
+            return not self.object.needs_feedback_from_client()
         else:
             return BookingFeedback.objects.freelancer_feedback_exists(
                                                 self.object, self.freelancer)
