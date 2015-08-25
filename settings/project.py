@@ -123,7 +123,7 @@ class ProjectConfiguration(StandardConfiguration):
     COMMISSION_ROUND_PENCE = 25
 
     # API
-    API_ACTIVE = False
+    API_ACTIVE = True
     REST_FRAMEWORK = {
         'DEFAULT_AUTHENTICATION_CLASSES': (
             'rest_framework.authentication.TokenAuthentication',
