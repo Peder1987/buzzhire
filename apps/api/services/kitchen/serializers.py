@@ -1,10 +1,12 @@
 from django.forms import widgets
 from rest_framework import serializers
-from apps.services.kitchen.models import KitchenFreelancer, KitchenJobRequest
+from apps.services.kitchen.models import (KitchenFreelancer, KitchenJobRequest,
+                                          KitchenPayGrade)
 from ...freelancer.serializers import (OwnFreelancerSerializer,
                                              FreelancerForClientSerializer)
 from ...job.serializers import JobRequestForFreelancerSerializer
 from ...booking.serializers import BookingsJobRequestForClientSerializer
+from ...paygrade.serializers import BasePayGradeSerializer
 
 
 class KitchenFreelancerForClientSerializer(FreelancerForClientSerializer):
@@ -35,3 +37,8 @@ class KitchenJobRequestForClientSerializer(BookingsJobRequestForClientSerializer
         model = KitchenJobRequest
         fields = BookingsJobRequestForClientSerializer.Meta.fields + \
                   ('role',)
+
+
+class KitchenPayGradeSerializer(BasePayGradeSerializer):
+    class Meta(BasePayGradeSerializer.Meta):
+        model = KitchenPayGrade

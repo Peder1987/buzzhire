@@ -1,6 +1,7 @@
 from apps.service import services, Service
-from .models import WaitingJobRequest, WaitingFreelancer
+from .models import WaitingJobRequest, WaitingFreelancer, WaitingPayGrade
 from .forms import WaitingJobRequestForm, WaitingFreelancerForm
+from apps.booking.forms import JobMatchingForm
 
 
 class WaitingService(Service):
@@ -13,6 +14,10 @@ class WaitingService(Service):
 
     freelancer_model = WaitingFreelancer
     freelancer_form = WaitingFreelancerForm
+
+    job_matching_form = JobMatchingForm
+
+    pay_grade_model = WaitingPayGrade
 
 
 services.register(WaitingService)

@@ -37,6 +37,7 @@ class ProjectConfiguration(StandardConfiguration):
         'apps.client',
         'apps.freelancer',
         'apps.payment',
+        'apps.paygrade',
         'apps.job',
         'apps.booking',
         'apps.feedback',
@@ -115,7 +116,7 @@ class ProjectConfiguration(StandardConfiguration):
     COMING_SOON = False
 
     # Min pay per hour, before commission
-    CLIENT_MIN_WAGE = 9.0
+    CLIENT_MIN_WAGE = 8.0
     # The percent commission we charge on client rates
     COMMISSION_PERCENT = 15
     # Number of pence to round to
@@ -148,3 +149,12 @@ class ProjectConfiguration(StandardConfiguration):
 
     CONTACT_PHONE = '020 3322 3738'
     BOOKINGS_EMAIL = 'support@buzzhire.co'
+    JOBS_EMAIL = 'jobs@buzzhire.co'
+
+    # This setting provides a way to specify the endpoint for getting
+    # the minimum pay grade, while keeping apps.paygrade naive about apps.api.
+    # See apps.paygrade.templatetags.min_pay_ajax_endpoint()
+    PAY_GRADE_REVERSE_URL = '%(service)s_pay_grade_for_client-detail'
+
+    # The number of minutes before the booking a freelancer should arrive
+    ARRIVAL_PERIOD_MINUTES = 15

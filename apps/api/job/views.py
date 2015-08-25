@@ -6,9 +6,10 @@ from ..booking.serializers import BookingsJobRequestForClientSerializer
 from .serializers import (JobRequestForFreelancerSerializer,
                           JobRequestForClientSerializer)
 from apps.job.models import JobRequest
+from apps.api.views import DateSliceMixin
 
 
-class JobRequestForClientViewSet(viewsets.ReadOnlyModelViewSet):
+class JobRequestForClientViewSet(DateSliceMixin, viewsets.ReadOnlyModelViewSet):
     """All job requests created by the logged in client.
     
     This endpoint can be used to list job requests.  To create job
@@ -78,11 +79,7 @@ class JobRequestForClientViewSet(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         queryset = self.model_class.objects.for_client(
                                                 self.request.user.client)
-        if self.request.GET.get('dateslice') == 'future':
-            queryset = queryset.future()
-        elif self.request.GET.get('dateslice') == 'past':
-            queryset = queryset.past()
-
+        queryset = self.datesliced_queryset(queryset)
         return queryset
 
 
@@ -94,9 +91,18 @@ class ServiceSpecificJobRequestForClientViewSet(mixins.CreateModelMixin,
     """
     pass
 
-class JobRequestForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
+class JobRequestForFreelancerViewSet(DateSliceMixin,
+                                     viewsets.ReadOnlyModelViewSet):
     """All job requests for the logged in freelancer
     (ones either invited or booked on).
+    
+    ## Query parameters
+    
+    - `dateslice` Optional. Limit results by date.  Choices are:
+        - `past` Past job requests.
+        - `future` Future job requests.
+    
+    ## Fields
     
     - `id` Unique id for the job request.  Can be used as a unique id for 
            more specific kinds of job request objects,
@@ -148,7 +154,11 @@ class JobRequestForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
         #       Not that bad for the overview, but breaks the individual views:
         #       fine:   /api/v1/freelancer/job-requests/
         #       broken: /api/v1/freelancer/job-requests/155/
-        from_bookings = map(lambda x:x.jobrequest.id,freelancer.bookings.all())
-        from_invitations = map(lambda x:x.jobrequest.id,freelancer.invitations.all())
-        x = self.model_class.objects.filter(id__in=set(from_bookings+from_invitations))
-        return x 
+        from_bookings = map(lambda x:x.jobrequest.id, freelancer.bookings.all())
+        from_invitations = map(lambda x:x.jobrequest.id, freelancer.invitations.all())
+        queryset = self.model_class.objects.filter(id__in=set(from_bookings + from_invitations))
+
+        queryset = self.datesliced_queryset(queryset)
+
+        return queryset
+

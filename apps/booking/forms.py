@@ -159,6 +159,11 @@ class BookingOrInvitationConfirmForm(ConfirmForm):
         context['request'] = self.request
         return context
 
+class BookingConfirmForm(BookingOrInvitationConfirmForm):
+    """Form for confirming a booking."""
+    inner_template_name = 'booking/includes/booking_confirm_form_inner.html'
+
+
 class InvitationApplyForm(ConfirmForm):
     def __init__(self, *args, **kwargs):
         self.invitation = kwargs.pop('invitation')

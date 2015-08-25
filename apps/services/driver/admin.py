@@ -1,6 +1,7 @@
 from django.contrib import admin
 from apps.job.admin import JobRequestAdmin
 from apps.freelancer.admin import FreelancerAdmin
+from apps.paygrade.admin import PayGradeAdmin
 from . import models
 
 
@@ -21,6 +22,7 @@ admin.site.register(models.Driver, DriverAdmin)
 admin.site.register(models.VehicleType, VehicleTypeAdmin)
 admin.site.register(models.DriverVehicleType, DriverVehicleTypeAdmin)
 
+
 class DriverJobRequestAdmin(JobRequestAdmin):
     list_display = ('reference_number', 'client', 'date', 'start_time',
                     'duration', 'end_datetime',
@@ -29,3 +31,9 @@ class DriverJobRequestAdmin(JobRequestAdmin):
     exclude = JobRequestAdmin.exclude + ('driving_experience_old',)
 
 admin.site.register(models.DriverJobRequest, DriverJobRequestAdmin)
+
+
+class DriverPayGradeAdmin(PayGradeAdmin):
+    list_display = ('vehicle_type',) + PayGradeAdmin.list_display
+
+admin.site.register(models.DriverPayGrade, DriverPayGradeAdmin)

@@ -16,22 +16,34 @@ class BookingOrInvitationSerializer(serializers.ModelSerializer):
                                                         source='jobrequest',
                                                         read_only=True)
 
-    accept_endpoint = serializers.HyperlinkedIdentityField(
-                                view_name='invitations_for_freelancer-accept')
     class Meta:
         fields = ('id', 'reference_number',
                   'job_request', 'date_created',
-                  'job_request_full', 'accept_endpoint')
+                  'job_request_full')
 
 class BookingSerializer(BookingOrInvitationSerializer):
     class Meta(BookingOrInvitationSerializer.Meta):
         model = Booking
 
 
-
 class InvitationSerializer(BookingOrInvitationSerializer):
+
+    apply_endpoint = serializers.HyperlinkedIdentityField(
+                                view_name='invitations_for_freelancer-apply')
+
     class Meta(BookingOrInvitationSerializer.Meta):
         model = Invitation
+        fields = BookingOrInvitationSerializer.Meta.fields + \
+                                                            ('apply_endpoint',)
+
+
+class ApplicationSerializer(BookingOrInvitationSerializer):
+    "An Application is just an Invitation that has been applied for."
+
+    class Meta(BookingOrInvitationSerializer.Meta):
+        model = Invitation
+        fields = BookingOrInvitationSerializer.Meta.fields + ('date_applied',
+                                                              'date_declined')
 
 
 class BookingForClientSerializer(serializers.ModelSerializer):
@@ -55,8 +67,9 @@ class BookingsJobRequestForClientSerializer(
         fields = job_serializers.JobRequestForClientSerializer.Meta.fields + (
                         'bookings',)
 
+
 class AvailabilitySerializer(serializers.ModelSerializer):
     "Serializer for Freelancer Availability."
     class Meta:
       model = Availability
-      exclude = ('freelancer','id')
+      exclude = ('freelancer', 'id')

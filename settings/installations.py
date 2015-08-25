@@ -1,7 +1,7 @@
 from .project import ProjectConfiguration
 from configurations_seddonym import installations
 import os
-
+import logging
 
 class BraintreeSandboxMixin(object):
     """Settings for the Braintree sandbox.
@@ -40,6 +40,7 @@ class Local(BraintreeSandboxMixin, HueyMixin,
     API_ACTIVE = True
 
     BOOKINGS_EMAIL = 'support-local@dev.buzzhire.co'
+    JOBS_EMAIL = 'jobs-local@dev.buzzhire.co'
 
     INSTALLED_APPS = ProjectConfiguration.INSTALLED_APPS + (
         'debug_toolbar',
@@ -55,6 +56,7 @@ class Dev(BraintreeSandboxMixin, HueyMixin,
     ACCOUNT_PASSWORD_MIN_LENGTH = 1
 
     BOOKINGS_EMAIL = 'support@dev.buzzhire.co'
+    JOBS_EMAIL = 'jobs@dev.buzzhire.co'
 
     HUEY_NAME = 'dev'
     HUEY_PORT = 17610

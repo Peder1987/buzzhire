@@ -13,10 +13,10 @@ from .models import (Booking, Availability, Invitation,
             JobFullyBooked, JobInPast)
 from .forms import AvailabilityForm, JobMatchingForm, \
                     BookingOrInvitationConfirmForm, InvitationApplyForm, \
-                    InvitationDeclineForm
+                    InvitationDeclineForm, BookingConfirmForm
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import get_object_or_404, redirect
-from .signals import (invitation_created, invitation_applied,
+from .signals import (invitation_created,
                       booking_created, invitation_declined)
 from django.core.exceptions import PermissionDenied
 from apps.job.views import JobRequestDetail
@@ -239,6 +239,7 @@ class BookingConfirm(BaseInvitationOrBookingConfirm):
     """
     question = 'Are you sure you want to create this booking?'
     model_class = Booking
+    form_class = BookingConfirmForm
     action_text = 'Book'
     action_icon = 'confirm'
 
@@ -328,8 +329,6 @@ class InvitationApply(FreelancerOnlyMixin,
     def form_valid(self, form):
         form.save()
         messages.success(self.request, 'You have now applied for the job.')
-        # Dispatch signal
-        invitation_applied.send(sender=self, invitation=self.invitation)
         return redirect(self.invitation.jobrequest.get_absolute_url())
 
 class InvitationDecline(AdminOnlyMixin,

@@ -1,6 +1,7 @@
 from apps.service import services, Service
-from .models import CleanerJobRequest, Cleaner
+from .models import CleanerJobRequest, Cleaner, CleanerPayGrade
 from .forms import CleanerJobRequestForm, CleanerForm
+from apps.booking.forms import JobMatchingForm
 
 
 class CleanerService(Service):
@@ -13,5 +14,8 @@ class CleanerService(Service):
     freelancer_model = Cleaner
     freelancer_form = CleanerForm
 
+    job_matching_form = JobMatchingForm
+
+    pay_grade_model = CleanerPayGrade
 
 services.register(CleanerService)

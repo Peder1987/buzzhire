@@ -16,3 +16,4 @@ def complete_job_requests():
         count += 1
     print('[%s] Automatically completed %d job requests.' % (time.ctime(),
                                                              count))
+

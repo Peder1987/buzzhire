@@ -62,9 +62,13 @@ class Client(models.Model):
         "Returns the full name of the client."
         return '%s %s' % (self.first_name,
                           self.last_name)
-    
+
     def __unicode__(self):
-        return self.get_full_name()
+        # Show the company name by default, falling back to their own name
+        if self.company_name:
+            return self.company_name
+        else:
+            return self.get_full_name()
 
     def get_absolute_url(self):
         return reverse('admin:client_client_change', args=(self.pk,))

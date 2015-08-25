@@ -17,5 +17,6 @@ class FreelancerAdmin(admin.ModelAdmin):
                     'published', 'postcode')
     list_filter = ('published',)
     search_fields = ('first_name', 'last_name', 'user__email')
+    raw_id_fields = ('user',)
 
 admin.site.register(models.Freelancer, FreelancerAdmin)

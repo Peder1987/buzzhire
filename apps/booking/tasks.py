@@ -1,15 +1,16 @@
 import time
 from huey.djhuey import db_task
 from .models import Invitation
-from .forms import JobMatchingForm
-from .utils import JobMatcher
 from .signals import invitation_created
+from apps.job import service_from_class
+
 
 @db_task()
 def invite_matching_freelancers(job_request):
     """Invites all suitable freelancers for the supplied job request. 
     """
-    matcher = JobMatcher(job_request)
+    service = service_from_class(job_request.__class__)
+    matcher = service.job_matching_form.job_matcher(job_request)
     freelancers = matcher.get_results(ignore_availability=True)
     for freelancer in freelancers:
         invitation, created = Invitation.objects.get_or_create(

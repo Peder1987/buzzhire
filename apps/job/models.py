@@ -13,6 +13,7 @@ from apps.freelancer.models import client_to_freelancer_rate
 from decimal import Decimal
 from django_fsm import FSMField, transition
 from polymorphic import PolymorphicModel, PolymorphicQuerySet
+from apps.paygrade.models import YEARS_EXPERIENCE_CHOICES
 
 
 class JobRequestQuerySet(PolymorphicQuerySet):
@@ -145,12 +146,10 @@ class JobRequest(PolymorphicModel):
                                 choices=[(i, i) for i in range(1, 10)],
                                 default=1)
 
-    YEARS_EXPERIENCE_CHOICES = (
-        (0, 'No preference'),
-        (1, '1 year'),
-        (3, '3 years'),
-        (5, '5 years'),
-    )
+    # Set a reference to YEARS_EXPERIENCE_CHOICES on the JobRequest,
+    # for consistency
+    YEARS_EXPERIENCE_CHOICES = YEARS_EXPERIENCE_CHOICES
+
     years_experience = models.PositiveSmallIntegerField(
                                 'Minimum years of experience',
                                 choices=YEARS_EXPERIENCE_CHOICES,
@@ -219,6 +218,19 @@ class JobRequest(PolymorphicModel):
         "Returns a reference number for this request."
         return 'JR%s' % str(self.pk).zfill(5)
 
+    @property
+    def start_datetime(self):
+        return timezone.make_aware(
+                                datetime.combine(self.date, self.start_time),
+                                timezone.get_current_timezone())
+
+    @property
+    def arrival_time(self):
+        "Returns the time that a freelancer should arrive before booking."
+        arrival_datetime = self.start_datetime - timedelta(
+                                    minutes=settings.ARRIVAL_PERIOD_MINUTES)
+        return arrival_datetime.time()
+
     def get_absolute_url(self):
         return reverse('jobrequest_detail', args=(self.pk,))
 
@@ -229,11 +241,7 @@ class JobRequest(PolymorphicModel):
         # we need to assume that the date and time are provided as the default
         # timezone.  For example, if someone has specified a date during British
         # Summertime, we need to take that into account.
-        local_start_datetime = timezone.make_aware(
-                                datetime.combine(self.date, self.start_time),
-                                timezone.get_current_timezone())
-
-        local_end_datetime = local_start_datetime + timedelta(
+        local_end_datetime = self.start_datetime + timedelta(
                                                         hours=self.duration)
         # Now we have a correct timezone aware datetime, we need to convert it
         # to UTC (which is how it's stored in the database) before saving.

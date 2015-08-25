@@ -1,5 +1,5 @@
 from apps.service import services, Service
-from .models import DriverJobRequest, Driver
+from .models import DriverJobRequest, Driver, DriverPayGrade
 from .forms import DriverJobRequestForm, DriverForm, DriverJobMatchingForm
 from django.core.urlresolvers import reverse_lazy
 
@@ -20,5 +20,7 @@ class DriverService(Service):
     ]
 
     job_matching_form = DriverJobMatchingForm
+
+    pay_grade_model = DriverPayGrade
 
 services.register(DriverService)

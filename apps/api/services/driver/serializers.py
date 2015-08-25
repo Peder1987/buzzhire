@@ -2,11 +2,12 @@ from django.forms import widgets
 from django.core.validators import ValidationError
 from rest_framework import serializers
 from apps.services.driver.models import (VehicleType, FlexibleVehicleType,
-                Driver, DriverJobRequest, DriverVehicleType)
+                Driver, DriverJobRequest, DriverVehicleType, DriverPayGrade)
 from ...freelancer.serializers import (OwnFreelancerSerializer,
                                              FreelancerForClientSerializer)
 from ...job.serializers import JobRequestForFreelancerSerializer
 from ...booking.serializers import BookingsJobRequestForClientSerializer
+from ...paygrade.serializers import BasePayGradeSerializer
 
 
 class VehicleTypeSerializer(serializers.ModelSerializer):
@@ -112,3 +113,7 @@ class DriverVehicleTypeSerializer(serializers.ModelSerializer):
                   'vehicle_type_url',
                   'own_vehicle', 'delivery_box')
 
+
+class DriverPayGradeSerializer(BasePayGradeSerializer):
+    class Meta(BasePayGradeSerializer.Meta):
+        model = DriverPayGrade

@@ -10,6 +10,7 @@
         <h5>Date and time</h5>
         <p></p>
         <p><strong>Date:</strong> {{ object.date }}</p>
+        {% block extra_time_details %}{% endblock %}
         <p><strong>Start time:</strong> {{ object.start_time }}</p>
         <p><strong>Duration:</strong> {{ object.duration }} hour{{ object.duration|pluralize }}</p>
         
