@@ -239,6 +239,14 @@ class JobRequestUpdateMixin(object):
                    'content': content,
                    'bookings_email': settings.BOOKINGS_EMAIL},
                   from_email=settings.BOOKINGS_FROM_EMAIL)
+
+            # Notification for app
+            Notification.objects.create(
+                    message='Your job request has been changed.',
+                    category='client_job_request_changed',
+                    related_object=self.instance,
+                    user=self.instance.client)
+
         return instance
 
 

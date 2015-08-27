@@ -48,6 +48,8 @@ class Notification(models.Model):
 
     def send_as_push(self):
         """Sends the notification as an push notification."""
+        # TODO - this should be sent to the queue instead,
+        # in case of network failure?
         connection = ParseConnection()
         connection.push_message(self.message,
                                 self.user,
