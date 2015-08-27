@@ -10,7 +10,7 @@ from apps.freelancer.models import Freelancer
 from apps.job.models import JobRequest
 from .models import (Booking, Availability, Invitation,
             JobAlreadyBookedByFreelancer, JobAlreadyAppliedToByFreelancer,
-            JobFullyBooked, JobInPast)
+            JobFullyBooked, JobInPast, JobInvalidStatus)
 from .forms import AvailabilityForm, JobMatchingForm, \
                     BookingOrInvitationConfirmForm, InvitationApplyForm, \
                     InvitationDeclineForm, BookingConfirmForm
@@ -291,6 +291,9 @@ class InvitationApply(FreelancerOnlyMixin,
         except JobInPast:
             messages.add_message(self.request, messages.WARNING,
                                  'Sorry, this job is now in the past.')
+        except JobInvalidStatus:
+            messages.add_message(self.request, messages.WARNING,
+                    'Sorry, this job is no longer open for applications.')
         return redirect(self.job_request.get_absolute_url())
 
     def get_form_kwargs(self, *args, **kwargs):
