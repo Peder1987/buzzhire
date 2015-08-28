@@ -4,6 +4,7 @@ from apps.core.templatetags.core_tags import summary_for_email
 from django.conf import settings
 from django.template.loader import render_to_string
 from .models import JobRequest
+from .signals import job_request_changed
 from django_fsm.signals import post_transition
 from apps.notification.models import Notification
 
@@ -93,3 +94,29 @@ def notify_client_on_jobrequest_cancelled(sender, instance, name,
                     category='client_job_request_cancelled',
                     related_object=instance,
                     user=instance.client.user)
+
+
+@receiver(job_request_changed)
+def notify_client_on_job_request_changed(sender, instance,
+                                         changed_data, silent, **kwargs):
+    """Notifies the client if their job request is edited by a staff member.
+    """
+    if not silent:
+        content = render_to_string(
+            'job/email/includes/jobrequest_changed.html',
+            {'object': instance})
+        send_mail(instance.client.user.email,
+              'Your job request has been changed',
+              'email/base',
+              {'title':
+               'Your job request has been changed',
+               'content': content,
+               'bookings_email': settings.BOOKINGS_EMAIL},
+              from_email=settings.BOOKINGS_FROM_EMAIL)
+
+        # Notification for app
+        Notification.objects.create(
+                message='Your job request has been changed.',
+                category='client_job_request_changed',
+                related_object=instance,
+                user=instance.client.user)

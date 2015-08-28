@@ -1,4 +1,5 @@
 from decimal import Decimal
+from copy import deepcopy
 from moneyed import Money
 from datetime import date, datetime, timedelta
 from django import forms
@@ -16,6 +17,7 @@ from apps.core.widgets import Bootstrap3SterlingMoneyWidget, Bootstrap3TextInput
 from django.forms import widgets
 from apps.location.forms import PostcodeFormMixin
 from apps.payment.utils import PaymentAPI, PaymentException
+from .signals import job_request_changed
 from .models import JobRequest
 from . import service_from_class
 from .validators import validate_start_date_and_time
@@ -226,21 +228,14 @@ class JobRequestUpdateMixin(object):
     def save(self, *args, **kwargs):
         kwargs['client'] = self.instance.client
         instance = super(JobRequestUpdateMixin, self).save(*args, **kwargs)
-        if self.cleaned_data['notify']:
-            # Notify the client
-            content = render_to_string(
-                'job/email/includes/jobrequest_changed.html',
-                {'object': instance})
-            send_mail(instance.client.user.email,
-                  'Your job request has been changed',
-                  'email/base',
-                  {'title':
-                   'Your job request has been changed',
-                   'content': content,
-                   'bookings_email': settings.BOOKINGS_EMAIL},
-                  from_email=settings.BOOKINGS_FROM_EMAIL)
-        return instance
 
+        # Send signal
+        job_request_changed.send(sender=self,
+              instance=self.instance,
+              changed_data=self.changed_data,
+              silent=(not self.cleaned_data['notify']))
+
+        return instance
 
 
 class JobRequestCheckoutForm(CrispyFormMixin, forms.Form):

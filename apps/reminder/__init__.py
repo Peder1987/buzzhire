@@ -1,0 +1,1 @@
+default_app_config = 'apps.reminder.config.ReminderConfig'

@@ -41,6 +41,7 @@ class ProjectConfiguration(StandardConfiguration):
         'apps.job',
         'apps.booking',
         'apps.feedback',
+        'apps.reminder',
         'apps.services.driver',
         'apps.services.kitchen',
         'apps.services.bar',

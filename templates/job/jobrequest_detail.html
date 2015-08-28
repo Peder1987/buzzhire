@@ -196,7 +196,7 @@
                         <span class='label label-warning'>{{ 'no'|icon }} Your application for this job was unsuccessful</span>
                     {% elif invitation.can_be_applied_to %}
                         <a class='btn btn-primary green-btn accept-job-button' href='{% url 'invitation_apply' invitation.pk %}'> Apply for job</a>
-                    {% else %}
+                    {% elif invitation.date_applied %}
                         <span class='label label-info'>{{ 'yes'|icon }} You have applied to this job</span>
                     {% endif %}
                 {% endwith %}

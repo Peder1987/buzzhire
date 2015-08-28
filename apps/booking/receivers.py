@@ -36,6 +36,7 @@ def notify_freelancer_on_apply(sender, invitation, **kwargs):
                'content': content},
               from_email=settings.BOOKINGS_FROM_EMAIL)
 
+
 @receiver(booking_created)
 def notify_freelancer_on_booking(sender, booking, **kwargs):
     "Notifies the freelancer when a booking is created."
@@ -50,7 +51,7 @@ def notify_freelancer_on_booking(sender, booking, **kwargs):
               {'title': 'Confirmation of booking',
                'content': content},
               from_email=settings.BOOKINGS_FROM_EMAIL)
-    
+
     # Notification for app
     Notification.objects.create(
             message='Your booking has been confirmed.',
@@ -73,6 +74,13 @@ def notify_freelancer_on_decline(sender, invitation, **kwargs):
               {'title': 'Your application was unsuccessful',
                'content': content},
               from_email=settings.BOOKINGS_FROM_EMAIL)
+
+        # Notification for app
+    Notification.objects.create(
+            message='Your application was unsuccessful.',
+            category='freelancer_declined',
+            related_object=invitation.jobrequest,
+            user=invitation.freelancer.user)
 
 
 @receiver(invitation_applied)

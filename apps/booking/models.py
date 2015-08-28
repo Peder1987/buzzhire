@@ -60,7 +60,7 @@ class InvitationQuerySet(BookingOrInvitationQuerySet):
         queryset = queryset.filter(date_applied__isnull=True)
 
         # Filter by job requests that are open
-        queryset.filter(jobrequest__status=JobRequest.STATUS_OPEN)
+        queryset = queryset.filter(jobrequest__status=JobRequest.STATUS_OPEN)
 
         # Filter by job requests that they aren't already booked on
         already_booked_on = Booking.objects.for_freelancer(
@@ -94,6 +94,10 @@ class InvitationQuerySet(BookingOrInvitationQuerySet):
         """
         return self.filter(date_applied__isnull=False,
                            date_declined__isnull=True)
+
+class JobInvalidStatus(Exception):
+    "Exception raised when a job has the wrong status for a particular action."
+    pass
 
 class JobInPast(Exception):
     "Exception raised when a job is in the past."
@@ -162,6 +166,10 @@ class Invitation(models.Model):
         
         Raises JobInPast or JobAlreadyBookedByFreelancer on failure.
         """
+        # Check that the job request is still open
+        if self.jobrequest.status != JobRequest.STATUS_OPEN:
+            raise JobInvalidStatus()
+
         # Check that the job request is not in the past
         if self.jobrequest.end_datetime < timezone.now():
             raise JobInPast()
