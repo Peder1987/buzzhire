@@ -27,7 +27,6 @@ def enqueue_reminders(job_request):
     )
 
     for info in infos:
-        print 'Scheduling for %s' % info.scheduled_datetime
         send_reminders.schedule(args=(info,),
                                eta=info.scheduled_datetime)
 
@@ -47,4 +46,6 @@ def enqueue_reminders_on_job_request_changed(sender, instance,
                                          changed_data, silent, **kwargs):
     # If the datetime has changed, queue the reminders up again
     if any(i in ('date', 'start_time') for i in changed_data):
-        enqueue_reminders(instance)
+        # Only for confirmed jobs
+        if instance.status == JobRequest.STATUS_CONFIRMED:
+            enqueue_reminders(instance)

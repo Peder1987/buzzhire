@@ -57,7 +57,12 @@ class ScheduledReminderSet(object):
     def is_still_valid(self):
         """Returns whether it is still valid to send the reminders.
         """
-        # Just test to check the start_datetime hasn't changed; if it has,
+        # Only remind if the status is confirmed (so we don't remind
+        # for cancelled jobs)
+        if self.job_request.status != JobRequest.STATUS_CONFIRMED:
+            return False
+
+        # Test to check the start_datetime hasn't changed; if it has,
         # new reminders will have been scheduled
         # TODO - there is a slight problem with this logic - if the job
         # request is changed and then changed back, multiple reminders
