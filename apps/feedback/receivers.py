@@ -4,6 +4,7 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from apps.job.models import JobRequest
 from django_fsm.signals import post_transition
+from apps.notification.models import Notification
 
 
 @receiver(post_transition)
@@ -33,10 +34,9 @@ def prompt_client_and_drivers_for_feedback(sender, instance, name,
             message='Tell us how it went.',
             category='client_feedback_request',
             related_object=instance,
-            user=instance.client)
+            user=instance.client.user)
 
         # Email freelancers
-
         content = render_to_string(
             'feedback/email/includes/feedback_prompt.html',
             {'object': instance})
@@ -51,9 +51,10 @@ def prompt_client_and_drivers_for_feedback(sender, instance, name,
                'bookings_email': settings.BOOKINGS_EMAIL},
                from_email=settings.BOOKINGS_FROM_EMAIL)
 
-        # Notification for app
-        Notification.objects.create(
-            message='Tell us how it went.',
-            category='freelancer_feedback_request',
-            related_object=instance,
-            user=instance.freelancer)
+        # Notify freelancers for app
+        for booking in instance.bookings.all():
+            Notification.objects.create(
+                message='Tell us how it went.',
+                category='freelancer_feedback_request',
+                related_object=instance,
+                user=booking.freelancer.user)
