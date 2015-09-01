@@ -95,7 +95,7 @@ class InvitationForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
         # TODO - consider potential race condition here?
 
         invitation.mark_as_applied()
-        return Response('Applied.')
+        return Response({'message': 'Applied.'})
 
 
 class ApplicationForFreelancerViewSet(DateSliceMixin,
