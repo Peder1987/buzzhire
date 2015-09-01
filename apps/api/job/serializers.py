@@ -7,6 +7,7 @@ from apps.api.serializers import MoneyField
 from apps.job import service_from_class
 from apps.job.models import JobRequest
 from ..location.serializers import PostcodeField
+from ..client.serializers import ClientForFreelancerSerializer
 from apps.job.validators import validate_start_date_and_time
 
 
@@ -81,8 +82,11 @@ class BaseJobRequestSerializer(serializers.ModelSerializer):
 
 class JobRequestForFreelancerSerializer(BaseJobRequestSerializer):
     """Serializer for job requests for freelancer."""
+
     client = serializers.HyperlinkedRelatedField(read_only=True,
                                     view_name='clients_for_freelancer-detail')
+
+    client_full = ClientForFreelancerSerializer(source='client')
 
     freelancer_pay_per_hour = MoneyField()
 
@@ -91,7 +95,7 @@ class JobRequestForFreelancerSerializer(BaseJobRequestSerializer):
 
     class Meta(BaseJobRequestSerializer.Meta):
         fields = BaseJobRequestSerializer.Meta.fields + ('client',
-                                                    'freelancer_pay_per_hour')
+                                    'client_full', 'freelancer_pay_per_hour')
 
 
 class JobRequestForClientSerializer(BaseJobRequestSerializer):
