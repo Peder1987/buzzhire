@@ -72,6 +72,11 @@ class SingleObjectFriendlyRouter(routers.DefaultRouter):
         class APIRoot(views.APIView):
             _ignore_model_permissions = True
 
+            @classmethod
+            def as_view(cls, **initkwargs):
+                cls.extra_endpoints = initkwargs.pop('extra_endpoints')
+                return super(APIRoot, cls).as_view(**initkwargs)
+
             def get(self, request, *args, **kwargs):
                 ret = OrderedDict()
                 namespace = get_resolver_match(request).namespace
@@ -88,6 +93,23 @@ class SingleObjectFriendlyRouter(routers.DefaultRouter):
                         # Don't bail out if eg. no list routes exist, only detail routes.
                         continue
 
+                # Add extra endpoints
+                for local_path, url_name in self.extra_endpoints:
+                    ret[local_path] = reverse(url_name,
+                                              request=request)
+
                 return Response(ret)
 
-        return APIRoot.as_view()
+        return APIRoot.as_view(extra_endpoints=self.extra_endpoints)
+
+    """extra_endpoints is a list of extra endpoints to be added to the
+    self documenting API.
+        
+    Usage:
+    
+        class MyRouter(SingleObjectFriendlyRouter):
+            extra_endpoints = [
+                
+            ] 
+    """
+    extra_endpoints = []
