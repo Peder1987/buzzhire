@@ -130,7 +130,14 @@ class OwnFreelancerAvailabilityViewSet(RetrieveAndUpdateViewset):
     permission_classes = (FreelancerOnlyPermission,)
 
     def get_object(self):
-        return self.request.user.freelancer.availability
+        # Return the Availability for the Freelancer, creating
+        # (but not saving) one if it doesn't exist.
+        freelancer = self.request.user.freelancer
+        try:
+           return freelancer.availability
+        except Availability.DoesNotExist:
+           return Availability(freelancer=freelancer)
+
 
 class FreelancerEarningView(APIView):
     """The currently logged in freelancer's earnings.
