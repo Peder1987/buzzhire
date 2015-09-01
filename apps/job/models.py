@@ -14,6 +14,7 @@ from decimal import Decimal
 from django_fsm import FSMField, transition
 from polymorphic import PolymorphicModel, PolymorphicQuerySet
 from apps.paygrade.models import YEARS_EXPERIENCE_CHOICES
+from apps.service import service_from_class
 
 
 class JobRequestQuerySet(PolymorphicQuerySet):
@@ -230,6 +231,27 @@ class JobRequest(PolymorphicModel):
         arrival_datetime = self.start_datetime - timedelta(
                                     minutes=settings.ARRIVAL_PERIOD_MINUTES)
         return arrival_datetime.time()
+
+    @property
+    def summary_for_freelancer(self):
+        "Returns a short summary of the job request, for the freelancer."
+        return '%s for %s' % (self.get_service_description().capitalize(),
+                              self.client)
+
+    def get_service_description(self):
+        "Returns a brief description of the service being offered."
+        try:
+            service = service_from_class(self.__class__)
+        except ValueError:
+            # This can happen in the event of a database corruption;
+            # the job request doesn't have a service.  We should fail
+            # silently here, as we don't want to break the API
+            return 'booking'
+        model_opts = service.freelancer_model._meta
+        if self.number_of_freelancers == 1:
+            return model_opts.verbose_name
+        else:
+            return model_opts.verbose_name_plural
 
     def get_absolute_url(self):
         return reverse('jobrequest_detail', args=(self.pk,))

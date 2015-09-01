@@ -40,8 +40,6 @@ class BaseJobRequestSerializer(serializers.ModelSerializer):
             return 'unknown'
 
 
-
-
 #     address = serializers.SerializerMethodField('_address')
 #     def _address(self, obj):
 #         return {
@@ -76,6 +74,7 @@ class BaseJobRequestSerializer(serializers.ModelSerializer):
                   'number_of_freelancers', 'address1', 'address2', 'city',
                   'postcode', 'longitude', 'latitude',
                   'years_experience', 'comments',
+                  'summary_for_freelancer',
                   )
         read_only_fields = ('status',)
 

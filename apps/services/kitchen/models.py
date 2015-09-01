@@ -31,6 +31,9 @@ class KitchenJobRequest(JobRequest):
                                      default=ROLE_CHEF,
                                      choices=ROLE_CHOICES)
 
+    def get_service_description(self):
+        return self.get_role_display()
+
 
 class KitchenFreelancer(Freelancer):
     "A kitchen staff is a type of freelancer."

@@ -25,6 +25,8 @@ class BarJobRequest(JobRequest):
     role = models.CharField(max_length=2,
                                      default=ROLE_BARMAN,
                                      choices=ROLE_CHOICES)
+    def get_service_description(self):
+        return self.get_role_display()
 
 
 class BarFreelancer(Freelancer):
