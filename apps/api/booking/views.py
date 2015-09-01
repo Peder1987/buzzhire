@@ -95,6 +95,7 @@ class InvitationForFreelancerViewSet(viewsets.ReadOnlyModelViewSet):
         # TODO - consider potential race condition here?
 
         invitation.mark_as_applied()
+        # This must return a json object for the app to treat it as a success
         return Response({'message': 'Applied.'})
 
 
