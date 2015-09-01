@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
-from .utils import ParseConnection, CLIENT_APP, FREELANCER_APP
+from .push import ParseConnection, CLIENT_APP, FREELANCER_APP
 
 # class UserNotificationSettings(models.Model):
 #     """Settings for each user related to notifications.
