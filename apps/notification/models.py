@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
-from .utils import ParseConnection
+from .utils import ParseConnection, CLIENT_APP, FREELANCER_APP
 
 # class UserNotificationSettings(models.Model):
 #     """Settings for each user related to notifications.
@@ -48,9 +48,13 @@ class Notification(models.Model):
 
     def send_as_push(self):
         """Sends the notification as an push notification."""
+
+        # Select the app to push to depending on the user
+        app = FREELANCER_APP if self.user.is_freelancer else CLIENT_APP
+
         # TODO - this should be sent to the queue instead,
         # in case of network failure?
-        connection = ParseConnection()
+        connection = ParseConnection(app)
         connection.push_message(self.message,
                                 self.user,
                                 self.category,

@@ -145,8 +145,8 @@ class ProjectConfiguration(StandardConfiguration):
     # Minimum number of hours a job can last
     MIN_JOB_DURATION = 2
 
-    PARSE_APPLICATION_ID = '87WebYikYitgl6GOnavbGesoGvA6lka2oLVnH5i3'
-    PARSE_REST_API_KEY = 'fI0mhqGrii6fB3euOY2jeNLi44J6ijAXNAt43BWX'
+    PARSE_CLIENT_APPLICATION_ID = 'ARd59ixk04dHhZcY9aMYrBGHJGe9kLI7tdSYpdDV'
+    PARSE_FREELANCER_APPLICATION_ID = 'ARd59ixk04dHhZcY9aMYrBGHJGe9kLI7tdSYpdDV'
 
     CONTACT_PHONE = '020 3322 3738'
     BOOKINGS_EMAIL = 'support@buzzhire.co'
