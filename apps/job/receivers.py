@@ -7,6 +7,7 @@ from .models import JobRequest
 from .signals import job_request_changed
 from django_fsm.signals import post_transition
 from apps.notification.models import Notification
+from apps.notification.sms import send_sms
 
 
 @receiver(post_transition)
@@ -64,7 +65,7 @@ def notify_client_on_job_request_confirmed(sender, instance, name,
                     related_object=instance,
                     user=instance.client.user)
 
-
+            send_sms(instance.client.user, message, instance)
 
 @receiver(post_transition)
 def notify_client_on_jobrequest_cancelled(sender, instance, name,

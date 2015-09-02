@@ -9,6 +9,7 @@ from .signals import (invitation_created, invitation_applied,
                       booking_created, invitation_declined)
 from django_fsm.signals import post_transition
 from apps.notification.models import Notification
+from apps.notification.sms import send_sms
 from . import tasks
 
 
@@ -59,6 +60,8 @@ def notify_freelancer_on_booking(sender, booking, **kwargs):
             related_object=booking.jobrequest,
             user=booking.freelancer.user)
 
+    send_sms(booking.freelancer.user, 'Your booking has been confirmed.',
+             booking.jobrequest)
 
 @receiver(invitation_declined)
 def notify_freelancer_on_decline(sender, invitation, **kwargs):
@@ -82,6 +85,8 @@ def notify_freelancer_on_decline(sender, invitation, **kwargs):
             related_object=invitation.jobrequest,
             user=invitation.freelancer.user)
 
+    send_sms(invitation.freelancer.user, 'Your application was unsuccessful.',
+             invitation.jobrequest)
 
 @receiver(invitation_applied)
 def notify_admin_when_invitation_applied(sender, invitation, **kwargs):
