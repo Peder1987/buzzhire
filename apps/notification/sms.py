@@ -25,10 +25,12 @@ def local_to_international_phone_number(local_phone):
     return '+447%s' % local_phone[2:].replace(' ', '')
 
 
-def send_sms(message, user):
+def send_sms(user, message, related_object=None):
     """Send an SMS with the message, to the user.
     
     Currently, this fails silently (though it logs the error).
+    
+    Optionally, includes a link to a related object.
     """
     logger.debug('Attempting to send sms: %s' % message)
 
@@ -37,6 +39,9 @@ def send_sms(message, user):
         logger.debug('Could not get a phone number for user id %d.' % user.id)
         return
 
+    if related_object:
+        message += ' See more: %s%s' % (settings.BASE_URL,
+                                        related_object.get_absolute_url())
     try:
         client = TwilioRestClient(settings.TWILIO_ACCOUNT_SID,
                                   settings.TWILIO_TOKEN)

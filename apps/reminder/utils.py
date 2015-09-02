@@ -3,6 +3,8 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from apps.job.models import JobRequest
 from apps.notification.models import Notification
+from apps.notification.sms import send_sms
+
 
 class ScheduledReminderSet(object):
     """A set of reminders that should be scheduled for a job request.
@@ -91,6 +93,9 @@ class ScheduledReminderSet(object):
                 category='%s_reminder' % recipient_type,
                 related_object=self.job_request,
                 user=recipient.user)
+
+        send_sms(recipient.user, self.title, self.job_request)
+
 
     def send(self):
         """Sends out reminders to freelancers and client
