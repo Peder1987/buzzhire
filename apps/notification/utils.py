@@ -60,7 +60,8 @@ class ParseConnection(object):
              "object_id": object_id,
            }
         }
-        logger.debug('Attempting to send push notification: %s' % data)
+        logger.debug('Attempting to send push notification to %s: %s' % (
+                                            self.get_app_id(), data))
         try:
             self.connection.request('POST', self.PARSE_PUSH_ENDPOINT,
                                     json.dumps(data), {
