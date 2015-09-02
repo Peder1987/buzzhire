@@ -145,6 +145,10 @@ def notify_freelancer_on_invitation(sender, invitation, **kwargs):
             related_object=invitation.jobrequest,
             user=invitation.freelancer.user)
 
+
+    send_sms(invitation.freelancer.user, 'A new job was just posted.',
+             invitation.jobrequest)
+
 # @receiver(booking_created)
 # def notify_client_on_booking(sender, booking, **kwargs):
 #     "Notifies the client when a booking is created."
