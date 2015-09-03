@@ -4,7 +4,9 @@ from django.template.loader import render_to_string
 from apps.job.models import JobRequest
 from apps.notification.models import Notification
 from apps.notification.sms import send_sms
+import logging
 
+logger = logging.getLogger('project')
 
 class ScheduledReminderSet(object):
     """A set of reminders that should be scheduled for a job request.
@@ -73,8 +75,21 @@ class ScheduledReminderSet(object):
         # TODO - there is a slight problem with this logic - if the job
         # request is changed and then changed back, multiple reminders
         # will be sent out
-        return self.start_datetime_when_scheduled == \
-                                            self.job_request.start_datetime
+        if self.start_datetime_when_scheduled != \
+                                            self.job_request.start_datetime:
+            return False
+
+        # Don't send the reminder if the scheduled time is more than 3 minutes
+        # in the past.  This is to prevent a flurry of old reminders being sent
+        # out if the queue went down for any reason.
+        if self.scheduled_datetime < (timezone.now() - timedelta(minutes=3)):
+            logger.debug('Not sending reminder for %s, scheduled at %s, '
+                        'because it was stale.' % (self.job_request,
+                                                   self.scheduled_datetime))
+            return False
+
+        # Otherwise, we're all good
+        return True
 
     def send_to_recipient(self, recipient, recipient_type):
         "Sends reminders to a single recipient."
