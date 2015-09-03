@@ -9,18 +9,18 @@ def send_reminders(reminder_set):
     
     Accepts a ScheduledReminderSet. 
     """
-    try:
-        if reminder_set.is_still_valid():
+    if reminder_set.is_still_valid():
+        try:
             reminder_set.send()
+        except Exception as e:
+            print('[%s] Failed to send reminders for %s.' % (time.ctime(),
+                                        reminder_set.get_job_request_display()))
+            print('Exception: %s' % e)
+            # Reraise exception so it gets caught by other logging
+            raise
         else:
-            print('[%s] Skipped sending reminders for %s.' % (time.ctime(),
-                                    reminder_set.get_job_request_display()))
-    except Exception as e:
-        print('[%s] Failed to send reminders for %s.' % (time.ctime(),
-                                    reminder_set.get_job_request_display()))
-        print('Exception: %s' % e)
-        # Reraise exception so it gets caught by other logging
-        raise
+            print('[%s] Sent reminders for %s.' % (time.ctime(),
+                                        reminder_set.get_job_request_display()))
     else:
-        print('[%s] Sent reminders for %s.' % (time.ctime(),
+        print('[%s] Skipped sending reminders for %s.' % (time.ctime(),
                                     reminder_set.get_job_request_display()))

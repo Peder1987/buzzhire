@@ -65,7 +65,10 @@ def notify_client_on_job_request_confirmed(sender, instance, name,
                     related_object=instance,
                     user=instance.client.user)
 
-            send_sms(instance.client.user, message, instance)
+            send_sms(instance.client.user,
+                     render_to_string('job/sms/client_confirmed.txt',
+                                      {'job_request': instance}),
+                     instance)
 
 @receiver(post_transition)
 def notify_client_on_jobrequest_cancelled(sender, instance, name,

@@ -4,7 +4,7 @@ from django.conf import settings
 from copy import copy
 from crispy_forms.templatetags.crispy_forms_filters import flatatt_filter
 from apps.core.utils import template_names_from_polymorphic_model
-
+import datetime
 
 
 register = template.Library()
@@ -161,3 +161,16 @@ def summary_for_email(instance, audience):
                                     subdirectory='email/includes')).name
     return render_to_string(template_names, {'object': instance,
                                              'base_template': base_template})
+
+
+@register.filter
+def istoday(date):
+    """Returns whether or not the supplied date is today.
+    
+    Usage:
+    
+        {% if object.date|istoday %}
+            {# Do something #}
+        {% endif %}
+    """
+    return date == datetime.date.today()

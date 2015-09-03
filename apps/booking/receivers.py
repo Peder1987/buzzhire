@@ -60,8 +60,12 @@ def notify_freelancer_on_booking(sender, booking, **kwargs):
             related_object=booking.jobrequest,
             user=booking.freelancer.user)
 
-    send_sms(booking.freelancer.user, 'Your booking has been confirmed.',
+    send_sms(booking.freelancer.user,
+             render_to_string('booking/sms/freelancer_accepted.txt',
+                              {'object': booking,
+                               'job_request': booking.jobrequest}),
              booking.jobrequest)
+
 
 @receiver(invitation_declined)
 def notify_freelancer_on_decline(sender, invitation, **kwargs):
@@ -85,7 +89,10 @@ def notify_freelancer_on_decline(sender, invitation, **kwargs):
             related_object=invitation.jobrequest,
             user=invitation.freelancer.user)
 
-    send_sms(invitation.freelancer.user, 'Your application was unsuccessful.',
+    send_sms(invitation.freelancer.user,
+             render_to_string('booking/sms/freelancer_declined.txt',
+                              {'object': invitation,
+                               'job_request': invitation.jobrequest}),
              invitation.jobrequest)
 
 @receiver(invitation_applied)
@@ -146,7 +153,10 @@ def notify_freelancer_on_invitation(sender, invitation, **kwargs):
             user=invitation.freelancer.user)
 
 
-    send_sms(invitation.freelancer.user, 'A new job was just posted.',
+    send_sms(invitation.freelancer.user,
+             render_to_string('booking/sms/freelancer_invitation.txt',
+                              {'object': invitation,
+                               'job_request': invitation.jobrequest}),
              invitation.jobrequest)
 
 # @receiver(booking_created)

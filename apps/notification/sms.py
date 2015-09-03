@@ -42,6 +42,9 @@ def send_sms(user, message, related_object=None):
     if related_object:
         message += ' See more: %s%s' % (settings.BASE_URL,
                                         related_object.get_absolute_url())
+    # Add signature
+    message += ' The BuzzHire Team'
+
     try:
         client = TwilioRestClient(settings.TWILIO_ACCOUNT_SID,
                                   settings.TWILIO_TOKEN)
