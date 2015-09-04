@@ -9,6 +9,9 @@ def send_reminders(reminder_set):
     
     Accepts a ScheduledReminderSet. 
     """
+    print('[%s] send_reminders() called for %s.' % (time.ctime(),
+                                    reminder_set.get_job_request_display()))
+
     if reminder_set.is_still_valid():
         try:
             reminder_set.send()

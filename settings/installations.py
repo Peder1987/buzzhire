@@ -27,6 +27,18 @@ class HueyMixin(object):
             'consumer_options': {'workers': 1},
         }
 
+    @property
+    def LOGGING(self):
+        # Make sure we mail admins during uncaught exceptions during Huey tasks;
+        # Otherwise issues with tasks can easily go unnoticed
+        _LOGGING = super(HueyMixin, self).LOGGING
+        _LOGGING['loggers']['huey'] = {
+            'handlers': ['error', 'mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        }
+        return _LOGGING
+
 
 class Local(BraintreeSandboxMixin, HueyMixin,
             installations.LocalMixin, ProjectConfiguration):

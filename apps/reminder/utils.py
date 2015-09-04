@@ -1,5 +1,7 @@
 from apps.core.email import send_mail
 from django.conf import settings
+from datetime import timedelta
+from django.utils import timezone
 from django.template.loader import render_to_string
 from apps.job.models import JobRequest
 from apps.notification.models import Notification
@@ -68,6 +70,9 @@ class ScheduledReminderSet(object):
         # Only remind if the status is confirmed (so we don't remind
         # for cancelled jobs)
         if self.job_request.status != JobRequest.STATUS_CONFIRMED:
+            logger.debug('Not sending reminder for %s, scheduled at %s, '
+                        'because it was not confirmed.' % (self.job_request,
+                                                   self.scheduled_datetime))
             return False
 
         # Test to check the start_datetime hasn't changed; if it has,
@@ -77,6 +82,10 @@ class ScheduledReminderSet(object):
         # will be sent out
         if self.start_datetime_when_scheduled != \
                                             self.job_request.start_datetime:
+            logger.debug('Not sending reminder for %s, scheduled at %s, '
+                        'because the start_datetime has been changed.' % (
+                                                   self.job_request,
+                                                   self.scheduled_datetime))
             return False
 
         # Don't send the reminder if the scheduled time is more than 3 minutes
