@@ -222,7 +222,13 @@ class JobRequestUpdateMixin(object):
             required=False, initial=True)
 
         self.helper.layout.insert(-1,
-            layout.Fieldset('Notifications', 'notify')
+            layout.Fieldset('Notifications',
+                'notify',
+                layout.HTML('<div class="alert alert-warning" '
+                    'style="clear: both;">Note: upon saving, '
+                    'new invitations will be sent out to any matching '
+                    'freelancers who have not already been invited.</div>')
+            )
         )
 
     def save(self, *args, **kwargs):

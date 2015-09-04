@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 from apps.notification.models import Notification
-from apps.api.views import ViewAndDeleteViewset 
+from apps.api.views import ViewAndDeleteViewset
 from .serializers import NotificationSerializer
 import datetime
 
@@ -18,7 +18,9 @@ class NotificationsForUserViewSet(ViewAndDeleteViewset):
     - `category` A machine-readable name to identify what
        kind of notification this is.
     - `message` The text of the message.  
-    - `datetime_created` Date and time of the notification.
+    - `datetime_created` Date and time of the notification, in UTC.
+    - `datetime_created_localtime` Date and time of the notification in the
+       site's local time.
     - `object_id` Notifications can optionally be
        associated with a model in the system, known as the 'related object'.
        Together, the object id and content type form a unique reference to

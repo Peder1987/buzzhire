@@ -5,6 +5,7 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from .models import Booking
 from apps.job.models import JobRequest
+from apps.job.signals import job_request_changed
 from .signals import (invitation_created, invitation_applied,
                       booking_created, invitation_declined)
 from django_fsm.signals import post_transition
@@ -17,8 +18,19 @@ from . import tasks
 def invite_matching_freelancers(sender, instance, name,
                                 source, target, **kwargs):
     """Invites all freelancers who match the job request,
-    when a new job request is opened."""
+    when a new job request is opened.
+    """
     if name == 'open' and issubclass(sender, JobRequest):
+        tasks.invite_matching_freelancers(instance)
+
+
+@receiver(job_request_changed)
+def invite_matching_freelancers_on_job_request_changed(sender, instance,
+                                         changed_data, silent, **kwargs):
+    """Invites any freelancers who match the job request, and who were
+    not previously invited, when an open job request is edited.
+    """
+    if instance.status == JobRequest.STATUS_OPEN:
         tasks.invite_matching_freelancers(instance)
 
 

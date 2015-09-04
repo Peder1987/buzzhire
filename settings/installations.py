@@ -40,12 +40,17 @@ class HueyMixin(object):
         return _LOGGING
 
 
+class MandrillMixin(object):
+    "Enables Mandrill email on the installation."
+    EMAIL_HOST = 'smtp.mandrillapp.com'
+    EMAIL_HOST_USER = 'nick@buzzhire.co'
+
+
 class Local(BraintreeSandboxMixin, HueyMixin,
+            MandrillMixin,
             installations.LocalMixin, ProjectConfiguration):
     PROJECT_ROOT = '/home/david/www/buzzhire'
     BOOKINGS_EMAIL = 'bookingslocal@dev.buzzhire.co'
-    EMAIL_HOST_USER = 'buzzhire_dev'
-    EMAIL_HOST = 'smtp.webfaction.com'
     SERVER_EMAIL = 'local@dev.buzzhire.co'
     ACCOUNT_PASSWORD_MIN_LENGTH = 1
     HUEY_NAME = 'buzzhire'
@@ -60,10 +65,10 @@ class Local(BraintreeSandboxMixin, HueyMixin,
 
 
 class Dev(BraintreeSandboxMixin, HueyMixin,
+          MandrillMixin,
           installations.WebfactionDevMixin, ProjectConfiguration):
     DOMAIN = 'dev.buzzhire.co'
     WEBFACTION_USER = 'buzzhire'
-    EMAIL_HOST_USER = 'buzzhire_dev'
     DEBUG = False
     ACCOUNT_PASSWORD_MIN_LENGTH = 1
 
@@ -79,11 +84,11 @@ class Dev(BraintreeSandboxMixin, HueyMixin,
     X_FRAME_OPTIONS = "ALLOWALL"
 
 class VagrantDev(BraintreeSandboxMixin, HueyMixin,
+          MandrillMixin,
           installations.WebfactionDevMixin, ProjectConfiguration):
     DOMAIN = 'buzz.ubn'
     PROJECT_ROOT = '/vagrant'
     WEBFACTION_USER = 'buzzhire'
-    EMAIL_HOST_USER = 'buzzhire_dev'
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     DEBUG = True
     ACCOUNT_PASSWORD_MIN_LENGTH = 1
@@ -113,10 +118,10 @@ class VagrantDev(BraintreeSandboxMixin, HueyMixin,
     X_FRAME_OPTIONS = "ALLOWALL"
 
 class Live(HueyMixin,
+           MandrillMixin,
            installations.WebfactionLiveMixin, ProjectConfiguration):
     DOMAIN = 'buzzhire.co'
     WEBFACTION_USER = 'buzzhire'
-    EMAIL_HOST_USER = 'buzzhire_live'
 
     ACCOUNT_PASSWORD_MIN_LENGTH = 6
 
