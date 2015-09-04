@@ -14,13 +14,20 @@ from .feedback import views as feedback_views
 from .payment import views as payment_views
 from .notification import views as notification_views
 from .paygrade import views as paygrade_views
+from .account import views as account_views
 
 
 # This app is where we define the endpoints for the API,
 # used by native mobile apps.
 
-router = SingleObjectFriendlyRouter()
+class AppRouter(SingleObjectFriendlyRouter):
+    # Define extra endpoints, in a list of two-tuples.  The first item should
+    # be the local path, the second the url name.
+    extra_endpoints = [
+        ('account/password_reset', 'password_reset'),
+    ]
 
+router = AppRouter()
 
 # General data
 
@@ -198,5 +205,10 @@ urlpatterns = [
     url(r'^v1/token-auth/', views.obtain_auth_token),
     url(r'^v1/', include(router.urls)),
     url(r'^v1/freelancer/earnings/$',
-        freelancer_views.FreelancerEarningView.as_view(), name='combined-list'),
+        freelancer_views.FreelancerEarningView.as_view(),
+        name='combined-list'),
+    # User accounts
+    url(r'^v1/account/password_reset/$',
+        account_views.PasswordResetViewSet.as_view(),
+        name='password_reset'),
 ]

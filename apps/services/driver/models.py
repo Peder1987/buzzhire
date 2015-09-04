@@ -288,6 +288,11 @@ class DriverJobRequest(JobRequest):
         "Returns whether or not the minimum delivery box is applicable."
         return self.own_vehicle and self.vehicle_type.delivery_box_applicable
 
+    def get_service_description(self):
+        if self.vehicle_type:
+            return "%s delivery" % self.vehicle_type
+        else:
+            return 'delivery'
 
 class DriverPayGradeManager(BasePayGradeManager):
     "Model manager for DriverPayGrades."

@@ -1,8 +1,14 @@
 from apps.core.email import send_mail
 from django.conf import settings
+from datetime import timedelta
+from django.utils import timezone
 from django.template.loader import render_to_string
 from apps.job.models import JobRequest
 from apps.notification.models import Notification
+from apps.notification.sms import send_sms
+import logging
+
+logger = logging.getLogger('project')
 
 class ScheduledReminderSet(object):
     """A set of reminders that should be scheduled for a job request.
@@ -15,11 +21,13 @@ class ScheduledReminderSet(object):
     
     """
 
-    def __init__(self, job_request, title, scheduled_datetime):
+    def __init__(self, job_request, title, scheduled_datetime,
+                 sms_template_name=None):
         self.title = title
         self.job_request_id = job_request.id
         self.start_datetime_when_scheduled = job_request.start_datetime
         self.scheduled_datetime = scheduled_datetime
+        self.sms_template_name = sms_template_name
 
     def __getstate__(self):
         "Method to allow serialization."
@@ -29,6 +37,7 @@ class ScheduledReminderSet(object):
             'start_datetime_when_scheduled':
                                         self.start_datetime_when_scheduled,
             'scheduled_datetime': self.scheduled_datetime,
+            'sms_template_name': self.sms_template_name,
         }
 
     def __setstate__(self, dict):
@@ -38,6 +47,7 @@ class ScheduledReminderSet(object):
         self.start_datetime_when_scheduled = \
                                         dict['start_datetime_when_scheduled']
         self.scheduled_datetime = dict['scheduled_datetime']
+        self.sms_template_name = dict['sms_template_name']
 
     @property
     def job_request(self):
@@ -60,6 +70,9 @@ class ScheduledReminderSet(object):
         # Only remind if the status is confirmed (so we don't remind
         # for cancelled jobs)
         if self.job_request.status != JobRequest.STATUS_CONFIRMED:
+            logger.debug('Not sending reminder for %s, scheduled at %s, '
+                        'because it was not confirmed.' % (self.job_request,
+                                                   self.scheduled_datetime))
             return False
 
         # Test to check the start_datetime hasn't changed; if it has,
@@ -67,8 +80,25 @@ class ScheduledReminderSet(object):
         # TODO - there is a slight problem with this logic - if the job
         # request is changed and then changed back, multiple reminders
         # will be sent out
-        return self.start_datetime_when_scheduled == \
-                                            self.job_request.start_datetime
+        if self.start_datetime_when_scheduled != \
+                                            self.job_request.start_datetime:
+            logger.debug('Not sending reminder for %s, scheduled at %s, '
+                        'because the start_datetime has been changed.' % (
+                                                   self.job_request,
+                                                   self.scheduled_datetime))
+            return False
+
+        # Don't send the reminder if the scheduled time is more than 3 minutes
+        # in the past.  This is to prevent a flurry of old reminders being sent
+        # out if the queue went down for any reason.
+        if self.scheduled_datetime < (timezone.now() - timedelta(minutes=3)):
+            logger.debug('Not sending reminder for %s, scheduled at %s, '
+                        'because it was stale.' % (self.job_request,
+                                                   self.scheduled_datetime))
+            return False
+
+        # Otherwise, we're all good
+        return True
 
     def send_to_recipient(self, recipient, recipient_type):
         "Sends reminders to a single recipient."
@@ -92,6 +122,13 @@ class ScheduledReminderSet(object):
                 related_object=self.job_request,
                 user=recipient.user)
 
+        # Only send reminders to freelancers
+        if recipient_type == 'freelancer':
+            if self.sms_template_name:
+                send_sms(recipient.user, self.get_sms_message(),
+                         self.job_request)
+
+
     def send(self):
         """Sends out reminders to freelancers and client
         from the supplied reminder set.
@@ -99,3 +136,8 @@ class ScheduledReminderSet(object):
         self.send_to_recipient(self.job_request.client, 'client')
         for booking in self.job_request.bookings.all():
             self.send_to_recipient(booking.freelancer, 'freelancer')
+
+    def get_sms_message(self):
+        "Returns the text for the sms message."
+        return render_to_string(self.sms_template_name,
+                                {'job_request': self.job_request})

@@ -136,8 +136,11 @@ class JobRequestForFreelancerViewSet(DateSliceMixin,
         - `3` - 3 years
         - `5` - 5 years
     - `comments` Any extra information the client wants to tell the freelancer.
-      Free text.    
+      Free text.
+    - `summary_for_freelancer` A brief description of the job, for the
+      freelancer to read.
     - `client` The client who created the job request.  API endpoint.  Read only.
+    - `client_full` Full json object of the client.  Read only.
     - `freelancer_pay_per_hour`: The amount, in GBP, that the freelancer will
       be paid per hour.  This is based on the `client_pay_per_hour` field.
       Decimal.  Read only.

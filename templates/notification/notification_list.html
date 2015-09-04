@@ -9,7 +9,7 @@
                     <tr>
                         <td>{{ 'icon-notification-panel'|icon }}</td>
                         <td><a href='{{ object.related_object.get_absolute_url }}'>{{ object.message }}</a></td>
-                        <td class='text-right notification-date'>{{ object.datetime_created|naturalday }} <span style="color: #999999">at</span> {{ object.datetime_created.time }}</td>
+                        <td class='text-right notification-date'>{{ object.datetime_created|naturalday }} <span style="color: #999999">at</span> {{ object.datetime_created|time }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

@@ -27,6 +27,18 @@ class HueyMixin(object):
             'consumer_options': {'workers': 1},
         }
 
+    @property
+    def LOGGING(self):
+        # Make sure we mail admins during uncaught exceptions during Huey tasks;
+        # Otherwise issues with tasks can easily go unnoticed
+        _LOGGING = super(HueyMixin, self).LOGGING
+        _LOGGING['loggers']['huey'] = {
+            'handlers': ['error', 'mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        }
+        return _LOGGING
+
 
 class Local(BraintreeSandboxMixin, HueyMixin,
             installations.LocalMixin, ProjectConfiguration):
@@ -132,6 +144,8 @@ class Live(HueyMixin,
     BRAINTREE_PUBLIC_KEY = 'skmbrjfnnc4kfxq5'
     BRAINTREE_SANDBOX = False
 
+    TWILIO_ACCOUNT_SID = 'AC1480c67b0bebcaf9dd64492c96761570'
+    TWILIO_PHONE_NUMBER = "+441347722127"
 
 class Stage(Live):
     "The staging site - duplicates the live site, for deployment rehearsals."

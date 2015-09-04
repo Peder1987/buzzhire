@@ -57,4 +57,5 @@ requests-oauthlib==0.4.2
 six==1.5.2
 sorl-thumbnail==12.2
 sqlparse==0.1.15
+twilio==4.5.0
 wheel==0.24.0

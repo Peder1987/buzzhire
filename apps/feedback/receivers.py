@@ -51,10 +51,11 @@ def prompt_client_and_drivers_for_feedback(sender, instance, name,
                'bookings_email': settings.BOOKINGS_EMAIL},
                from_email=settings.BOOKINGS_FROM_EMAIL)
 
-        # Notify freelancers for app
-        for booking in instance.bookings.all():
-            Notification.objects.create(
-                message='Tell us how it went.',
-                category='freelancer_feedback_request',
-                related_object=instance,
-                user=booking.freelancer.user)
+         # Notify freelancers for app
+         # For now, we don't notify them (because they can't do it from the app)
+#         for booking in instance.bookings.all():
+#             Notification.objects.create(
+#                 message='Tell us how it went.',
+#                 category='freelancer_feedback_request',
+#                 related_object=instance,
+#                 user=booking.freelancer.user)

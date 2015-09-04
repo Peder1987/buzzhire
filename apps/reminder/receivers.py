@@ -18,12 +18,14 @@ def enqueue_reminders(job_request):
         # Reminders an hour before
         ScheduledReminderSet(job_request,
                  'Your job starts in one hour',
-                 job_request.start_datetime - timedelta(hours=1)),
+                 job_request.start_datetime - timedelta(hours=1),
+                 'reminder/sms/one_hour_reminder.txt'),
 
         # Reminders 10 minutes before
         ScheduledReminderSet(job_request,
                  'Your job starts in ten minutes',
-                 job_request.start_datetime - timedelta(minutes=10)),
+                 job_request.start_datetime - timedelta(minutes=10),
+                 'reminder/sms/ten_minutes_reminder.txt'),
     )
 
     for info in infos:
