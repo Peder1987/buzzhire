@@ -40,7 +40,14 @@ class HueyMixin(object):
         return _LOGGING
 
 
+class MandrillMixin(object):
+    "Enables Mandrill email on the installation."
+    EMAIL_HOST = 'smtp.mandrillapp.com'
+    EMAIL_HOST_USER = 'nick@buzzhire.co'
+
+
 class Local(BraintreeSandboxMixin, HueyMixin,
+            MandrillMixin,
             installations.LocalMixin, ProjectConfiguration):
     PROJECT_ROOT = '/home/david/www/buzzhire'
     BOOKINGS_EMAIL = 'bookingslocal@dev.buzzhire.co'
@@ -58,6 +65,7 @@ class Local(BraintreeSandboxMixin, HueyMixin,
 
 
 class Dev(BraintreeSandboxMixin, HueyMixin,
+          MandrillMixin,
           installations.WebfactionDevMixin, ProjectConfiguration):
     DOMAIN = 'dev.buzzhire.co'
     WEBFACTION_USER = 'buzzhire'
@@ -76,6 +84,7 @@ class Dev(BraintreeSandboxMixin, HueyMixin,
     X_FRAME_OPTIONS = "ALLOWALL"
 
 class VagrantDev(BraintreeSandboxMixin, HueyMixin,
+          MandrillMixin,
           installations.WebfactionDevMixin, ProjectConfiguration):
     DOMAIN = 'buzz.ubn'
     PROJECT_ROOT = '/vagrant'
@@ -109,6 +118,7 @@ class VagrantDev(BraintreeSandboxMixin, HueyMixin,
     X_FRAME_OPTIONS = "ALLOWALL"
 
 class Live(HueyMixin,
+           MandrillMixin,
            installations.WebfactionLiveMixin, ProjectConfiguration):
     DOMAIN = 'buzzhire.co'
     WEBFACTION_USER = 'buzzhire'
