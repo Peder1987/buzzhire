@@ -47,7 +47,7 @@ class ScheduledReminderSet(object):
         self.start_datetime_when_scheduled = \
                                         dict['start_datetime_when_scheduled']
         self.scheduled_datetime = dict['scheduled_datetime']
-        self.sms_template_name = dict['sms_template_name']
+        self.sms_template_name = dict.get('sms_template_name', None)
 
     @property
     def job_request(self):
