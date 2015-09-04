@@ -160,5 +160,5 @@ class ProjectConfiguration(StandardConfiguration):
     # The number of minutes before the booking a freelancer should arrive
     ARRIVAL_PERIOD_MINUTES = 15
 
-    TWILIO_ACCOUNT_SID = 'AC1480c67b0bebcaf9dd64492c96761570'
+    TWILIO_ACCOUNT_SID = 'AC28ae162c411ca4ac235efcdb0206c672'
     TWILIO_PHONE_NUMBER = "+441347722127"
