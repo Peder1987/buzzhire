@@ -44,8 +44,6 @@ class Local(BraintreeSandboxMixin, HueyMixin,
             installations.LocalMixin, ProjectConfiguration):
     PROJECT_ROOT = '/home/david/www/buzzhire'
     BOOKINGS_EMAIL = 'bookingslocal@dev.buzzhire.co'
-    EMAIL_HOST_USER = 'buzzhire_dev'
-    EMAIL_HOST = 'smtp.webfaction.com'
     SERVER_EMAIL = 'local@dev.buzzhire.co'
     ACCOUNT_PASSWORD_MIN_LENGTH = 1
     HUEY_NAME = 'buzzhire'
@@ -63,7 +61,6 @@ class Dev(BraintreeSandboxMixin, HueyMixin,
           installations.WebfactionDevMixin, ProjectConfiguration):
     DOMAIN = 'dev.buzzhire.co'
     WEBFACTION_USER = 'buzzhire'
-    EMAIL_HOST_USER = 'buzzhire_dev'
     DEBUG = False
     ACCOUNT_PASSWORD_MIN_LENGTH = 1
 
@@ -83,7 +80,6 @@ class VagrantDev(BraintreeSandboxMixin, HueyMixin,
     DOMAIN = 'buzz.ubn'
     PROJECT_ROOT = '/vagrant'
     WEBFACTION_USER = 'buzzhire'
-    EMAIL_HOST_USER = 'buzzhire_dev'
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     DEBUG = True
     ACCOUNT_PASSWORD_MIN_LENGTH = 1
@@ -116,7 +112,6 @@ class Live(HueyMixin,
            installations.WebfactionLiveMixin, ProjectConfiguration):
     DOMAIN = 'buzzhire.co'
     WEBFACTION_USER = 'buzzhire'
-    EMAIL_HOST_USER = 'buzzhire_live'
 
     ACCOUNT_PASSWORD_MIN_LENGTH = 6
 

@@ -163,3 +163,7 @@ class ProjectConfiguration(StandardConfiguration):
     # These are numbers for the test Twilio account
     TWILIO_ACCOUNT_SID = 'AC28ae162c411ca4ac235efcdb0206c672'
     TWILIO_PHONE_NUMBER = '+15005550006'
+
+    # Mandrill credentials
+    EMAIL_HOST = 'smtp.mandrillapp.com'
+    EMAIL_HOST_USER = 'nick@buzzhire.co'
