@@ -152,6 +152,7 @@ class Invitation(models.Model):
     class Meta:
         # A single freelancer can't be invited twice for the same job
         unique_together = (("freelancer", "jobrequest"),)
+        ordering = ['date_applied']
 
     def can_be_applied_to(self):
         "Whether or not the invitation can be applied to."
