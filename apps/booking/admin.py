@@ -7,7 +7,8 @@ from . import models
 class InvitationAdmin(admin.ModelAdmin):
     list_display = ('reference_number', 'freelancer', 'jobrequest',
                     'date_created', 'date_applied', 'date_declined', 'manual')
-    search_fields = ('jobrequest', 'freelancer')
+    search_fields = ('freelancer__first_name', 'freelancer__last_name',
+                     'freelancer__user__email')
     raw_id_fields = ('jobrequest', 'freelancer')
     readonly_fields = ('date_created', 'date_applied', 'date_declined')
     list_filter = ('manual',)
@@ -85,7 +86,8 @@ class BookingResource(resources.ModelResource):
 class BookingAdmin(ExportActionModelAdmin):
     list_display = ('reference_number', 'freelancer', 'jobrequest',
                     'date_created')
-    search_fields = ('jobrequest', 'freelancer')
+    search_fields = ('freelancer__first_name', 'freelancer__last_name',
+                     'freelancer__user__email')
     raw_id_fields = ('jobrequest', 'freelancer')
     resource_class = BookingResource
 
