@@ -27,6 +27,7 @@ class ProjectConfiguration(StandardConfiguration):
         'polymorphic',
         'django_bootstrap_breadcrumbs',
         'huey.djhuey',
+        'import_export',
         'rest_framework',
         'rest_framework.authtoken',
         'apps.core',
