@@ -20,9 +20,8 @@ admin.site.register(models.Invitation, InvitationAdmin)
 class BookingResource(resources.ModelResource):
     "Import/export resource to allow exporting of booking data."
 
-    booking_reference = fields.Field(column_name='Booking reference')
-    def dehydrate_booking_reference(self, obj):
-        return obj.reference_number
+    booking_reference = fields.Field(column_name='Booking reference',
+                                     attribute='reference_number')
 
     jobrequest_reference = fields.Field(column_name='Job reference')
     def dehydrate_jobrequest_reference(self, obj):

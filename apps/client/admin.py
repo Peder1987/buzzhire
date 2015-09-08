@@ -9,26 +9,24 @@ class LeadAdmin(admin.ModelAdmin):
 
 class ClientResource(resources.ModelResource):
     "Import/export resource to allow exporting of client data."
-    reference_number = fields.Field(column_name='Client reference')
-    def dehydrate_reference_number(self, obj):
-        return obj.reference_number
-
+    reference_number = fields.Field(column_name='Client reference',
+                                    attribute='reference_number')
     last_name = fields.Field(column_name='Last name',
                                 attribute='last_name')
     first_name = fields.Field(column_name='First name',
                                 attribute='first_name')
     company_name = fields.Field(column_name='Company name',
                                 attribute='company_name')
-    mobile = fields.Field(column_name='Mobile',
-                                attribute='mobile')
     user__email = fields.Field(column_name='Email',
                                 attribute='user__email')
+    mobile = fields.Field(column_name='Mobile',
+                                attribute='mobile')
 
     class Meta:
         model = models.Client
         fields = ('reference_number',
                   'last_name', 'first_name',
-                  'company_name', 'mobile', 'user__email')
+                  'company_name', 'user__email', 'mobile')
         export_order = fields
 
 
