@@ -203,6 +203,7 @@ urlpatterns = [
     url(r'^v1/auth/', include('rest_framework.urls',
                               namespace='rest_framework')),
     url(r'^v1/token-auth/', views.obtain_auth_token),
+    url(r'^v1/client/register/', client_views.ClientRegisterView.as_view()),
     url(r'^v1/', include(router.urls)),
     url(r'^v1/freelancer/earnings/$',
         freelancer_views.FreelancerEarningView.as_view(),

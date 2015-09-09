@@ -35,16 +35,15 @@ class ClientSerializer(serializers.ModelSerializer):
     -- currently used for: registration,
     Generic client serializer.
     """
-    email = serializers.EmailField()
+    email = serializers.EmailField(write_only=True)
     password = serializers.CharField(max_length=140,
-                                     style={'input_type': 'password'})
+                                     style={'input_type': 'password'},
+                                     write_only=True)
 
     class Meta:
         model = Client
         fields = ('first_name', 'last_name', 'email', 'password',
                   'mobile', 'company_name')
-        extra_fields = {'password': {'write_only': True},
-                        'email': {'write_only': True}}
 
     def create(self, validated_data):
         """
