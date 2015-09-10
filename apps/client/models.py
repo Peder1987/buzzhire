@@ -7,7 +7,12 @@ from django.core.urlresolvers import reverse
 
 
 class Lead(models.Model):
-    "A lead is an expression of interest created by a potential client."
+    """A lead is an expression of interest created by a potential client.
+    
+    Note: this model was used for the prelaunch website to capture interest.
+    It is not currently used in the new site and could possibly be
+    decommissioned.
+    """
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     email = models.EmailField()

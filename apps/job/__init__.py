@@ -1,3 +1,11 @@
+"""The job app is responsible for everything to do with clients requesting jobs.
+
+Most importantly, it defines the JobRequest model, which is then extended into
+more specific JobRequest models (e.g. DriverJobRequest) by service apps.
+
+It is naive about how the jobs get booked.
+"""
+
 from apps.core.utils import WeightedRegistry, classproperty
 from django.utils.module_loading import autodiscover_modules
 from apps.service import services

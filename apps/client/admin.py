@@ -7,6 +7,7 @@ from . import models
 class LeadAdmin(admin.ModelAdmin):
     list_display = ('first_name', 'last_name', 'email', 'created')
 
+
 class ClientResource(resources.ModelResource):
     "Import/export resource to allow exporting of client data."
     reference_number = fields.Field(column_name='Client reference',
