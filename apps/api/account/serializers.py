@@ -1,3 +1,5 @@
+from django.apps import apps
+from django.conf import settings
 from rest_framework import serializers, exceptions
 from apps.account.forms import ResetPasswordForm
 
@@ -26,3 +28,14 @@ class PasswordResetSerializer(serializers.Serializer):
     def save(self):
         request = self.context.get('request')
         self.form.save(request=request)
+
+
+class UserSerializer(serializers.Serializer):
+    """
+    Generic user auth model serializer.
+    """
+
+    class Meta:
+        model = apps.get_model(settings.AUTH_USER_MODEL)
+        fields = ('email', 'password')
+
