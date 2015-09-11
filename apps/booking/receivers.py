@@ -13,6 +13,8 @@ from apps.notification.models import Notification
 from apps.notification.sms import send_sms
 from . import tasks
 
+from datetime import date
+
 
 @receiver(post_transition)
 def invite_matching_freelancers(sender, instance, name,
@@ -48,6 +50,15 @@ def notify_freelancer_on_apply(sender, invitation, **kwargs):
               {'title': 'We have received your application',
                'content': content},
               from_email=settings.BOOKINGS_FROM_EMAIL)
+
+
+@receiver(invitation_applied)
+def update_freelancers_last_applied(sender, invitation, **kwargs):
+    """
+    Updates freelancer's last_applied date
+    """
+    invitation.freelancer.last_applied = date.today()
+    invitation.freelancer.save()
 
 
 @receiver(booking_created)
@@ -165,11 +176,12 @@ def notify_freelancer_on_invitation(sender, invitation, **kwargs):
             user=invitation.freelancer.user)
 
 
-    send_sms(invitation.freelancer.user,
-             render_to_string('booking/sms/freelancer_invitation.txt',
-                              {'object': invitation,
-                               'job_request': invitation.jobrequest}),
-             invitation.jobrequest)
+    if(invitation.freelancer.is_active):
+        send_sms(invitation.freelancer.user,
+                 render_to_string('booking/sms/freelancer_invitation.txt',
+                                  {'object': invitation,
+                                   'job_request': invitation.jobrequest}),
+                 invitation.jobrequest)
 
 # @receiver(booking_created)
 # def notify_client_on_booking(sender, booking, **kwargs):
