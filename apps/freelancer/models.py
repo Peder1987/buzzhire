@@ -177,10 +177,20 @@ class Freelancer(PolymorphicModel):
     objects = GeoPolymorphicManager()
     published_objects = PublishedFreelancerManager()
 
+    # stores information on the last application_date
+    last_applied = models.DateField(auto_now_add=True)
+
     @property
     def reference_number(self):
         "Returns a reference number for this freelancer."
         return 'FR%s' % str(self.pk).zfill(7)
+
+    @property
+    def is_active(self):
+        delta = date.today() - last_applied
+
+        return delta.days <= 30
+
 
     def get_full_name(self):
         "Returns the full name of the freelancer."

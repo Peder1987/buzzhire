@@ -114,9 +114,6 @@ class ProjectConfiguration(StandardConfiguration):
         # Location-based database
         return 'django.contrib.gis.db.backends.postgis'
 
-    # Whether to show the holding site instead of the main site
-    COMING_SOON = False
-
     # Min pay per hour, before commission
     CLIENT_MIN_WAGE = 8.0
     # The percent commission we charge on client rates
