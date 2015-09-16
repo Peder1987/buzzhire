@@ -187,7 +187,7 @@ class Freelancer(PolymorphicModel):
 
     @property
     def is_active(self):
-        delta = date.today() - last_applied
+        delta = date.today() - self.last_applied
 
         return delta.days <= 30
 
