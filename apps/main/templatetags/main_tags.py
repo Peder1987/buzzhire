@@ -37,3 +37,14 @@ def contact_phone():
         {% contact_phone %}
     """
     return settings.CONTACT_PHONE
+
+@register.inclusion_tag("main/customer_service_chat.html")
+def customer_service_chat():
+    """Renders the chat widget.
+
+    Usage:
+
+        {% customer_service_chat %}
+    """
+
+    return
