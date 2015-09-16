@@ -8,7 +8,7 @@ from apps.job.models import JobRequest, JobRequestQuerySet
 from apps.paygrade.models import BasePayGrade, BasePayGradeManager
 
 
-DRIVER_SERVICE_TITLE = 'delivery'
+DRIVER_SERVICE_TITLE = 'delivery driver'
 
 def _is_driver(self):
     """Custom method on User model.
@@ -64,14 +64,14 @@ class FlexibleVehicleTypeManager(models.Manager):
 class FlexibleVehicleType(VehicleType):
     """Proxy model for vehicle types when we're more flexible about
     the vehicle.
-    
+
     For example, in job requests, certain vehicle types are as good as another:
     it doesn't matter whether you have a scooter or a motorcycle.
-    
+
     Our way of handling this is to choose one VehicleType in the database
     to be the main one, and link the others via the equivalent_to field.
     The equivalent_to field should only be used in one direction
-    
+
     This should only be used in circumstances where collate_under is
     relevant; for example, DriverJobRequests link to vehicle types and
     want to take account of collation, while DriverVehicleTypes don't.
