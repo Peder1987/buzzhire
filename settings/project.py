@@ -7,6 +7,12 @@ class ProjectConfiguration(StandardConfiguration):
 #     STATICFILES_DIRS = (
 #         os.path.join(BASE_DIR, "static"),
 #     )
+
+    MANAGERS = ADMINS = (
+         ('David Seddon', 'david@seddonym.me'),
+         ('Nikola Kolevski', 'Nikola.Kolevski@borneagency.com')
+    )
+
     SITE_TITLE = 'BuzzHire'
     PROJECT_NAME = 'buzzhire'
     INSTALLED_APPS = StandardConfiguration.INSTALLED_APPS + (
