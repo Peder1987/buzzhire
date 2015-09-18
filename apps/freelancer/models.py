@@ -180,6 +180,13 @@ class Freelancer(PolymorphicModel):
     # stores information on the last application_date
     last_applied = models.DateField(auto_now_add=True)
 
+
+    def save(self, *args, **kwargs):
+        if self.published == True:
+            self.last_applied = date.today()
+        super(Freelancer, self).save(*args, **kwargs)
+
+
     @property
     def reference_number(self):
         "Returns a reference number for this freelancer."
