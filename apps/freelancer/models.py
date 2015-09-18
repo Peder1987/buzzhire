@@ -189,7 +189,7 @@ class Freelancer(PolymorphicModel):
     def is_active(self):
         delta = date.today() - self.last_applied
 
-        return delta.days <= 14
+        return (self.published and (delta.days <= 14))
 
 
     def get_full_name(self):
