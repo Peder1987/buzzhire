@@ -2,6 +2,8 @@ from django.contrib import admin
 from import_export.admin import ExportActionModelAdmin
 from import_export import resources, fields
 from apps.job.models import JobRequest
+from apps.freelancer.admin import FreelancerAdmin
+from apps.freelancer.models import Freelancer
 from . import models
 
 class InvitationAdmin(admin.ModelAdmin):
@@ -93,4 +95,25 @@ class BookingAdmin(ExportActionModelAdmin):
 admin.site.register(models.Booking, BookingAdmin)
 
 
+class AvailabilityAdmin(admin.ModelAdmin):
+    list_display = ('freelancer',)
 
+
+admin.site.register(models.Availability, AvailabilityAdmin)
+
+
+class AvailabilityInline(admin.StackedInline):
+    model = models.Availability
+    verbose_name_plural = "Availability"
+
+
+# [MONKEY-PATCH] Once we need more than one inline within the freelancer admin,
+#                we'll need to create an app that will register admins imbued
+#                with dependent inlines.
+#                Horrible explanation.
+class AvailabilityFreelancerAdmin(FreelancerAdmin):
+    inlines = FreelancerAdmin.inlines + [AvailabilityInline]
+
+
+admin.site.unregister(Freelancer)
+admin.site.register(Freelancer, AvailabilityFreelancerAdmin)

@@ -335,6 +335,10 @@ class Availability(models.Model):
                     return shift
         raise ValueError('Could not find shift for time %s.' % given_time)
 
+    class Meta:
+        verbose_name_plural = "Availability"
+
+
 
 def _is_full(self):
     "Returns whether or not the job request is fully booked."

@@ -50,4 +50,6 @@ class FreelancerAdmin(ExportActionModelAdmin):
     raw_id_fields = ('user',)
     resource_class = FreelancerResource
 
+    exclude = ('days_available', 'hours_available')
+
 admin.site.register(models.Freelancer, FreelancerAdmin)
