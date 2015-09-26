@@ -23,7 +23,7 @@ def _average_score(self):
     # Assemble a list of averages which we will then average.  This allows
     # us to 'weight' certain querysets by including them multiple times in
     # the averages list.
-    averages = []
+    averages = [5]
     for feedbacks, weighting in weighted_feedback:
         average = feedbacks.aggregate(Avg('score')).values()[0]
         # Add the average as many times as the weighting specifies
