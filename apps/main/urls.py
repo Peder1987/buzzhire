@@ -23,11 +23,6 @@ urlpatterns = [
                             template_name='main/privacy.html',
                             extra_context={'title': 'Privacy policy'}),
                             name='privacy'),
-     url(r'^pricing/$', ContextTemplateView.as_view(
-                            template_name='main/pricing.html',
-                            extra_context={'title': 'Pricing'}),
-                            name='pricing'),
-
     url(r'^testerror$', views.TestError.as_view()),
     url(r'^testdenied$', views.TestDenied.as_view()),
 ]
