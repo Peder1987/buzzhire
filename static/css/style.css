@@ -122,7 +122,7 @@ body{
 
 /* Custom */
 
- .sidebar-right-page .sidebar-content .become-freelancer-form legend, 
+ .sidebar-right-page .sidebar-content .become-freelancer-form legend,
   .sidebar-right-page .sidebar-content .become-freelancer-form h5,
   .sidebar-right-page .sidebar-content .client-signup-form legend,
   .sidebar-right-page .sidebar-content .client-signup-form h5{
@@ -346,7 +346,7 @@ select
 {
   border-top: none !important;
   border-bottom: 1px solid #ccc;
-  
+
 }
 
 .availability-table tr:last-child{
@@ -411,8 +411,16 @@ span.notification-icon-panel{
 }
 
 .booking-box .job-request-table-wrap{
-  min-height: 420px;
+  height: 440px;
   position: relative;
+  overflow: hidden;
+}
+
+.booking-box .job-request-table-wrap:hover {
+  min-height: 440px;
+  height: auto;
+  position: relative;
+  overflow: hidden;
 }
 
 .booking-box .job-request-table-wrap.booking-request-table-wrap{
@@ -543,7 +551,7 @@ span.notification-icon-panel{
   margin: 0;
   height: 100%;
   min-height: 100%;
- 
+
 }
 
 .sidebar-right-page .row.after-breadcrumb.sidebar{
@@ -551,7 +559,7 @@ span.notification-icon-panel{
   margin-bottom: -10000px;
 }
 .page .content-wrap{
-  min-height: calc(100% - 75px); 
+  min-height: calc(100% - 75px);
   height: auto;
   overflow: hidden;
 }
@@ -562,7 +570,7 @@ span.notification-icon-panel{
 .become-freelancer-form button.btn[name="freelancer_submit"] {
     background-color: rgb(166, 239, 100);
     font-family: 'OpenSans';
-    
+
     width: 100%;
     margin-left: 0;
 }
@@ -570,7 +578,7 @@ span.notification-icon-panel{
 .sidebar-right-page .sidebar-content button.btn[name="submit"]{
     background-color: rgb(166, 239, 100);
     font-family: 'OpenSans';
-    
+
     min-width: 250px;
     width: 100%;
     margin-left: 0;
@@ -779,7 +787,7 @@ span.notification-icon-panel{
   margin-bottom: 0;
 }
 
-.edit-account-form input, .edit-account-form select, 
+.edit-account-form input, .edit-account-form select,
 .edit-password-form input, .edit-account-form .input-group span.input-group-addon{
   color: #277dbc;
 }
@@ -802,7 +810,7 @@ span.notification-icon-panel{
    color: #277dbc;
 }
 
-.edit-account-form input:-ms-input-placeholder {  
+.edit-account-form input:-ms-input-placeholder {
   color: #277dbc;
 }
 
@@ -818,7 +826,7 @@ span.notification-icon-panel{
    color: #277dbc;
 }
 
-.edit-password-form input:-ms-input-placeholder {  
+.edit-password-form input:-ms-input-placeholder {
   color: #277dbc;
 }
 
@@ -827,12 +835,12 @@ span.notification-icon-panel{
   font-size: 20px;
   padding: 5px 0;
 }
-  
+
 .edit-account-form fieldset:not(:last-child)
 {
   border-bottom: 1px solid #eee;
 }
-    
+
 .sidebar-right-page .sidebar-content span.booking-form-num {
     border: 1px solid #2779bc;
     border-radius: 100px;
@@ -2132,7 +2140,7 @@ img {
 }
 .btn-primary {
     /* background: #011a26; */
-    
+
     border: none;
     color: #fff;
     background-color: #2779bc;
@@ -2349,42 +2357,42 @@ textarea::-webkit-input-placeholder {
     height: 600px;
 }
 .top-content.freelancer-profile{
-  background-image:url(/static/img/profile-top-content-bck.png); 
+  background-image:url(/static/img/profile-top-content-bck.png);
   background-size: cover;
   background-repeat: no-repeat;
   height: 550px;
 }
 
 .top-content.freelancer-profile.cleaners{
-  background-image:url(/static/img/hero/cleaner.jpg); 
+  background-image:url(/static/img/hero/cleaner.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   height: 550px;
 }
 
 .top-content.freelancer-profile.waiters{
-  background-image:url(/static/img/hero/waiting.jpg); 
+  background-image:url(/static/img/hero/waiting.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   height: 550px;
 }
 
 .top-content.freelancer-profile.delivery{
-  background-image:url(/static/img/hero/driver.jpg); 
+  background-image:url(/static/img/hero/driver.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   height: 550px;
 }
 
 .top-content.freelancer-profile.kitchen.staff{
-  background-image:url(/static/img/hero/kitchen.jpg); 
+  background-image:url(/static/img/hero/kitchen.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   height: 550px;
 }
 
 .top-content.freelancer-profile.bar.staff{
-  background-image:url(/static/img/hero/bar.jpg); 
+  background-image:url(/static/img/hero/bar.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   height: 550px;
@@ -2597,7 +2605,7 @@ textarea::-webkit-input-placeholder {
 
 .features-container {
     /*position: absolute;*/
-    
+
     width: 100%;
     height: 100%;
     margin: 0 auto;
@@ -3533,7 +3541,7 @@ address {
 }
 @media (max-width: 767px) {
 
- 
+
 
     .sidebar-right-page .sidebar-content, .sidebar-right-page .sidebar-page-title{
       padding-left: 10px;
@@ -3754,7 +3762,7 @@ address {
     display: inline-block;
   }
 
-  
+
 
   .notification-table td a {
     font-size: 16px;
@@ -3792,11 +3800,11 @@ address {
       font-size:  20px !important;
       letter-spacing: 0  !important;
     }
-    
+
     .top-content .description form, .top-content .description .inline-form-field{
       width: 100%;
     }
-  
+
 }
 
 @media (max-width: 345px) {
@@ -3816,7 +3824,7 @@ address {
     .top-content h2{
       font-size: 35px !important;
     }
-    
+
     .btn-lg {
         height: auto;
         padding-bottom: 2px;
