@@ -154,7 +154,7 @@ class JobRequest(PolymorphicModel):
     years_experience = models.PositiveSmallIntegerField(
                                 'Minimum years of experience',
                                 choices=YEARS_EXPERIENCE_CHOICES,
-                                default=1)
+                                default=0)
 
     address1 = models.CharField('Address line 1', max_length=75)
     address2 = models.CharField('Address line 2', max_length=75, blank=True)
