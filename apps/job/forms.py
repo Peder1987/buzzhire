@@ -103,7 +103,7 @@ class JobRequestForm(CrispyFormMixin, PostcodeFormMixin,
             layout.Fieldset(
                 '<span class="booking-form-num">3</span>Freelancer details',
                 'number_of_freelancers',
-                'years_experience',
+                #'years_experience',
             ),
             layout.Fieldset(
                 '<span class="booking-form-num">4</span>Budget',
