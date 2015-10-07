@@ -165,17 +165,11 @@
                         <span class='label label-default'>{{ object.service|capfirst }}</span>
                     </td>
                  </tr>
-                 
+
                  <tr>
                     <th>Number of freelancers</th>
                     <td>
                         {{ object.number_of_freelancers }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>Minimum years of experience</th>
-                    <td>
-                        {{ object.get_years_experience_display }}
                     </td>
                 </tr>
                 {% block extra_job_requirements %}{% endblock %}
@@ -184,7 +178,7 @@
                 <h5>Comments</h5>
                 <div class='compact'>{{ object.comments|linebreaks }}</div>
             {% endif %}
-            
+
             {% include 'booking/includes/bookings_for_job_request.html' %}
 
             {% if request.user.is_freelancer %}
