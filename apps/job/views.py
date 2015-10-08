@@ -381,6 +381,12 @@ class AdminJobList(AdminOnlyMixin, ContextMixin, TabsMixin, ListView):
 
     def get_queryset(self, *args, **kwargs):
 
-        return JobRequest.objects.filter(
-                    status=self.kwargs.get('status',
-                                           JobRequest.STATUS_OPEN))
+        status_tab = self.kwargs.get('status')
+
+        if (status_tab == JobRequest.STATUS_OPEN):
+            queryset = JobRequest.objects.filter(status=JobRequest.STATUS_OPEN).order_by('date', 'start_time')
+        else:
+            queryset = JobRequest.objects.filter(status=self.kwargs.get('status', JobRequest.STATUS_OPEN))
+
+        return queryset
+
