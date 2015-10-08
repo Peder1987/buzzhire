@@ -28,6 +28,8 @@ def invite_matching_freelancers(job_request):
             invitation_created.send(sender=invite_matching_freelancers,
                                 invitation=invitation)
 
-    print('[%s] Invited %d of %d matching freelancers.' % (time.ctime(),
-                                                           invited_count,
-                                                           freelancers.count()))
+    print('[%s] Invited %d of %d matching freelancers for %s.' \
+                                                        % (time.ctime(),
+                                                        invited_count,
+                                                        freelancers.count(),
+                                                        str(job_request)))
