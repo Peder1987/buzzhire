@@ -345,6 +345,20 @@ def _is_full(self):
     return self.bookings.count() >= self.number_of_freelancers
 JobRequest.is_full = property(_is_full)
 
+def _number_of_invited_freelancers(self):
+    """ Returns the number of invited freelancers for specific job request.
+    """
+    return self.invitations.count()
+JobRequest.number_of_invited_freelancers = property(_number_of_invited_freelancers)
+
+def _number_of_applied_freelancers(self):
+    """ Returns the number of applied freelancers for specific job request.
+    """
+    undeclined_applications = self.invitations.undeclined_applications()
+    return undeclined_applications.count()
+JobRequest.number_of_applied_freelancers = property(_number_of_applied_freelancers)
+
+
 def _has_freelancers_waiting_acceptance(self):
     """ Returns whether or not job request has any applied freelancers
     waiting to be accepted.
