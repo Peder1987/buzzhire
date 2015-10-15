@@ -21,14 +21,10 @@
                 <table class="table job-request-table black f14">
                     {% if request.user.is_admin %}
                     <tr>
-                        <td>Freelancers waiting acceptance? </td>
-                        <td class="blue">
-                            {% if object.has_freelancers_waiting_acceptance %}
-                            <i class="fa fa-check"></i>
-                            {% else %}
-                            <i class="fa fa-times"></i>
-                            {% endif %}
-                        </td>
+                        <td>Invited freelancers: {{ object.number_of_invited_freelancers }} </td>
+                    </tr>
+                    <tr>
+                        <td>Applied freelancers: {{ object.number_of_applied_freelancers }} </td>
                     </tr>
                     {% endif %}
                     <tr>
