@@ -49,7 +49,7 @@ class MandrillMixin(object):
 class Local(BraintreeSandboxMixin, HueyMixin,
             MandrillMixin,
             installations.LocalMixin, ProjectConfiguration):
-    PROJECT_ROOT = '/home/david/www/buzzhire'
+    PROJECT_ROOT = '/home/devmaster/buzzhire_django'
     BOOKINGS_EMAIL = 'bookingslocal@dev.buzzhire.co'
     SERVER_EMAIL = 'local@dev.buzzhire.co'
     ACCOUNT_PASSWORD_MIN_LENGTH = 1
@@ -63,6 +63,17 @@ class Local(BraintreeSandboxMixin, HueyMixin,
         'debug_toolbar',
     )
 
+    @property
+    def DATABASES(self):
+        return {
+            'default': {
+                'NAME': 'buzzhire',
+                'USER': 'postgres',
+                'PASSWORD': '111',
+                'ENGINE': 'django.contrib.gis.db.backends.postgis',
+                'HOST': 'localhost',
+            }
+        }
 
 class Dev(BraintreeSandboxMixin, HueyMixin,
           MandrillMixin,
