@@ -1,3 +1,5 @@
-# buzzhire
+BuzzHire
+========
 
-site name : buzzhir.co
+### site name
+buzzhire.co
